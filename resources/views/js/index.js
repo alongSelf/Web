@@ -43,30 +43,5 @@ angular.module('ionicApp', ['ionic'])
                 }
             })
 
-            .state('menu.tabs.about.first', {
-                url: "/first",
-                views: {
-                    'about-sub': {
-                        templateUrl: "templates/first.html"
-                    }
-                }
-            })
-            .state('menu.tabs.about.second', {
-                url: "/second",
-                views: {
-                    'about-sub': {
-                        templateUrl: "templates/second.html"
-                    }
-                }
-            })
-            .state('menu.tabs.about.third', {
-                url: "/third",
-                views: {
-                    'about-sub': {
-                        templateUrl: "templates/third.html"
-                    }
-                }
-            })
-
-        $urlRouterProvider.otherwise("/menu/tabs/about");
+        $urlRouterProvider.otherwise("/menu/tabs/home");
     })
