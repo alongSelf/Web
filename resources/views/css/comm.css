@@ -1,0 +1,12 @@
+.footer {
+    position:fixed;
+    bottom:5px;
+    width:100%;
+}
+
+.body {
+    margin-top:0.5%;
+    margin-right:0.5%;
+    margin-bottom:0px;
+    margin-left:0.5%;
+}

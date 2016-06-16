@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('test', function () {
-    echo 11111;
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/', 'IndexController@index');
 });
