@@ -16,7 +16,6 @@ angular.module('ionicApp', ['ionic'])
                     }
                 }
             })
-
             .state('menu.tabs.home', {
                 url: "/home",
                 views: {
@@ -25,20 +24,29 @@ angular.module('ionicApp', ['ionic'])
                     }
                 }
             })
-            .state('menu.tabs.search', {
-                url: "/search",
+            .state('menu.tabs.category', {
+                url: "/category/*id",
                 views: {
-                    'search-tab': {
-                        templateUrl: "templates/search.html"
+                    'category-tab': {
+                        templateUrl: "templates/category.html"
                     }
                 }
             })
 
-            .state('menu.tabs.about', {
-                url: "/about",
+            .state('menu.tabs.user', {
+                url: "/user",
                 views: {
-                    'about-tab': {
-                        templateUrl: "templates/about.html"
+                    'user-tab': {
+                        templateUrl: "templates/user.html"
+                    }
+                }
+            })
+
+            .state('menu.tabs.car', {
+                url: "/car",
+                views: {
+                    'car-tab': {
+                        templateUrl: "templates/car.html"
                     }
                 }
             })

@@ -13,4 +13,9 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'IndexController@index');
+    Route::get('home', 'HomeController@index');
+    Route::get('user', 'UserController@index');
+    Route::get('car', 'CarController@index');
+    Route::get('category/{id}', 'ItemController@index');
+    Route::get('item/{id}', 'ItemController@item');
 });
