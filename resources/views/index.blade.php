@@ -1,4 +1,4 @@
-<html ng-app="ionicApp">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -8,7 +8,7 @@
 
     <title>首页</title>
 </head>
-<body>
+<body ng-app="ionicApp">
 
 <ion-nav-view></ion-nav-view>
 
@@ -32,15 +32,15 @@
         <ion-side-menu side="left">
             <ion-header-bar class="bar-dark">
                 <!--<h1 class="title">Left Menu</h1>-->
-                <div class="buttons pull-center" nav-clear menu-close>
-                    <img src="{{asset('resources/views/sysimg/Tool_Animation_Icon_LANShare.png')}}"/>
+                <div class="buttons pull-center" nav-clear menu-close style="width: 100%">
+                    <img style="width: 100%" src="{{asset('resources/views/sysimg/logo.png')}}"/>
                 </div>
             </ion-header-bar>
             <ion-content class = "has-header">
                 <ion-list>
-                    <img ui-sref="menu.tabs.home" src="{{asset('resources/views/sysimg/Tool_Animation_Icon_LANShare.png')}}"/>
-                    <ion-item nav-clear menu-close ui-sref="menu.tabs.search">Search</ion-item>
-                    <ion-item nav-clear menu-close ui-sref="menu.tabs.about">About</ion-item>
+                    @foreach($category as $val)
+                        <ion-item nav-clear menu-close ui-sref="menu.tabs.category({id: {{$val->id}}})">{{$val->title}}</ion-item>
+                    @endforeach
                 </ion-list>
             </ion-content>
         </ion-side-menu>
@@ -48,49 +48,58 @@
 </script>
 
 <script id="templates/tabs.html" type="text/ng-template">
-    <ion-view view-title="Welcome">
+    <ion-view view-title="首页">
         <ion-tabs class="tabs-icon-top tabs-positive">
-
-            <ion-tab title="Search" icon="ion-search" ui-sref="menu.tabs.search">
-                <ion-nav-view name="search-tab"></ion-nav-view>
-            </ion-tab>
-
-            <ion-tab title="About" icon="ion-information-circled" ui-sref="menu.tabs.about">
-                <ion-nav-view name="about-tab"></ion-nav-view>
-            </ion-tab>
-            <ion-tab title="Home" icon="ion-information-circled" ui-sref="menu.tabs.home" hidden = "true">
+            <ion-tab title="首页" icon="ion-ios-home" ui-sref="menu.tabs.home">
                 <ion-nav-view name="home-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="购物车" icon="ion-ios-cart" ui-sref="menu.tabs.car">
+                <ion-nav-view name="car-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="我的" icon="ion-android-contact" ui-sref="menu.tabs.user">
+                <ion-nav-view name="user-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="分类" icon="ion-home" ui-sref="menu.tabs.category" hidden="true">
+                <ion-nav-view title="分类" name="category-tab"></ion-nav-view>
             </ion-tab>
         </ion-tabs>
     </ion-view>
 </script>
 
 <script id="templates/home.html" type="text/ng-template">
-    <ion-view view-title="home Page">
-        <ion-content>
-            <div>
-                Main Content goes here
-            </div>
+    <ion-view view-title="首页">
+        <ion-content  scroll="true" overflow-scroll="true">
+            @include('home')
         </ion-content>
     </ion-view>
 </script>
 
-<script id="templates/search.html" type="text/ng-template">
-    <ion-view view-title="search">
-        <ion-content class="padding">
-            search content
+<script id="templates/category.html" type="text/ng-template">
+    <ion-view view-title="商品">
+        <ion-content  scroll="true" overflow-scroll="true">
+            @include('item')
         </ion-content>
     </ion-view>
 </script>
 
-<script id="templates/about.html" type="text/ng-template">
-    <ion-view view-title="about">
-        <ion-content class="padding">
-            about content
+<script id="templates/user.html" type="text/ng-template">
+    <ion-view view-title="用户中心">
+        <ion-content  scroll="true" overflow-scroll="true">
+            @include('user')
         </ion-content>
     </ion-view>
 </script>
 
+<script id="templates/car.html" type="text/ng-template">
+    <ion-view view-title="购物车">
+        <ion-content  scroll="true" overflow-scroll="true">
+            @include('car')
+        </ion-content>
+    </ion-view>
+</script>
 
 </body>
 </html>
