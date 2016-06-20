@@ -62,8 +62,12 @@
                 <ion-nav-view name="user-tab"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="分类" icon="ion-home" ui-sref="menu.tabs.category" hidden="true">
+            <ion-tab title="分类" ui-sref="menu.tabs.category" hidden="true">
                 <ion-nav-view title="分类" name="category-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="物品详情" ui-sref="menu.tabs.iteminfo" hidden="true">
+                <ion-nav-view title="物品详情" name="iteminfo-tab"></ion-nav-view>
             </ion-tab>
         </ion-tabs>
     </ion-view>
@@ -79,8 +83,16 @@
 
 <script id="templates/category.html" type="text/ng-template">
     <ion-view view-title="商品">
-        <ion-content  scroll="true" overflow-scroll="true">
-            @include('item')
+        <ion-content  scroll="true" overflow-scroll="true" ng-controller="categoryController">
+            <div nav-clear menu-close ui-sref="menu.tabs.iteminfo({id: [[categoryID]], name: [[categoryID]]})">商品分类 [[categoryID]]</div>
+        </ion-content>
+    </ion-view>
+</script>
+
+<script id="templates/iteminfo.html" type="text/ng-template">
+    <ion-view view-title="商品详情">
+        <ion-content  scroll="true" overflow-scroll="true" ng-controller="iteminfoController">
+            <div nav-clear menu-close >商品详情 [[itemID]]  [[itemNam]]</div>
         </ion-content>
     </ion-view>
 </script>
