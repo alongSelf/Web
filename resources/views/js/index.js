@@ -63,6 +63,10 @@ indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProv
     $urlRouterProvider.otherwise("/menu/tabs/home");
 });
 
+//indexModule.config(function(initMainData){
+//    initMainData.setName('张三');
+//});
+
 indexModule.service('initMainData',function(){
     var _name='';
 
@@ -79,7 +83,9 @@ indexModule.controller('categoryController',['$scope','$stateParams',function($s
     $scope.categoryID = $stateParams.id;
 }]);
 
-indexModule.controller('iteminfoController',['$scope','$stateParams',function($scope, $stateParams){
+indexModule.controller('iteminfoController', ['$scope','$stateParams', 'initMainData', function($scope, $stateParams, initMainData){
+    console.log(initMainData);
     $scope.itemID = $stateParams.id;
-    $scope.itemNam = $stateParams.name;
+    //$scope.itemNam = $stateParams.name;
+    //$scope.itemNam = initMainData.getName();
 }]);
