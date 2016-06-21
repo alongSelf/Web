@@ -1,10 +1,14 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="{{asset('resources/views/ionic/css/ionic.min.css')}}" rel="stylesheet">
+
     <script src="{{asset('resources/views/ionic/js/ionic.bundle.min.js')}}"></script>
+    <script src="{{asset('resources/views/js/jquery-1.12.4.js')}}"></script>
+    <script src="{{asset('resources/views/js/lazyload.js')}}"></script>
+    <script src="{{asset('resources/views/js/layer.js')}}"></script>
     <script src="{{asset('resources/views/js/index.js')}}"></script>
 
     <title>{{$config->title}}</title>
@@ -19,7 +23,7 @@
 
         <ion-side-menu-content>
             <ion-nav-bar class="bar-calm">
-                <ion-nav-back-button>
+                <ion-nav-back-button class="button-icon ion-arrow-right-c">
                 </ion-nav-back-button>
 
                 <ion-nav-buttons side="left">
@@ -77,9 +81,16 @@
 </script>
 
 <script id="templates/home.html" type="text/ng-template">
-    <ion-view view-title="{{$config->title}}">
+    <ion-view view-title="{{$config->title}}" ng-controller="homeController">
         <ion-content  scroll="true" overflow-scroll="true">
-            @include('home')
+            <!-- 轮播  至少要3个图...不然ion-slide-box 有 bug... -->
+            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)" delegate-handle="delegateHandler">
+                <ion-slide ng-repeat="actItem in homeData.activityItem">
+                    <img ng-src = "{{asset('uploads')}}/[[actItem.indeximg]]" ui-sref="menu.tabs.iteminfo({itemID: [[actItem.id]], itemNam: '[[actItem.name]]'})" style="width: 100%; height: [[imgHeight]]">
+                </ion-slide>
+            </ion-slide-box>
+
+            <!--首页物品展示-->
         </ion-content>
     </ion-view>
 </script>

@@ -63,6 +63,29 @@ indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProv
     $urlRouterProvider.otherwise("/menu/tabs/home");
 });
 
+indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', function($scope, $http, $ionicSlideBoxDelegate){
+    var clientHeight=$(window).height();
+    $scope.imgHeight = (clientHeight / 5) * 2 + 'px';
+    $http.get("home")
+        .success(
+            function(data, status, header, config){
+                $scope.homeData = data;
+
+                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
+                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
+            }
+        )
+        .error(
+            function(data){
+                layer.msg('加载页面出错,请稍后再试.');
+            }
+        );
+
+    $scope.index = 0;
+    $scope.go = function(index){
+        $ionicSlideBoxDelegate.$getByHandle('delegateHandler').slide(index);
+    };
+}]);
 
 indexModule.controller('categoryController',['$scope','$stateParams',function($scope, $stateParams){
     $scope.categoryID = $stateParams.categoryID;
