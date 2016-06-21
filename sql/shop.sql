@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-06-17 17:56:50
+Date: 2016-06-21 10:35:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,3 +35,18 @@ INSERT INTO `category` VALUES ('2', '分类2', '2', '1');
 INSERT INTO `category` VALUES ('3', '分类3', '3', '1');
 INSERT INTO `category` VALUES ('4', '分类4', '4', '1');
 INSERT INTO `category` VALUES ('5', '分类5', '5', '1');
+
+-- ----------------------------
+-- Table structure for `config`
+-- ----------------------------
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of config
+-- ----------------------------
+INSERT INTO `config` VALUES ('1', 'myApp');
