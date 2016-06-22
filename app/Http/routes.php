@@ -12,10 +12,10 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'IndexController@index');
-    Route::get('home', 'HomeController@index');
-    Route::get('user', 'UserController@index');
-    Route::get('car', 'CarController@index');
-    Route::get('category/{id}', 'ItemController@index');
-    Route::get('item/{id}', 'ItemController@item');
+    Route::get('/', 'MainController@index');
+    Route::get('category', 'MainController@category');
+    Route::get('indexItem', 'MainController@indexItem');
+    Route::get('getCar', 'MainController@getCar');
+    Route::get('categoryInfo/{id}', 'MainController@categoryInfo');
+    Route::get('itemInfo/{id}', 'MainController@itemInfo');
 });

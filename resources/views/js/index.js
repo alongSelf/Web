@@ -1,7 +1,6 @@
 var indexModule = angular.module('ionicApp', ['ionic']);
 
 indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider) {
-
     $ionicConfigProvider.tabs.position('bottom');
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
@@ -63,10 +62,28 @@ indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProv
     $urlRouterProvider.otherwise("/menu/tabs/home");
 });
 
-indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', function($scope, $http, $ionicSlideBoxDelegate){
+//菜单
+indexModule.controller('menuController', ['$scope', '$http', function ($scope, $http) {
+    $http.get("category")
+        .success(
+            function(data, status, header, config){
+                $scope.Categorys = data;
+            }
+        ).error(
+        function(data){
+            layer.msg('加载页面出错,请稍后再试...');
+        }
+    );
+}]);
+
+//主页
+indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate',
+    function($scope, $http, $ionicSlideBoxDelegate){
     var clientHeight=$(window).height();
     $scope.imgHeight = (clientHeight / 5) * 2 + 'px';
-    $http.get("home")
+    $scope.homeData = [];
+
+    $http.get("indexItem")
         .success(
             function(data, status, header, config){
                 $scope.homeData = data;
@@ -74,10 +91,9 @@ indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDeleg
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
             }
-        )
-        .error(
+        ).error(
             function(data){
-                layer.msg('加载页面出错,请稍后再试.');
+                layer.msg('加载页面出错,请稍后再试...');
             }
         );
 
@@ -90,11 +106,9 @@ indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDeleg
 indexModule.controller('categoryController',['$scope','$stateParams',function($scope, $stateParams){
     $scope.categoryID = $stateParams.categoryID;
     $scope.categoryNam = $stateParams.categoryNam;
-    console.log($stateParams);
 }]);
 
 indexModule.controller('iteminfoController', ['$scope','$stateParams', function($scope, $stateParams){
     $scope.itemID = $stateParams.itemID;
     $scope.itemNam = $stateParams.itemNam;
-    console.log($stateParams);
 }]);

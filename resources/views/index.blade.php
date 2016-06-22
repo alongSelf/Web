@@ -19,11 +19,11 @@
 
 <!--左侧菜单-->
 <script id="templates/menu.html" type="text/ng-template">
-    <ion-side-menus>
+    <ion-side-menus ng-controller="menuController">
 
         <ion-side-menu-content>
             <ion-nav-bar class="bar-calm">
-                <ion-nav-back-button class="button-icon ion-arrow-right-c">
+                <ion-nav-back-button>
                 </ion-nav-back-button>
 
                 <ion-nav-buttons side="left">
@@ -35,7 +35,7 @@
         </ion-side-menu-content>
 
         <ion-side-menu side="left">
-            <ion-header-bar class="bar-dark">
+            <ion-header-bar class="bar-calm">
                 <!--<h1 class="title">Left Menu</h1>-->
                 <div class="buttons pull-center" nav-clear menu-close style="width: 100%">
                     <img style="width: 100%" src="{{asset('resources/views/sysimg/logo.png')}}"/>
@@ -43,11 +43,11 @@
             </ion-header-bar>
             <ion-content class = "has-header">
                 <ion-list>
-                    @foreach($category as $val)
-                        <ion-item nav-clear menu-close ui-sref="menu.tabs.category({categoryID: {{$val->id}}, categoryNam: '{{$val->title}}'})">
-                            {{$val->title}}
-                        </ion-item>
-                    @endforeach
+                    <ion-item nav-clear menu-close
+                              ng-repeat="Category in Categorys"
+                              ui-sref="menu.tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})">
+                        [[Category.title]]
+                    </ion-item>
                 </ion-list>
             </ion-content>
         </ion-side-menu>
@@ -84,13 +84,22 @@
     <ion-view view-title="{{$config->title}}" ng-controller="homeController">
         <ion-content  scroll="true" overflow-scroll="true">
             <!-- 轮播  至少要3个图...不然ion-slide-box 有 bug... -->
-            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)" delegate-handle="delegateHandler">
+            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
+                           delegate-handle="delegateHandler">
                 <ion-slide ng-repeat="actItem in homeData.activityItem">
-                    <img ng-src = "{{asset('uploads')}}/[[actItem.indeximg]]" ui-sref="menu.tabs.iteminfo({itemID: [[actItem.id]], itemNam: '[[actItem.name]]'})" style="width: 100%; height: [[imgHeight]]">
+                    <img ng-src = "{{asset('uploads')}}/[[actItem.indeximg]]"
+                         ui-sref="menu.tabs.iteminfo({itemID: [[actItem.id]], itemNam: '[[actItem.name]]'})"
+                         style="width: 100%; height: [[imgHeight]]">
                 </ion-slide>
             </ion-slide-box>
 
             <!--首页物品展示-->
+            <div class="row">
+                <div class="col col-44">1111</div>
+                <div class="col col-44">2222</div>
+                <div class="col col-44">333</div>
+                <div class="col col-44">44444</div>
+            </div>
         </ion-content>
     </ion-view>
 </script>
@@ -98,7 +107,7 @@
 <script id="templates/category.html" type="text/ng-template">
     <ion-view view-title="[[categoryNam]]" ng-controller="categoryController">
         <ion-content  scroll="true" overflow-scroll="true">
-            <div nav-clear menu-close ui-sref="menu.tabs.iteminfo({itemID: [[categoryID]], itemNam: '商品[[categoryNam]]'})">商品分类 [[categoryID]]</div>
+            <!--物品展示-->
         </ion-content>
     </ion-view>
 </script>
