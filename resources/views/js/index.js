@@ -87,12 +87,14 @@ indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDeleg
         .success(
             function(data, status, header, config){
                 $scope.homeData = data;
+                console.log($scope.homeData);
 
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
             }
         ).error(
             function(data){
+                console.log(data);
                 layer.msg('加载页面出错,请稍后再试...');
             }
         );
@@ -103,12 +105,52 @@ indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDeleg
     };
 }]);
 
-indexModule.controller('categoryController',['$scope','$stateParams',function($scope, $stateParams){
+//分类商品展示
+indexModule.controller('categoryController',['$scope','$stateParams',
+    function($scope, $stateParams){
+
     $scope.categoryID = $stateParams.categoryID;
     $scope.categoryNam = $stateParams.categoryNam;
 }]);
 
-indexModule.controller('iteminfoController', ['$scope','$stateParams', function($scope, $stateParams){
+//物品详情
+indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http){
+
     $scope.itemID = $stateParams.itemID;
     $scope.itemNam = $stateParams.itemNam;
+    var clientHeight=$(window).height();
+    $scope.imgHeight = (clientHeight / 5) * 2 + 'px';
+
+    $http.get("itemInfo/" + $scope.itemID)
+        .success(
+            function(data, status, header, config){
+                console.log(data);
+
+                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
+                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
+            }
+        ).error(
+            function(data){
+                console.log(data);
+                layer.msg('加载页面出错,请稍后再试...');
+            }
+    );
+
+    $scope.index = 0;
+    $scope.go = function(index){
+        $ionicSlideBoxDelegate.$getByHandle('delegateHandler').slide(index);
+    };
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//用户中心
+indexModule.controller('uerCenterController', ['$scope', function($scope){
+
+}]);
+
+//购物车
+indexModule.controller('carController', ['$scope', function($scope){
+
 }]);

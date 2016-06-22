@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Model\Category;
 use App\http\Model\Config;
+use App\http\model\ShopItem;
 
 class MainController extends Controller
 {
@@ -42,6 +43,7 @@ class MainController extends Controller
 
     public function itemInfo($id)
     {
-
+        $itemInfo = ShopItem::where('id', $id)->get();
+        return $itemInfo;
     }
 }

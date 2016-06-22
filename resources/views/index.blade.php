@@ -23,9 +23,6 @@
 
         <ion-side-menu-content>
             <ion-nav-bar class="bar-calm">
-                <ion-nav-back-button>
-                </ion-nav-back-button>
-
                 <ion-nav-buttons side="left">
                     <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
                     </button>
@@ -107,31 +104,47 @@
 <script id="templates/category.html" type="text/ng-template">
     <ion-view view-title="[[categoryNam]]" ng-controller="categoryController">
         <ion-content  scroll="true" overflow-scroll="true">
-            <!--物品展示-->
+
+
         </ion-content>
     </ion-view>
 </script>
 
 <script id="templates/iteminfo.html" type="text/ng-template">
     <ion-view view-title="[[itemNam]]" ng-controller="iteminfoController">
+        <ion-nav-bar class="bar-calm">
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-chevron-left" ng-click="goBack()">
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+
         <ion-content  scroll="true" overflow-scroll="true" >
-            <div nav-clear menu-close >商品详情 [[itemID]]  [[itemNam]]</div>
+            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
+                           delegate-handle="delegateHandler">
+                <ion-slide ng-repeat="actItem in homeData.activityItem">
+                    <img ng-src = "{{asset('uploads')}}"
+                         ui-sref="menu.tabs.iteminfo({itemID: [[actItem.id]], itemNam: '[[actItem.name]]'})"
+                         style="width: 100%; height: [[imgHeight]]">
+                </ion-slide>
+            </ion-slide-box>
+
         </ion-content>
     </ion-view>
 </script>
 
 <script id="templates/user.html" type="text/ng-template">
-    <ion-view view-title="我的{{$config->title}}">
+    <ion-view view-title="我的{{$config->title}}" ng-controller="uerCenterController">
         <ion-content  scroll="true" overflow-scroll="true">
-            @include('user')
+
         </ion-content>
     </ion-view>
 </script>
 
 <script id="templates/car.html" type="text/ng-template">
-    <ion-view view-title="购物车">
+    <ion-view view-title="购物车" ng-controller="carController">
         <ion-content  scroll="true" overflow-scroll="true">
-            @include('car')
+
         </ion-content>
     </ion-view>
 </script>
