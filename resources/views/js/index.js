@@ -66,6 +66,7 @@ indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProv
 
 function onError(data) {
     layer.msg('加载页面出错,请稍后再试...');
+    console.log(data);
 }
 
 //配置
@@ -95,7 +96,6 @@ indexModule.controller('menuController', ['$scope', '$http', function ($scope, $
         ).error(
             function(data){
                 onError(data);
-                console.log(data);
         }
     );
 }]);

@@ -36,7 +36,7 @@ class MainController extends Controller
 
     public function getCar()
     {
-
+        
     }
 
     public function categoryInfo($id)
