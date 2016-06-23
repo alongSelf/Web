@@ -13,7 +13,8 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'MainController@index');
-    Route::get('category', 'MainController@category');
+    Route::get('getConfig', 'MainController@getConfig');
+    Route::get('categorys', 'MainController@categorys');
     Route::get('indexItem', 'MainController@indexItem');
     Route::get('getCar', 'MainController@getCar');
     Route::get('categoryInfo/{id}', 'MainController@categoryInfo');

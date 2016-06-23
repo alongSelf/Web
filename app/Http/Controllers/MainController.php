@@ -10,25 +10,28 @@ class MainController extends Controller
 {
     public function index()
     {
-        $config = Config::all()[0];
-        return view('index', compact('config'));
+        return view('index');
     }
 
-    public function category()
+    public function getConfig()
     {
-        $category = Category::where('display', 1)->orderBy('sort')->get();
-        return $category;
+        $config = Config::all()[0];
+        return $config;
+    }
+
+    public function categorys()
+    {
+        $categs = Category::select('id', 'title')->where('display', 1)->orderBy('sort')->get();
+        return $categs;
     }
 
     public function indexItem()
     {
-        $activityItem = ShopItem::where('display', 1)->where('activity', 1)->get();
-        $homeItem = ShopItem::where('display', 1)->where('showindex', 1)->get();
+        $activityItem = ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
+            where('display', 1)->where('activity', 1)->get();
+        $homeItem = ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->where('display', 1)->where('showindex', 1)->get();
 
-        $retVal = ['homeItem'=>$homeItem,
-            'activityItem'=>$activityItem];
-
-        return $retVal;
+        return compact('activityItem', 'homeItem');
     }
 
     public function getCar()
@@ -38,12 +41,15 @@ class MainController extends Controller
 
     public function categoryInfo($id)
     {
+        $categoryInfo = ShopItem::where('display', 1)->where('category', $id)->get();
 
+        return $categoryInfo;
     }
 
     public function itemInfo($id)
     {
         $itemInfo = ShopItem::where('id', $id)->get();
+
         return $itemInfo;
     }
 }
