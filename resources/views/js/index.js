@@ -43,7 +43,6 @@ indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProv
                 }
             })
         .state('menu.tabs.car', {
-            cache: false,
             url: "/car",
             views: {
                 'car-tab': {
@@ -131,10 +130,10 @@ function createItemList(itemData) {
             var url = '#/menu/tabs/iteminfo/?itemID='+itemData[iIndex].id+'';
             html += '<div class="col col-'+iLine+''+iLine+'">';
             html += '<span>';
-            html += '<a href="'+url+'"><img href="'+url+'" class="lazy" style="height: 100%; width: 100%" src="uploads/'+itemData[iIndex].indeximg+'"></a>';
+            html += '<a href="'+url+'"><img class="lazy" href="'+url+'" class="lazy" style="height: 100%; width: 100%" src="uploads/'+itemData[iIndex].indeximg+'"></a>';
             html += '</span>';
             html += '<span>';
-            html += '<a href="'+url+'" style="text-decoration:none; color: #000000"><div>'+itemData[iIndex].name+'</div></a>';
+            html += '<a href="'+url+'" style="text-decoration:none; color: #000000;"><div>'+itemData[iIndex].name+'</div></a>';
             html += '</span>';
             html += '<div></div>';
             html += '<span>';
@@ -167,10 +166,7 @@ indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDeleg
         .success(
             function(data, status, header, config){
                 $scope.activityItem = data.activityItem;
-
-                var htmlStr = createItemList(data.homeItem);
-                var objItemList = document.getElementById('homeItemList');
-                $(objItemList).append(htmlStr);
+                $scope.homeItemList = createItemList(data.homeItem);
 
                 //更新轮播
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
@@ -201,9 +197,7 @@ indexModule.controller('categoryController',['$scope','$stateParams', '$http', '
     $http.get("categoryInfo/" + $scope.categoryID)
         .success(
             function(data, status, header, config){
-                var htmlStr = createItemList(data);
-                var objItemList = document.getElementById('categoryItemList'+$scope.categoryID);
-                $(objItemList).append(htmlStr);
+                $scope.categoryItemList = createItemList(data);
             }
         ).error(
             function(data){
@@ -212,8 +206,14 @@ indexModule.controller('categoryController',['$scope','$stateParams', '$http', '
     );
 }]);
 
+indexModule.filter('trustHtml', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input);
+    }
+});
+
 //物品详情
-indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http){
+indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce){
     $scope.itemID = $stateParams.itemID;
     $scope.imgHeight = getSlideImgH();
     $scope.itemInfo = [];
@@ -222,6 +222,11 @@ indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHi
     $http.get("itemInfo/" + $scope.itemID)
         .success(
             function(data, status, header, config){
+                var prime_price = parseFloat(data[0].prime_price);
+                var cur_price = parseFloat(data[0].cur_price);
+
+                $scope.prime_price = '￥' + prime_price.toFixed(2);
+                $scope.cur_price = '￥' + cur_price.toFixed(2);
                 $scope.itemInfo = data[0];
                 $scope.slideImg = data[0].showimg.split(";");
 
@@ -235,7 +240,6 @@ indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHi
     );
 
     $scope.index = 0;
-
     $scope.go = function(index){
         $ionicSlideBoxDelegate.$getByHandle('delegateHandler').slide(index);
     };
@@ -251,7 +255,28 @@ indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHi
 
 //用户中心
 indexModule.controller('uerCenterController', ['$scope', function($scope){
+    $scope.groups = [];
+    for (var i=0; i<5; i++) {
+        $scope.groups[i] = {
+            name: i,
+            items: [],
+            show: false
+        };
+        for (var j=0; j<3; j++) {
+            $scope.groups[i].items.push(i + '-' + j);
+        }
+    }
 
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleGroup = function(group) {
+        group.show = !group.show;
+    };
+    $scope.isGroupShown = function(group) {
+        return group.show;
+    };
 }]);
 
 //购物车

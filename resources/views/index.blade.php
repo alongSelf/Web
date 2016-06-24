@@ -87,13 +87,12 @@
                 <ion-slide ng-repeat="actItem in activityItem">
                     <img ng-src = "{{asset('uploads')}}/[[actItem.indeximg]]"
                          ui-sref="menu.tabs.iteminfo({itemID: [[actItem.id]]})"
-                         style="width: 100%; height: [[imgHeight]]">
+                         style="width: 100%; height: [[imgHeight]]" class="lazy">
                 </ion-slide>
             </ion-slide-box>
 
-            <!--物品展示-->
-            <div id="homeItemList">
-            </div>
+            <!--首页物品展示-->
+            <div ng-bind-html="homeItemList | trustHtml"/>
         </ion-content>
     </ion-view>
 </script>
@@ -101,9 +100,8 @@
 <script id="templates/category.html" type="text/ng-template">
     <ion-view view-title="[[categoryNam]]" ng-controller="categoryController">
         <ion-content  scroll="true" overflow-scroll="true">
-            <!--物品展示-->
-            <div id="categoryItemList[[categoryID]]">
-            </div>
+            <!--分类物品展示-->
+            <div ng-bind-html="categoryItemList | trustHtml"/>
         </ion-content>
     </ion-view>
 </script>
@@ -123,9 +121,26 @@
                            delegate-handle="delegateHandler">
                 <ion-slide ng-repeat="strImg in slideImg">
                     <img ng-src = "{{asset('uploads')}}/[[strImg]]"
-                         style="width: 100%; height: [[imgHeight]]">
+                         style="width: 100%; height: [[imgHeight]]" class="lazy">
                 </ion-slide>
             </ion-slide-box>
+
+            <!--物品信息-->
+            <div style="padding-left:15px; padding-right: 15px;">
+                <div>
+                    <span style="font-weight:bold">[[itemInfo.describe]]</span>
+                </div>
+                <div>
+                    <span>
+                        <em style="color: red">惊爆价:[[cur_price]]&nbsp&nbsp</em>
+                        <em style="text-decoration:line-through; color: #adadad">[[prime_price]]</em>
+                        <em>&nbsp&nbsp&nbsp&nbsp已售:[[itemInfo.buynum]]</em>
+                    </span>
+                </div>
+                <br/>
+
+                <div ng-bind-html="itemInfo.content | trustHtml"/>
+            </div>
 
         </ion-content>
     </ion-view>
@@ -135,6 +150,23 @@
     <ion-view view-title="我的[[config.title]]" ng-controller="uerCenterController">
         <ion-content  scroll="true" overflow-scroll="true">
 
+            <ion-list>
+                <div ng-repeat="group in groups">
+                    <ion-item class="item-stable"
+                              ng-click="toggleGroup(group)"
+                              ng-class="{active: isGroupShown(group)}">
+                        <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+                        &nbsp;
+                        Group [[group.name]]
+                    </ion-item>
+                    <ion-item class="item-accordion"
+                              ng-repeat="item in group.items"
+                              ng-show="isGroupShown(group)">
+                        [[item]]
+                    </ion-item>
+                </div>
+            </ion-list>
+
         </ion-content>
     </ion-view>
 </script>
@@ -142,9 +174,28 @@
 <script id="templates/car.html" type="text/ng-template">
     <ion-view view-title="购物车" ng-controller="carController">
         <ion-content  scroll="true" overflow-scroll="true">
-
+            <div class="bar bar-footer has-tab-bar-footer">
+                <div class="row bottom-buttons">
+                    <div class="buttons">
+                        <button class="button button-light left half" ng-click="save()">
+                            保存
+                        </button>
+                        <button class="button button-light right half" ng-click="remove()">
+                            删除
+                        </button>
+                    </div>
+                </div>
+            </div>
         </ion-content>
     </ion-view>
+</script>
+
+<script type="text/javascript">
+    /*引用懒加载*/
+    $("img.lazy").lazyload({
+        threshold : 100,
+        effect : "fadeIn"
+    });
 </script>
 
 </body>
