@@ -1,6 +1,6 @@
-var indexModule = angular.module('ionicApp', ['ionic']);
+var appModule = angular.module('ionicApp', ['ionic']);
 
-indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider) {
+appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider) {
     $ionicConfigProvider.tabs.position('bottom');
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
@@ -35,13 +35,13 @@ indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProv
             }
         })
         .state('menu.tabs.user', {
-                url: "/user",
-                views: {
-                    'user-tab': {
-                        templateUrl: "templates/user.html"
-                    }
+            url: "/user",
+            views: {
+                'user-tab': {
+                    templateUrl: "templates/user.html"
                 }
-            })
+            }
+        })
         .state('menu.tabs.car', {
             url: "/car",
             views: {
@@ -63,29 +63,32 @@ indexModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProv
     $urlRouterProvider.otherwise("/menu/tabs/home");
 });
 
-function onError(data) {
-    layer.msg('加载页面出错,请稍后再试...');
-    console.log(data);
-}
-
 //配置
-indexModule.run(['$rootScope', '$http', function($rootScope, $http) {
+appModule.run(['$rootScope', '$http', function($rootScope, $http) {
     $rootScope.config = [];
     $rootScope.clientWidth = $(window).width();
+    $rootScope.imgHeight = getSlideImgH();
     $http.get("getConfig")
         .success(
             function(data, status, header, config){
                 $rootScope.config = data;
+                document.title = data.title;
             }
         ).error(
-            function(data){
-                onError(data);
+        function(data){
+            onError(data);
         }
     );
 }])
 
+appModule.filter('trustHtml', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input);
+    }
+});
+
 //分类
-indexModule.controller('menuController', ['$scope', '$http', function ($scope, $http) {
+appModule.controller('menuController', ['$scope', '$http', function ($scope, $http) {
     $scope.Categorys = [];
     $http.get("categorys")
         .success(
@@ -93,73 +96,14 @@ indexModule.controller('menuController', ['$scope', '$http', function ($scope, $
                 $scope.Categorys = data;
             }
         ).error(
-            function(data){
-                onError(data);
+        function(data){
+            onError(data);
         }
     );
 }]);
 
-//物品展示
-function createItemList(itemData) {
-    var iCount = itemData.length;
-    var clientWidth = $(window).width();
-
-    //每列多少个
-    var iLine = parseInt(clientWidth/150);
-    iLine = (0 == iLine ? 1 : iLine);
-
-    //共有多少行
-    var iRow = Math.ceil(iCount / iLine);
-    var html = '';
-    var iIndex = 0;
-    for (i = 0; i < iRow; i++)
-    {
-        html += '<div class="row">';
-        for (j = 0; j < iLine; j++)
-        {
-            if (iIndex >= iCount)
-            {
-                for (k = j; k < iLine; k++)
-                {
-                    html += '<div class="col col-'+iLine+''+iLine+'"/>';
-                }
-
-                break;
-            }
-
-            var url = '#/menu/tabs/iteminfo/?itemID='+itemData[iIndex].id+'';
-            html += '<div class="col col-'+iLine+''+iLine+'">';
-            html += '<span>';
-            html += '<a href="'+url+'"><img class="lazy" href="'+url+'" class="lazy" style="height: 100%; width: 100%" src="uploads/'+itemData[iIndex].indeximg+'"></a>';
-            html += '</span>';
-            html += '<span>';
-            html += '<a href="'+url+'" style="text-decoration:none; color: #000000;"><div>'+itemData[iIndex].name+'</div></a>';
-            html += '</span>';
-            html += '<div></div>';
-            html += '<span>';
-            var f = parseFloat(itemData[iIndex].cur_price);
-            html += '<em style="color: red">￥'+f.toFixed(2)+'</em>';
-            html += '<em style="padding-left:10px; font-size:10px; color:#999">已售：'+itemData[iIndex].buynum+'笔</em>';
-            html += '</span>';
-
-            html += '</div>';
-
-            iIndex++;
-        }
-        html += '</div>';
-    }
-
-    return html;
-};
-
-function getSlideImgH() {
-    var clientHeight=$(window).height();
-    return (clientHeight / 5) * 2 + 'px';
-};
-
 //主页
-indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', function($scope, $http, $ionicSlideBoxDelegate, $sce){
-    $scope.imgHeight = getSlideImgH();
+appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', function($scope, $http, $ionicSlideBoxDelegate, $sce){
     $scope.activityItem = [];
 
     $http.get("indexItem")
@@ -173,10 +117,10 @@ indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDeleg
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
             }
         ).error(
-            function(data){
-                onError(data);
-            }
-        );
+        function(data){
+            onError(data);
+        }
+    );
 
     $scope.index = 0;
     $scope.go = function(index){
@@ -190,7 +134,7 @@ indexModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDeleg
 }]);
 
 //分类商品展示
-indexModule.controller('categoryController',['$scope','$stateParams', '$http', '$sce', function($scope, $stateParams, $http, $sce){
+appModule.controller('categoryController',['$scope','$stateParams', '$http', '$sce', function($scope, $stateParams, $http, $sce){
     $scope.categoryID = $stateParams.categoryID;
     $scope.categoryNam = $stateParams.categoryNam;
 
@@ -200,43 +144,37 @@ indexModule.controller('categoryController',['$scope','$stateParams', '$http', '
                 $scope.categoryItemList = createItemList(data);
             }
         ).error(
-            function(data){
-                onError(data);
+        function(data){
+            onError(data);
         }
     );
 }]);
 
-indexModule.filter('trustHtml', function ($sce) {
-    return function (input) {
-        return $sce.trustAsHtml(input);
-    }
-});
-
 //物品详情
-indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce){
+appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce){
     $scope.itemID = $stateParams.itemID;
-    $scope.imgHeight = getSlideImgH();
     $scope.itemInfo = [];
     $scope.slideImg = [];
+    $scope.cur_price = '';
+    $scope.buynum = '';
 
     $http.get("itemInfo/" + $scope.itemID)
         .success(
             function(data, status, header, config){
-                var prime_price = parseFloat(data[0].prime_price);
-                var cur_price = parseFloat(data[0].cur_price);
-
-                $scope.prime_price = '￥' + prime_price.toFixed(2);
-                $scope.cur_price = '￥' + cur_price.toFixed(2);
-                $scope.itemInfo = data[0];
                 $scope.slideImg = data[0].showimg.split(";");
+                $scope.itemInfo = data[0];
+
+                var f = parseFloat(data[0].cur_price);
+                $scope.cur_price = '惊爆价:￥' + f.toFixed(2);
+                $scope.buynum = '已售:' + data[0].buynum;
 
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
             }
         ).error(
-            function(data){
-                onError(data);
-            }
+        function(data){
+            onError(data);
+        }
     );
 
     $scope.index = 0;
@@ -254,7 +192,7 @@ indexModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHi
 }]);
 
 //用户中心
-indexModule.controller('uerCenterController', ['$scope', function($scope){
+appModule.controller('uerCenterController', ['$scope', function($scope){
     $scope.groups = [];
     for (var i=0; i<5; i++) {
         $scope.groups[i] = {
@@ -280,6 +218,6 @@ indexModule.controller('uerCenterController', ['$scope', function($scope){
 }]);
 
 //购物车
-indexModule.controller('carController', ['$scope', function($scope){
+appModule.controller('carController', ['$scope', function($scope){
 
 }]);

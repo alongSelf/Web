@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html ng-app="ionicApp">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <link href="{{asset('resources/views/ionic/css/ionic.min.css')}}" rel="stylesheet">
-    <link href="{{asset('resources/views/css/index.css')}}" rel="stylesheet">
+    <link href="{{asset('resources/views/css/app.css')}}" rel="stylesheet">
 
     <script src="{{asset('resources/views/ionic/js/ionic.bundle.min.js')}}"></script>
     <script src="{{asset('resources/views/js/jquery-1.12.4.js')}}"></script>
     <script src="{{asset('resources/views/js/lazyload.js')}}"></script>
     <script src="{{asset('resources/views/js/layer.js')}}"></script>
-    <script src="{{asset('resources/views/js/index.js')}}"></script>
 
-    <title>[[config.title]]</title>
+    <script src="{{asset('resources/views/js/utile.js')}}"></script>
+    <script src="{{asset('resources/views/js/app.js')}}"></script>
+
+    <title></title>
 </head>
-<body>
+
+<body ng-app="ionicApp">
 
 <ion-nav-view></ion-nav-view>
 
@@ -43,7 +46,7 @@
                 <ion-list>
                     <ion-item nav-clear menu-close
                               ng-repeat="Category in Categorys"
-                              ui-sref="menu.tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})">
+                              ui-sref="menu.tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})" ng-cloak>
                         [[Category.title]]
                     </ion-item>
                 </ion-list>
@@ -53,9 +56,9 @@
 </script>
 
 <script id="templates/tabs.html" type="text/ng-template">
-    <ion-view view-title="[[config.title]]">
+    <ion-view view-title="首页">
         <ion-tabs class="tabs-icon-top tabs-positive">
-            <ion-tab title="[[config.title]]" icon="ion-ios-home" ui-sref="menu.tabs.home">
+            <ion-tab title="首页" icon="ion-ios-home" ui-sref="menu.tabs.home">
                 <ion-nav-view name="home-tab"></ion-nav-view>
             </ion-tab>
 
@@ -63,7 +66,7 @@
                 <ion-nav-view name="car-tab"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="我的[[config.title]]" icon="ion-android-contact" ui-sref="menu.tabs.user">
+            <ion-tab title="我的" icon="ion-android-contact" ui-sref="menu.tabs.user">
                 <ion-nav-view name="user-tab"></ion-nav-view>
             </ion-tab>
 
@@ -79,7 +82,7 @@
 </script>
 
 <script id="templates/home.html" type="text/ng-template">
-    <ion-view view-title="[[config.title]]" ng-controller="homeController">
+    <ion-view view-title="首页" ng-controller="homeController">
         <ion-content  scroll="true" overflow-scroll="true">
             <!-- 轮播  至少要3个图...不然ion-slide-box 有 bug... -->
             <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
@@ -128,13 +131,13 @@
             <!--物品信息-->
             <div style="padding-left:15px; padding-right: 15px;">
                 <div>
-                    <span style="font-weight:bold">[[itemInfo.describe]]</span>
+                    <span style="font-weight:bold" ng-cloak>[[itemInfo.describe]]</span>
                 </div>
                 <div>
                     <span>
-                        <em style="color: red">惊爆价:[[cur_price]]&nbsp&nbsp</em>
-                        <em style="text-decoration:line-through; color: #adadad">[[prime_price]]</em>
-                        <em>&nbsp&nbsp&nbsp&nbsp已售:[[itemInfo.buynum]]</em>
+                        <em style="color: red" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
+                        <em style="text-decoration:line-through; color: #adadad" ng-cloak>[[itemInfo.prime_price | currency:"￥"]]</em>
+                        <em ng-cloak>&nbsp&nbsp&nbsp&nbsp[[buynum]]</em>
                     </span>
                 </div>
                 <br/>
@@ -147,7 +150,7 @@
 </script>
 
 <script id="templates/user.html" type="text/ng-template">
-    <ion-view view-title="我的[[config.title]]" ng-controller="uerCenterController">
+    <ion-view view-title="我的" ng-controller="uerCenterController">
         <ion-content  scroll="true" overflow-scroll="true">
 
             <ion-list>
@@ -177,11 +180,11 @@
             <div class="bar bar-footer has-tab-bar-footer">
                 <div class="row bottom-buttons">
                     <div class="buttons">
-                        <button class="button button-light left half" ng-click="save()">
-                            保存
+                        <button class="button button-light left half" ng-click="checkout()">
+                            结算
                         </button>
-                        <button class="button button-light right half" ng-click="remove()">
-                            删除
+                        <button class="button button-light right half" ng-click="clear()">
+                            清空
                         </button>
                     </div>
                 </div>
