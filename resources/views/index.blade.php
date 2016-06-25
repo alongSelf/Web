@@ -13,6 +13,9 @@
 
     <script src="{{asset('resources/views/js/utile.js')}}"></script>
     <script src="{{asset('resources/views/js/app.js')}}"></script>
+    <script src="{{asset('resources/views/js/filter.js')}}"></script>
+    <script src="{{asset('resources/views/js/server.js')}}"></script>
+    <script src="{{asset('resources/views/js/controller.js')}}"></script>
 
     <title></title>
 </head>
@@ -177,17 +180,17 @@
 <script id="templates/car.html" type="text/ng-template">
     <ion-view view-title="购物车" ng-controller="carController">
         <ion-content  scroll="true" overflow-scroll="true">
+            <div class="visible-print text-center">
+                {!! QrCode::size(100)->generate('http://192.168.0.234/#/menu/tabs/home')!!}
+                <p>{{Request::url('')}}</p>
+            </div>
             <div class="bar bar-footer has-tab-bar-footer">
-                <div class="row bottom-buttons">
-                    <div class="buttons">
-                        <button class="button button-light left half" ng-click="checkout()">
-                            结算
-                        </button>
-                        <button class="button button-light right half" ng-click="clear()">
-                            清空
-                        </button>
-                    </div>
-                </div>
+                    <button class="button button-calm" style="width: 49%;" ng-click="checkout()">
+                        结算
+                    </button>
+                     <button class="button button-energized" style="width: 49%;" ng-click="delete()">
+                        删除
+                    </button>
             </div>
         </ion-content>
     </ion-view>

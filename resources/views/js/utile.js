@@ -1,7 +1,15 @@
 
+var bDebug = true;
+
+function dd(data) {
+    if (bDebug) {
+        console.log(data);
+    }
+};
+
 function onError(data) {
     layer.msg('加载页面出错,请稍后再试...');
-    console.log(data);
+    dd(data);
 };
 
 function getSlideImgH() {
