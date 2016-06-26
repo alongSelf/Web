@@ -148,6 +148,16 @@
                 <div ng-bind-html="itemInfo.content | trustHtml"/>
             </div>
 
+            <div class="bar bar-footer has-tab-bar-footer">
+                <button class="button button-balanced" style="width: 49%;" ng-click="buy()">
+                    立即购买
+                </button>
+                <button class="button button-calm" style="width: 49%;" ng-click="addInCar()">
+                    加入购物车
+                </button>
+            </div>
+        </ion-content>
+
         </ion-content>
     </ion-view>
 </script>

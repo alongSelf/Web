@@ -53,7 +53,6 @@ appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
             }
         })
         .state('menu.tabs.iteminfo', {
-            cache: false,
             url: "/iteminfo/?itemID",
             views: {
                 'iteminfo-tab': {

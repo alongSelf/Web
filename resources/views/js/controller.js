@@ -111,6 +111,13 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         }
     );
 
+    $scope.buy = function(){
+        alert('buy:' + $scope.itemID);
+    };
+    $scope.addInCar = function(){
+        alert('addInCar:' + $scope.itemID);
+    };
+
     $scope.index = 0;
     $scope.go = function(index){
         $ionicSlideBoxDelegate.$getByHandle('delegateHandler').slide(index);
