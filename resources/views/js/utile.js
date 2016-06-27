@@ -106,7 +106,7 @@ function addInCarOrBuyPopup(itemNam, itemSpec, itemImg, strButtName, $ionicPopup
                 text: '<b>'+strButtName+'</b>',
                 type: 'button-balanced',
                 onTap: function(e) {
-                    if (!$scope.Data.itemNum || 0 == $scope.Data.itemNum) {
+                    if (!$scope.Data.itemNum || 0 >= parseInt($scope.Data.itemNum)) {
                         //不允许用户关闭
                         e.preventDefault();
                     } else {
@@ -116,4 +116,30 @@ function addInCarOrBuyPopup(itemNam, itemSpec, itemImg, strButtName, $ionicPopup
             },
         ]
     });
+}
+
+function getCarItemNum(carInfo) {
+    var iNum = 0;
+    if (!carInfo){
+        return iNum;
+    }
+
+    for (i = 0; i < carInfo.length; i++){
+        iNum += carInfo[i].num;
+    }
+
+    return iNum;
+}
+
+function getCarPriceTotal(carInfo) {
+    var iPrice = 0;
+    if (!carInfo){
+        return iPrice;
+    }
+
+    for (i = 0; i < carInfo.length; i++){
+        iPrice += carInfo[i].num * carInfo[i].price;
+    }
+
+    return iPrice;
 }

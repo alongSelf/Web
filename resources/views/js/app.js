@@ -45,6 +45,7 @@ appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
             }
         })
         .state('menu.tabs.car', {
+            cache: false,
             url: "/car",
             views: {
                 'car-tab': {

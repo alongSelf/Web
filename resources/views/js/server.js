@@ -3,10 +3,12 @@
 var appModule = angular.module('ionicApp.server', []);
 
 //配置
-appModule.run(['$rootScope', '$http', function($rootScope, $http) {
+appModule.run(['$rootScope', '$http', '$cookieStore', function($rootScope, $http, $cookieStore) {
     $rootScope.config = [];
     $rootScope.clientWidth = $(window).width();
     $rootScope.imgHeight = getSlideImgH();
+    $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
+
     $http.get("getConfig")
         .success(
             function(data, status, header, config){
@@ -20,4 +22,15 @@ appModule.run(['$rootScope', '$http', function($rootScope, $http) {
             onError(data);
         }
     );
-}])
+}]);
+
+appModule.factory('carItemNumFactory', ['$rootScope', function ($rootScope) {
+    var factory = {};
+
+    factory.setCarItemNum = function(iNum) {
+        $rootScope.carItemNum = iNum;
+    };
+
+    return factory;
+}]);
+

@@ -16,7 +16,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('getConfig', 'MainController@getConfig');
     Route::get('categorys', 'MainController@categorys');
     Route::get('indexItem', 'MainController@indexItem');
-    Route::get('getCar', 'MainController@getCar');
     Route::get('categoryInfo/{id}', 'MainController@categoryInfo');
     Route::get('itemInfo/{id}', 'MainController@itemInfo');
 });

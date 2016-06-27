@@ -81,7 +81,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$s
 }]);
 
 //物品详情
-appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$injector', '$ionicPopup', '$cookieStore', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $injector, $ionicPopup, $cookieStore){
+appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$injector', '$ionicPopup', '$cookieStore', 'carItemNumFactory', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $injector, $ionicPopup, $cookieStore, carItemNumFactory){
     $scope.itemID = $stateParams.itemID;
     $scope.itemInfo = [];
     $scope.slideImg = [];
@@ -89,6 +89,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.buynum = '';
     $injector.get('$ionicLoading').show({template: '加载中...'});
 
+    //数据获取
     $http.get("itemInfo/" + $scope.itemID)
         .success(
             function(data, status, header, config){
@@ -112,7 +113,8 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         }
     );
 
-    $scope.buy = function(itemID, itemNam, itemImg, itemSpec){
+    //购买
+    $scope.buy = function(itemID, itemNam, itemPrice, itemImg, itemSpec){
         $scope.Data = {};
         var buyItemPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '立即购买', $ionicPopup, $scope);
 
@@ -131,24 +133,50 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         });
     };
 
-    $scope.addInCar = function(itemID, itemNam, itemImg, itemSpec){
+    //加进购物车
+    $scope.addInCar = function(itemID, itemNam, itemPrice, itemImg, itemSpec){
         $scope.Data = {};
-        var buyItemPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '加入购物车', $ionicPopup, $scope);
-
+        var addItemInCarPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '加入购物车', $ionicPopup, $scope);
         if(0 != itemSpec.length){
             $scope.Data.itemSpec = itemSpec[0];
         }
+
         $scope.Data.itemNum = 1;
 
-        buyItemPopup.then(function(res) {
+        addItemInCarPopup.then(function(res) {
             if(!res){
                 return;
             }
 
             //加入购物车....
-            $cookieStore.put('car', itemID);
+            var car = $cookieStore.get('car');
+            if(!car){
+                car = [];
+            }
 
-            alert($cookieStore.get('car'));
+            for (var i = 0; i < car.length; i++){
+                if (car[i].id == itemID
+                    && car[i].spec == res.itemSpec)
+                {
+                    car[i].num += parseInt(res.itemNum);
+                    $cookieStore.put("car", car);
+                    carItemNumFactory.setCarItemNum(getCarItemNum(car));
+
+                    return;
+                }
+            }
+
+            var info = {};
+            info.id = itemID;
+            info.name = itemNam;
+            info.spec = res.itemSpec;
+            info.num = parseInt(res.itemNum);
+            info.price = itemPrice;
+
+            car.push(info);
+            $cookieStore.put("car", car);
+
+            carItemNumFactory.setCarItemNum(getCarItemNum(car));
         });
     };
 
@@ -193,12 +221,51 @@ appModule.controller('uerCenterController', ['$scope', function($scope){
 }]);
 
 //购物车
-appModule.controller('carController', ['$scope', function($scope){
-    
+appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', function($scope, $cookieStore, $ionicPopup, carItemNumFactory){
+    var carInfo = $cookieStore.get('car');
+    $scope.itemInCar = carInfo;
+    $scope.priceTotal = getCarPriceTotal(carInfo);
+
     $scope.checkout = function(){
         alert('checkout');
     };
-    $scope.delete = function(){
-        alert('delete');
+
+    //清空购物车
+    $scope.clear = function(){
+        carInfo = $cookieStore.get('car');
+        if (!carInfo || 0 == carInfo.length){
+            return;
+        }
+
+        var confirmPopup = $ionicPopup.confirm({
+            title: '',
+            template: '确定清空购物车?'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                $cookieStore.remove('car');
+                $scope.itemInCar = null;
+                carItemNumFactory.setCarItemNum(0);
+            }
+        });
     };
+
+    //删除物品
+    $scope.delete = function (itemID) {
+        carInfo = $cookieStore.get('car');
+        if (!carInfo || 0 == carInfo.length){
+            return;
+        }
+
+        for (var i = 0; i < carInfo.length; i++){
+            if (carInfo[i].id == itemID){
+                carInfo.splice(i, 1);
+                $cookieStore.put("car", carInfo);
+                $scope.itemInCar = carInfo;
+                carItemNumFactory.setCarItemNum(getCarItemNum(carInfo));
+
+                return;
+            }
+        }
+    }
 }]);

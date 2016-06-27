@@ -67,7 +67,7 @@
                 <ion-nav-view name="home-tab"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="购物车" icon="ion-ios-cart" ui-sref="menu.tabs.car">
+            <ion-tab title="购物车" icon="ion-ios-cart" ui-sref="menu.tabs.car" badge="carItemNum" badge-style="badge-assertive">
                 <ion-nav-view name="car-tab"></ion-nav-view>
             </ion-tab>
 
@@ -146,27 +146,33 @@
                     </span>
                 </div>
                 <br/>
-
+                <!--
                 <div ng-bind-html="itemInfo.content | trustHtml"/>
+                -->
+                [[itemInfo.content]]
             </div>
 
-            <div class="bar bar-footer has-tab-bar-footer">
-                <button class="button button-balanced" style="width: 49%;" ng-click="buy(itemInfo.id, itemInfo.name, itemInfo.indeximg, itemSpec)">
-                    立即购买
-                </button>
-                <button class="button button-calm" style="width: 49%;" ng-click="addInCar(itemInfo.id, itemInfo.name, itemInfo.indeximg, itemSpec)">
-                    加入购物车
-                </button>
-            </div>
         </ion-content>
 
-        </ion-content>
+        <ion-footer-bar align-title="left">
+            <button class="button button-balanced" style="width: 49%;" ng-click="buy(itemInfo.id, itemInfo.name, itemInfo.cur_price, itemInfo.indeximg, itemSpec)">
+                立即购买
+            </button>
+            <button class="button button-calm" style="width: 49%;" ng-click="addInCar(itemInfo.id, itemInfo.name, itemInfo.cur_price, itemInfo.indeximg, itemSpec)">
+                加入购物车
+            </button>
+        </ion-footer-bar>
+
     </ion-view>
 </script>
 
 <script id="templates/user.html" type="text/ng-template">
     <ion-view view-title="我的" ng-controller="uerCenterController">
         <ion-content  scroll="true" overflow-scroll="true">
+            <div class="visible-print text-center">
+                {!! QrCode::size(100)->generate('http://192.168.0.234/#/menu/tabs/home')!!}
+                <p>{{Request::url('')}}</p>
+            </div>
 
             <ion-list>
                 <div ng-repeat="group in groups">
@@ -192,19 +198,51 @@
 <script id="templates/car.html" type="text/ng-template">
     <ion-view view-title="购物车" ng-controller="carController">
         <ion-content  scroll="true" overflow-scroll="true">
-            <div class="visible-print text-center">
-                {!! QrCode::size(100)->generate('http://192.168.0.234/#/menu/tabs/home')!!}
-                <p>{{Request::url('')}}</p>
+            <div class="carbox">
+                <table id="cartTable">
+                    <thead>
+                        <tr>
+                            <th>商品</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>小计</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in itemInCar">
+                            <td class="goods">
+                                <span ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</span>
+                            </td>
+                            <td class="price">
+                                [[item.price | currency:'￥']]
+                            </td>
+                            <td class="count">
+                                <input style="width: 100%" type="number" value="[[item.num]]"/>
+                            <td class="subtotal">[[item.num * item.price | currency:'￥']]</td>
+                            <td class="operation">
+                                 <span ng-click="delete(item.id)" style="color:red">删除</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="foot" id="foot">
+                    <div class="fr total">合计：<span id="priceTotal">[[priceTotal | currency:'￥']]</span></div>
+                </div>
             </div>
-            <div class="bar bar-footer has-tab-bar-footer">
-                    <button class="button button-calm" style="width: 49%;" ng-click="checkout()">
-                        结算
-                    </button>
-                     <button class="button button-energized" style="width: 49%;" ng-click="delete()">
-                        删除
-                    </button>
-            </div>
+
         </ion-content>
+
+        <ion-footer-bar align-title="left">
+            <button class="button button-calm" style="width: 49%;" ng-click="checkout()">
+                结算
+            </button>
+            <button class="button button-energized" style="width: 49%;" ng-click="clear()">
+                清空
+            </button>
+        </ion-footer-bar>
+
     </ion-view>
 </script>
 

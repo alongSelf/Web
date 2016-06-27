@@ -34,16 +34,6 @@ class MainController extends Controller
         return compact('activityItem', 'homeItem');
     }
 
-    public function addCar()
-    {
-        
-    }
-
-    public function getCar()
-    {
-        
-    }
-
     public function categoryInfo($id)
     {
         $categoryInfo = ShopItem::where('display', 1)->where('category', $id)->get();
