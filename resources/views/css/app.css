@@ -16,7 +16,7 @@
 
 .fr{float:right;}
 .fc{text-align:center;}
-.carbox{width:100%;margin:auto; margin-top: 10px;}
+.carbox{width:100%;margin:auto;}
 .carbox table{text-align:center;width:100%;}
 .carbox table th,.carbox table td{border:1px solid #CADEFF;}
 .carbox table th{background:#e2f2ff;border-top:3px solid #a7cbff;height:30px;}
