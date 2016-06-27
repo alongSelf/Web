@@ -234,7 +234,7 @@
             </div>
 
             <div class="fc" ng-if="!showCarInfo">
-                <img src="{{asset('resources/views/sysimg/emptycar.png')}}" />
+                <img ng-src="{{asset('resources/views/sysimg/emptycar.png')}}" />
             </div>
 
         </ion-content>
