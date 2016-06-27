@@ -49,10 +49,12 @@
             </ion-header-bar>
             <ion-content class = "has-header">
                 <ion-list>
-                    <ion-item nav-clear menu-close
+                    <ion-item ion-item nav-clear menu-close class="item-avatar"
                               ng-repeat="Category in Categorys"
                               ui-sref="menu.tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})" ng-cloak>
-                        [[Category.title]]
+                        <img class="lazy" ng-src="{{asset('uploads')}}/[[Category.img]]">
+                        <br/>
+                        <div style="margin-bottom: 0">[[Category.title]]</div>
                     </ion-item>
                 </ion-list>
             </ion-content>
@@ -146,10 +148,8 @@
                     </span>
                 </div>
                 <br/>
-                <!--
+
                 <div ng-bind-html="itemInfo.content | trustHtml"/>
-                -->
-                [[itemInfo.content]]
             </div>
 
         </ion-content>
@@ -198,7 +198,7 @@
 <script id="templates/car.html" type="text/ng-template">
     <ion-view view-title="购物车" ng-controller="carController">
         <ion-content  scroll="true" overflow-scroll="true">
-            <div class="carbox">
+            <div class="carbox" ng-if="showCarInfo">
                 <table id="cartTable">
                     <thead>
                         <tr>
@@ -213,12 +213,13 @@
                         <tr ng-repeat="item in itemInCar">
                             <td class="goods">
                                 <span ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</span>
+                                <span style="color: #adadad">[[item.spec]]</span>
                             </td>
                             <td class="price">
                                 [[item.price | currency:'￥']]
                             </td>
                             <td class="count">
-                                <input style="width: 100%" type="number" value="[[item.num]]"/>
+                                <input type="text" style="width: 100%;" ng-model="item.num" ng-change="numChange(item.id, item.num)"/>
                             <td class="subtotal">[[item.num * item.price | currency:'￥']]</td>
                             <td class="operation">
                                  <span ng-click="delete(item.id)" style="color:red">删除</span>
@@ -230,6 +231,10 @@
                 <div class="foot" id="foot">
                     <div class="fr total">合计：<span id="priceTotal">[[priceTotal | currency:'￥']]</span></div>
                 </div>
+            </div>
+
+            <div class="fc" ng-if="!showCarInfo">
+                <img src="{{asset('resources/views/sysimg/emptycar.png')}}" />
             </div>
 
         </ion-content>

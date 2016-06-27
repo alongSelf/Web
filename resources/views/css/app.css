@@ -15,7 +15,8 @@
 }
 
 .fr{float:right;}
-.carbox{width:100%;margin:auto;}
+.fc{text-align:center;}
+.carbox{width:100%;margin:auto; margin-top: 10px;}
 .carbox table{text-align:center;width:100%;}
 .carbox table th,.carbox table td{border:1px solid #CADEFF;}
 .carbox table th{background:#e2f2ff;border-top:3px solid #a7cbff;height:30px;}
@@ -31,5 +32,5 @@
 .operation {color:red; width:19%; text-decoration:underline;}
 
 .foot{margin-top:10px; color:#666;height:40px;border:1px solid #c8c8c8;background-color:#eaeaea;background-image:linear-gradient(RGB(241,241,241),RGB(226,226,226));position:relative;z-index:8;}
-.foot  #priceTotal, .foot #selectedTotal{color:red;font-family:"Microsoft Yahei";font-weight:bold;}
+.foot  #priceTotal{color:red;font-family:"Microsoft Yahei";font-weight:bold; margin-left: 10px;}
 

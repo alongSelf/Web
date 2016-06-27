@@ -225,9 +225,14 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     var carInfo = $cookieStore.get('car');
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
+    $scope.showCarInfo = false;
+
+    if (carInfo && carInfo.length > 0){
+        $scope.showCarInfo = true;
+    }
 
     $scope.checkout = function(){
-        alert('checkout');
+        alert('发起购买');
     };
 
     //清空购物车
@@ -246,8 +251,34 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
                 $cookieStore.remove('car');
                 $scope.itemInCar = [];
                 carItemNumFactory.setCarItemNum(0);
+                $scope.priceTotal = 0;
+                $scope.showCarInfo = false;
             }
         });
+    };
+
+    //修改数量
+    $scope.numChange = function (itemID, itemNum) {
+        carInfo = $cookieStore.get('car');
+        if (!carInfo || 0 == carInfo.length){
+            return;
+        }
+
+        if (!checkInt(itemNum, true)){
+            return;
+        }
+
+        var iNum = parseInt(itemNum);
+        for (var i = 0; i < carInfo.length; i++){
+            if (carInfo[i].id == itemID){
+                carInfo[i].num = iNum;
+                $cookieStore.put("car", carInfo);
+                carItemNumFactory.setCarItemNum(getCarItemNum(carInfo));
+                $scope.priceTotal = getCarPriceTotal(carInfo);
+
+                return;
+            }
+        }
     };
 
     //删除物品
@@ -263,6 +294,10 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
                 $cookieStore.put("car", carInfo);
                 $scope.itemInCar = carInfo;
                 carItemNumFactory.setCarItemNum(getCarItemNum(carInfo));
+                $scope.priceTotal = getCarPriceTotal(carInfo);
+                if (carInfo.length == 0){
+                    $scope.showCarInfo = false;
+                }
 
                 return;
             }

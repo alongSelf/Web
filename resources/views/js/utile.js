@@ -71,7 +71,7 @@ function createItemList(itemData) {
 };
 
 //购物车、立即购买 弹出页
-function getBuyItemHtml(itemSpec) {
+function getBuyItemHtml(itemSpec, $scope) {
     var  html = '';
     var iLens = itemSpec.length;
     if (0 != iLens){
@@ -87,14 +87,43 @@ function getBuyItemHtml(itemSpec) {
 
 
     html += '<br/><span>数量</span>';
-    html += '<input type="number" ng-model="Data.itemNum" value="1"/>'
+    html += '<input type="text" ng-model="Data.itemNum" ng-change="checkInput(Data.itemNum)" value="1"/>'
 
     return html;
 }
 
+function checkInt(strVal, bLayer) {
+    if (0 == strVal.length){
+        return false;
+    }
+
+    var strCheck = /^\+?[1-9][0-9]*$/;
+    if (!strCheck.test(strVal)){
+        if(bLayer){
+            layer.msg('亲,请输入数字...');
+        }
+        return false;
+    }
+
+    var iNum = parseInt(strVal);
+    if (0 >= iNum){
+        if(bLayer){
+            layer.msg('亲,数量必须大于0...');
+        }
+        return false;
+    }
+
+    return true;
+}
+
 function addInCarOrBuyPopup(itemNam, itemSpec, itemImg, strButtName, $ionicPopup, $scope) {
+
+    $scope.checkInput = function (strVal) {
+        checkInt(strVal, true);
+    };
+    
     return $ionicPopup.show({
-        template: getBuyItemHtml(itemSpec),
+        template: getBuyItemHtml(itemSpec, $scope),
         scope: $scope,
         title: itemNam,
         buttons: [
@@ -106,7 +135,7 @@ function addInCarOrBuyPopup(itemNam, itemSpec, itemImg, strButtName, $ionicPopup
                 text: '<b>'+strButtName+'</b>',
                 type: 'button-balanced',
                 onTap: function(e) {
-                    if (!$scope.Data.itemNum || 0 >= parseInt($scope.Data.itemNum)) {
+                    if (!checkInt($scope.Data.itemNum, false)) {
                         //不允许用户关闭
                         e.preventDefault();
                     } else {
