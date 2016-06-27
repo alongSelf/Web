@@ -244,7 +244,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
         confirmPopup.then(function(res) {
             if(res) {
                 $cookieStore.remove('car');
-                $scope.itemInCar = null;
+                $scope.itemInCar = [];
                 carItemNumFactory.setCarItemNum(0);
             }
         });
