@@ -81,7 +81,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$s
 }]);
 
 //物品详情
-appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$injector', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $injector){
+appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$injector', '$ionicPopup', '$cookieStore', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $injector, $ionicPopup, $cookieStore){
     $scope.itemID = $stateParams.itemID;
     $scope.itemInfo = [];
     $scope.slideImg = [];
@@ -93,6 +93,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         .success(
             function(data, status, header, config){
                 $scope.slideImg = data[0].showimg.split(";");
+                $scope.itemSpec = data[0].spec.split(";");
                 $scope.itemInfo = data[0];
 
                 var f = parseFloat(data[0].cur_price);
@@ -111,11 +112,44 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         }
     );
 
-    $scope.buy = function(){
-        alert('buy:' + $scope.itemID);
+    $scope.buy = function(itemID, itemNam, itemImg, itemSpec){
+        $scope.Data = {};
+        var buyItemPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '立即购买', $ionicPopup, $scope);
+
+        if(0 != itemSpec.length){
+            $scope.Data.itemSpec = itemSpec[0];
+        }
+        $scope.Data.itemNum = 1;
+
+        buyItemPopup.then(function(res) {
+            if(!res){
+                return;
+            }
+
+            //发起购买....
+            alert('发起购买');
+        });
     };
-    $scope.addInCar = function(){
-        alert('addInCar:' + $scope.itemID);
+
+    $scope.addInCar = function(itemID, itemNam, itemImg, itemSpec){
+        $scope.Data = {};
+        var buyItemPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '加入购物车', $ionicPopup, $scope);
+
+        if(0 != itemSpec.length){
+            $scope.Data.itemSpec = itemSpec[0];
+        }
+        $scope.Data.itemNum = 1;
+
+        buyItemPopup.then(function(res) {
+            if(!res){
+                return;
+            }
+
+            //加入购物车....
+            $cookieStore.put('car', itemID);
+
+            alert($cookieStore.get('car'));
+        });
     };
 
     $scope.index = 0;

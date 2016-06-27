@@ -11,6 +11,8 @@
     <script src="{{asset('resources/views/js/lazyload.js')}}"></script>
     <script src="{{asset('resources/views/js/layer.js')}}"></script>
 
+    <script src="{{asset('resources/views/ionic/js/angular/angular-cookies.min.js')}}"></script>
+
     <script src="{{asset('resources/views/js/utile.js')}}"></script>
     <script src="{{asset('resources/views/js/app.js')}}"></script>
     <script src="{{asset('resources/views/js/filter.js')}}"></script>
@@ -149,10 +151,10 @@
             </div>
 
             <div class="bar bar-footer has-tab-bar-footer">
-                <button class="button button-balanced" style="width: 49%;" ng-click="buy()">
+                <button class="button button-balanced" style="width: 49%;" ng-click="buy(itemInfo.id, itemInfo.name, itemInfo.indeximg, itemSpec)">
                     立即购买
                 </button>
-                <button class="button button-calm" style="width: 49%;" ng-click="addInCar()">
+                <button class="button button-calm" style="width: 49%;" ng-click="addInCar(itemInfo.id, itemInfo.name, itemInfo.indeximg, itemSpec)">
                     加入购物车
                 </button>
             </div>

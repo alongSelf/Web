@@ -34,6 +34,11 @@ class MainController extends Controller
         return compact('activityItem', 'homeItem');
     }
 
+    public function addCar()
+    {
+        
+    }
+
     public function getCar()
     {
         

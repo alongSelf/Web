@@ -69,3 +69,51 @@ function createItemList(itemData) {
 
     return html;
 };
+
+//购物车、立即购买 弹出页
+function getBuyItemHtml(itemSpec) {
+    var  html = '';
+    var iLens = itemSpec.length;
+    if (0 != iLens){
+        html += '<span>规格</span>';
+        html += '<div><select ng-model="Data.itemSpec" style="width: 100%">';
+
+        for (i = 0; i < iLens; i++){
+            html += '<option id="'+i+'">'+itemSpec[i]+'</option>';
+        }
+
+        html += '</select> </div>';
+    }
+
+
+    html += '<br/><span>数量</span>';
+    html += '<input type="number" ng-model="Data.itemNum" value="1"/>'
+
+    return html;
+}
+
+function addInCarOrBuyPopup(itemNam, itemSpec, itemImg, strButtName, $ionicPopup, $scope) {
+    return $ionicPopup.show({
+        template: getBuyItemHtml(itemSpec),
+        scope: $scope,
+        title: itemNam,
+        buttons: [
+            {
+                text: '取消',
+                type: 'button-energized',
+            },
+            {
+                text: '<b>'+strButtName+'</b>',
+                type: 'button-balanced',
+                onTap: function(e) {
+                    if (!$scope.Data.itemNum || 0 == $scope.Data.itemNum) {
+                        //不允许用户关闭
+                        e.preventDefault();
+                    } else {
+                        return $scope.Data;
+                    }
+                }
+            },
+        ]
+    });
+}
