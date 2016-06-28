@@ -1,0 +1,54 @@
+
+<ion-view view-title="购物车" ng-controller="carController">
+    <ion-content  scroll="true" overflow-scroll="true">
+        <div class="carbox" ng-if="showCarInfo">
+            <table id="cartTable">
+                <thead>
+                <tr>
+                    <th>商品</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>小计</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in itemInCar">
+                    <td class="goods">
+                        <span ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</span>
+                        <span style="color: #adadad">[[item.spec]]</span>
+                    </td>
+                    <td class="price">
+                        [[item.price | currency:'￥']]
+                    </td>
+                    <td class="count">
+                        <input type="text" style="width: 100%;" ng-model="item.num" ng-change="numChange(item.id, item.num)"/>
+                    <td class="subtotal">[[item.num * item.price | currency:'￥']]</td>
+                    <td class="operation">
+                        <span ng-click="delete(item.id)" style="color:red">删除</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="foot" id="foot">
+                <div class="fr">合计：<span class="priceTotal">[[priceTotal | currency:'￥']]</span></div>
+            </div>
+        </div>
+
+        <div class="fc" ng-if="!showCarInfo">
+            <img class="lazy" ng-src="resources/views/sysimg/emptycar.png" />
+        </div>
+
+    </ion-content>
+
+    <ion-footer-bar align-title="left">
+        <button class="button button-calm" style="width: 49%;" ng-click="checkout()">
+            结算
+        </button>
+        <button class="button button-energized" style="width: 49%;" ng-click="clear()">
+            清空
+        </button>
+    </ion-footer-bar>
+
+</ion-view>

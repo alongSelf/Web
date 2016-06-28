@@ -11,8 +11,6 @@ appModule.controller('menuController', ['$scope', '$http', '$injector', function
         .success(
             function(data, status, header, config){
                 $scope.Categorys = data;
-                dd('menuController');
-                dd($scope.Categorys);
                 $injector.get('$ionicLoading').hide();
             }
         ).error(
@@ -23,18 +21,21 @@ appModule.controller('menuController', ['$scope', '$http', '$injector', function
     );
 }]);
 
+//tabs
+appModule.controller('tabsController', ['$scope', function ($scope) {
+
+}]);
+
 //主页
 appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$injector', function($scope, $http, $ionicSlideBoxDelegate, $sce, $injector){
     $scope.activityItem = [];
     $injector.get('$ionicLoading').show({template: '加载中...'});
+    
     $http.get("indexItem")
         .success(
             function(data, status, header, config){
                 $scope.activityItem = data.activityItem;
-                $scope.homeItemList = createItemList(data.homeItem);
-                dd('homeController');
-                dd($scope.activityItem);
-                dd($scope.homeItemList);
+                $scope.itemList = data.homeItem;
 
                 //更新轮播
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
@@ -69,7 +70,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$s
     $http.get("categoryInfo/" + $scope.categoryID)
         .success(
             function(data, status, header, config){
-                $scope.categoryItemList = createItemList(data);
+                $scope.itemList = data;
                 $injector.get('$ionicLoading').hide();
             }
         ).error(
@@ -87,14 +88,20 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.slideImg = [];
     $scope.cur_price = '';
     $scope.buynum = '';
+    var bPopuped = false;
     $injector.get('$ionicLoading').show({template: '加载中...'});
 
     //数据获取
     $http.get("itemInfo/" + $scope.itemID)
         .success(
             function(data, status, header, config){
-                $scope.slideImg = data[0].showimg.split(";");
-                $scope.itemSpec = data[0].spec.split(";");
+                if (data[0].showimg){
+                    $scope.slideImg = data[0].showimg.split(";");
+                }
+                if (data[0].spec){
+                    $scope.itemSpec = data[0].spec.split(";");
+                }
+
                 $scope.itemInfo = data[0];
 
                 var f = parseFloat(data[0].cur_price);
@@ -115,15 +122,21 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
     //购买
     $scope.buy = function(itemID, itemNam, itemPrice, itemImg, itemSpec){
+        if (bPopuped){
+            return;
+        }
+
+        bPopuped = true;
         $scope.Data = {};
         var buyItemPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '立即购买', $ionicPopup, $scope);
 
-        if(0 != itemSpec.length){
+        if(itemSpec){
             $scope.Data.itemSpec = itemSpec[0];
         }
         $scope.Data.itemNum = 1;
 
         buyItemPopup.then(function(res) {
+            bPopuped = false;
             if(!res){
                 return;
             }
@@ -135,15 +148,21 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
     //加进购物车
     $scope.addInCar = function(itemID, itemNam, itemPrice, itemImg, itemSpec){
+        if (bPopuped){
+            return;
+        }
+
+        bPopuped = true;
         $scope.Data = {};
         var addItemInCarPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '加入购物车', $ionicPopup, $scope);
-        if(0 != itemSpec.length){
+        if(itemSpec){
             $scope.Data.itemSpec = itemSpec[0];
         }
 
         $scope.Data.itemNum = 1;
 
         addItemInCarPopup.then(function(res) {
+            bPopuped = false;
             if(!res){
                 return;
             }
@@ -226,13 +245,27 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
     $scope.showCarInfo = false;
+    var bPopuped = false;//解决ie会弹出2次
 
     if (carInfo && carInfo.length > 0){
         $scope.showCarInfo = true;
     }
 
     $scope.checkout = function(){
+        carInfo = $cookieStore.get('car');
+        if (!carInfo || 0 == carInfo.length){
+            return;
+        }
+
+        if (bPopuped){
+            return;
+        }
+
+        bPopuped = true;
+
         alert('发起购买');
+
+        bPopuped = false;
     };
 
     //清空购物车
@@ -242,11 +275,17 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
             return;
         }
 
+        if (bPopuped){
+            return;
+        }
+
+        bPopuped = true;
         var confirmPopup = $ionicPopup.confirm({
             title: '',
             template: '确定清空购物车?'
         });
         confirmPopup.then(function(res) {
+            bPopuped = false;
             if(res) {
                 $cookieStore.remove('car');
                 $scope.itemInCar = [];

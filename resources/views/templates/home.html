@@ -1,0 +1,32 @@
+
+<ion-view view-title="首页" ng-controller="homeController">
+    <ion-content  scroll="true" overflow-scroll="true">
+        <!-- 轮播  至少要3个图...不然ion-slide-box 有 bug... -->
+        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
+                       delegate-handle="delegateHandler">
+            <ion-slide ng-repeat="actItem in activityItem">
+                <img ng-src = "uploads/[[actItem.indeximg]]"
+                     ui-sref="menu.tabs.iteminfo({itemID: [[actItem.id]]})"
+                     style="height: 250px; width: 100%" class="lazy">
+            </ion-slide>
+        </ion-slide-box>
+
+        <!--首页物品展示-->
+        <div class="row row-wrap">
+            <div class="col" ng-repeat="items in itemList">
+                <span>
+                    <img class="lazy" ui-sref="menu.tabs.iteminfo({itemID: [[items.id]]})" style="height: 150px; width: 160px" ng-src="uploads/[[items.indeximg]]">
+                </span>
+                <span>
+                    <div ui-sref="menu.tabs.iteminfo({itemID: [[items.id]]})">[[items.name]]</div>
+                </span>
+                <div/>
+                <span>
+                    <em style="color: red">[[items.cur_price | currency:'￥']]</em>
+                    <em style="padding-left:10px; font-size:10px; color:#999">已售：[[items.buynum]]笔</em>
+                </span>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

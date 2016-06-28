@@ -1,0 +1,48 @@
+
+<ion-view view-title="[[itemInfo.name]]" ng-controller="iteminfoController">
+    <!--返回-->
+    <ion-nav-bar class="bar-calm">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-chevron-left" ng-click="goBack()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content scroll="true" overflow-scroll="true" >
+        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
+                       delegate-handle="delegateHandler">
+            <ion-slide ng-repeat="strImg in slideImg">
+                <img ng-src = "uploads/[[strImg]]"
+                     style="height: 250px; width: 100%" class="lazy">
+            </ion-slide>
+        </ion-slide-box>
+
+        <!--物品信息-->
+        <div style="padding-left:15px; padding-right: 15px;">
+            <div>
+                <span style="font-weight:bold" ng-cloak>[[itemInfo.describe]]</span>
+            </div>
+            <div>
+                <span>
+                    <em style="color: red" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
+                    <em style="text-decoration:line-through; color: #adadad" ng-cloak>[[itemInfo.prime_price | currency:"￥"]]</em>
+                    <em ng-cloak>&nbsp&nbsp&nbsp&nbsp[[buynum]]</em>
+                </span>
+            </div>
+            <br/>
+
+            <div ng-bind-html="itemInfo.content | trustHtml"/>
+        </div>
+
+    </ion-content>
+
+    <ion-footer-bar align-title="left">
+        <button class="button button-balanced" style="width: 49%;" ng-click="buy(itemInfo.id, itemInfo.name, itemInfo.cur_price, itemInfo.indeximg, itemSpec)">
+            立即购买
+        </button>
+        <button class="button button-calm" style="width: 49%;" ng-click="addInCar(itemInfo.id, itemInfo.name, itemInfo.cur_price, itemInfo.indeximg, itemSpec)">
+            加入购物车
+        </button>
+    </ion-footer-bar>
+
+</ion-view>

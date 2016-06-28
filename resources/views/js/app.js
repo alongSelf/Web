@@ -2,21 +2,22 @@
 
 var appModule = angular.module('ionicApp', ['ionic', 'ionicApp.filter', 'ionicApp.server', 'ionicApp.controller', 'ngCookies']);
 
-appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider) {
+appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$interpolateProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider) {
     $ionicConfigProvider.tabs.position('bottom');
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
+    //$locationProvider.html5Mode(true);
 
     $stateProvider
         .state('menu', {
             url: "/menu",
-            templateUrl: "templates/menu.html"
+            templateUrl: "resources/views/templates/menu.html"
         })
         .state('menu.tabs', {
             url: "/tabs",
             views: {
                 'menu' :{
-                    templateUrl: "templates/tabs.html"
+                    templateUrl: "resources/views/templates/tabs.html"
                 }
             }
         })
@@ -24,7 +25,7 @@ appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
             url: "/home",
             views: {
                 'home-tab': {
-                    templateUrl: "templates/home.html"
+                    templateUrl: "resources/views/templates/home.html"
                 }
             }
         })
@@ -32,7 +33,7 @@ appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
             url: "/category/?categoryID & categoryNam",
             views: {
                 'category-tab': {
-                    templateUrl: "templates/category.html"
+                    templateUrl: "resources/views/templates/category.html"
                 }
             }
         })
@@ -40,7 +41,7 @@ appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
             url: "/user",
             views: {
                 'user-tab': {
-                    templateUrl: "templates/user.html"
+                    templateUrl: "resources/views/templates/user.html"
                 }
             }
         })
@@ -49,7 +50,7 @@ appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
             url: "/car",
             views: {
                 'car-tab': {
-                    templateUrl: "templates/car.html"
+                    templateUrl: "resources/views/templates/car.html"
                 }
             }
         })
@@ -57,10 +58,10 @@ appModule.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
             url: "/iteminfo/?itemID",
             views: {
                 'iteminfo-tab': {
-                    templateUrl: "templates/iteminfo.html"
+                    templateUrl: "resources/views/templates/iteminfo.html"
                 }
             }
         })
 
     $urlRouterProvider.otherwise("/menu/tabs/home");
-});
+}]);

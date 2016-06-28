@@ -5,8 +5,6 @@ var appModule = angular.module('ionicApp.server', []);
 //配置
 appModule.run(['$rootScope', '$http', '$cookieStore', function($rootScope, $http, $cookieStore) {
     $rootScope.config = [];
-    $rootScope.clientWidth = $(window).width();
-    $rootScope.imgHeight = getSlideImgH();
     $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
 
     $http.get("getConfig")

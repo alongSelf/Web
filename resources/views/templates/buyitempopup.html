@@ -1,0 +1,14 @@
+
+<div>
+    <div ng-if="inptItem.itemSpec">
+        <span> 规格:</span>
+        <select ng-model="Data.itemSpec" style="width: 100%">
+            <option id="[[spec]]" ng-repeat="spec in inptItem.itemSpec">[[spec]]</option>
+        </select>
+    </div>
+
+    <div>
+        <span>数量:</span>
+        <input type="text" ng-model="Data.itemNum" ng-change="checkInput(Data.itemNum)" value="1"/>
+    </div>
+</div>
