@@ -82,13 +82,12 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$s
 }]);
 
 //物品详情
-appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$injector', '$ionicPopup', '$cookieStore', 'carItemNumFactory', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $injector, $ionicPopup, $cookieStore, carItemNumFactory){
+appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$injector', '$ionicPopover', '$cookieStore', 'carItemNumFactory', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $injector, $ionicPopover, $cookieStore, carItemNumFactory){
     $scope.itemID = $stateParams.itemID;
     $scope.itemInfo = [];
     $scope.slideImg = [];
     $scope.cur_price = '';
     $scope.buynum = '';
-    var bPopuped = false;
     $injector.get('$ionicLoading').show({template: '加载中...'});
 
     //数据获取
@@ -120,13 +119,43 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         }
     );
 
+    $scope.popover = $ionicPopover.fromTemplateUrl('resources/views/templates/buyitempopup.html', {
+        scope: $scope
+    });
+    $ionicPopover.fromTemplateUrl('resources/views/templates/buyitempopup.html', {
+        scope: $scope
+    }).then(function(popover) {
+        $scope.popover = popover;
+    });
+
+
+    $scope.openPopover = function($event) {
+        $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+        $scope.popover.hide();
+    };
+    // 清除浮动框
+    $scope.$on('$destroy', function() {
+        $scope.popover.remove();
+    });
+    // 在隐藏浮动框后执行
+    $scope.$on('popover.hidden', function() {
+        // 执行代码
+    });
+    // 移除浮动框后执行
+    $scope.$on('popover.removed', function() {
+        // 执行代码
+    });
+
     //购买
-    $scope.buy = function(itemID, itemNam, itemPrice, itemImg, itemSpec){
+    $scope.buy = function($event){
+        $scope.popover.show($event);
+        return;
         if (bPopuped){
             return;
         }
 
-        bPopuped = true;
         $scope.Data = {};
         var buyItemPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '立即购买', $ionicPopup, $scope);
 
@@ -136,7 +165,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         $scope.Data.itemNum = 1;
 
         buyItemPopup.then(function(res) {
-            bPopuped = false;
             if(!res){
                 return;
             }
@@ -152,7 +180,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             return;
         }
 
-        bPopuped = true;
         $scope.Data = {};
         var addItemInCarPopup = addInCarOrBuyPopup(itemNam, itemSpec, itemImg, '加入购物车', $ionicPopup, $scope);
         if(itemSpec){
@@ -162,7 +189,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         $scope.Data.itemNum = 1;
 
         addItemInCarPopup.then(function(res) {
-            bPopuped = false;
             if(!res){
                 return;
             }

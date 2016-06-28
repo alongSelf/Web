@@ -71,7 +71,7 @@ function makeItemList(itemData) {
     return itemList;
 }
 
-function addInCarOrBuyPopup(itemNam, itemSpec, itemImg, strButtName, $ionicPopup, $scope) {
+function addInCarOrBuyPopover(itemNam, itemSpec, itemImg, strButtName, $ionicPopover, $scope) {
 
     $scope.checkInput = function (strVal) {
         checkInt(strVal, true);

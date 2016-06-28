@@ -1,14 +1,20 @@
-
-<div>
-    <div ng-if="inptItem.itemSpec">
-        <span> 规格:</span>
-        <select ng-model="Data.itemSpec" style="width: 100%">
-            <option id="[[spec]]" ng-repeat="spec in inptItem.itemSpec">[[spec]]</option>
-        </select>
-    </div>
-
+<ion-popover-view>
+    <ion-content>
     <div>
-        <span>数量:</span>
-        <input type="text" ng-model="Data.itemNum" ng-change="checkInput(Data.itemNum)" value="1"/>
+        <div ng-if="inptItem.itemSpec">
+            <span> 规格:</span>
+            <select ng-model="Data.itemSpec" style="width: 100%">
+                <option id="[[spec]]" ng-repeat="spec in inptItem.itemSpec">[[spec]]</option>
+            </select>
+        </div>
+
+        <div>
+            <span>数量:</span>
+            <input type="text" ng-model="Data.itemNum" ng-change="checkInput(Data.itemNum)" value="1"/>
+        </div>
     </div>
-</div>
+    </ion-content>
+    <ion-footer-bar class="bar-balanced">
+        <div class="title">确定</div>
+    </ion-footer-bar>
+</ion-popover-view>
