@@ -2,18 +2,20 @@
 <ion-view view-title="[[categoryNam]]" ng-controller="categoryController">
     <ion-content  scroll="true" overflow-scroll="true">
         <!--分类物品展示-->
-        <div class="row row-wrap">
-            <div class="col" ng-repeat="items in itemList">
+        <div class="row" ng-repeat="items in itemList">
+            <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
-                    <img class="lazy" ui-sref="menu.tabs.iteminfo({itemID: [[items.id]]})" style="height: 150px; width: 160px" ng-src="uploads/[[items.indeximg]]">
+                    <img class="lazy" style="height: 160px; width: 150px"
+                         ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})"
+                         ng-src="uploads/[[item.indeximg]]">
                 </span>
                 <span>
-                    <div ui-sref="menu.tabs.iteminfo({itemID: [[items.id]]})">[[items.name]]</div>
+                    <div ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</div>
                 </span>
                 <div/>
                 <span>
-                    <em style="color: red">[[items.cur_price | currency:'￥']]</em>
-                    <em style="padding-left:10px; font-size:10px; color:#999">已售：[[items.buynum]]笔</em>
+                    <em style="color: red">[[item.cur_price | currency:'￥']]</em>
+                    <em style="padding-left:10px; font-size:10px; color:#999">已售：[[item.buynum]]笔</em>
                 </span>
             </div>
         </div>

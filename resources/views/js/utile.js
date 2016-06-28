@@ -41,6 +41,36 @@ function checkInt(strVal, bLayer) {
     return true;
 }
 
+function makeItemList(itemData) {
+    var itemList = new Array;
+    if (!itemData){
+        return itemList;
+    }
+
+    var itemCount = itemData.length;
+    var clientWidth = $(window).width();
+    var lineNum = parseInt(clientWidth / 150);//每列多少个
+    var rowNum = Math.ceil(itemCount / lineNum);//多少行
+    var iIndex = 0;
+
+    for (var i = 0; i < rowNum; i++){
+        var itemTmp = new Array;
+        for (var j = 0; j < lineNum; j++){
+            if (iIndex >= itemCount){
+                itemList.push(itemTmp);
+                return itemList;
+            }
+
+            itemTmp.push(itemData[iIndex]);
+            iIndex++;
+        }
+
+        itemList.push(itemTmp);
+    }
+
+    return itemList;
+}
+
 function addInCarOrBuyPopup(itemNam, itemSpec, itemImg, strButtName, $ionicPopup, $scope) {
 
     $scope.checkInput = function (strVal) {

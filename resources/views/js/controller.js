@@ -35,7 +35,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
         .success(
             function(data, status, header, config){
                 $scope.activityItem = data.activityItem;
-                $scope.itemList = data.homeItem;
+                $scope.itemList = makeItemList(data.homeItem);
 
                 //更新轮播
                 $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
@@ -70,7 +70,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$s
     $http.get("categoryInfo/" + $scope.categoryID)
         .success(
             function(data, status, header, config){
-                $scope.itemList = data;
+                $scope.itemList = makeItemList(data);
                 $injector.get('$ionicLoading').hide();
             }
         ).error(

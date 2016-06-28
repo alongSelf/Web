@@ -7,13 +7,14 @@ appModule.run(['$rootScope', '$http', '$cookieStore', function($rootScope, $http
     $rootScope.config = [];
     $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
 
+    var clientWidth = $(window).width();
+    $rootScope.perItemWidth = parseInt((150 / clientWidth) * 100) + '%';
+
     $http.get("getConfig")
         .success(
             function(data, status, header, config){
                 $rootScope.config = data;
                 document.title = data.title;
-                dd('module:run');
-                dd(data);
             }
         ).error(
         function(data){
