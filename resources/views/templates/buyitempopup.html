@@ -1,20 +1,31 @@
+<!--加入购物车、立即购买弹出页-->
 <ion-popover-view>
     <ion-content>
-    <div>
-        <div ng-if="inptItem.itemSpec">
-            <span> 规格:</span>
-            <select ng-model="Data.itemSpec" style="width: 100%">
-                <option id="[[spec]]" ng-repeat="spec in inptItem.itemSpec">[[spec]]</option>
-            </select>
-        </div>
+        <div style="padding-left:5px; padding-right: 5px;">
+            <div>
+                <img class="lazy" style="width: 50px; height: 60px;" ng-src="uploads/[[itemInfo.indeximg]]">
+                <div>[[itemInfo.name]]</div>
+                <div style="color: red;">[[itemInfo.cur_price | currency:'￥']]</div>
+            </div>
+            <div ng-if="itemSpec">
+                <span> 规格:</span>
+                <select ng-model="PopData.itemSpec" style="width: 100%">
+                    <option id="[[spec]]" ng-repeat="spec in itemSpec">[[spec]]</option>
+                </select>
+            </div>
 
-        <div>
-            <span>数量:</span>
-            <input type="text" ng-model="Data.itemNum" ng-change="checkInput(Data.itemNum)" value="1"/>
+            <div>
+                <span>数量:</span>
+                <input type="text" ng-model="PopData.buyNum" ng-change="checkInput(PopData.buyNum)" value="1"/>
+            </div>
         </div>
-    </div>
     </ion-content>
-    <ion-footer-bar class="bar-balanced">
-        <div class="title">确定</div>
+    <ion-footer-bar align-title="left">
+        <button class="button button-balanced" ng-click="cancel()">
+            取消
+        </button>
+        <button class="button button-calm" ng-click="confirm()">
+            确定
+        </button>
     </ion-footer-bar>
 </ion-popover-view>

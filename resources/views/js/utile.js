@@ -71,44 +71,6 @@ function makeItemList(itemData) {
     return itemList;
 }
 
-function addInCarOrBuyPopover(itemNam, itemSpec, itemImg, strButtName, $ionicPopover, $scope) {
-
-    $scope.checkInput = function (strVal) {
-        checkInt(strVal, true);
-    };
-
-    $scope.inptItem = {};
-    $scope.inptItem.itemSpec = itemSpec;
-    $scope.inptItem.itemImg = itemImg;
-
-    return $ionicPopup.show({
-        templateUrl: 'resources/views/templates/buyitempopup.html',
-        scope: $scope,
-        title: itemNam,
-        buttons: [
-            {
-                text: '取消',
-                type: 'button-energized',
-            },
-            {
-                text: '<b>'+strButtName+'</b>',
-                type: 'button-balanced',
-                onTap: function(e) {
-                    if (!checkInt($scope.Data.itemNum, false)) {
-                        //不允许用户关闭
-                        e.preventDefault();
-                    } else {
-                        if (!$scope.Data.itemSpec){
-                            $scope.Data.itemSpec = '';
-                        }
-                        return $scope.Data;
-                    }
-                }
-            },
-        ]
-    });
-}
-
 function getCarItemNum(carInfo) {
     var iNum = 0;
     if (!carInfo){

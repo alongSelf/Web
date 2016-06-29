@@ -1,7 +1,6 @@
-
+<!--分类物品展示-->
 <ion-view view-title="[[categoryNam]]" ng-controller="categoryController">
     <ion-content  scroll="true" overflow-scroll="true">
-        <!--分类物品展示-->
         <div class="row" ng-repeat="items in itemList">
             <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
