@@ -3,22 +3,26 @@
 var appModule = angular.module('ionicApp.controller', ['ionicApp.server']);
 
 //分类
-appModule.controller('menuController', ['$scope', '$http', '$injector', function ($scope, $http, $injector) {
+appModule.controller('menuController', ['$scope', '$http', '$injector', function ($scope, $http) {
     $scope.Categorys = [];
-    $injector.get('$ionicLoading').show({template: '加载中...'});
 
-    $http.get("categorys")
-        .success(
-            function(data, status, header, config){
-                $scope.Categorys = data;
-                $injector.get('$ionicLoading').hide();
+    $scope.doRefresh = function () {
+        $http.get("categorys")
+            .success(
+                function(data, status, header, config){
+                    $scope.Categorys = data;
+                }
+            ).error(
+            function(data){
+                onError(data);
+            }).finally(function() {
+                // 停止广播ion-refresher
+                $scope.$broadcast('scroll.refreshComplete');
             }
-        ).error(
-        function(data){
-            dd(data);
-            $injector.get('$ionicLoading').show({template: '网络请求错误！', duration: 800, noBackdrop: true});
-        }
-    );
+        );
+    };
+
+    $scope.doRefresh();
 }]);
 
 //tabs
@@ -27,28 +31,31 @@ appModule.controller('tabsController', ['$scope', function ($scope) {
 }]);
 
 //主页
-appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$injector', function($scope, $http, $ionicSlideBoxDelegate, $sce, $injector){
+appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$timeout', function($scope, $http, $ionicSlideBoxDelegate, $sce, $timeout){
     $scope.activityItem = [];
-    $injector.get('$ionicLoading').show({template: '加载中...'});
-    
-    $http.get("indexItem")
-        .success(
-            function(data, status, header, config){
-                $scope.activityItem = data.activityItem;
-                $scope.itemList = makeItemList(data.homeItem);
 
-                //更新轮播
-                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
-                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
+    $scope.doRefresh = function () {
+        $http.get("indexItem")
+            .success(
+                function (data, status, header, config) {
+                    $scope.activityItem = data.activityItem;
+                    $scope.itemList = makeItemList(data.homeItem);
 
-                $injector.get('$ionicLoading').hide();
+                    //更新轮播
+                    $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
+                    $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            }).finally(function () {
+                // 停止广播ion-refresher
+                $scope.$broadcast('scroll.refreshComplete');
             }
-        ).error(
-        function(data){
-            dd(data);
-            $injector.get('$ionicLoading').show({template: '网络请求错误！', duration: 800, noBackdrop: true});
-        }
-    );
+        );
+    };
+
+    $scope.doRefresh();
 
     $scope.index = 0;
     $scope.go = function(index){
@@ -62,27 +69,31 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 }]);
 
 //分类商品展示
-appModule.controller('categoryController',['$scope','$stateParams', '$http', '$sce', '$injector', function($scope, $stateParams, $http, $sce, $injector){
+appModule.controller('categoryController',['$scope','$stateParams', '$http', function($scope, $stateParams, $http){
     $scope.categoryID = $stateParams.categoryID;
     $scope.categoryNam = $stateParams.categoryNam;
-    $injector.get('$ionicLoading').show({template: '加载中...'});
 
-    $http.get("categoryInfo/" + $scope.categoryID)
-        .success(
-            function(data, status, header, config){
-                $scope.itemList = makeItemList(data);
-                $injector.get('$ionicLoading').hide();
+    $scope.doRefresh = function () {
+        $http.get("categoryInfo/" + $scope.categoryID)
+            .success(
+                function(data, status, header, config){
+                    $scope.itemList = makeItemList(data);
+                }
+            ).error(
+            function(data){
+                onError(data);
+            }).finally(function() {
+                // 停止广播ion-refresher
+                $scope.$broadcast('scroll.refreshComplete');
             }
-        ).error(
-        function(data){
-            dd(data);
-            $injector.get('$ionicLoading').show({template: '网络请求错误！', duration: 800, noBackdrop: true});
-        }
-    );
+        );
+    };
+
+    $scope.doRefresh();
 }]);
 
 //物品详情
-appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$injector', '$ionicPopover', '$cookieStore', 'carItemNumFactory', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $injector, $ionicPopover, $cookieStore, carItemNumFactory){
+appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$ionicPopover', '$cookieStore', 'carItemNumFactory', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $ionicPopover, $cookieStore, carItemNumFactory){
     $scope.itemID = $stateParams.itemID;
     $scope.itemInfo = [];
     $scope.slideImg = [];
@@ -92,36 +103,38 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.isBuy = true;
     $scope.PopData = {};
 
-    $injector.get('$ionicLoading').show({template: '加载中...'});
-
     //数据获取
-    $http.get("itemInfo/" + $scope.itemID)
-        .success(
-            function(data, status, header, config){
-                if (data[0].showimg){
-                    $scope.slideImg = data[0].showimg.split(";");
+    $scope.doRefresh = function () {
+        $http.get("itemInfo/" + $scope.itemID)
+            .success(
+                function (data, status, header, config) {
+                    if (data[0].showimg) {
+                        $scope.slideImg = data[0].showimg.split(";");
+                    }
+                    if (data[0].spec) {
+                        $scope.itemSpec = data[0].spec.split(";");
+                    }
+
+                    $scope.itemInfo = data[0];
+
+                    var f = parseFloat(data[0].cur_price);
+                    $scope.cur_price = '惊爆价:￥' + f.toFixed(2);
+                    $scope.buynum = '已售:' + data[0].buynum;
+
+                    $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
+                    $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
                 }
-                if (data[0].spec){
-                    $scope.itemSpec = data[0].spec.split(";");
-                }
-
-                $scope.itemInfo = data[0];
-
-                var f = parseFloat(data[0].cur_price);
-                $scope.cur_price = '惊爆价:￥' + f.toFixed(2);
-                $scope.buynum = '已售:' + data[0].buynum;
-
-                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
-                $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
-
-                $injector.get('$ionicLoading').hide();
+            ).error(
+            function (data) {
+                onError(data);
+            }).finally(function() {
+                // 停止广播ion-refresher
+                $scope.$broadcast('scroll.refreshComplete');
             }
-        ).error(
-        function(data){
-            dd(data);
-            $injector.get('$ionicLoading').show({template: '网络请求错误！', duration: 800, noBackdrop: true});
-        }
-    );
+        );
+    };
+
+    $scope.doRefresh();
 
     //数字验证
     $scope.checkInput = function (strVal) {
@@ -143,7 +156,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     };
     //确定
     $scope.confirm = function() {
-        if (!checkInt($scope.PopData.buyNum, true)) {
+        if (!checkInt($scope.PopData.chooseNum, true)) {
             return;
         }
 
@@ -170,7 +183,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                 if (car[i].id == $scope.itemInfo.id
                     && car[i].spec == $scope.PopData.itemSpec)
                 {
-                    car[i].num += parseInt($scope.PopData.buyNum);
+                    car[i].num += parseInt($scope.PopData.chooseNum);
                     $cookieStore.put("car", car);
                     carItemNumFactory.setCarItemNum(getCarItemNum(car));
 
@@ -182,7 +195,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             info.id = $scope.itemInfo.id;
             info.name = $scope.itemInfo.name;
             info.spec = $scope.PopData.itemSpec;
-            info.num = parseInt($scope.PopData.buyNum);
+            info.num = parseInt($scope.PopData.chooseNum);
             info.price = $scope.itemInfo.cur_price;
 
             car.push(info);
@@ -200,7 +213,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             $scope.PopData.itemSpec = $scope.itemSpec[0];
         }
 
-        $scope.PopData.buyNum = 1;
+        $scope.PopData.chooseNum = 1;
     };
     //加进购物车
     $scope.addInCar = function($event){
@@ -210,7 +223,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             $scope.PopData.itemSpec = $scope.itemSpec[0];
         }
 
-        $scope.PopData.buyNum = 1;
+        $scope.PopData.chooseNum = 1;
     };
 
     $scope.index = 0;

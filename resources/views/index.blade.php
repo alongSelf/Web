@@ -9,9 +9,9 @@
 
     <script src="{{asset('resources/views/ionic/js/ionic.bundle.min.js')}}"></script>
     <script src="{{asset('resources/views/js/jquery-1.12.4.js')}}"></script>
-    <script src="{{asset('resources/views/js/lazyload.js')}}"></script>
     <script src="{{asset('resources/views/js/layer.js')}}"></script>
     <script src="{{asset('resources/views/ionic/js/angular/angular-cookies.min.js')}}"></script>
+    <script src="{{asset('resources/views/ionic/js/ionic-image-lazy-load.js')}}"></script>
 
     <script src="{{asset('resources/views/js/utile.js')}}"></script>
     <script src="{{asset('resources/views/js/app.js')}}"></script>
@@ -25,14 +25,6 @@
 <body ng-app="ionicApp">
 
 <ion-nav-view></ion-nav-view>
-
-<script type="text/javascript">
-    /*引用懒加载*/
-    $("img.lazy").lazyload({
-        threshold : 100,
-        effect : "fadeIn"
-    });
-</script>
 
 </body>
 </html>

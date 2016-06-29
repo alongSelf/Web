@@ -1,6 +1,11 @@
 <!--用户中心-->
 <ion-view view-title="我的" ng-controller="uerCenterController">
     <ion-content  scroll="true" overflow-scroll="true">
+        <ion-refresher on-refresh="doRefresh()"
+                       pulling-text="下拉刷新..."
+                       refreshing-text="加载中...">
+        </ion-refresher>
+
         <div class="visible-print text-left">
             测试二维码
         </div>

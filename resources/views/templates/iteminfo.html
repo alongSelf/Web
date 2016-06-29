@@ -8,12 +8,17 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content scroll="true" overflow-scroll="true">
+    <ion-content scroll="true" overflow-scroll="true" lazy-scroll>
+        <ion-refresher on-refresh="doRefresh()"
+                       pulling-text="下拉刷新..."
+                       refreshing-text="加载中...">
+        </ion-refresher>
+
         <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
                        delegate-handle="delegateHandler">
             <ion-slide ng-repeat="strImg in slideImg">
-                <img ng-src = "uploads/[[strImg]]"
-                     style="height: 250px; width: 100%" class="lazy">
+                <img ng-src="uploads/[[strImg]]"
+                     style="height: 250px; width: 100%">
             </ion-slide>
         </ion-slide-box>
 

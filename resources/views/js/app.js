@@ -1,6 +1,6 @@
 'use strict';
 
-var appModule = angular.module('ionicApp', ['ionic', 'ionicApp.filter', 'ionicApp.server', 'ionicApp.controller', 'ngCookies']);
+var appModule = angular.module('ionicApp', ['ionic', 'ionicApp.filter', 'ionicApp.server', 'ionicApp.controller', 'ngCookies', 'ionicLazyLoad']);
 
 appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$interpolateProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider) {
     $ionicConfigProvider.tabs.position('bottom');

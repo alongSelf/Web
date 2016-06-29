@@ -19,11 +19,16 @@
             </div>
         </ion-header-bar>
         <ion-content class = "has-header">
+            <ion-refresher on-refresh="doRefresh()"
+                           pulling-text="下拉刷新..."
+                           refreshing-text="加载中...">
+            </ion-refresher>
+
             <ion-list>
                 <ion-item ion-item nav-clear menu-close class="item-avatar"
                           ng-repeat="Category in Categorys"
                           ui-sref="menu.tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})" ng-cloak>
-                    <img class="lazy" ng-src="uploads/[[Category.img]]">
+                    <img ng-src="uploads/[[Category.img]]">
                     <br/>
                     <div style="margin-bottom: 0">[[Category.title]]</div>
                 </ion-item>
