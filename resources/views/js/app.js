@@ -54,6 +54,14 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('menu.tabs.search', {
+            url: "/search",
+            views: {
+                'search-tab': {
+                    templateUrl: "resources/views/templates/search.html"
+                }
+            }
+        })
         .state('menu.tabs.iteminfo', {
             url: "/iteminfo/?itemID",
             views: {

@@ -368,3 +368,28 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
         }
     }
 }]);
+
+appModule.controller('searchController', ['$scope', '$http', function ($scope, $http) {
+    $scope.search = function (strVal) {
+        if (!strVal){
+            return;
+        }
+        if (0 == strVal.length){
+            return;
+        }
+        if (checkStr(strVal)){
+            return;
+        }
+
+        $http.get("search/" + strVal)
+            .success(
+                function(data, status, header, config){
+                    $scope.searchData = data;
+                }
+            ).error(
+            function(data){
+                onError(data);
+            }
+        );
+    }
+}]);

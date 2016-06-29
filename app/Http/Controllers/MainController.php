@@ -48,4 +48,13 @@ class MainController extends Controller
 
         return $itemInfo;
     }
+
+    public function search($param)
+    {
+        $searchInfo = ShopItem::select('id', 'name')->
+            where('display', 1)->where('stock', '<>', 0)->
+            where('name','like','%'.$param.'%')->get();
+
+        return $searchInfo;
+    }
 }

@@ -8,8 +8,6 @@
     <link href="{{asset('resources/views/css/app.css')}}" rel="stylesheet">
 
     <script src="{{asset('resources/views/ionic/js/ionic.bundle.min.js')}}"></script>
-    <script src="{{asset('resources/views/js/jquery-1.12.4.js')}}"></script>
-    <script src="{{asset('resources/views/js/layer.js')}}"></script>
     <script src="{{asset('resources/views/ionic/js/angular/angular-cookies.min.js')}}"></script>
     <script src="{{asset('resources/views/ionic/js/ionic-image-lazy-load.js')}}"></script>
 
@@ -18,6 +16,9 @@
     <script src="{{asset('resources/views/js/filter.js')}}"></script>
     <script src="{{asset('resources/views/js/server.js')}}"></script>
     <script src="{{asset('resources/views/js/controller.js')}}"></script>
+
+    <script src="{{asset('resources/views/js/jquery-1.12.4.js')}}"></script>
+    <script src="{{asset('resources/views/js/layer.js')}}"></script>
 
     <title></title>
 </head>

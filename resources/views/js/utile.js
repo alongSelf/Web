@@ -41,6 +41,12 @@ function checkInt(strVal, bLayer) {
     return true;
 }
 
+function checkStr(str) {
+    var containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/);
+
+    return (containSpecial.test(str));
+}
+
 function makeItemList(itemData) {
     var itemList = new Array;
     if (!itemData){
