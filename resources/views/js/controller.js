@@ -212,29 +212,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
 //用户中心
 appModule.controller('uerCenterController', ['$scope', function($scope){
-    $scope.groups = [];
-    for (var i=0; i<5; i++) {
-        $scope.groups[i] = {
-            name: i,
-            items: [],
-            show: false
-        };
-        for (var j=0; j<3; j++) {
-            $scope.groups[i].items.push(i + '-' + j);
-        }
-    }
-
-    /*
-     * if given group is the selected group, deselect it
-     * else, select the given group
-     */
-    $scope.toggleGroup = function(group) {
-        group.show = !group.show;
-    };
-    $scope.isGroupShown = function(group) {
-        return group.show;
-    };
-
     $scope.doRefresh = function () {
         $scope.$broadcast('scroll.refreshComplete');
     };
@@ -350,12 +327,15 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
 appModule.controller('searchController', ['$scope', '$http', function ($scope, $http) {
     $scope.search = function (strVal) {
         if (!strVal){
+            $scope.searchData = {};
             return;
         }
         if (0 == strVal.length){
+            $scope.searchData = {};
             return;
         }
         if (checkStr(strVal)){
+            $scope.searchData = {};
             return;
         }
 
@@ -367,6 +347,7 @@ appModule.controller('searchController', ['$scope', '$http', function ($scope, $
             ).error(
             function(data){
                 onError(data);
+                $scope.searchData = {};
             }
         );
     }

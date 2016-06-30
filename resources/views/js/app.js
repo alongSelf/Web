@@ -35,7 +35,7 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
         .state('tabs.category', {
             url: "/category/?categoryID & categoryNam",
             views: {
-                'find-tab': {
+                'home-tab': {
                     templateUrl: "resources/views/templates/category.html",
                     controller: 'categoryController'
                 }
@@ -44,7 +44,7 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
         .state('tabs.iteminfo', {
             url: "/iteminfo/?itemID",
             views: {
-                'find-tab': {
+                'home-tab': {
                     templateUrl: "resources/views/templates/iteminfo.html",
                     controller: 'iteminfoController'
                 }

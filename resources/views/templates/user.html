@@ -1,34 +1,85 @@
 <!--用户中心-->
 <ion-view view-title="用户中心">
-    <ion-nav-bar class="bar-dark">
-    </ion-nav-bar>
-
     <ion-content  scroll="true" overflow-scroll="true">
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div class="visible-print text-left">
-            测试二维码
+        <div class="profile">
+            <div class="avatar"></div>
+            <div class="detail">
+                <div class="">
+                    昵称
+                </div>
+                <div class="">
+                    电话
+                </div>
+            </div>
+            <div class="edit" ng-click="editProfile()">
+                <i class="icon ion-edit"></i>
+            </div>
+            <div class="clear-both"></div>
         </div>
 
-        <ion-list>
-            <div ng-repeat="group in groups">
-                <ion-item class="item-stable"
-                          ng-click="toggleGroup(group)"
-                          ng-class="{active: isGroupShown(group)}">
-                    <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
-                    &nbsp;
-                    Group [[group.name]]
-                </ion-item>
-                <ion-item class="item-accordion"
-                          ng-repeat="item in group.items"
-                          ng-show="isGroupShown(group)">
-                    [[item]]
-                </ion-item>
+        <div class="section">
+            <div class="row my-header" ng-click="showOrders()">
+                <div class="left">
+                    <i class="icon ion-ios-pricetags-outline"></i>
+                    订单管理
+                </div>
+                <div class="right">
+                    <i class="icon ion-chevron-right"></i>
+                </div>
             </div>
-        </ion-list>
+            <div class="row my-content">
+                <div class="col" ng-click="showOrders('waitPay')">
+                    <div class="box">
+                        <i class="icon pay has-badge my-badge">
+                            <span class="badge light" ng-if="info.waitPayCount > 0">{{info.waitPayCount}}</span>
+                        </i>
+                        待付款
+                    </div>
+                </div>
+                <div class="col" ng-click="showOrders('waitShip')">
+                    <div class="box">
+                        <i class="icon deliver has-badge my-badge">
+                            <span class="badge light" ng-if="info.waitShip > 0">{{info.waitShip}}</span>
+                        </i>
+                        待投递
+                    </div>
+                </div>
+                <div class="col" ng-click="showOrders('waitReceive')">
+                    <div class="box">
+                        <i class="icon take has-badge my-badge">
+                            <span class="badge light" ng-if="info.waitReceive > 0">{{info.waitReceive}}</span>
+                        </i>
+                        待收货
+                    </div>
+                </div>
+                <div class="col" ng-click="showOrders('waitRate')">
+                    <div class="box">
+                        <i class="icon mark has-badge my-badge">
+                            <span class="badge light" ng-if="info.waitRate > 0">{{info.waitRate}}</span>
+                        </i>
+                        待评价
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="row my-header" ng-click="showAddress()">
+                <div class="left">
+                    <i class="icon ion-ios-home-outline"></i>
+                    地址管理
+                </div>
+                <div class="right">
+                    <i class="icon ion-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
 
     </ion-content>
 </ion-view>
