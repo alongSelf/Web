@@ -25,7 +25,7 @@
                         <input type="text" style="width: 100%;" ng-model="item.num" ng-change="numChange(item.id, item.num)"/>
                     <td class="subtotal">[[item.num * item.price | currency:'￥']]</td>
                     <td class="operation">
-                        <span ng-click="delete(item.id)" style="color:red">删除</span>
+                        <span ng-click="delete(item.id)" class="icon ion-trash-a"></span>
                     </td>
                 </tr>
                 </tbody>
@@ -42,7 +42,7 @@
 
     </ion-content>
 
-    <ion-footer-bar align-title="left">
+    <ion-footer-bar align-title="left" ng-if="showCarInfo">
         <button class="button button-balanced" style="width: 49%;" ng-click="checkout()">
             结算
         </button>

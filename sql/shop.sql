@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-06-29 10:49:14
+Date: 2016-06-30 12:56:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -60,7 +60,7 @@ CREATE TABLE `shopitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT '' COMMENT '名称',
   `category` int(11) DEFAULT '0' COMMENT '类别ID',
-  `content` text COMMENT '详情',
+  `content` varchar(255) DEFAULT NULL COMMENT '图片详情',
   `describe` varchar(255) DEFAULT NULL COMMENT '描述',
   `prime_price` float(11,0) DEFAULT '0' COMMENT '原价',
   `cur_price` float(11,0) DEFAULT '0' COMMENT '现价',
@@ -78,10 +78,10 @@ CREATE TABLE `shopitem` (
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
-INSERT INTO `shopitem` VALUES ('1', '云中歌1', '1', '&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568881b627d58.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568881b649488.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568881b6a1aad.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568881b6cd5ef.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568881b709542.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568881b735855.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568881b7c39e6.jpg&quot;/&gt;&lt;/p&gt;', '云中歌（套装全3册）', '124', '158', '1', '10', '56974ea4579b2.png', '56a1f2d2219f6.jpg;56a1f55e6a6a2.jpg;56974c014e6c8.jpg', '规格1;规格12', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('2', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 2', '2', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', '5000', '5200', '-1', '50', '56a1f2d2219f6.jpg', '56974ea4579b2.png;home-img1.png;homeSlide-02.jpg', '规格2;规格22', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('3', '北鼎养生壶 K106 2L222', '3', '北鼎养生壶 K106 2L及以下', '北鼎养生壶 K106 2L及以下', '410', '500', '-1', '15', '56974c014e6c8.jpg', '56974f536b240.jpg;homeSlide-01.jpg;produce-01.jpg', '规格3;规格32', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('4', '北鼎养生壶 K106 2L111', '5', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', '4', '7', '-1', '1', '56a1f2d2219f6.jpg', '56974ea4579b2.png;home-img1.png;homeSlide-02.jpg', null, '1', '0', '1');
-INSERT INTO `shopitem` VALUES ('5', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 1', '4', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 ', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 ', '122', '33', '-1', '11', '56974c014e6c8.jpg', '56a1f2d2219f6.jpg;56a1f55e6a6a2.jpg;56974c014e6c8.jpg', null, '1', '0', '1');
-INSERT INTO `shopitem` VALUES ('6', '云中歌2', '1', '云中歌2', '云中歌2', '11', '112', '-1', '33', '56a1f2d2219f6.jpg', '56974f536b240.jpg;homeSlide-01.jpg;produce-01.jpg', null, '1', '0', '1');
-INSERT INTO `shopitem` VALUES ('7', '北鼎养生壶 K106 2L333', '1', '北鼎养生壶 K106 2L111', '北鼎养生壶 K106 2L111', '12', '23', '-1', '1', '56a1f2d2219f6.jpg', '56974f536b240.jpg;homeSlide-01.jpg;produce-01.jpg', null, '1', '0', '1');
+INSERT INTO `shopitem` VALUES ('1', '云中歌1', '1', '56f35f74b0ea4.jpg', '云中歌（套装全3册）', '124', '158', '1', '10', '56974ea4579b2.png', '56a1f2d2219f6.jpg;56a1f55e6a6a2.jpg;56974c014e6c8.jpg', '规格1;规格12', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('2', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 2', '2', '56f35f75b01d4.jpg', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', '5000', '5200', '-1', '50', '56a1f2d2219f6.jpg', '56974ea4579b2.png;home-img1.png;homeSlide-02.jpg', '规格2;规格22', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('3', '北鼎养生壶 K106 2L222', '3', '56f35f76d5c98.jpg', '北鼎养生壶 K106 2L及以下', '410', '500', '-1', '15', '56974c014e6c8.jpg', '56974f536b240.jpg;homeSlide-01.jpg;produce-01.jpg', '规格3;规格32', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('4', '北鼎养生壶 K106 2L111', '5', '56f35f77adab6.jpg', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', '4', '7', '-1', '1', '56a1f2d2219f6.jpg', '56974ea4579b2.png;home-img1.png;homeSlide-02.jpg', null, '1', '0', '1');
+INSERT INTO `shopitem` VALUES ('5', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 1', '4', '56f35f78a4534.jpg', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 ', '122', '33', '-1', '11', '56974c014e6c8.jpg', '56a1f2d2219f6.jpg;56a1f55e6a6a2.jpg;56974c014e6c8.jpg', null, '1', '0', '1');
+INSERT INTO `shopitem` VALUES ('6', '云中歌2', '1', '56f35f79e74cf.jpg', '云中歌2', '11', '112', '-1', '33', '56a1f2d2219f6.jpg', '56974f536b240.jpg;homeSlide-01.jpg;produce-01.jpg', null, '1', '0', '1');
+INSERT INTO `shopitem` VALUES ('7', '北鼎养生壶 K106 2L333', '1', '56f35f793a7e0.jpg', '北鼎养生壶 K106 2L111', '12', '23', '-1', '1', '56a1f2d2219f6.jpg', '56974f536b240.jpg;homeSlide-01.jpg;produce-01.jpg', null, '1', '0', '1');

@@ -1,7 +1,7 @@
 <!--物品展示-->
 <ion-view view-title="[[itemInfo.name]]" ng-controller="iteminfoController">
     <!--返回-->
-    <ion-nav-bar class="bar-calm">
+    <ion-nav-bar class="bar-dark">
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-chevron-left" ng-click="goBack()">
             </button>
@@ -25,19 +25,23 @@
         <!--物品基本信息-->
         <div style="padding-left:15px; padding-right: 15px;">
             <div>
-                <span style="font-weight:bold" ng-cloak>[[itemInfo.describe]]</span>
+                <div>
+                    <span style="font-weight:bold" ng-cloak>[[itemInfo.describe]]</span>
+                </div>
+                <div>
+                    <span>
+                        <em style="color: red" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
+                        <em style="text-decoration:line-through; color: #adadad" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
+                        <em ng-cloak>&nbsp&nbsp&nbsp&nbsp[[buynum]]</em>
+                    </span>
+                </div>
             </div>
-            <div>
-                <span>
-                    <em style="color: red" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
-                    <em style="text-decoration:line-through; color: #adadad" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
-                    <em ng-cloak>&nbsp&nbsp&nbsp&nbsp[[buynum]]</em>
-                </span>
-            </div>
-            <br/>
 
-            <!--相信信息评价等-->
+            <br>
 
+            <span style="font-weight:bold">宝贝介绍:</span>
+            <img image-lazy-src="uploads/[[itemInfo.content]]"
+                 style="width: 100%" image-lazy-loader="bubbles">
         </div>
 
     </ion-content>
@@ -46,7 +50,7 @@
         <button style="width: 49%;" class="button button-balanced" ng-click="buy($event)">
             立即购买
         </button>
-        <button style="width: 49%;" class="button button-calm" ng-click="addInCar($event)">
+        <button style="width: 49%;" class="button button-calm ion-ios-cart" ng-click="addInCar($event)">
             加入购物车
         </button>
     </ion-footer-bar>
