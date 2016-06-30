@@ -1,5 +1,8 @@
 <!--主页-->
-<ion-view view-title="首页" ng-controller="homeController">
+<ion-view view-title="首页">
+    <ion-nav-bar class="bar-dark">
+    </ion-nav-bar>
+
     <ion-content  scroll="true" overflow-scroll="true" lazy-scroll>
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
@@ -11,7 +14,7 @@
                        delegate-handle="delegateHandler">
             <ion-slide ng-repeat="actItem in activityItem">
                 <img ng-src="uploads/[[actItem.indeximg]]"
-                     ui-sref="menu.tabs.iteminfo({itemID: [[actItem.id]]})"
+                     ui-sref="tabs.iteminfo({itemID: [[actItem.id]]})"
                      style="height: 250px; width: 100%">
             </ion-slide>
         </ion-slide-box>
@@ -21,11 +24,11 @@
             <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
                     <img style="height: 160px; width: 150px"
-                         ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})"
+                         ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
                          image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
                 </span>
                 <span>
-                    <div ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</div>
+                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</div>
                 </span>
                 <div/>
                 <span>

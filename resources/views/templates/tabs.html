@@ -1,28 +1,20 @@
 <!--底部tables-->
-<ion-view view-title="首页" ng-controller="tabsController">
+<ion-view>
     <ion-tabs class="tabs-icon-top tabs-color-dark">
-        <ion-tab title="首页" icon="ion-ios-home" ui-sref="menu.tabs.home">
+        <ion-tab title="首页" icon="ion-ios-home" ui-sref="tabs.home">
             <ion-nav-view name="home-tab"></ion-nav-view>
         </ion-tab>
 
-        <ion-tab title="购物车" icon="ion-ios-cart" ui-sref="menu.tabs.car" badge="carItemNum" badge-style="badge-assertive">
+        <ion-tab title="发现" icon="ion-ios-color-wand" ui-sref="tabs.find">
+            <ion-nav-view name="find-tab"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="购物车" icon="ion-ios-cart" ui-sref="tabs.car" badge="carItemNum" badge-style="badge-assertive">
             <ion-nav-view name="car-tab"></ion-nav-view>
         </ion-tab>
 
-        <ion-tab title="搜索" icon="ion-ios-search-strong" ui-sref="menu.tabs.search">
-            <ion-nav-view name="search-tab"></ion-nav-view>
-        </ion-tab>
-
-        <ion-tab title="我的" icon="ion-android-contact" ui-sref="menu.tabs.user">
+        <ion-tab title="我的" icon="ion-android-contact" ui-sref="tabs.user">
             <ion-nav-view name="user-tab"></ion-nav-view>
-        </ion-tab>
-
-        <ion-tab title="分类" ui-sref="menu.tabs.category" hidden="true">
-            <ion-nav-view title="分类" name="category-tab"></ion-nav-view>
-        </ion-tab>
-
-        <ion-tab title="物品详情" ui-sref="menu.tabs.iteminfo" hidden="true">
-            <ion-nav-view title="物品详情" name="iteminfo-tab"></ion-nav-view>
         </ion-tab>
     </ion-tabs>
 </ion-view>

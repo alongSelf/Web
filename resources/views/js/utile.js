@@ -8,13 +8,7 @@ function dd(data) {
 };
 
 function onError(data) {
-    layer.msg('加载页面出错,请稍后再试...');
     dd(data);
-};
-
-function getSlideImgH() {
-    var clientHeight=$(window).height();
-    return (clientHeight / 5) * 2 + 'px';
 };
 
 function checkInt(strVal, bLayer) {
@@ -47,14 +41,13 @@ function checkStr(str) {
     return (containSpecial.test(str));
 }
 
-function makeItemList(itemData) {
+function makeItemList(itemData, clientWidth) {
     var itemList = new Array;
     if (!itemData){
         return itemList;
     }
 
     var itemCount = itemData.length;
-    var clientWidth = $(window).width();
     var lineNum = parseInt(clientWidth / 150);//每列多少个
     var rowNum = Math.ceil(itemCount / lineNum);//多少行
     var iIndex = 0;

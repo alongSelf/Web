@@ -3,11 +3,11 @@
 var appModule = angular.module('ionicApp.server', []);
 
 //配置
-appModule.run(['$rootScope', '$http', '$cookieStore', function($rootScope, $http, $cookieStore) {
+appModule.run(['$rootScope', '$http', '$cookieStore', '$window', function($rootScope, $http, $cookieStore, $window) {
     $rootScope.config = [];
     $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
 
-    var clientWidth = $(window).width();
+    var clientWidth = $window.innerWidth;
     $rootScope.perItemWidth = parseInt((150 / clientWidth) * 100) + '%';
 
     $http.get("getConfig")

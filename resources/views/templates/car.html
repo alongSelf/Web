@@ -1,5 +1,8 @@
 <!--购物车-->
-<ion-view view-title="购物车" ng-controller="carController">
+<ion-view view-title="购物车">
+    <ion-nav-bar class="bar-dark">
+    </ion-nav-bar>
+
     <ion-content  scroll="true" overflow-scroll="true" lazy-scroll>
         <div class="carbox" ng-if="showCarInfo">
             <table id="cartTable">
@@ -15,7 +18,7 @@
                 <tbody>
                 <tr ng-repeat="item in itemInCar">
                     <td class="goods">
-                        <span ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</span>
+                        <span ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</span>
                         <span style="color: #adadad">[[item.spec]]</span>
                     </td>
                     <td class="price">

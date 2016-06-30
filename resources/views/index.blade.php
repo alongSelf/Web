@@ -17,9 +17,6 @@
     <script src="{{asset('resources/views/js/server.js')}}"></script>
     <script src="{{asset('resources/views/js/controller.js')}}"></script>
 
-    <script src="{{asset('resources/views/js/jquery-1.12.4.js')}}"></script>
-    <script src="{{asset('resources/views/js/layer.js')}}"></script>
-
     <title></title>
 </head>
 

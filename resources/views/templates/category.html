@@ -1,5 +1,5 @@
 <!--分类物品展示-->
-<ion-view view-title="[[categoryNam]]" ng-controller="categoryController">
+<ion-view view-title="[[categoryNam]]">
     <ion-content  scroll="true" overflow-scroll="true" lazy-scroll>
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
@@ -10,11 +10,11 @@
             <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
                     <img style="height: 160px; width: 150px"
-                         ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})"
+                         ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
                          image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
                 </span>
                 <span>
-                    <div ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</div>
+                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</div>
                 </span>
                 <div/>
                 <span>

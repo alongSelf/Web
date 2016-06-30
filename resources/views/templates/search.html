@@ -1,6 +1,14 @@
 <!--搜索-->
-<ion-view view-title="搜索" ng-controller="searchController">
+<ion-view view-title="发现">
+    <ion-nav-bar class="bar-dark">
+    </ion-nav-bar>
+
     <ion-content  scroll="true" overflow-scroll="true">
+        <ion-refresher on-refresh="doRefresh()"
+                       pulling-text="下拉刷新..."
+                       refreshing-text="加载中...">
+        </ion-refresher>
+
         <div id="search-bar">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper" id="search-input">
@@ -14,10 +22,20 @@
             <ion-list>
                 <ion-item ion-item nav-clear
                           ng-repeat="item in searchData"
-                          ui-sref="menu.tabs.iteminfo({itemID: [[item.id]]})" ng-cloak>
+                          ui-sref="tabs.iteminfo({itemID: [[item.id]]})" ng-cloak>
                     [[item.name]]
                 </ion-item>
             </ion-list>
         </div>
+
+        <ion-list>
+            <ion-item ion-item nav-clear menu-close class="item-avatar"
+                      ng-repeat="Category in Categorys"
+                      ui-sref="tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})" ng-cloak>
+                <img ng-src="uploads/[[Category.img]]">
+                <br/>
+                <div style="margin-bottom: 0">[[Category.title]]</div>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

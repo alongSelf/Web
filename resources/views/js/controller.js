@@ -2,36 +2,8 @@
 
 var appModule = angular.module('ionicApp.controller', ['ionicApp.server']);
 
-//分类
-appModule.controller('menuController', ['$scope', '$http', '$injector', function ($scope, $http) {
-    $scope.Categorys = [];
-
-    $scope.doRefresh = function () {
-        $http.get("categorys")
-            .success(
-                function(data, status, header, config){
-                    $scope.Categorys = data;
-                }
-            ).error(
-            function(data){
-                onError(data);
-            }).finally(function() {
-                // 停止广播ion-refresher
-                $scope.$broadcast('scroll.refreshComplete');
-            }
-        );
-    };
-
-    $scope.doRefresh();
-}]);
-
-//tabs
-appModule.controller('tabsController', ['$scope', function ($scope) {
-
-}]);
-
 //主页
-appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$timeout', function($scope, $http, $ionicSlideBoxDelegate, $sce, $timeout){
+appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$timeout', '$window', function($scope, $http, $ionicSlideBoxDelegate, $sce, $timeout, $window){
     $scope.activityItem = [];
 
     $scope.doRefresh = function () {
@@ -39,7 +11,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
             .success(
                 function (data, status, header, config) {
                     $scope.activityItem = data.activityItem;
-                    $scope.itemList = makeItemList(data.homeItem);
+                    $scope.itemList = makeItemList(data.homeItem, $window.innerWidth);
 
                     //更新轮播
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
@@ -69,7 +41,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 }]);
 
 //分类商品展示
-appModule.controller('categoryController',['$scope','$stateParams', '$http', function($scope, $stateParams, $http){
+appModule.controller('categoryController',['$scope','$stateParams', '$http', '$window', function($scope, $stateParams, $http, $window){
     $scope.categoryID = $stateParams.categoryID;
     $scope.categoryNam = $stateParams.categoryNam;
 
@@ -77,7 +49,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', fun
         $http.get("categoryInfo/" + $scope.categoryID)
             .success(
                 function(data, status, header, config){
-                    $scope.itemList = makeItemList(data);
+                    $scope.itemList = makeItemList(data, $window.innerWidth);
                 }
             ).error(
             function(data){
@@ -262,6 +234,12 @@ appModule.controller('uerCenterController', ['$scope', function($scope){
     $scope.isGroupShown = function(group) {
         return group.show;
     };
+
+    $scope.doRefresh = function () {
+        $scope.$broadcast('scroll.refreshComplete');
+    };
+
+    $scope.doRefresh();
 }]);
 
 //购物车
@@ -392,4 +370,23 @@ appModule.controller('searchController', ['$scope', '$http', function ($scope, $
             }
         );
     }
+
+    $scope.Categorys = [];
+    $scope.doRefresh = function () {
+        $http.get("categorys")
+            .success(
+                function(data, status, header, config){
+                    $scope.Categorys = data;
+                }
+            ).error(
+            function(data){
+                onError(data);
+            }).finally(function() {
+                // 停止广播ion-refresher
+                $scope.$broadcast('scroll.refreshComplete');
+            }
+        );
+    };
+
+    $scope.doRefresh();
 }]);

@@ -9,67 +9,66 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
     //$locationProvider.html5Mode(true);
 
     $stateProvider
-        .state('menu', {
-            url: "/menu",
-            templateUrl: "resources/views/templates/menu.html"
-        })
-        .state('menu.tabs', {
+        .state('tabs', {
+            abstract: true,
             url: "/tabs",
-            views: {
-                'menu' :{
-                    templateUrl: "resources/views/templates/tabs.html"
-                }
-            }
+            templateUrl: "resources/views/templates/tabs.html",
         })
-        .state('menu.tabs.home', {
+        .state('tabs.home', {
             url: "/home",
             views: {
                 'home-tab': {
-                    templateUrl: "resources/views/templates/home.html"
+                    templateUrl: "resources/views/templates/home.html",
+                    controller: 'homeController'
                 }
             }
         })
-        .state('menu.tabs.category', {
+        .state('tabs.find', {
+            url: "/find",
+            views: {
+                'find-tab': {
+                    templateUrl: "resources/views/templates/search.html",
+                    controller: 'searchController'
+                }
+            }
+        })
+        .state('tabs.category', {
             url: "/category/?categoryID & categoryNam",
             views: {
-                'category-tab': {
-                    templateUrl: "resources/views/templates/category.html"
+                'find-tab': {
+                    templateUrl: "resources/views/templates/category.html",
+                    controller: 'categoryController'
                 }
             }
         })
-        .state('menu.tabs.user', {
+        .state('tabs.iteminfo', {
+            url: "/iteminfo/?itemID",
+            views: {
+                'find-tab': {
+                    templateUrl: "resources/views/templates/iteminfo.html",
+                    controller: 'iteminfoController'
+                }
+            }
+        })
+        .state('tabs.user', {
             url: "/user",
             views: {
                 'user-tab': {
-                    templateUrl: "resources/views/templates/user.html"
+                    templateUrl: "resources/views/templates/user.html",
+                    controller: 'uerCenterController'
                 }
             }
         })
-        .state('menu.tabs.car', {
+        .state('tabs.car', {
             cache: false,
             url: "/car",
             views: {
                 'car-tab': {
-                    templateUrl: "resources/views/templates/car.html"
-                }
-            }
-        })
-        .state('menu.tabs.search', {
-            url: "/search",
-            views: {
-                'search-tab': {
-                    templateUrl: "resources/views/templates/search.html"
-                }
-            }
-        })
-        .state('menu.tabs.iteminfo', {
-            url: "/iteminfo/?itemID",
-            views: {
-                'iteminfo-tab': {
-                    templateUrl: "resources/views/templates/iteminfo.html"
+                    templateUrl: "resources/views/templates/car.html",
+                    controller: 'carController'
                 }
             }
         })
 
-    $urlRouterProvider.otherwise("/menu/tabs/home");
+    $urlRouterProvider.otherwise("/tabs/home");
 }]);
