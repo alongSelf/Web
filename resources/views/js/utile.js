@@ -8,6 +8,7 @@ function dd(data) {
 };
 
 function onError(data) {
+    layer.msg('加载页面出错,请稍后再试...');
     dd(data);
 };
 
@@ -68,6 +69,45 @@ function makeItemList(itemData, clientWidth) {
     }
 
     return itemList;
+}
+
+function appendItemList(itemOldeData, itemNewData, clientWidth) {
+    var lineNum = parseInt(clientWidth / 150);//每列多少个
+    var oldItemNum = itemOldeData.length;
+    var iAdded = 0;
+    if (0 != oldItemNum){
+        //补齐
+        if (itemOldeData[oldItemNum - 1].length != lineNum){
+            iAdded = lineNum - itemOldeData[oldItemNum - 1].length;
+            for (var i = 0; i < iAdded; i++){
+                itemOldeData[oldItemNum - 1].push(itemNewData[i]);
+            }
+        }
+    }
+
+    if (iAdded >= itemNewData.length){
+        return itemOldeData;
+    }
+
+    while (true){
+        var itemTmp = new Array;
+        for (var j = 0; j < lineNum; j++){
+            if (iAdded >= itemNewData.length){
+                itemOldeData.push(itemTmp);
+                return itemOldeData;
+            }
+
+            itemTmp.push(itemNewData[iAdded]);
+            iAdded++;
+        }
+
+        itemOldeData.push(itemTmp);
+        if (iAdded >= itemNewData.length) {
+            break;
+        }
+    }
+
+    return itemOldeData;
 }
 
 function getCarItemNum(carInfo) {

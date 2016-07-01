@@ -11,12 +11,26 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+Route::group([], function () {
     Route::get('/', 'MainController@index');
     Route::get('getConfig', 'MainController@getConfig');
     Route::get('categorys', 'MainController@categorys');
     Route::get('indexItem', 'MainController@indexItem');
-    Route::get('categoryInfo/{id}', 'MainController@categoryInfo');
+    Route::get('loadMoreIndexItem/{page}', 'MainController@loadMoreIndexItem');
+    Route::get('categoryInfo/{id}/{page}', 'MainController@categoryInfo');
     Route::get('itemInfo/{id}', 'MainController@itemInfo');
     Route::get('search/{param}', 'MainController@search');
+
+    //admin
+    Route::any('admin/login', 'Admin\LoginController@login');
+    Route::get('admin/code', 'Admin\LoginController@code');
+});
+
+Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'Admin'], function () {
+    Route::get('index', 'IndexController@index');
+    Route::get('quit', 'LoginController@quit');
+    Route::any('pass', 'IndexController@pass');
+    Route::get('info', 'IndexController@info');
+
+
 });

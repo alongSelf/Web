@@ -5,13 +5,17 @@ var appModule = angular.module('ionicApp.controller', ['ionicApp.server']);
 //主页
 appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$timeout', '$window', function($scope, $http, $ionicSlideBoxDelegate, $sce, $timeout, $window){
     $scope.activityItem = [];
+    $scope.itemList = [];
+    $scope.Page = 0;
+    $scope.moreData = true;
+    $scope.innerWidth = $window.innerWidth;
 
     $scope.doRefresh = function () {
         $http.get("indexItem")
             .success(
                 function (data, status, header, config) {
                     $scope.activityItem = data.activityItem;
-                    $scope.itemList = makeItemList(data.homeItem, $window.innerWidth);
+                    $scope.itemList = makeItemList(data.homeItem, $scope.innerWidth);
 
                     //更新轮播
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
@@ -29,6 +33,27 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 
     $scope.doRefresh();
 
+    $scope.loadMore = function () {
+        $scope.Page++;
+        $http.get("loadMoreIndexItem/" + $scope.Page)
+            .success(
+                function (data, status, header, config) {
+                    if (0 == data.length){
+                        $scope.moreData = false;
+                    }else {
+                        appendItemList($scope.itemList, data, $scope.innerWidth);
+                    }
+                }
+            ).error(
+            function (data) {
+                onError(data);
+                $scope.Page--;
+            }).finally(function () {
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+        );
+    };
+
     $scope.index = 0;
     $scope.go = function(index){
         $ionicSlideBoxDelegate.$getByHandle('delegateHandler').slide(index);
@@ -44,12 +69,15 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 appModule.controller('categoryController',['$scope','$stateParams', '$http', '$window', function($scope, $stateParams, $http, $window){
     $scope.categoryID = $stateParams.categoryID;
     $scope.categoryNam = $stateParams.categoryNam;
+    $scope.Page = 0;
+    $scope.moreData = true;
+    $scope.innerWidth = $window.innerWidth;
 
     $scope.doRefresh = function () {
-        $http.get("categoryInfo/" + $scope.categoryID)
+        $http.get("categoryInfo/" + $scope.categoryID + '/'+ $scope.Page)
             .success(
                 function(data, status, header, config){
-                    $scope.itemList = makeItemList(data, $window.innerWidth);
+                    $scope.itemList = makeItemList(data, $scope.innerWidth);
                 }
             ).error(
             function(data){
@@ -62,6 +90,27 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     };
 
     $scope.doRefresh();
+
+    $scope.loadMore = function () {
+        $scope.Page++;
+        $http.get("categoryInfo/" + $scope.categoryID + '/'+ $scope.Page)
+            .success(
+                function (data, status, header, config) {
+                    if (0 == data.length){
+                        $scope.moreData = false;
+                    }else {
+                        appendItemList($scope.itemList, data, $scope.innerWidth);
+                    }
+                }
+            ).error(
+            function (data) {
+                onError(data);
+                $scope.Page--;
+            }).finally(function () {
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+        );
+    };
 }]);
 
 //物品详情
@@ -85,6 +134,9 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                     }
                     if (data[0].spec) {
                         $scope.itemSpec = data[0].spec.split(";");
+                    }
+                    if (data[0].content) {
+                        $scope.imgContent = data[0].content.split(";");
                     }
 
                     $scope.itemInfo = data[0];

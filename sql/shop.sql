@@ -10,10 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-06-30 12:56:38
+Date: 2016-07-01 17:46:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `adminuser`
+-- ----------------------------
+DROP TABLE IF EXISTS `adminuser`;
+CREATE TABLE `adminuser` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(64) DEFAULT '' COMMENT '用户名',
+  `user_pass` varchar(256) DEFAULT '' COMMENT '密码',
+  `errortime` int(11) DEFAULT '0' COMMENT '登录验证错误时间',
+  `errorcount` int(11) DEFAULT '0' COMMENT '登录验证错误次数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of adminuser
+-- ----------------------------
+INSERT INTO `adminuser` VALUES ('1', 'admin', 'eyJpdiI6IlppSmV1MDJoZHhvZkFoZWhzbW1BWkE9PSIsInZhbHVlIjoicGVpUmh0MHhSd3VqT1wvNjl1QnhBclE9PSIsIm1hYyI6Ijg4NDE3MWMwYmExMzFmNDM0MzEzM2E0M2FiYTQ1YjIyZTM1ODVhOTM5NzQ3ZTQwNTg1OThhMmRmNjk4N2Q3NmUifQ==', '0', '0');
+INSERT INTO `adminuser` VALUES ('2', 'lqf', 'eyJpdiI6IlppSmV1MDJoZHhvZkFoZWhzbW1BWkE9PSIsInZhbHVlIjoicGVpUmh0MHhSd3VqT1wvNjl1QnhBclE9PSIsIm1hYyI6Ijg4NDE3MWMwYmExMzFmNDM0MzEzM2E0M2FiYTQ1YjIyZTM1ODVhOTM5NzQ3ZTQwNTg1OThhMmRmNjk4N2Q3NmUifQ==', '0', '0');
 
 -- ----------------------------
 -- Table structure for `category`
@@ -60,7 +79,7 @@ CREATE TABLE `shopitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT '' COMMENT '名称',
   `category` int(11) DEFAULT '0' COMMENT '类别ID',
-  `content` varchar(255) DEFAULT NULL COMMENT '图片详情',
+  `content` text COMMENT '商品图集',
   `describe` varchar(255) DEFAULT NULL COMMENT '描述',
   `prime_price` float(11,0) DEFAULT '0' COMMENT '原价',
   `cur_price` float(11,0) DEFAULT '0' COMMENT '现价',
@@ -78,7 +97,7 @@ CREATE TABLE `shopitem` (
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
-INSERT INTO `shopitem` VALUES ('1', '云中歌1', '1', '56f35f74b0ea4.jpg', '云中歌（套装全3册）', '124', '158', '1', '10', '56974ea4579b2.png', '56a1f2d2219f6.jpg;56a1f55e6a6a2.jpg;56974c014e6c8.jpg', '规格1;规格12', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('1', '云中歌1', '1', '56f35f74b0ea4.jpg;56f35f75b01d4.jpg;56f35f79e74cf.jpg', '云中歌（套装全3册）', '124', '158', '1', '10', '56974ea4579b2.png', '56a1f2d2219f6.jpg;56a1f55e6a6a2.jpg;56974c014e6c8.jpg', '规格1;规格12', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('2', '台湾 正品bitplay iPhone6 4.7 照相机手机壳 2', '2', '56f35f75b01d4.jpg', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', '5000', '5200', '-1', '50', '56a1f2d2219f6.jpg', '56974ea4579b2.png;home-img1.png;homeSlide-02.jpg', '规格2;规格22', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('3', '北鼎养生壶 K106 2L222', '3', '56f35f76d5c98.jpg', '北鼎养生壶 K106 2L及以下', '410', '500', '-1', '15', '56974c014e6c8.jpg', '56974f536b240.jpg;homeSlide-01.jpg;produce-01.jpg', '规格3;规格32', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('4', '北鼎养生壶 K106 2L111', '5', '56f35f77adab6.jpg', 'SNAP! PRO 台湾 正品bitplay iPhone6 4.7 照相机手机壳 还原传统拍照的顺畅感！', '4', '7', '-1', '1', '56a1f2d2219f6.jpg', '56974ea4579b2.png;home-img1.png;homeSlide-02.jpg', null, '1', '0', '1');

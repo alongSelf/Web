@@ -40,7 +40,7 @@
             <br>
 
             <span style="font-weight:bold">宝贝介绍:</span>
-            <img image-lazy-src="uploads/[[itemInfo.content]]"
+            <img ng-repeat="imgSrc in imgContent" image-lazy-src="uploads/[[imgSrc]]"
                  style="width: 100%" image-lazy-loader="bubbles">
         </div>
 
