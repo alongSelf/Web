@@ -17,8 +17,16 @@ class CommonController extends Controller
             $entension = $file -> getClientOriginalExtension(); //上传文件的后缀.
             $newName = date('YmdHis').mt_rand(100,999).'.'.$entension;
             $path = $file -> move(base_path().'/uploads',$newName);
-            $filepath = 'uploads/'.$newName;
-            return $filepath;
+            return $newName;
         }
+    }
+
+    public function removeFile($name)
+    {
+        if(0 == strlen($name)){
+            return;
+        }
+        
+        unlink(base_path().'/uploads/'.$name);
     }
 }

@@ -21,7 +21,7 @@ class MainController extends Controller
 
     public function categorys()
     {
-        $categs = Category::select('id', 'title', 'img')->where('display', 1)->orderBy('sort')->get();
+        $categs = Category::select('id', 'title', 'img')->orderBy('sort')->get();
         return $categs;
     }
 
@@ -33,14 +33,14 @@ class MainController extends Controller
     private function getIndexItem($page)
     {
         return ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
-            where('display', 1)->where('showindex', 1)->where('stock', '<>', 0)->
+            where('showindex', 1)->where('stock', '<>', 0)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
     }
 
     public function indexItem()
     {
         $activityItem = ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
-            where('display', 1)->where('activity', 1)->where('stock', '<>', 0)->get();
+            where('activity', 1)->where('stock', '<>', 0)->get();
         $homeItem = $this->getIndexItem(0);
 
         return compact('activityItem', 'homeItem');
@@ -53,7 +53,7 @@ class MainController extends Controller
 
     private function getCategoryInfo($id, $page)
     {
-        return ShopItem::where('display', 1)->where('category', $id)->where('stock', '<>', 0)->
+        return ShopItem::where('category', $id)->where('stock', '<>', 0)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
     }
 
@@ -72,8 +72,7 @@ class MainController extends Controller
     public function search($param)
     {
         $searchInfo = ShopItem::select('id', 'name')->
-            where('display', 1)->where('stock', '<>', 0)->
-            where('name','like','%'.$param.'%')->get();
+            where('stock', '<>', 0)->where('name','like','%'.$param.'%')->get();
 
         return $searchInfo;
     }

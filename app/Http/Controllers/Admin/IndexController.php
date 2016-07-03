@@ -22,7 +22,7 @@ class IndexController extends CommonController
         return view('admin.info');
     }
 
-    //更改员密码
+    //更改密码
     public function pass()
     {
         if($input = Input::all()){

@@ -1,5 +1,5 @@
 <?php
-SESSION_START();
+
 class Code{
 
 	//资源

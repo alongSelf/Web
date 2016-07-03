@@ -27,10 +27,15 @@ Route::group([], function () {
 });
 
 Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'Admin'], function () {
+    Route::any('upload', 'CommonController@upload');
+
     Route::get('index', 'IndexController@index');
     Route::get('quit', 'LoginController@quit');
     Route::any('pass', 'IndexController@pass');
     Route::get('info', 'IndexController@info');
 
+    Route::post('category/changeOrder', 'CategoryController@changeOrder');
+    Route::resource('category', 'CategoryController');
 
+    Route::resource('shop', 'ShopController');
 });
