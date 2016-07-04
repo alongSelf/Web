@@ -17,23 +17,25 @@ class ShopController extends CommonController
     //
     public function index()
     {
+        $cate_id = -1;
         $cate = Category::all();
         $data = ShopItem::orderBy('id','desc')->paginate(10);
-        return view('admin.shop.index',compact('data', 'cate'));
+        return view('admin.shop.index', compact('data', 'cate', 'cate_id'));
     }
 
     public function searchbycate($cate_id)
     {
         $cate = Category::all();
         $data = ShopItem::where('category', $cate_id)->orderBy('id','desc')->paginate(10);
-        return view('admin.shop.index',compact('data', 'cate'));
+        return view('admin.shop.index',compact('data', 'cate', 'cate_id'));
     }
 
     public function searchbyname($name)
     {
+        $cate_id = -1;
         $cate = Category::all();
         $data = ShopItem::where('name','like','%'.$name.'%')->orderBy('id','desc')->paginate(10);
-        return view('admin.shop.index',compact('data', 'cate'));
+        return view('admin.shop.index', compact('data', 'cate', 'cate_id'));
     }
 
     public function create()

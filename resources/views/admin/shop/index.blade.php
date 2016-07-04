@@ -16,9 +16,9 @@
 
             <select name="category" onchange="searchbycate(this)">
                 @foreach($cate as $c)
-                    <option value="{{$c->id}}" >
-                        {{$c->title}}
-                    </option>
+                    <option value="{{$c->id}}"
+                            @if($c->id==$cate_id) selected @endif
+                    >{{$c->title}}</option>
                 @endforeach
             </select>
 
