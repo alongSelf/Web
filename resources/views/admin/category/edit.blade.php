@@ -6,6 +6,14 @@
     </div>
     <!--面包屑导航 结束-->
 
+    <script src="{{asset('resources/views/uploadify/jquery.uploadify.min.js')}}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('resources/views/uploadify/uploadify.css')}}">
+    <style>
+        .uploadify{display:inline-block;}
+        .uploadify-button{border:none; border-radius:5px; margin-top:8px;}
+        table.add_tab tr td span.uploadify-button-text{color: #FFF; margin:0;}
+    </style>
+
     <!--结果集标题与导航组件 开始-->
     <div class="result_wrap">
         <div class="result_title">
@@ -29,7 +37,6 @@
         <form action="{{url('admin/category/'.$data->id)}}" method="post">
             <input type="hidden" name="_method" value="put">
             {{csrf_field()}}
-            <input type="text" name="id" hidden="true" value="{{$data->id}}">
             <table class="add_tab">
                 <tbody>
                 <tr>
@@ -40,36 +47,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>图标：</th>
+                    <th>图标：</th>
                     <td>
                         <input type="text" size="50" name="img" value="{{$data->img}}">
                         <input id="file_upload" name="file_upload" type="file" multiple="true">
                         <img alt="" id="category_img" style="max-width: 350px; max-height:100px;" src="{{asset('uploads/'.$data->img)}}">
-                        <script src="{{asset('resources/views/uploadify/jquery.uploadify.min.js')}}" type="text/javascript"></script>
-                        <link rel="stylesheet" type="text/css" href="{{asset('resources/views/uploadify/uploadify.css')}}">
-                        <script type="text/javascript">
-                            <?php $timestamp = time();?>
-                            $(function() {
-                                $('#file_upload').uploadify({
-                                    'buttonText' : '图片上传',
-                                    'formData'     : {
-                                        'timestamp' : '<?php echo $timestamp;?>',
-                                        '_token'     : "{{csrf_token()}}"
-                                    },
-                                    'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
-                                    'uploader' : "{{url('admin/upload')}}",
-                                    'onUploadSuccess' : function(file, data, response) {
-                                        $('input[name=img]').val(data);
-                                        $('#category_img').attr('src','/uploads/'+data);
-                                    }
-                                });
-                            });
-                        </script>
-                        <style>
-                            .uploadify{display:inline-block;}
-                            .uploadify-button{border:none; border-radius:5px; margin-top:8px;}
-                            table.add_tab tr td span.uploadify-button-text{color: #FFF; margin:0;}
-                        </style>
                     </td>
                 </tr>
                 <tr>
@@ -89,5 +71,24 @@
             </table>
         </form>
     </div>
+
+    <script type="text/javascript">
+        <?php $timestamp = time();?>
+        $(function() {
+            $('#file_upload').uploadify({
+                'buttonText' : '图片上传',
+                'formData'     : {
+                    'timestamp' : '<?php echo $timestamp;?>',
+                    '_token'     : "{{csrf_token()}}"
+                },
+                'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
+                'uploader' : "{{url('admin/upload')}}",
+                'onUploadSuccess' : function(file, data, response) {
+                    $('input[name=img]').val(data);
+                    $('#category_img').attr('src','/uploads/'+data);
+                }
+            });
+        });
+    </script>
 
 @endsection

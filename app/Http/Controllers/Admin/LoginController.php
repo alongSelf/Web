@@ -47,7 +47,7 @@ class LoginController extends CommonController
                 return back()->with('msg','密码错误！');
             }
 
-            session(['user'=>$user]);
+            session(['admin_user'=>$user]);
             return redirect('admin/index');
 
         }else {
@@ -62,7 +62,7 @@ class LoginController extends CommonController
 
     public function quit()
     {
-        session(['user'=>null]);
+        session(['admin_user'=>null]);
         return redirect('admin/login');
     }
 

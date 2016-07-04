@@ -130,13 +130,13 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             .success(
                 function (data, status, header, config) {
                     if (data[0].showimg) {
-                        $scope.slideImg = data[0].showimg.split(";");
+                        $scope.slideImg = JSON.parse(data[0].showimg);
                     }
                     if (data[0].spec) {
-                        $scope.itemSpec = data[0].spec.split(";");
+                        $scope.itemSpec = JSON.parse(data[0].spec);
                     }
                     if (data[0].content) {
-                        $scope.imgContent = data[0].content.split(";");
+                        $scope.imgContent = JSON.parse(data[0].content);
                     }
 
                     $scope.itemInfo = data[0];
@@ -182,6 +182,17 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.confirm = function() {
         if (!checkInt($scope.PopData.chooseNum, true)) {
             return;
+        }
+
+        $scope.PopData.itemSpec = "";
+        for(var specNam in $scope.itemSpec){
+            var specVal = document.getElementById(specNam).value;
+            $scope.PopData.itemSpec += (specNam + ":" + specVal + "  ");
+        }
+
+        if (0 != $scope.PopData.itemSpec.length){
+            $scope.PopData.itemSpec = $scope.PopData.itemSpec.substring(0,
+                $scope.PopData.itemSpec.length - 2);
         }
 
         $scope.isCancel = false;

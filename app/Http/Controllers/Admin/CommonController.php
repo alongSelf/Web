@@ -26,7 +26,10 @@ class CommonController extends Controller
         if(0 == strlen($name)){
             return;
         }
-        
-        unlink(base_path().'/uploads/'.$name);
+
+        $filePath = base_path().'/uploads/'.$name;
+        if (file_exists($filePath)){
+            unlink($filePath);
+        }
     }
 }

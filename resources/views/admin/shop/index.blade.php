@@ -9,11 +9,23 @@
 <!--搜索结果页面 列表 开始-->
 
 <div class="result_wrap">
-    <div class="result_title">
-        <h3>宝贝列表</h3>
-    </div>
     <!--快捷导航 开始-->
     <div class="result_content">
+        <div class="short_wrap">
+            <a href="{{url('admin/shop')}}"><i class="fa"></i>全部宝贝</a>
+
+            <select name="category" onchange="searchbycate(this)">
+                @foreach($cate as $c)
+                    <option value="{{$c->id}}" >
+                        {{$c->title}}
+                    </option>
+                @endforeach
+            </select>
+
+            <input type="text" id="search" name="search" value=""><input type="button" onclick="searchbynam()" value="搜索">
+        </div>
+
+        <br>
         <div class="short_wrap">
             <a href="{{url('admin/shop/create')}}"><i class="fa fa-plus"></i>添加宝贝</a>
         </div>
@@ -83,6 +95,20 @@
         }, function(){
 
         });
+    }
+    
+    function searchbycate(obj) {
+        window.location.href='{{url('admin/shop/searchbycate')}}/'+obj.value+'';
+    }
+    
+    function searchbynam() {
+        var inputVal = document.getElementById('search').value;
+        if (0 == inputVal.length){
+            window.location.href='{{url('admin/shop')}}';
+            return;
+        }
+
+        window.location.href='{{url('admin/shop/searchbyname')}}/'+inputVal+'';
     }
 
 </script>

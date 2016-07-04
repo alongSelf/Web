@@ -13,7 +13,7 @@ class IndexController extends CommonController
 {
     public function index()
     {
-        $uerNam = session('user')->user_name;
+        $uerNam = session('admin_user')->user_name;
         return view('admin.index', compact('uerNam'));
     }
 
@@ -38,10 +38,10 @@ class IndexController extends CommonController
             $validator = Validator::make($input,$rules,$message);
 
             if($validator->passes()){
-                $user = AdminUser::where('user_name', session('user')->user_name)->first();
+                $user = AdminUser::where('user_name', session('admin_user')->user_name)->first();
                 if (!$user
                     || 0 == count($user)){
-                    session(['user'=>null]);
+                    session(['admin_user'=>null]);
                     return redirect('admin/login')->with('msg','未找到用户！');
                 }
 

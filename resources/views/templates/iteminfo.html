@@ -40,8 +40,10 @@
             <br>
 
             <span style="font-weight:bold">宝贝介绍:</span>
-            <img ng-repeat="imgSrc in imgContent" image-lazy-src="uploads/[[imgSrc]]"
-                 style="width: 100%" image-lazy-loader="bubbles">
+            <div style="width: 100%; margin:0;padding:0;">
+                <img ng-repeat="imgSrc in imgContent" image-lazy-src="uploads/[[imgSrc]]"
+                     style="width: 100%;" image-lazy-loader="bubbles">
+            </div>
         </div>
 
     </ion-content>

@@ -37,5 +37,7 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::post('category/changeOrder', 'CategoryController@changeOrder');
     Route::resource('category', 'CategoryController');
 
+    Route::any('shop/searchbycate/{cate_id}', 'ShopController@searchbycate');
+    Route::any('shop/searchbyname/{name}', 'ShopController@searchbyname');
     Route::resource('shop', 'ShopController');
 });

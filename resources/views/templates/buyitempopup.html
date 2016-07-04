@@ -1,5 +1,5 @@
 <!--加入购物车、立即购买弹出页-->
-<ion-popover-view>
+<ion-popover-view >
     <ion-content scroll="true" overflow-scroll="true" lazy-scroll>
         <div style="padding-left:5px; padding-right: 5px;">
             <div>
@@ -8,10 +8,12 @@
                 <div style="color: red;">[[itemInfo.cur_price | currency:'￥']]</div>
             </div>
             <div ng-if="itemSpec">
-                <span> 规格:</span>
-                <select ng-model="PopData.itemSpec" style="width: 100%">
-                    <option id="[[spec]]" ng-repeat="spec in itemSpec">[[spec]]</option>
-                </select>
+                <div ng-repeat="(key,value) in itemSpec">
+                    <span>[[key]]</span>
+                    <select id="[[key]]" style="width: 100%">
+                        <option id="[[spec]]" ng-repeat="spec in value">[[spec]]</option>
+                    </select>
+                </div>
             </div>
 
             <div>

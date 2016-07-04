@@ -53,13 +53,11 @@ class CategoryController extends CommonController
         $input = Input::except('_token');
         $rules = [
             'title'=>'required',
-            'img'=>'required',
             'sort'=>'required',
         ];
 
         $message = [
             'title.required'=>'分类名称不能为空！',
-            'img.required'=>'分类图标不能为空！',
             'sort.required'=>'分类排序不能为空！',
         ];
 
