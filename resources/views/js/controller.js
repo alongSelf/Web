@@ -131,6 +131,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                 function (data, status, header, config) {
                     if (data[0].showimg) {
                         $scope.slideImg = JSON.parse(data[0].showimg);
+                        console.log($scope.slideImg);
                     }
                     if (data[0].spec) {
                         $scope.itemSpec = JSON.parse(data[0].spec);

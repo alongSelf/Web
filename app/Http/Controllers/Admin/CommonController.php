@@ -15,7 +15,7 @@ class CommonController extends Controller
         $file = Input::file('Filedata');
         if($file -> isValid()){
             $entension = $file -> getClientOriginalExtension(); //上传文件的后缀.
-            $newName = date('YmdHis').mt_rand(100,999).'.'.$entension;
+            $newName = uniqid().'.'.$entension;
             $path = $file -> move(base_path().'/uploads',$newName);
             return $newName;
         }
