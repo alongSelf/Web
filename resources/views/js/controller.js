@@ -66,7 +66,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 }]);
 
 //分类商品展示
-appModule.controller('categoryController',['$scope','$stateParams', '$http', '$window', function($scope, $stateParams, $http, $window){
+appModule.controller('categoryController',['$scope','$stateParams', '$http', '$window', '$ionicHistory', function($scope, $stateParams, $http, $window, $ionicHistory){
     $scope.categoryID = $stateParams.categoryID;
     $scope.categoryNam = $stateParams.categoryNam;
     $scope.Page = 0;
@@ -111,6 +111,10 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
             }
         );
     };
+
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
 }]);
 
 //物品详情
@@ -131,8 +135,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                 function (data, status, header, config) {
                     if (data[0].showimg) {
                         $scope.slideImg = JSON.parse(data[0].showimg);
-                        console.log($scope.slideImg);
-                    }
+                      }
                     if (data[0].spec) {
                         $scope.itemSpec = JSON.parse(data[0].spec);
                     }
