@@ -40,4 +40,9 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('shop/searchbycate/{cate_id}', 'ShopController@searchbycate');
     Route::any('shop/searchbyname/{name}', 'ShopController@searchbyname');
     Route::resource('shop', 'ShopController');
+
+    Route::get('user/index', 'UserController@index');
+
+
+    Route::get('order/index', 'OrderController@index');
 });

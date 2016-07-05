@@ -32,14 +32,14 @@
 		<li>
 			<h3><i class="fa fa-fw fa-user"></i>用户管理</h3>
 			<ul class="sub_menu" style="display: block;">
-				<li><a href="{{url('admin/links')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>用户</a></li>
+				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>用户</a></li>
 			</ul>
 		</li>
 
 		<li>
 			<h3><i class="fa fa-fw fa-credit-card"></i>订单管理</h3>
 			<ul class="sub_menu" style="display: block;">
-				<li><a href="{{url('admin/links')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>订单</a></li>
+				<li><a href="{{url('admin/order/index')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>订单</a></li>
 			</ul>
 		</li>
 	</ul>
