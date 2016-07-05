@@ -126,16 +126,17 @@ class ShopController extends CommonController
                     $oldShowImg =  json_decode($data->showimg);
                     $newShowImg = json_decode($input['showimg']);
                     $bHave = false;
-                    foreach ($oldShowImg as $old){
-                        foreach ($newShowImg as $new){
-                            if ($old == $new){
+                    for($i = 0; $i < count($oldShowImg); $i++){
+                        $bHave = false;
+                        for($j = 0; $j < count($newShowImg); $j++){
+                            if ($oldShowImg[$i] == $newShowImg[$j]){
                                 $bHave = true;
                                 break;
                             }
                         }
 
                         if (!$bHave){
-                            $this->removeFile($old);
+                            $this->removeFile($oldShowImg[$i]);
                         }
                     }
                 }
@@ -144,16 +145,17 @@ class ShopController extends CommonController
                     $oldContentImg = json_decode($data->content);
                     $newContentImg = json_decode($input['content']);
                     $bHave = false;
-                    foreach ($oldContentImg as $old){
-                        foreach ($newContentImg as $new){
-                            if ($old == $new){
+                    for($i = 0; $i < count($oldContentImg); $i++){
+                        $bHave = false;
+                        for($j = 0; $j < count($newContentImg); $j++){
+                            if ($oldContentImg[$i] == $newContentImg[$j]){
                                 $bHave = true;
                                 break;
                             }
                         }
 
                         if (!$bHave){
-                            $this->removeFile($old);
+                            $this->removeFile($oldContentImg[$i]);
                         }
                     }
                 }
