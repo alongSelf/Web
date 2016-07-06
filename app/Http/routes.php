@@ -12,14 +12,17 @@
 */
 
 Route::group([], function () {
-    Route::get('/', 'MainController@index');
-    Route::get('getConfig', 'MainController@getConfig');
-    Route::get('categorys', 'MainController@categorys');
-    Route::get('indexItem', 'MainController@indexItem');
-    Route::get('loadMoreIndexItem/{page}', 'MainController@loadMoreIndexItem');
-    Route::get('categoryInfo/{id}/{page}', 'MainController@categoryInfo');
-    Route::get('itemInfo/{id}', 'MainController@itemInfo');
-    Route::get('search/{param}', 'MainController@search');
+    Route::get('/', 'ShopController@index');
+    Route::get('getConfig', 'ShopController@getConfig');
+    Route::get('categorys', 'ShopController@categorys');
+    Route::get('indexItem', 'ShopController@indexItem');
+    Route::get('loadMoreIndexItem/{page}', 'ShopController@loadMoreIndexItem');
+    Route::get('categoryInfo/{id}/{page}', 'ShopController@categoryInfo');
+    Route::get('itemInfo/{id}', 'ShopController@itemInfo');
+    Route::get('itemName/{id}', 'ShopController@itemName');
+    Route::get('itemContent/{id}', 'ShopController@itemContent');
+    Route::get('itemEvaluate/{id}/{page}', 'ShopController@itemEvaluate');
+    Route::get('search/{param}', 'ShopController@search');
 
     //admin
     Route::any('admin/login', 'Admin\LoginController@login');

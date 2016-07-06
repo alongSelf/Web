@@ -33,7 +33,7 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
             }
         })
         .state('tabs.category', {
-            url: "/category/?categoryID & categoryNam",
+            url: "/category/:categoryID/:categoryNam",
             views: {
                 'home-tab': {
                     templateUrl: "resources/views/templates/category.html",
@@ -42,11 +42,29 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
             }
         })
         .state('tabs.iteminfo', {
-            url: "/iteminfo/?itemID",
+            url: "/iteminfo/:itemID",
             views: {
                 'home-tab': {
                     templateUrl: "resources/views/templates/iteminfo.html",
                     controller: 'iteminfoController'
+                }
+            }
+        })
+        .state('tabs.itemcontent', {
+            url: "/itemcontent/:itemID",
+            views: {
+                'home-tab': {
+                    templateUrl: "resources/views/templates/itemcontent.html",
+                    controller: 'itemContentController'
+                }
+            }
+        })
+        .state('tabs.itemevaluate', {
+            url: "/itemevaluate/:itemID",
+            views: {
+                'home-tab': {
+                    templateUrl: "resources/views/templates/itemevaluate.html",
+                    controller: 'itemEvaluatesController'
                 }
             }
         })

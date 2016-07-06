@@ -98,7 +98,7 @@
 
                     <th>首页显示(0否1是)：</th>
                     <td>
-                        <input type="number" name="showindex" value="0">
+                        <input type="number" name="showindex" value="1">
                     </td>
                 </tr>
                 <tr>

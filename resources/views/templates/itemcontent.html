@@ -1,0 +1,17 @@
+<!--物品图片详情-->
+<ion-view view-title="[[itemName]]">
+    <!--返回-->
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-chevron-left" ng-click="goBack()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content scroll="true" overflow-scroll="true" lazy-scroll>
+        <div style="width: 100%;">
+            <img ng-repeat="imgSrc in imgContent" image-lazy-src="uploads/[[imgSrc]]"
+                 style="width: 100%;" image-lazy-loader="bubbles">
+        </div>
+    </ion-content>
+</ion-view>

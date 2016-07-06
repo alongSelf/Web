@@ -16,6 +16,17 @@
             </ion-slide>
         </ion-slide-box>
 
+        <div class="row">
+            <div class="col col-10">
+                <img ng-src="resources/views/sysimg/ic_scroll_bar.gif" style="width: 100%; height: 100%">
+            </div>
+            <div class="col col-90">
+                <marquee direction="left" scrollamount="3">
+                    [[Notice]]
+                </marquee>
+            </div>
+        </div>
+
         <!--首页物品展示-->
         <div class="row" ng-repeat="items in itemList">
             <div class="col col-[[perItemWidth]]" ng-repeat="item in items">

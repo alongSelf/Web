@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-04 21:15:57
+Date: 2016-07-06 17:55:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `adminuser` (
   `errortime` int(11) DEFAULT '0' COMMENT '登录验证错误时间',
   `errorcount` int(11) DEFAULT '0' COMMENT '登录验证错误次数',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of adminuser
@@ -71,6 +71,58 @@ CREATE TABLE `config` (
 INSERT INTO `config` VALUES ('2', '微信商城');
 
 -- ----------------------------
+-- Table structure for `evaluates`
+-- ----------------------------
+DROP TABLE IF EXISTS `evaluates`;
+CREATE TABLE `evaluates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `itemid` int(11) DEFAULT '0' COMMENT '物品ID',
+  `star` int(11) DEFAULT '10' COMMENT '评分',
+  `evaluate` varchar(255) DEFAULT '' COMMENT '评价',
+  `userid` int(11) DEFAULT '0',
+  `orderid` int(11) DEFAULT '0' COMMENT '订单ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of evaluates
+-- ----------------------------
+INSERT INTO `evaluates` VALUES ('1', '11', '10', '谢谢啊啊撒的', '0', '0');
+INSERT INTO `evaluates` VALUES ('2', '11', '10', 'asada的撒发生地方', '0', '0');
+INSERT INTO `evaluates` VALUES ('3', '11', '10', '56时代发生地方', '0', '0');
+INSERT INTO `evaluates` VALUES ('4', '11', '10', '撒地方快快快', '0', '0');
+INSERT INTO `evaluates` VALUES ('5', '11', '10', '永远永远永远永远永远', '0', '0');
+
+-- ----------------------------
+-- Table structure for `notice`
+-- ----------------------------
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE `notice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `notice` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of notice
+-- ----------------------------
+INSERT INTO `notice` VALUES ('1', '嘻嘻嘻嘻嘻嘻嘻嘻惺惺惜惺惺');
+INSERT INTO `notice` VALUES ('2', '2222xxxxxxxxxxxxzcxz是多少');
+
+-- ----------------------------
+-- Table structure for `orders`
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `shopitem`
 -- ----------------------------
 DROP TABLE IF EXISTS `shopitem`;
@@ -106,4 +158,21 @@ INSERT INTO `shopitem` VALUES ('18', 'Lion狮王 美白牙膏', '14', '[\"201607
 INSERT INTO `shopitem` VALUES ('19', '和光堂爽身粉', '15', '[\"20160704170039771.jpg\",\"20160704170042328.jpg\",\"20160704170044960.jpg\"]', '和光堂爽身粉', '68', '49', '-1', '0', '20160704170012983.png', '[\"20160704170032337.png\",\"20160704170032391.png\",\"20160704170033941.png\",\"20160704170033750.png\"]', '', '1', '1');
 INSERT INTO `shopitem` VALUES ('20', '花王纸尿裤', '15', '[\"20160704170252750.jpg\"]', '花王纸尿裤   L54片  日本原装进口', '178', '158', '-1', '0', '20160704170218249.png', '[\"20160704170225771.png\",\"20160704170225387.jpg\",\"20160704170225207.png\",\"20160704170225128.png\",\"20160704170225187.png\"]', '', '1', '1');
 INSERT INTO `shopitem` VALUES ('21', 'VAPE  KT 驱蚊手环', '16', '[\"20160704170443593.jpg\",\"20160704170453299.jpg\",\"20160704170502709.jpg\",\"20160704170514796.jpg\"]', 'VAPE  KT 驱蚊手环', '158', '139', '-1', '0', '20160704170355838.png', '[\"20160704170428541.png\",\"20160704170428546.png\",\"20160704170428913.png\",\"20160704170428436.png\",\"20160704170428819.png\"]', '', '0', '1');
-INSERT INTO `shopitem` VALUES ('22', '安耐晒', '16', '[\"20160704170714400.jpg\",\"20160704170725931.jpg\"]', '安耐晒', '198', '268', '-1', '0', '20160704170605420.png', '[\"20160704170617857.png\",\"20160704170617135.png\",\"20160704170617878.png\"]', '', '0', '1');
+INSERT INTO `shopitem` VALUES ('22', '安耐晒', '16', '[\"20160704170714400.jpg\",\"20160704170725931.jpg\"]', '安耐晒', '198', '268', '-1', '0', '20160704170605420.png', '[\"20160704170617857.png\",\"20160704170617135.png\",\"20160704170617878.png\"]', '{\"颜色\":[\"红\",\"黄\",\"绿\"],\"大小\":[\"M\",\"X\"]}', '0', '1');
+
+-- ----------------------------
+-- Table structure for `users`
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wxid` varchar(128) DEFAULT '' COMMENT '微信ID',
+  `email` varchar(250) DEFAULT '' COMMENT 'email',
+  `phone` varchar(50) DEFAULT '' COMMENT '电话',
+  `consume` int(11) DEFAULT '0' COMMENT '总消费',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------

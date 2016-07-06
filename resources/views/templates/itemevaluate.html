@@ -1,0 +1,27 @@
+<!--评价-->
+<ion-view view-title="[[itemName]]">
+    <!--返回-->
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-chevron-left" ng-click="goBack()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content scroll="true" overflow-scroll="true" lazy-scroll>
+        <ion-list ng-if="Evaluates">
+            <ion-item ion-item nav-clear menu-close
+                      ng-repeat="Evaluate in Evaluates">
+                <div>名字&nbsp&nbsp[[Evaluate.star]]</div>
+                <br/>
+                <div style="margin-bottom: 0">[[Evaluate.evaluate]]</div>
+            </ion-item>
+        </ion-list>
+
+        <div ng-if="!Evaluates">
+            暂无评价
+        </div>
+
+        <ion-infinite-scroll ng-if="moreData" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+    </ion-content>
+</ion-view>

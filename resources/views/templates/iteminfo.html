@@ -36,14 +36,13 @@
                     </span>
                 </div>
             </div>
-
             <br>
+        </div>
 
-            <span style="font-weight:bold">宝贝介绍:</span>
-            <div style="width: 100%; margin:0;padding:0;">
-                <img ng-repeat="imgSrc in imgContent" image-lazy-src="uploads/[[imgSrc]]"
-                     style="width: 100%;" image-lazy-loader="bubbles">
-            </div>
+        <!--评价详情等-->
+        <div class="row" style="font-weight:bold">
+            <div class="col col-20" ui-sref="tabs.itemcontent({itemID: [[itemID]]})">宝贝详情</div>
+            <div class="col col-20" ui-sref="tabs.itemevaluate({itemID: [[itemID]]})">点价</div>
         </div>
 
     </ion-content>

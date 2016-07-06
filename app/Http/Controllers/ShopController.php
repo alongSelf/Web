@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Model\Category;
 use App\http\Model\Config;
+use App\http\Model\Evaluates;
+use App\http\Model\Notice;
 use App\http\model\ShopItem;
 
-class MainController extends Controller
+class ShopController extends Controller
 {
     public function index()
     {
@@ -42,8 +44,10 @@ class MainController extends Controller
         $activityItem = ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
             where('activity', 1)->where('stock', '<>', 0)->get();
         $homeItem = $this->getIndexItem(0);
+        $notice = Notice::orderBy('id','desc')->first();
 
-        return compact('activityItem', 'homeItem');
+
+        return compact('activityItem', 'homeItem', 'notice');
     }
 
     public function loadMoreIndexItem($page)
@@ -64,10 +68,31 @@ class MainController extends Controller
 
     public function itemInfo($id)
     {
-        $itemInfo = ShopItem::where('id', $id)->get();
-
+        $itemInfo = ShopItem::find($id);
+        $itemInfo->content = null;
         return $itemInfo;
     }
+
+    public function itemContent($id)
+    {
+        $itemContent = ShopItem::select('name', 'content')->find($id);
+
+        return $itemContent;
+    }
+
+    public function itemName($id)
+    {
+        $itemNam = ShopItem::select('name')->find($id);
+
+        return $itemNam;
+    }
+
+    public function itemEvaluate($id, $page)
+    {
+        return Evaluates::where('itemid', $id)->
+            skip($page * $this->numPerPage())->take($this->numPerPage())->orderBy('id','desc')->get();
+    }
+
 
     public function search($param)
     {

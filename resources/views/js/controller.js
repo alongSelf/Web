@@ -16,6 +16,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
                 function (data, status, header, config) {
                     $scope.activityItem = data.activityItem;
                     $scope.itemList = makeItemList(data.homeItem, $scope.innerWidth);
+                    $scope.Notice = data.notice.notice;
 
                     //更新轮播
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
@@ -130,24 +131,21 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
     //数据获取
     $scope.doRefresh = function () {
-        $http.get("itemInfo/" + $scope.itemID)
+        $http.get("itemInfo/" + $stateParams.itemID)
             .success(
                 function (data, status, header, config) {
-                    if (data[0].showimg) {
-                        $scope.slideImg = JSON.parse(data[0].showimg);
+                    if (data.showimg) {
+                        $scope.slideImg = JSON.parse(data.showimg);
                       }
-                    if (data[0].spec) {
-                        $scope.itemSpec = JSON.parse(data[0].spec);
-                    }
-                    if (data[0].content) {
-                        $scope.imgContent = JSON.parse(data[0].content);
+                    if (data.spec) {
+                        $scope.itemSpec = JSON.parse(data.spec);
                     }
 
-                    $scope.itemInfo = data[0];
+                    $scope.itemInfo = data;
 
-                    var f = parseFloat(data[0].cur_price);
+                    var f = parseFloat(data.cur_price);
                     $scope.cur_price = '惊爆价:￥' + f.toFixed(2);
-                    $scope.buynum = '已售:' + data[0].buynum;
+                    $scope.buynum = '已售:' + data.buynum;
 
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
@@ -275,6 +273,72 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.$on('$ionicView.beforeEnter',function(){
         $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();
     })
+}]);
+
+//图片详情
+appModule.controller('itemContentController', ['$scope','$stateParams', '$ionicHistory', '$http', function($scope, $stateParams, $ionicHistory, $http){
+    $http.get("itemContent/" + $stateParams.itemID)
+        .success(
+            function (data, status, header, config) {
+                $scope.itemName = data.name;
+                if (data.content) {
+                    $scope.imgContent = JSON.parse(data.content);
+                }
+            }
+        ).error(
+        function (data) {
+            onError(data);
+        });
+
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//评价
+appModule.controller('itemEvaluatesController', ['$scope','$stateParams', '$ionicHistory', '$http', function($scope, $stateParams, $ionicHistory, $http){
+    $http.get("itemName/" + $stateParams.itemID)
+        .success(
+            function (data, status, header, config) {
+                $scope.itemName = data.name;
+            }
+        ).error(
+        function (data) {
+            onError(data);
+        });
+
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+
+    $scope.Page = 0;
+    $scope.moreData = true;
+    $scope.loadMore = function () {
+        $http.get("itemEvaluate/" + $stateParams.itemID + '/'+ $scope.Page)
+            .success(
+                function (data, status, header, config) {
+                    if (0 == data.length){
+                        $scope.moreData = false;
+                    }else {
+                        if ($scope.Evaluates){
+                            $scope.Evaluates = $scope.Evaluates.concat(data);
+                        }else {
+                            $scope.Evaluates = data;
+                        }
+                    }
+                }
+            ).error(
+            function (data) {
+                onError(data);
+                $scope.Page--;
+            }).finally(function () {
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+        );
+        $scope.Page++;
+    };
+
+    $scope.loadMore();
 }]);
 
 //用户中心
