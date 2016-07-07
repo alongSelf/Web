@@ -18,7 +18,9 @@
 
             <div>
                 <span>数量:</span>
-                <input type="text" ng-model="PopData.chooseNum" ng-change="checkInput(PopData.chooseNum)" value="1"/>
+                <select ng-model="PopData.chooseNum" style="width: 100%">
+                    <option id="[[num]]" ng-repeat="num in PopData.itemNums">[[num]]</option>
+                </select>
             </div>
         </div>
     </ion-content>

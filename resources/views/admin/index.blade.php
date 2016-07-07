@@ -48,6 +48,7 @@
 			<ul class="sub_menu" style="display: block;">
 				<li><a href="{{url('admin/other/config')}}" target="main"><i class="fa fa-fw fa-edit"></i>配置</a></li>
 				<li><a href="{{url('admin/other/notice')}}" target="main"><i class="fa fa-fw fa-edit"></i>公告</a></li>
+				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>点评</a></li>
 			</ul>
 		</li>
 	</ul>

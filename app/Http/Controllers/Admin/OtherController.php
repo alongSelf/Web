@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\http\Model\Config;
+use App\http\Model\Evaluates;
 use App\http\Model\Notice;
 use Illuminate\Http\Request;
 
@@ -67,5 +68,35 @@ class OtherController extends CommonController
             }
             return $data;
         }
+    }
+
+    public function evaluatesIndex()
+    {
+        $evaluates = Evaluates::orderBy('itemid')->paginate(10);
+        return view('admin.other.evaluates', compact('evaluates'));
+    }
+
+    public function searchEvaluates($ev_id)
+    {
+        $evaluates = Evaluates::where('itemid', $ev_id)->orderBy('id','desc')->paginate(10);
+        return view('admin.other.evaluates', compact('evaluates'));
+    }
+
+    public function delEvaluates()
+    {
+        $input = Input::except('_token');
+        $re = Evaluates::where('id', $input['id'])->delete();
+        if($re){
+            $data = [
+                'status' => 0,
+                'msg' => '评论删除成功！',
+            ];
+        }else{
+            $data = [
+                'status' => 1,
+                'msg' => '评论删除失败，请稍后重试！',
+            ];
+        }
+        return $data;
     }
 }

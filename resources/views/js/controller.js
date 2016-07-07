@@ -147,7 +147,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
                     var f = parseFloat(data.cur_price);
                     $scope.cur_price = '惊爆价:￥' + f.toFixed(2);
-                    $scope.buynum = '已售:' + data.buynum;
+                    $scope.buynum = data.buynum + '人付款';
 
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').loop(true);
@@ -169,6 +169,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         checkInt(strVal, true);
     };
     //弹出选项
+    $scope.PopData.itemNums = ['1','2','3','4','5','6','7','8','9','10'];
     $scope.popover = $ionicPopover.fromTemplateUrl('resources/views/templates/buyitempopup.html', {
         scope: $scope
     });
@@ -218,23 +219,12 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                 car = [];
             }
 
-            for (var i = 0; i < car.length; i++){
-                if (car[i].id == $scope.itemInfo.id
-                    && car[i].spec == $scope.PopData.itemSpec)
-                {
-                    car[i].num += parseInt($scope.PopData.chooseNum);
-                    $cookieStore.put("car", car);
-                    carItemNumFactory.setCarItemNum(getCarItemNum(car));
-
-                    return;
-                }
-            }
-
             var info = {};
+            info.carID = uuid();
             info.id = $scope.itemInfo.id;
             info.name = $scope.itemInfo.name;
             info.spec = $scope.PopData.itemSpec;
-            info.num = parseInt($scope.PopData.chooseNum);
+            info.num = $scope.PopData.chooseNum;//这个是字符串......
             info.price = $scope.itemInfo.cur_price;
 
             car.push(info);
@@ -252,7 +242,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             $scope.PopData.itemSpec = $scope.itemSpec[0];
         }
 
-        $scope.PopData.chooseNum = 1;
+        $scope.PopData.chooseNum = $scope.PopData.itemNums[0];
     };
     //加进购物车
     $scope.addInCar = function($event){
@@ -262,7 +252,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             $scope.PopData.itemSpec = $scope.itemSpec[0];
         }
 
-        $scope.PopData.chooseNum = 1;
+        $scope.PopData.chooseNum = $scope.PopData.itemNums[0];
     };
 
     $scope.index = 0;
@@ -277,7 +267,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     })
 }]);
 
-//图片详情
+//物品介绍
 appModule.controller('itemContentController', ['$scope','$stateParams', '$ionicHistory', '$http', function($scope, $stateParams, $ionicHistory, $http){
     $http.get("itemContent/" + $stateParams.itemID)
         .success(
@@ -356,6 +346,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
     $scope.showCarInfo = false;
+    $scope.itemNums = ['1','2','3','4','5','6','7','8','9','10'];
     var bPopuped = false;//解决ie会弹出2次
 
     if (carInfo && carInfo.length > 0){
@@ -408,7 +399,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     };
 
     //修改数量
-    $scope.numChange = function (itemID, itemNum) {
+    $scope.numChange = function (carID, itemNum) {
         carInfo = $cookieStore.get('car');
         if (!carInfo || 0 == carInfo.length){
             return;
@@ -418,10 +409,9 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
             return;
         }
 
-        var iNum = parseInt(itemNum);
         for (var i = 0; i < carInfo.length; i++){
-            if (carInfo[i].id == itemID){
-                carInfo[i].num = iNum;
+            if (carInfo[i].carID == carID){
+                carInfo[i].num = itemNum;
                 $cookieStore.put("car", carInfo);
                 carItemNumFactory.setCarItemNum(getCarItemNum(carInfo));
                 $scope.priceTotal = getCarPriceTotal(carInfo);
@@ -432,14 +422,14 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     };
 
     //删除物品
-    $scope.delete = function (itemID) {
+    $scope.delete = function (carID) {
         carInfo = $cookieStore.get('car');
         if (!carInfo || 0 == carInfo.length){
             return;
         }
 
         for (var i = 0; i < carInfo.length; i++){
-            if (carInfo[i].id == itemID){
+            if (carInfo[i].carID == carID){
                 carInfo.splice(i, 1);
                 $cookieStore.put("car", carInfo);
                 $scope.itemInCar = carInfo;

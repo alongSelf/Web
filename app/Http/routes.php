@@ -48,6 +48,9 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/changeTitle', 'OtherController@changeTitle');
     Route::get('other/notice', 'OtherController@noticeIndex');
     Route::any('other/changeNotice', 'OtherController@changeNotice');
+    Route::get('other/evaluates', 'OtherController@evaluatesIndex');
+    Route::any('other/delEvaluates', 'OtherController@delEvaluates');
+    Route::any('other/searchEvaluates/{ev_id}', 'OtherController@searchEvaluates');
 
     Route::get('user/index', 'UserController@index');
     Route::get('order/index', 'OrderController@index');

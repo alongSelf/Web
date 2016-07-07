@@ -22,7 +22,7 @@
                 @endforeach
             </select>
 
-            <input type="text" id="search" name="search" value=""><input type="button" onclick="searchbynam()" value="搜索">
+            <input type="text" id="search" name="search" value=""><input type="button" onclick="searchbynam()" value="搜索(物品名)">
         </div>
 
         <br>
@@ -80,7 +80,7 @@
 <script>
     //删除分类
     function delShop(item_id) {
-        layer.confirm('您确定要删除这篇文章吗？', {
+        layer.confirm('您确定要删除该商品吗？', {
             btn: ['确定','取消'] //按钮
         }, function(){
             $.post("{{url('admin/shop/')}}/"+item_id,{'_method':'delete','_token':"{{csrf_token()}}"},function (data) {

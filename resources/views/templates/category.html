@@ -13,7 +13,7 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div class="row" ng-repeat="items in itemList">
+        <div class="row row-wrap" ng-repeat="items in itemList">
             <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
                     <img style="height: 160px; width: 150px"
@@ -26,7 +26,7 @@
                 <div/>
                 <span>
                     <em style="color: red">[[item.cur_price | currency:'￥']]</em>
-                    <em style="padding-left:10px; font-size:10px; color:#999">已售：[[item.buynum]]笔</em>
+                    <em style="padding-left:10px; font-size:10px; color:#999">[[item.buynum]]人付款</em>
                 </span>
             </div>
         </div>
