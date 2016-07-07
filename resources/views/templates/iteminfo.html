@@ -23,7 +23,7 @@
         </ion-slide-box>
 
         <!--物品基本信息-->
-        <div style="padding-left:15px; padding-right: 15px;">
+        <div style="padding-left:5px; padding-right: 5px;">
             <div>
                 <div>
                     <p style="font-weight:bold" ng-bind-html="itemInfo.describe | toHtml | trustHtml"></p>
@@ -42,7 +42,7 @@
         <!--评价详情等-->
         <div class="row" style="font-weight:bold">
             <div class="col col-20" ui-sref="tabs.itemcontent({itemID: [[itemID]]})">宝贝详情</div>
-            <div class="col col-20" ui-sref="tabs.itemevaluate({itemID: [[itemID]]})">点评</div>
+            <div class="col col-20" ui-sref="tabs.itemevaluate({itemID: [[itemID]]})">点评([[commentNum]])</div>
         </div>
 
     </ion-content>

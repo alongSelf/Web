@@ -25,21 +25,29 @@
 		<li>
 			<h3><i class="fa fa-fw fa-shopping-cart"></i>宝贝管理</h3>
 			<ul class="sub_menu">
-				<li><a href="{{url('admin/category')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>分类</a></li>
-				<li><a href="{{url('admin/shop')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>宝贝</a></li>
+				<li><a href="{{url('admin/category')}}" target="main"><i class="fa fa-fw fa-edit"></i>分类</a></li>
+				<li><a href="{{url('admin/shop')}}" target="main"><i class="fa fa-fw fa-edit"></i>宝贝</a></li>
 			</ul>
 		</li>
 		<li>
 			<h3><i class="fa fa-fw fa-user"></i>用户管理</h3>
 			<ul class="sub_menu" style="display: block;">
-				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>用户</a></li>
+				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>用户</a></li>
 			</ul>
 		</li>
 
 		<li>
 			<h3><i class="fa fa-fw fa-credit-card"></i>订单管理</h3>
 			<ul class="sub_menu" style="display: block;">
-				<li><a href="{{url('admin/order/index')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>订单</a></li>
+				<li><a href="{{url('admin/order/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>订单</a></li>
+			</ul>
+		</li>
+
+		<li>
+			<h3><i class="fa fa-fw fa-cog"></i>其他</h3>
+			<ul class="sub_menu" style="display: block;">
+				<li><a href="{{url('admin/other/config')}}" target="main"><i class="fa fa-fw fa-edit"></i>配置</a></li>
+				<li><a href="{{url('admin/other/notice')}}" target="main"><i class="fa fa-fw fa-edit"></i>公告</a></li>
 			</ul>
 		</li>
 	</ul>

@@ -70,6 +70,8 @@ class ShopController extends Controller
     {
         $itemInfo = ShopItem::find($id);
         $itemInfo->content = null;
+        $comment = Evaluates::where('itemid', $id)->count();
+        $itemInfo->commentNum = $comment;
         return $itemInfo;
     }
 

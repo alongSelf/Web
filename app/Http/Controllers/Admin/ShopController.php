@@ -50,6 +50,7 @@ class ShopController extends CommonController
         $rules = [
             'name'=>'required',
             'category'=>'required',
+            'content'=>'required',
             'describe'=>'required',
             'prime_price'=>'required',
             'cur_price'=>'required',
@@ -60,6 +61,7 @@ class ShopController extends CommonController
         $message = [
             'name.required'=>'物品名称不能为空！',
             'category.required'=>'物品分类不能为空！',
+            'content.required'=>'宝贝详情不能为空！',
             'describe.required'=>'物品文字描述不能为空！',
             'prime_price.required'=>'原价不能为空！',
             'cur_price.required'=>'当前价格不能为空！',
@@ -95,6 +97,7 @@ class ShopController extends CommonController
         $rules = [
             'name'=>'required',
             'category'=>'required',
+            'content'=>'required',
             'describe'=>'required',
             'prime_price'=>'required',
             'cur_price'=>'required',
@@ -105,6 +108,7 @@ class ShopController extends CommonController
         $message = [
             'name.required'=>'物品名称不能为空！',
             'category.required'=>'物品分类不能为空！',
+            'content.required'=>'宝贝详情不能为空！',
             'describe.required'=>'物品文字描述不能为空！',
             'prime_price.required'=>'原价不能为空！',
             'cur_price.required'=>'当前价格不能为空！',
@@ -141,25 +145,6 @@ class ShopController extends CommonController
                     }
                 }
 
-                if ($data->content != $input['content']) {
-                    $oldContentImg = json_decode($data->content);
-                    $newContentImg = json_decode($input['content']);
-                    $bHave = false;
-                    for($i = 0; $i < count($oldContentImg); $i++){
-                        $bHave = false;
-                        for($j = 0; $j < count($newContentImg); $j++){
-                            if ($oldContentImg[$i] == $newContentImg[$j]){
-                                $bHave = true;
-                                break;
-                            }
-                        }
-
-                        if (!$bHave){
-                            $this->removeFile($oldContentImg[$i]);
-                        }
-                    }
-                }
-
                 return redirect('admin/shop');
             }else{
                 return back()->with('errors','数据更新失败，请稍后重试！');
@@ -185,10 +170,6 @@ class ShopController extends CommonController
             for($i = 0; $i < count($showImg); $i++){
                 $this->removeFile($showImg[$i]);
             }
-            for($i = 0; $i < count($contentImg); $i++){
-                $this->removeFile($contentImg[$i]);
-            }
-
             $data = [
                 'status' => 0,
                 'msg' => '宝贝删除成功！',

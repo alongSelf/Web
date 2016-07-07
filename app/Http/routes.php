@@ -44,8 +44,11 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('shop/searchbyname/{name}', 'ShopController@searchbyname');
     Route::resource('shop', 'ShopController');
 
+    Route::get('other/config', 'OtherController@configIndex');
+    Route::any('other/changeTitle', 'OtherController@changeTitle');
+    Route::get('other/notice', 'OtherController@noticeIndex');
+    Route::any('other/changeNotice', 'OtherController@changeNotice');
+
     Route::get('user/index', 'UserController@index');
-
-
     Route::get('order/index', 'OrderController@index');
 });

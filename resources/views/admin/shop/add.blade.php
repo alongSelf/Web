@@ -41,7 +41,7 @@
                 <tr>
                     <th width="70"><i class="require">*</i>分类：</th>
                     <td>
-                        <select style="width: 50%" name="category">
+                        <select style="width: 20%" name="category">
                             @foreach($cate as $c)
                                 <option value="{{$c->id}}"
 
@@ -49,13 +49,13 @@
                             @endforeach
                         </select>
                     </td>
-
+                </tr>
+                <tr>
                     <th><i class="require">*</i>名称：</th>
                     <td>
                         <input type="text" name="name" value="">
                     </td>
                 </tr>
-
                 <tr>
                     <th><i class="require">*</i>主图片：</th>
                     <td>
@@ -68,35 +68,41 @@
                 <tr>
                     <th><i class="require">*</i>文字描述：</th>
                     <td>
-                        <textarea style="width: 80%" name="describe"></textarea>
+                        <textarea style="width: 30%" name="describe"></textarea>
                     </td>
                 </tr>
-
                 <tr>
                     <th><i class="require">*</i>原价：</th>
                     <td>
                         <input type="number" name="prime_price" value="0">
                     </td>
+                </tr>
+                <tr>
                     <th><i class="require">*</i>现价：</th>
                     <td>
                         <input type="number" name="cur_price" value="0">
                     </td>
+                </tr>
+                <tr>
                     <th><i class="require">*</i>库存(-1无限制)：</th>
                     <td>
                         <input type="number" name="stock" value="-1">
                     </td>
-                    <th>售出数量：</th>
+                </tr>
+                <tr>
+                    <th><i class="require">*</i>售出数量：</th>
                     <td>
                         <input type="number" name="buynum" value="0">
                     </td>
                 </tr>
                 <tr>
-                    <th>首页轮播(0否1是)：</th>
+                    <th><i class="require">*</i>首页轮播(0否1是)：</th>
                     <td>
                         <input type="number" name="activity" value="0">
                     </td>
-
-                    <th>首页显示(0否1是)：</th>
+                </tr>
+                <tr>
+                    <th><i class="require">*</i>首页显示(0否1是)：</th>
                     <td>
                         <input type="number" name="showindex" value="1">
                     </td>
@@ -123,10 +129,21 @@
                 </tr>
 
                 <tr>
-                    <th>图片描述：</th>
-                    <td id="contenttd">
-                        <input type="text" id="content" name="content" value="" hidden="true">
-                        <input id="content_upload" name="content_upload" type="file" multiple="true">
+                    <th><i class="require">*</i>宝贝详情:</th>
+                    <td>
+                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.config.js')}}"></script>
+                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.all.min.js')}}"> </script>
+                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/lang/zh-cn/zh-cn.js')}}"></script>
+                        <script id="editor" name="content" type="text/plain" style="width:860px;height:500px;"></script>
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('editor');
+                        </script>
+                        <style>
+                            .edui-default{line-height: 28px;}
+                            div.edui-combox-body,div.edui-button-body,div.edui-splitbutton-body
+                            {overflow: hidden; height:20px;}
+                            div.edui-box{overflow: hidden; height:22px;}
+                        </style>
                     </td>
                 </tr>
 
@@ -182,55 +199,6 @@
                 }
             });
         });
-
-        //物品介绍图片
-        $(function() {
-            $('#content_upload').uploadify({
-                'buttonText' : '图片上传',
-                'formData'     : {
-                    'timestamp' : '<?php echo $timestamp;?>',
-                    '_token'     : "{{csrf_token()}}"
-                },
-                'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
-                'uploader' : "{{url('admin/upload')}}",
-                'onUploadSuccess' : function(file, data, response) {
-                    var  html = '<dl>\
-                     <input type="text" value="'+data+'" onchange="content_total(this)"><br>\
-                     <img style="max-width: 200px; max-height:210px;" src="{{asset('uploads')}}/'+data+'">\
-                     </dl>';
-                    $(document.getElementById('contenttd')).append(html);
-                    setContentImg();
-                }
-            });
-        });
-
-        //物品详情
-        function setContentImg() {
-            var contentimg = document.getElementById('content');
-            var contentTd = document.getElementById('contenttd');
-            var allImg = []
-
-            $(contentTd).find('dl').each(function(i) {
-                var img = $(this).find('input').val();
-                if (0 != img.length){
-                    allImg.push(img);
-                }
-            });
-
-            contentimg.value = JSON.stringify(allImg);
-        }
-
-        function content_total(obj) {
-            var inputVal = obj.value;
-            if (0 == inputVal.length){
-                $(obj).parents('dl').hide();
-            }
-            else {
-                $(obj).parents('dl').find('img').attr('src', '{{asset('uploads')}}/'+inputVal+'');
-            }
-
-            setContentImg();
-        }
 
         //物品详情轮播
         function setShowImg() {

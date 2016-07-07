@@ -141,6 +141,8 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                         $scope.itemSpec = JSON.parse(data.spec);
                     }
 
+                    $scope.commentNum = data.commentNum;
+
                     $scope.itemInfo = data;
 
                     var f = parseFloat(data.cur_price);
@@ -281,9 +283,7 @@ appModule.controller('itemContentController', ['$scope','$stateParams', '$ionicH
         .success(
             function (data, status, header, config) {
                 $scope.itemName = data.name;
-                if (data.content) {
-                    $scope.imgContent = JSON.parse(data.content);
-                }
+                $scope.itemContent = data.content;
             }
         ).error(
         function (data) {

@@ -9,9 +9,7 @@
     </ion-nav-bar>
 
     <ion-content scroll="true" overflow-scroll="true" lazy-scroll>
-        <div style="width: 100%;">
-            <img ng-repeat="imgSrc in imgContent" image-lazy-src="uploads/[[imgSrc]]"
-                 style="width: 100%;" image-lazy-loader="bubbles">
+        <div style="padding-left:5px; padding-right: 5px;" ng-bind-html="itemContent | trustHtml">
         </div>
     </ion-content>
 </ion-view>
