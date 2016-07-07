@@ -26,7 +26,7 @@
         <div style="padding-left:15px; padding-right: 15px;">
             <div>
                 <div>
-                    <span style="font-weight:bold" ng-cloak>[[itemInfo.describe]]</span>
+                    <p style="font-weight:bold" ng-bind-html="itemInfo.describe | toHtml | trustHtml"></p>
                 </div>
                 <div>
                     <span>
