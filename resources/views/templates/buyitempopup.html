@@ -3,14 +3,14 @@
     <ion-content scroll="true" overflow-scroll="true" lazy-scroll>
         <div style="padding-left:5px; padding-right: 5px;">
             <div>
-                <img style="width: 50px; height: 60px;" image-lazy-src="uploads/[[itemInfo.indeximg]]" image-lazy-loader="bubbles">
+                <img style="width: 50px; height: 60px; border-radius:10px" image-lazy-src="uploads/[[itemInfo.indeximg]]" image-lazy-loader="bubbles">
                 <div>[[itemInfo.name]]</div>
                 <div style="color: red;">[[itemInfo.cur_price | currency:'￥']]</div>
             </div>
             <div ng-if="itemSpec">
                 <div ng-repeat="(key,value) in itemSpec">
-                    <span>[[key]]</span>
-                    <select id="[[key]]" style="width: 100%">
+                    <span>[[key]]:</span>
+                    <select id="[[key]]" style="width: 95%">
                         <option id="[[spec]]" ng-repeat="spec in value">[[spec]]</option>
                     </select>
                 </div>
@@ -18,9 +18,10 @@
 
             <div>
                 <span>数量:</span>
-                <select ng-model="PopData.chooseNum" style="width: 100%">
+                <select ng-model="PopData.chooseNum" style="width: 95%">
                     <option id="[[num]]" ng-repeat="num in PopData.itemNums">[[num]]</option>
                 </select>
+
             </div>
         </div>
     </ion-content>

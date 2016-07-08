@@ -40,15 +40,20 @@
                 <th><i class="require">*</i>分类名称：</th>
                 <td>
                     <input type="text" name="title">
-                    <span><i class="fa fa-exclamation-circle yellow"></i>分类名称必填</span>
                 </td>
             </tr>
             <tr>
-                <th>图标：</th>
+                <th><i class="require">*</i>简介：</th>
+                <td>
+                    <input type="text" style="width: 50%" name="describe">
+                </td>
+            </tr>
+            <tr>
+                <th><i class="require">*</i>图标：</th>
                 <td>
                     <input type="text" size="50" name="img">
                     <input id="file_upload" name="file_upload" type="file" multiple="true">
-                    <img alt="" id="category_img" style="max-width: 350px; max-height:100px;" src="">
+                    <img alt="" id="category_img" style="width: 100px; height:100px; border-radius:50%;" src="">
                 </td>
             </tr>
             <tr>

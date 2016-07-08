@@ -5,6 +5,11 @@
     <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo; 宝贝管理
 </div>
 <!--面包屑导航 结束-->
+<div class="result_wrap">
+    <div class="result_title">
+        <h3>商品列表</h3>
+    </div>
+</div>
 
 <!--搜索结果页面 列表 开始-->
 

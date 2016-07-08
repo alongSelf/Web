@@ -23,7 +23,7 @@ class ShopController extends Controller
 
     public function categorys()
     {
-        $categs = Category::select('id', 'title', 'img')->orderBy('sort')->get();
+        $categs = Category::orderBy('sort')->get();
         return $categs;
     }
 

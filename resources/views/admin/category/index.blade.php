@@ -26,6 +26,7 @@
             <th class="tc" width="5%">ID</th>
             <th class="tc" width="5%">排序</th>
             <th>名称</th>
+            <th>简介</th>
             <th>图标</th>
             <th>操作</th>
         </tr>
@@ -37,8 +38,9 @@
                     <input type="text" onchange="changeOrder(this, {{$v->id}})" value="{{$v->sort}}">
                 </td>
                 <td>{{$v->title}}</td>
+                <td>{{$v->describe}}</td>
                 <td>
-                    <img src="{{asset('uploads/'.$v->img)}}" style="width: 50px; height: 50px"/>
+                    <img src="{{asset('uploads/'.$v->img)}}" style="width: 50px; height: 50px; border-radius:50%"/>
                 </td>
                 <td>
                     <a href="{{url('admin/category/'.$v->id.'/edit')}}">修改</a>

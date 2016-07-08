@@ -17,7 +17,7 @@
     <!--结果集标题与导航组件 开始-->
     <div class="result_wrap">
         <div class="result_title">
-            <h3>添加分类</h3>
+            <h3>修改分类</h3>
             @if(count($errors)>0)
                 <div class="mark">
                     @if(is_object($errors))
@@ -43,15 +43,20 @@
                     <th><i class="require">*</i>分类名称：</th>
                     <td>
                         <input type="text" name="title" value="{{$data->title}}">
-                        <span><i class="fa fa-exclamation-circle yellow"></i>分类名称必填</span>
                     </td>
                 </tr>
                 <tr>
-                    <th>图标：</th>
+                    <th><i class="require">*</i>简介：</th>
+                    <td>
+                        <input type="text" style="width: 50%" name="describe" value="{{$data->describe}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th><i class="require">*</i>图标：</th>
                     <td>
                         <input type="text" size="50" name="img" value="{{$data->img}}">
                         <input id="file_upload" name="file_upload" type="file" multiple="true">
-                        <img alt="" id="category_img" style="max-width: 350px; max-height:100px;" src="{{asset('uploads/'.$data->img)}}">
+                        <img alt="" id="category_img" style="width: 100px; height:100px; border-radius:50%;" src="{{asset('uploads/'.$data->img)}}">
                     </td>
                 </tr>
                 <tr>

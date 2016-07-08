@@ -6,7 +6,9 @@
     </div>
     <!--面包屑导航 结束-->
     <div class="result_wrap">
-
+        <div class="result_title">
+            <h3>公告</h3>
+        </div>
     </div>
 
     <!--搜索结果页面 列表 开始-->

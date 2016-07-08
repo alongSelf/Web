@@ -7,6 +7,11 @@
     <!--面包屑导航 结束-->
 
     <!--搜索结果页面 列表 开始-->
+    <div class="result_wrap">
+        <div class="result_title">
+            <h3>点评</h3>
+        </div>
+    </div>
 
     <div class="result_wrap">
         <!--快捷导航 开始-->

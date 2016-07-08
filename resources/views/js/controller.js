@@ -14,6 +14,9 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
         $http.get("indexItem")
             .success(
                 function (data, status, header, config) {
+                    $scope.Page = 0;
+                    $scope.moreData = true;
+
                     $scope.activityItem = data.activityItem;
                     $scope.itemList = makeItemList(data.homeItem, $scope.innerWidth);
                     $scope.Notice = data.notice.notice;
@@ -72,13 +75,23 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     $scope.categoryNam = $stateParams.categoryNam;
     $scope.Page = 0;
     $scope.moreData = true;
+    $scope.showBuild = false;
     $scope.innerWidth = $window.innerWidth;
 
     $scope.doRefresh = function () {
         $http.get("categoryInfo/" + $scope.categoryID + '/'+ $scope.Page)
             .success(
                 function(data, status, header, config){
+                    $scope.Page = 0;
+                    $scope.moreData = true;
+
                     $scope.itemList = makeItemList(data, $scope.innerWidth);
+                    if (0 == $scope.itemList.length){
+                        $scope.showBuild = true;
+                    }
+                    else{
+                        $scope.showBuild = false;
+                    }
                 }
             ).error(
             function(data){
@@ -101,6 +114,13 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
                         $scope.moreData = false;
                     }else {
                         appendItemList($scope.itemList, data, $scope.innerWidth);
+                    }
+
+                    if (0 == $scope.itemList.length){
+                        $scope.showBuild = true;
+                    }
+                    else{
+                        $scope.showBuild = false;
                     }
                 }
             ).error(
@@ -290,6 +310,9 @@ appModule.controller('itemEvaluatesController', ['$scope','$stateParams', '$ioni
     $http.get("itemName/" + $stateParams.itemID)
         .success(
             function (data, status, header, config) {
+                $scope.Page = 0;
+                $scope.moreData = true;
+
                 $scope.itemName = data.name;
             }
         ).error(

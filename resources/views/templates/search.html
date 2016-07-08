@@ -26,12 +26,12 @@
         </div>
 
         <ion-list>
-            <ion-item ion-item nav-clear menu-close class="item-avatar"
+            <ion-item ion-item nav-clear class="item-avatar"
                       ng-repeat="Category in Categorys"
                       ui-sref="tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})" ng-cloak>
                 <img ng-src="uploads/[[Category.img]]">
-                <br/>
-                <div style="margin-bottom: 0">[[Category.title]]</div>
+                <div>[[Category.title]]</div>
+                <div style="font-size:10px; color:#999">[[Category.describe]]</div>
             </ion-item>
         </ion-list>
     </ion-content>

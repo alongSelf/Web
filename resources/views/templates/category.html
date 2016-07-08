@@ -13,22 +13,28 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div class="row row-wrap" ng-repeat="items in itemList">
-            <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
+        <div>
+            <div class="row row-wrap" ng-repeat="items in itemList">
+                <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
-                    <img style="height: 160px; width: 150px"
+                    <img style="height: 160px; width: 150px; border-radius:10px"
                          ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
                          image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
                 </span>
                 <span>
                     <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</div>
                 </span>
-                <div/>
+                    <div/>
                 <span>
                     <em style="color: red">[[item.cur_price | currency:'￥']]</em>
                     <em style="padding-left:10px; font-size:10px; color:#999">[[item.buynum]]人付款</em>
                 </span>
+                </div>
             </div>
+        </div>
+
+        <div ng-if="showBuild">
+            <img style="width: 100%; height: 500px" ng-src="resources/views/sysimg/Maintenance-Services-Websit.jpg"/>
         </div>
 
         <ion-infinite-scroll ng-if="moreData" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>

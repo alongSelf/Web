@@ -54,11 +54,15 @@ class CategoryController extends CommonController
         $rules = [
             'title'=>'required',
             'sort'=>'required',
+            'img'=>'required',
+            'describe'=>'required',
         ];
 
         $message = [
             'title.required'=>'分类名称不能为空！',
             'sort.required'=>'分类排序不能为空！',
+            'img.required'=>'分类图标不能为空！',
+            'describe.required'=>'分类简介不能为空！',
         ];
 
         $validator = Validator::make($input,$rules,$message);
@@ -86,16 +90,35 @@ class CategoryController extends CommonController
     //put.admin/category/{category}    更新分类
     public function update($cate_id)
     {
-        $data = Category::find($cate_id);
         $input = Input::except('_token','_method');
-        $re = Category::where('id', $cate_id)->update($input);
-        if($re){
-            if ($data->img != $input['img']){
-                $this->removeFile($data->img);
+        $rules = [
+            'title'=>'required',
+            'sort'=>'required',
+            'img'=>'required',
+            'describe'=>'required',
+        ];
+
+        $message = [
+            'title.required'=>'分类名称不能为空！',
+            'sort.required'=>'分类排序不能为空！',
+            'img.required'=>'分类图标不能为空！',
+            'describe.required'=>'分类简介不能为空！',
+        ];
+
+        $validator = Validator::make($input,$rules,$message);
+        if($validator->passes()){
+            $data = Category::find($cate_id);
+            $re = Category::where('id', $cate_id)->update($input);
+            if($re){
+                if ($data->img != $input['img']){
+                    $this->removeFile($data->img);
+                }
+                return redirect('admin/category');
+            }else{
+                return back()->with('errors','分类信息更新失败，请稍后重试！');
             }
-            return redirect('admin/category');
         }else{
-            return back()->with('errors','分类信息更新失败，请稍后重试！');
+            return back()->withErrors($validator);
         }
     }
 
