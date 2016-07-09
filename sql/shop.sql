@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-07 13:58:40
+Date: 2016-07-09 22:56:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,6 @@ CREATE TABLE `adminuser` (
 -- ----------------------------
 -- Records of adminuser
 -- ----------------------------
-INSERT INTO `adminuser` VALUES ('1', 'admin', 'eyJpdiI6ImVEQUtQNXd5eEZSeEo1Q1VpYllTV2c9PSIsInZhbHVlIjoidzI0Q1FEWmlEQmlYSk9PMFlCdXJVdz09IiwibWFjIjoiNGY0YzFhMTM4ZjVjNTZkYjBhNTFmMzI4ZTJlODdiMWNmZGYyNzkyYzE3NmUzNGI4NGNlNDliOWI4NzE1MTE0ZCJ9', '0', '0');
 
 -- ----------------------------
 -- Table structure for `category`
@@ -41,9 +40,10 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `title` varchar(50) DEFAULT '' COMMENT '//名称',
   `img` varchar(255) DEFAULT '' COMMENT '图标',
+  `describe` varchar(255) DEFAULT '',
   `sort` tinyint(4) DEFAULT '0' COMMENT '排序规则',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of category
@@ -62,7 +62,6 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('2', '微信商城');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -71,7 +70,7 @@ DROP TABLE IF EXISTS `evaluates`;
 CREATE TABLE `evaluates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itemid` int(11) DEFAULT '0' COMMENT '物品ID',
-  `star` int(11) DEFAULT '10' COMMENT '评分',
+  `star` int(11) DEFAULT '5' COMMENT '评分',
   `evaluate` varchar(255) DEFAULT '' COMMENT '评价',
   `userid` int(11) DEFAULT '0',
   `orderid` int(11) DEFAULT '0' COMMENT '订单ID',
@@ -91,12 +90,11 @@ CREATE TABLE `notice` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `notice` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of notice
 -- ----------------------------
-INSERT INTO `notice` VALUES ('1', '公告滚出来');
 
 -- ----------------------------
 -- Table structure for `orders`
@@ -131,7 +129,7 @@ CREATE TABLE `shopitem` (
   `activity` tinyint(4) DEFAULT '0' COMMENT '活动',
   `showindex` tinyint(4) DEFAULT '0' COMMENT '是否在主页显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shopitem

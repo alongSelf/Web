@@ -1,6 +1,6 @@
 <!--主页-->
 <ion-view view-title="首页">
-    <ion-content  scroll="true" overflow-scroll="true" lazy-scroll>
+    <ion-content scroll="true" lazy-scroll>
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
                        refreshing-text="加载中...">
@@ -12,7 +12,7 @@
             <ion-slide ng-repeat="actItem in activityItem">
                 <img ng-src="uploads/[[actItem.indeximg]]"
                      ui-sref="tabs.iteminfo({itemID: [[actItem.id]]})"
-                     style="height: 250px; width: 100%; border-radius:10px">
+                     style="height: 200px; width: 100%; border-radius:10px">
             </ion-slide>
         </ion-slide-box>
 
@@ -31,14 +31,13 @@
         <div class="row row-wrap" ng-repeat="items in itemList">
             <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
-                    <img style="height: 160px; width: 150px; border-radius:10px"
+                    <img style="height: 160px; width: 160px; border-radius:10px"
                          ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
                          image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
                 </span>
                 <span>
-                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</div>
+                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name | clipStr]]</div>
                 </span>
-                <div/>
                 <span>
                     <em style="color: red">[[item.cur_price | currency:'￥']]</em>
                     <em style="padding-left:10px; font-size:10px; color:#999">[[item.buynum]]人付款</em>

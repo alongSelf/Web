@@ -23,6 +23,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('tabs.iteminfo', {
+            url: "/iteminfo/:itemID",
+            views: {
+                'home-tab': {
+                    templateUrl: "resources/views/templates/iteminfo.html",
+                    controller: 'iteminfoController'
+                }
+            }
+        })
         .state('tabs.find', {
             url: "/find",
             views: {
@@ -35,36 +44,18 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
         .state('tabs.category', {
             url: "/category/:categoryID/:categoryNam",
             views: {
-                'home-tab': {
+                'find-tab': {
                     templateUrl: "resources/views/templates/category.html",
                     controller: 'categoryController'
                 }
             }
         })
-        .state('tabs.iteminfo', {
-            url: "/iteminfo/:itemID",
+        .state('tabs.finditeminfo', {
+            url: "/finditeminfo/:itemID",
             views: {
-                'home-tab': {
+                'find-tab': {
                     templateUrl: "resources/views/templates/iteminfo.html",
                     controller: 'iteminfoController'
-                }
-            }
-        })
-        .state('tabs.itemcontent', {
-            url: "/itemcontent/:itemID",
-            views: {
-                'home-tab': {
-                    templateUrl: "resources/views/templates/itemcontent.html",
-                    controller: 'itemContentController'
-                }
-            }
-        })
-        .state('tabs.itemevaluate', {
-            url: "/itemevaluate/:itemID",
-            views: {
-                'home-tab': {
-                    templateUrl: "resources/views/templates/itemevaluate.html",
-                    controller: 'itemEvaluatesController'
                 }
             }
         })
@@ -74,6 +65,51 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 'user-tab': {
                     templateUrl: "resources/views/templates/user.html",
                     controller: 'uerCenterController'
+                }
+            }
+        })
+        .state('tabs.userinfo', {
+            url: "/userinfo",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/userinfo.html",
+                    controller: 'userInfoController'
+                }
+            }
+        })
+        .state('tabs.addr', {
+            url: "/addr",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/addr.html",
+                    controller: 'addrController'
+                }
+            }
+        })
+        .state('tabs.order', {
+            url: "/order",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/order.html",
+                    controller: 'orderController'
+                }
+            }
+        })
+        .state('tabs.spread', {
+            url: "/spread",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/spread.html",
+                    controller: 'spreadController'
+                }
+            }
+        })
+        .state('tabs.agent', {
+            url: "/agent",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/agent.html",
+                    controller: 'agentController'
                 }
             }
         })

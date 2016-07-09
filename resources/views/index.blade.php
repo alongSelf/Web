@@ -25,7 +25,8 @@
 
 <body ng-app="ionicApp">
 
-<ion-nav-view></ion-nav-view>
+<ion-nav-view style="max-width: 850px;">
+</ion-nav-view>
 
 </body>
 </html>

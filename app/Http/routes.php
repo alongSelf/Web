@@ -19,8 +19,6 @@ Route::group([], function () {
     Route::get('loadMoreIndexItem/{page}', 'ShopController@loadMoreIndexItem');
     Route::get('categoryInfo/{id}/{page}', 'ShopController@categoryInfo');
     Route::get('itemInfo/{id}', 'ShopController@itemInfo');
-    Route::get('itemName/{id}', 'ShopController@itemName');
-    Route::get('itemContent/{id}', 'ShopController@itemContent');
     Route::get('itemEvaluate/{id}/{page}', 'ShopController@itemEvaluate');
     Route::get('search/{param}', 'ShopController@search');
 

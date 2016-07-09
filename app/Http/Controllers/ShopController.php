@@ -69,24 +69,9 @@ class ShopController extends Controller
     public function itemInfo($id)
     {
         $itemInfo = ShopItem::find($id);
-        $itemInfo->content = null;
         $comment = Evaluates::where('itemid', $id)->count();
         $itemInfo->commentNum = $comment;
         return $itemInfo;
-    }
-
-    public function itemContent($id)
-    {
-        $itemContent = ShopItem::select('name', 'content')->find($id);
-
-        return $itemContent;
-    }
-
-    public function itemName($id)
-    {
-        $itemNam = ShopItem::select('name')->find($id);
-
-        return $itemNam;
     }
 
     public function itemEvaluate($id, $page)
@@ -94,7 +79,6 @@ class ShopController extends Controller
         return Evaluates::where('itemid', $id)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->orderBy('id','desc')->get();
     }
-
 
     public function search($param)
     {

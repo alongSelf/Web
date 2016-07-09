@@ -1,37 +1,55 @@
 <!--用户中心-->
 <ion-view view-title="用户中心">
-    <ion-content  scroll="true" overflow-scroll="true">
+    <ion-content scroll="true">
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <ion-item ion-item nav-clear class="item-image">
-            <img ng-src="resources/views/sysimg/logo.png" style="width: 80px; height: 80px;border-radius:50%">
-            <div style="margin-bottom: 0">大毛毛虫</div>
-            <div class="row">
-                <div class="col">ID:123456</div>
-                <div class="col">累计购物:￥150</div>
+        <ion-item class="item-image" style="background-image: url('resources/views/sysimg/userback.jpg'); background-repeat: no-repeat;background-size:100% 100%">
+            <div>
+                <img ng-src="resources/views/sysimg/logo.png" style="width: 80px; height: 80px;border-radius:50%">
+                <div style="margin-bottom: 0; font-weight: bold; color: white">大毛毛虫</div>
+                <div class="row">
+                    <div class="col" style="color: white">ID:123456</div>
+                    <div class="col" style="color: white">累计购物:￥150</div>
+                </div>
             </div>
         </ion-item>
-        <ion-item ion-item nav-clear class="item-image" style="text-align:left">
-            <img ng-src="resources/views/sysimg/logo.png " style="width: 40px; height: 40px; border-radius:50%">
-            个人资料
-            <i class="icon ion-chevron-right fr" style="padding-right: 5px; padding-top: 10px"></i>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.userinfo">
+            <div>
+                <img ng-src="resources/views/sysimg/userinfo.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">个人资料</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
         </ion-item>
-        <ion-item ion-item nav-clear class="item-image" style="text-align:left">
-            <img ng-src="resources/views/sysimg/logo.png " style="width: 40px; height: 40px; border-radius:50%">
-            收货地址
-            <i class="icon ion-chevron-right fr" style="padding-right: 5px; padding-top: 10px"></i>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.addr">
+            <div>
+                <img ng-src="resources/views/sysimg/addr.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">收货地址</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
         </ion-item>
-        <ion-item ion-item nav-clear class="item-image" style="text-align:left">
-            <img ng-src="resources/views/sysimg/logo.png " style="width: 40px; height: 40px; border-radius:50%">
-            我的订单
-            <i class="icon ion-chevron-right fr" style="padding-right: 5px; padding-top: 10px"></i>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.order">
+            <div>
+                <img ng-src="resources/views/sysimg/myorder.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">我的订单</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
         </ion-item>
-        <ion-item ion-item nav-clear class="item-image" style="text-align:left">
-            <img ng-src="resources/views/sysimg/logo.png " style="width: 40px; height: 40px; border-radius:50%">
-            <i class="icon ion-chevron-right fr" style="padding-right: 5px; padding-top: 10px"></i>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.spread">
+            <div>
+                <img ng-src="resources/views/sysimg/spread.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">我来推广</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.agent">
+            <div>
+                <img ng-src="resources/views/sysimg/agent.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">我来代理</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
         </ion-item>
     </ion-content>
 </ion-view>

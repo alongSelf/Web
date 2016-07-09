@@ -8,7 +8,7 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content scroll="true" overflow-scroll="true" lazy-scroll>
+    <ion-content scroll="true" lazy-scroll>
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
                        refreshing-text="加载中...">
@@ -18,12 +18,12 @@
                        delegate-handle="delegateHandler">
             <ion-slide ng-repeat="strImg in slideImg">
                 <img ng-src="uploads/[[strImg]]"
-                     style="height: 250px; width: 100%; border-radius:10px">
+                     style="height: 200px; width: 100%; border-radius:10px">
             </ion-slide>
         </ion-slide-box>
 
-        <!--物品基本信息-->
-        <div style="padding-left:3px; padding-right: 3px;">
+        <!--物品信息-->
+        <div style="padding-left:3px; padding-right: 3px">
             <div>
                 <div>
                     <p style="font-weight:bold" ng-bind-html="itemInfo.describe | toHtml | trustHtml"></p>
@@ -37,14 +37,34 @@
                 </div>
             </div>
             <br>
+
+            <!--评价详情等-->
+            <div class="row row-wrap">
+                <div class="col col-20" id="itemContent" ng-click="showContent()">详情</div>
+                <div class="col col-20" id="itemEvaluate" ng-click="showEvaluate()">点评([[commentNum]])</div>
+            </div>
+
+            <div ng-if="showCon">
+                <div ng-bind-html="itemInfo.content | trustHtml"></div>
+            </div>
+
+            <div ng-if="showEv">
+                <ion-list ng-if="Evaluates">
+                    <ion-item class="item-body" ng-repeat="Evaluate in Evaluates">
+                        <em>名字</em>
+                        <em>[[Evaluate.star]]</em>
+                        <br/>
+                        <div style="margin-bottom: 0">[[Evaluate.evaluate]]</div>
+                    </ion-item>
+                </ion-list>
+
+                <div ng-if="!Evaluates">
+                    <img src="resources/views/sysimg/noevaluates.jpg" style="width: 100%;">
+                </div>
+            </div>
         </div>
 
-        <!--评价详情等-->
-        <div class="row" style="font-weight:bold">
-            <div class="col col-20" ui-sref="tabs.itemcontent({itemID: [[itemID]]})">宝贝详情</div>
-            <div class="col col-20" ui-sref="tabs.itemevaluate({itemID: [[itemID]]})">点评([[commentNum]])</div>
-        </div>
-
+        <ion-infinite-scroll ng-if="moreData && showEv" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 
     <ion-footer-bar align-title="left">

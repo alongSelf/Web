@@ -21,3 +21,13 @@ appModule.filter('toHtml', function () {
        return input;
    } 
 });
+
+appModule.filter('clipStr', function () {
+    return function (input) {
+        if (input.length > 19){
+            input = input.substr(0, 19) + "......";
+        }
+
+        return input;
+    }
+});

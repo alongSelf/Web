@@ -50,7 +50,7 @@ function makeItemList(itemData, clientWidth) {
     }
 
     var itemCount = itemData.length;
-    var lineNum = parseInt(clientWidth / 150);//每列多少个
+    var lineNum = parseInt(clientWidth / 160);//每列多少个
     var rowNum = Math.ceil(itemCount / lineNum);//多少行
     var iIndex = 0;
 

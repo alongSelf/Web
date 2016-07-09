@@ -1,6 +1,6 @@
 <!--购物车-->
 <ion-view view-title="购物车">
-    <ion-content  scroll="true" overflow-scroll="true" lazy-scroll>
+    <ion-content scroll="true" lazy-scroll>
         <div class="carbox" ng-if="showCarInfo">
             <table id="cartTable">
                 <thead>
@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div style="width: 100%; height: 100%" ng-show="!showCarInfo">
+        <div style="width: 100%; height: 100%" ng-if="!showCarInfo">
             <img style="width: 100%; height: 100%" ng-src="resources/views/sysimg/emptycar.png"/>
         </div>
 

@@ -8,7 +8,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     $scope.itemList = [];
     $scope.Page = 0;
     $scope.moreData = true;
-    $scope.innerWidth = $window.innerWidth;
+    $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
 
     $scope.doRefresh = function () {
         $http.get("indexItem")
@@ -76,7 +76,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     $scope.Page = 0;
     $scope.moreData = true;
     $scope.showBuild = false;
-    $scope.innerWidth = $window.innerWidth;
+    $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
 
     $scope.doRefresh = function () {
         $http.get("categoryInfo/" + $scope.categoryID + '/'+ $scope.Page)
@@ -147,6 +147,8 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.buynum = '';
     $scope.isCancel = true;
     $scope.isBuy = true;
+    $scope.showCon = false;
+    $scope.showEv = false;
     $scope.PopData = {};
 
     //数据获取
@@ -284,44 +286,15 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     };
     $scope.$on('$ionicView.beforeEnter',function(){
         $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();
-    })
-}]);
+    });
 
-//物品介绍
-appModule.controller('itemContentController', ['$scope','$stateParams', '$ionicHistory', '$http', function($scope, $stateParams, $ionicHistory, $http){
-    $http.get("itemContent/" + $stateParams.itemID)
-        .success(
-            function (data, status, header, config) {
-                $scope.itemName = data.name;
-                $scope.itemContent = data.content;
-            }
-        ).error(
-        function (data) {
-            onError(data);
-        });
-
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
+    $scope.showContent = function () {
+        $scope.showCon = true;
+        $scope.showEv = false;
     };
-}]);
-
-//评价
-appModule.controller('itemEvaluatesController', ['$scope','$stateParams', '$ionicHistory', '$http', function($scope, $stateParams, $ionicHistory, $http){
-    $http.get("itemName/" + $stateParams.itemID)
-        .success(
-            function (data, status, header, config) {
-                $scope.Page = 0;
-                $scope.moreData = true;
-
-                $scope.itemName = data.name;
-            }
-        ).error(
-        function (data) {
-            onError(data);
-        });
-
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
+    $scope.showEvaluate = function () {
+        $scope.showCon = false;
+        $scope.showEv = true;
     };
 
     $scope.Page = 0;
@@ -514,4 +487,39 @@ appModule.controller('searchController', ['$scope', '$http', function ($scope, $
     };
 
     $scope.doRefresh();
+}]);
+
+//个人资料
+appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//地址
+appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//订单
+appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//推广
+appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//代理
+appModule.controller('agentController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
 }]);

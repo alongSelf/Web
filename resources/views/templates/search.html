@@ -1,6 +1,6 @@
 <!--搜索-->
 <ion-view view-title="发现">
-    <ion-content  scroll="true" overflow-scroll="true">
+    <ion-content scroll="true">
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
                        refreshing-text="加载中...">
@@ -17,8 +17,7 @@
 
         <div>
             <ion-list>
-                <ion-item ion-item nav-clear
-                          ng-repeat="item in searchData"
+                <ion-item ng-repeat="item in searchData"
                           ui-sref="tabs.iteminfo({itemID: [[item.id]]})" ng-cloak>
                     [[item.name]]
                 </ion-item>
@@ -26,9 +25,8 @@
         </div>
 
         <ion-list>
-            <ion-item ion-item nav-clear class="item-avatar"
-                      ng-repeat="Category in Categorys"
-                      ui-sref="tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})" ng-cloak>
+            <ion-item class="item-avatar" ng-repeat="Category in Categorys"
+                      ui-sref="tabs.category({categoryID: [[Category.id]], categoryNam: '[[Category.title]]'})">
                 <img ng-src="uploads/[[Category.img]]">
                 <div>[[Category.title]]</div>
                 <div style="font-size:10px; color:#999">[[Category.describe]]</div>
