@@ -23,7 +23,7 @@
     <title></title>
 </head>
 
-<body ng-app="ionicApp">
+<body ng-app="ionicApp" style="max-width:850px; margin:0 auto;">
 
 <ion-nav-view style="max-width: 850px;">
 </ion-nav-view>

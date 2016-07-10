@@ -8,7 +8,7 @@ appModule.run(['$rootScope', '$http', '$cookieStore', '$window', function($rootS
     $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
 
     var clientWidth = $window.innerWidth;
-    $rootScope.perItemWidth = parseInt((150 / clientWidth) * 100) + '%';
+    $rootScope.clientWidth = clientWidth > 850 ? 850: clientWidth;
 
     $http.get("getConfig")
         .success(

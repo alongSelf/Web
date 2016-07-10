@@ -14,8 +14,8 @@
                 <tbody>
                 <tr ng-repeat="item in itemInCar">
                     <td class="goods">
-                        <span ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name]]</span>
-                        <span style="color: #adadad">[[item.spec]]</span>
+                        <span ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name | clipStr]]</span>
+                        <span style="color: #adadad" ng-if="item.spec">[[item.spec]]</span>
                     </td>
                     <td class="price">
                         [[item.price | currency:'￥']]
@@ -24,8 +24,8 @@
                         <select ng-model="item.num" ng-change="numChange(item.carID, item.num)" style="width: 100%">
                             <option ng-repeat="num in itemNums" ng-selected="num == item.num" id="[[num]]">[[num]]</option>
                         </select>
-                    <td class="operation" >
-                       <button class="button transButton ion-trash-a" ng-click="delete(item.carID)"></button>
+                    <td class="operation" ng-click="delete(item.carID)">
+                       <i class="ion-trash-a" ></i>
                     </td>
                 </tr>
                 </tbody>

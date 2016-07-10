@@ -24,8 +24,8 @@ appModule.filter('toHtml', function () {
 
 appModule.filter('clipStr', function () {
     return function (input) {
-        if (input.length > 19){
-            input = input.substr(0, 19) + "......";
+        if (input.length > 10){
+            input = input.substr(0, 10) + "...";
         }
 
         return input;
