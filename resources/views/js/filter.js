@@ -31,3 +31,16 @@ appModule.filter('clipStr', function () {
         return input;
     }
 });
+
+appModule.filter('hidePhone', function () {
+    return function (input) {
+        if (!input || 0 == input.length){
+            return '';
+        }
+
+        var val1 = input.substring(0, 3);
+        var val2 = input.substr(input.length - 3);
+
+        return val1 + '******' + val2;
+    }
+});

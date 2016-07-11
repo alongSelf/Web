@@ -6,6 +6,82 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content  scroll="true">
-        个人资料
+        <!--账号绑定-->
+        <div ng-if="showBind">
+            <div class="row row-wrap" style="text-align: center">
+                <div class="col">账号绑定</div>
+            </div>
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">手机号码:</div>
+                <div class="col"><input  style="width:100%; background-color: #f4f3ff" type="text" name="phone" value=""></div>
+            </div>
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">密码:</div>
+                <div class="col"><input style="width:100%; background-color: #f4f3ff" type="password" name="psw1" value=""></div>
+            </div>
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">确认密码:</div>
+                <div class="col"><input style="width:100%; background-color: #f4f3ff" type="password" name="psw2" value=""></div>
+            </div>
+            <div style="text-align:center; width: 100%">
+                <button class="button button-light" ng-click="">
+                    确认绑定
+                </button>
+            </div>
+        </div>
+        <!--相信信息-->
+        <div ng-if="!showBind">
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">姓名:</div>
+                <div class="col"><input  style="width:100%; background-color: #f4f3ff" type="text" name="name" value="[[userInfo.name]]"></div>
+            </div>
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">手机号码:</div>
+                <div class="col">[[userInfo.phone | hidePhone]]</div>
+                <div class="col col-20" ng-click="showChangePsw()">[[showName]]</div>
+            </div>
+            <!--密码修改-->
+            <div ng-if="showChange">
+                <div class="row row-wrap">
+                    <div class="col col-20" style="text-align:right">原密码:</div>
+                    <div class="col"><input style="width:100%; background-color: #f4f3ff" type="password" name="oldpsw" value=""></div>
+                </div>
+                <div class="row row-wrap">
+                    <div class="col col-20" style="text-align:right">新密码:</div>
+                    <div class="col"><input style="width:100%; background-color: #f4f3ff" type="password" name="changepsw1" value=""></div>
+                </div>
+                <div class="row row-wrap">
+                    <div class="col col-20" style="text-align:right">确认密码:</div>
+                    <div class="col"><input style="width:100%; background-color: #f4f3ff" type="password" name="changepsw2" value=""></div>
+                </div>
+                <div style="text-align:center; width: 100%">
+                      <button class="button button-light" ng-click="changePassWord()">
+                        确认修改
+                    </button>
+                </div>
+            </div>
+            <!--其他信息-->
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">头像:</div>
+                <div class="col"></div>
+            </div>
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">昵称:</div>
+                <div class="col"><input  style="width:100%; background-color: #f4f3ff" type="text" name="nickname" value="[[userInfo.nickname]]"></div>
+            </div>
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">邮箱:</div>
+                <div class="col"><input  style="width:100%; background-color: #f4f3ff" type="text" name="email" value="[[userInfo.email]]"></div>
+            </div>
+
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">QQ号码:</div>
+                <div class="col"><input  style="width:100%; background-color: #f4f3ff" type="text" name="qqnumber" value="[[userInfo.qq]]"></div>
+            </div>
+            <div class="row row-wrap">
+                <div class="col col-20" style="text-align:right">微信号:</div>
+                <div class="col"><input  style="width:100%; background-color: #f4f3ff" type="text" name="weixnumber" value="[[userInfo.weixnumber]]"></div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

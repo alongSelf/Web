@@ -327,15 +327,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.loadMore();
 }]);
 
-//用户中心
-appModule.controller('uerCenterController', ['$scope', function($scope){
-    $scope.doRefresh = function () {
-        $scope.$broadcast('scroll.refreshComplete');
-    };
-
-    $scope.doRefresh();
-}]);
-
 //购物车
 appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', function($scope, $cookieStore, $ionicPopup, carItemNumFactory){
     var carInfo = $cookieStore.get('car');
@@ -441,6 +432,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     }
 }]);
 
+//发现
 appModule.controller('searchController', ['$scope', '$http', function ($scope, $http) {
     $scope.search = function (strVal) {
         if (!strVal){
@@ -489,10 +481,113 @@ appModule.controller('searchController', ['$scope', '$http', function ($scope, $
     $scope.doRefresh();
 }]);
 
+//用户中心
+appModule.controller('uerCenterController', ['$scope', '$http', function($scope, $http){
+    $scope.needLogIn = true;
+    $scope.doRefresh = function () {
+        $http.get("getUserBase")
+            .success(
+                function (data, status, header, config) {
+                    if (0 != data.status){
+                        $scope.needLogIn = true;
+                    }else {
+                        $scope.needLogIn = false;
+                        $scope.uerBase = data.msg;
+                    }
+                }
+            ).error(
+            function (data) {
+                $scope.needLogIn = true;
+                onError(data);
+            }).finally(function() {
+            // 停止广播ion-refresher
+            $scope.$broadcast('scroll.refreshComplete');
+        });
+    };
+
+    $scope.doRefresh();
+
+    $scope.logIn = function () {
+        var phone = document.getElementById('phone').value;
+        var pwd = document.getElementById('password').value;
+        if (!checkMobile(phone)){
+            layer.msg('亲，请输入正确的电话号码!');
+            return;
+        }
+
+        $http.get("logIn/"+phone+"/"+pwd)
+            .success(
+                function (data, status, header, config) {
+                    if (0 != data.status){
+                        $scope.needLogIn = true;
+                        layer.msg(data.msg);
+                    }else {
+                        $scope.needLogIn = false;
+                        $scope.uerBase = data.msg;
+                    }
+                }
+            ).error(
+            function (data) {
+                $scope.needLogIn = true;
+                onError(data);
+            });
+    };
+
+    $scope.logOut = function () {
+        $http.get("logOut")
+            .success(
+                function (data, status, header, config) {
+                    $scope.needLogIn = true;
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            });
+    };
+}]);
+
+
 //个人资料
 appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
     $scope.goBack = function () {
         $ionicHistory.goBack();
+    };
+
+    $scope.showBind = false;
+    $scope.showChange = false;
+    $scope.showName = '修改密码';
+    $http.get("getUserInfo")
+        .success(
+            function (data, status, header, config) {
+                if (0 == data.status){
+                    $scope.userInfo = data.msg;
+                    var phone = $scope.userInfo.phone;
+                    if(phone && 0 != phone.length){
+                        $scope.showBind = false;
+                    }else {
+                        $scope.showBind = true;
+                    }
+                }else {
+
+                }
+            }
+        ).error(
+        function (data) {
+            onError(data);
+        });
+    
+    $scope.showChangePsw = function () {
+        if ($scope.showChange){
+            $scope.showName = '修改密码';
+        }else {
+            $scope.showName = '取消修改';
+        }
+
+        $scope.showChange = !$scope.showChange;
+    };
+
+    $scope.changePassWord = function () {
+        
     };
 }]);
 

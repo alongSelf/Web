@@ -22,6 +22,12 @@ Route::group([], function () {
     Route::get('itemEvaluate/{id}/{page}', 'ShopController@itemEvaluate');
     Route::get('search/{param}', 'ShopController@search');
 
+
+    Route::get('logIn/{phone}/{psw}', 'UserController@logIn');
+    Route::get('logOut', 'UserController@logOut');
+    Route::get('getUserBase', 'UserController@getUserBase');
+    Route::get('getUserInfo', 'UserController@getUserInfo');
+
     //admin
     Route::any('admin/login', 'Admin\LoginController@login');
     Route::get('admin/code', 'Admin\LoginController@code');
