@@ -1,0 +1,28 @@
+<ion-view view-title="密码修改">
+    <ion-nav-bar class="bar-dark" align-title="center">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-reply" ng-click="goBack()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content scroll="true">
+        <label class="item item-input">
+            <span class="input-label" style="text-align:right; padding-right: 20px">原密码:</span>
+            <input id="change_oldpsw" placeholder="请输入原密码" type="password">
+        </label>
+        <label class="item item-input">
+            <span class="input-label" style="text-align:right; padding-right: 20px">新密码:</span>
+            <input id="change_psw1" placeholder="请输入新密码" type="password">
+        </label>
+        <label class="item item-input">
+            <span class="input-label" style="text-align:right; padding-right: 20px">确认密码:</span>
+            <input id="change_psw2" placeholder="请再次输入新密码" type="password">
+        </label>
+        <div style="text-align: center">
+            <button class="button button-light" ng-click="changePassWord()">
+                修改
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

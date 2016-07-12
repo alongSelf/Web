@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <!--<base href="/" />-->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <link rel="stylesheet" href="resources/views/ionic/css/ionic.min.css" type="text/css" charset="utf-8"/>
-    <link rel="stylesheet" href="resources/views/css/app.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="resources/views/ionic/css/ionic.min.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="resources/views/css/app.css" type="text/css" charset="utf-8">
 
     <script src="resources/views/ionic/js/ionic.bundle.min.js"></script>
     <script src="resources/views/ionic/js/angular/angular-cookies.min.js"></script>

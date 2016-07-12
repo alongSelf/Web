@@ -11,75 +11,60 @@
             <div class="row row-wrap" style="text-align: center">
                 <div class="col">账号绑定</div>
             </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">手机号码:</span>
-                <input class="col" placeholder="请输手机号码" type="text" id="bind_phone">
-            </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">密码:</span>
-                <input class="col" placeholder="请输密码" type="password" id="bind_psw1">
-            </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">确认密码:</span>
-                <input class="col" placeholder="请再次输密码" type="password" id="bind_psw2">
-            </div>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
+                <input id="bind_phone" placeholder="请输入手机号码" type="tel">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">密码:</span>
+                <input id="bind_psw1" placeholder="请输密码" type="password">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">确认密码:</span>
+                <input id="bind_psw2" placeholder="请再次输密码" type="password">
+            </label>
             <div style="text-align: center">
-                <button class="button button-light" ng-click="bindAccount()">
+                <button class="button button-light" style="width: 50%" ng-click="bindAccount()">
                     绑定
                 </button>
             </div>
         </div>
         <!--相信信息-->
         <div ng-if="!showBind">
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">姓名:</span>
-                <input class="col" placeholder="请输入姓名" type="text" id="name" ng-change="setField('name')" ng-model="userInfo.name">
-            </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">手机号码:</span>
-                <div class="col">[[userInfo.phone | hidePhone]]</div>
-                <div class="col col-25" ng-click="showChangePsw()">[[showName]]</div>
-            </div>
-            <!--密码修改-->
-            <div ng-if="showChange">
-                <div class="row row-wrap">
-                    <span class="col col-25" style="text-align:right; padding-right: 10px;">原密码:</span>
-                    <input class="col" placeholder="请输入原密码" type="password" id="change_oldpsw" value="">
-                </div>
-                <div class="row row-wrap">
-                    <span class="col col-25" style="text-align:right; padding-right: 10px;">新密码:</span>
-                    <input class="col" placeholder="请输入新密码" type="password" id="change_psw1" value="">
-                </div>
-                <div class="row row-wrap">
-                    <span class="col col-25" style="text-align:right; padding-right: 10px;">确认密码:</span>
-                    <input class="col" placeholder="请再次输入新密码" type="password" id="change_psw2" value="">
-                </div>
-                <div style="text-align: center">
-                    <button class="button button-light" ng-click="changePassWord()">
-                        修改
-                    </button>
-                </div>
-            </div>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
+                <div>[[userInfo.phone | hidePhone]]</div>
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">姓名:</span>
+                <input id="name" placeholder="请输入姓名" type="text" ng-model="userInfo.name" ng-change="fieldChanged()">
+            </label>
             <!--其他信息-->
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">头像:</span>
-                <div class="col"></div>
-            </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">昵称:</span>
-                <input class="col" placeholder="请输入昵称" type="text" id="nickname" ng-change="setField('nickname')" ng-model="userInfo.nickname">
-            </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">邮箱:</span>
-                <input class="col" placeholder="请输入邮箱" type="text" id="email" ng-change="setField('email')" ng-model="userInfo.email">
-            </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">QQ号码:</span>
-                <input class="col" placeholder="请输入QQ号码" type="text" id="qq" ng-change="setField('qq')" ng-model="userInfo.qq">
-            </div>
-            <div class="row row-wrap">
-                <span class="col col-25" style="text-align:right; padding-right: 10px;">微信号:</span>
-                <input class="col" placeholder="请输入微信号" type="text" id="weixnumber" ng-change="setField('weixnumber')" ng-model="userInfo.weixnumber">
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">头像:</span>
+                <img src="">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">昵称:</span>
+                <input id="nickname" placeholder="请输入昵称" type="text" ng-model="userInfo.nickname" ng-change="fieldChanged()">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">邮箱:</span>
+                <input id="email" placeholder="请输入邮箱" type="email" ng-model="userInfo.email" ng-change="fieldChanged()">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">QQ号码:</span>
+                <input id="qq" placeholder="请输入QQ号码" type="text" ng-model="userInfo.qq" ng-change="fieldChanged()">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="text-align:right; padding-right: 20px">微信号:</span>
+                <input id="weixnumber" placeholder="请输入微信号" type="text" ng-model="userInfo.weixnumber" ng-change="fieldChanged()">
+            </label>
+            <div style="text-align: center" ng-if="showChange">
+                <button class="button button-light" style="width: 50%" ng-click="changeInfo()">
+                    修改
+                </button>
             </div>
         </div>
     </ion-content>

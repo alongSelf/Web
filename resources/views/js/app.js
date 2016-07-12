@@ -113,6 +113,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('tabs.changepsw', {
+            url: "/changepsw",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/changepsw.html",
+                    controller: 'changePSWController'
+                }
+            }
+        })
         .state('tabs.car', {
             cache: false,
             url: "/car",
