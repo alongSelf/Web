@@ -3,10 +3,11 @@
     <ion-content scroll="true" lazy-scroll>
         <div style="padding-left:3px; padding-right: 3px">
             <div>
-                <img style="width: 50px; height: 60px; border-radius:10px" image-lazy-src="uploads/[[itemInfo.indeximg]]" image-lazy-loader="bubbles">
-                <div>[[itemInfo.name]]</div>
-                <div style="color: red;">[[itemInfo.cur_price | currency:'￥']]</div>
+                <img style="width: 50px; height: 60px; border-radius:10px;"
+                     image-lazy-src="uploads/[[itemInfo.indeximg]]" image-lazy-loader="bubbles">
+                <span>[[itemInfo.name]]</span>
             </div>
+            <div style="color: red;">[[itemInfo.cur_price | currency:'￥']]</div>
             <div ng-if="itemSpec">
                 <div ng-repeat="(key,value) in itemSpec">
                     <span>[[key]]:</span>
@@ -21,7 +22,6 @@
                 <select ng-model="PopData.chooseNum" style="width: 95%">
                     <option id="[[num]]" ng-repeat="num in PopData.itemNums">[[num]]</option>
                 </select>
-
             </div>
         </div>
     </ion-content>

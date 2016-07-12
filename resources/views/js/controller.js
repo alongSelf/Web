@@ -556,6 +556,7 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
     $scope.showBind = false;
     $scope.showChange = false;
     $scope.showName = '修改密码';
+    //获取用户信息
     $http.get("getUserInfo")
         .success(
             function (data, status, header, config) {
@@ -575,7 +576,8 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
         function (data) {
             onError(data);
         });
-    
+
+    //显示、隐藏密码修改
     $scope.showChangePsw = function () {
         if ($scope.showChange){
             $scope.showName = '修改密码';
@@ -586,8 +588,82 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
         $scope.showChange = !$scope.showChange;
     };
 
+    //绑定账号
+    $scope.bindAccount = function () {
+        var phone = document.getElementById('bind_phone').value;
+        var psw1 = document.getElementById('bind_psw1').value;
+        var psw2 = document.getElementById('bind_psw2').value;
+        if (!checkMobile(phone)){
+            layer.msg('亲，请输入正确的电话号码!');
+            return;
+        }
+        if (0 == psw1.length){
+            layer.msg('密码不能为空!');
+            return;
+        }
+        if (psw1 != psw2){
+            layer.msg('两次输入密码不同!');
+            return;
+        }
+        if (psw1.length < 6){
+            layer.msg('密码长度最少6位!');
+            return;
+        }
+        $http.get("bindAccount/"+phone+"/"+psw1)
+            .success(
+                function (data, status, header, config) {
+                    if (0 != data.status){
+                        $scope.showBind = true;
+                        layer.msg(data.msg);
+                    }else {
+                        $scope.userInfo.phone = phone;
+                        $scope.showBind = false;
+                        layer.msg(data.msg);
+                    }
+                }
+            ).error(
+            function (data) {
+                $scope.showBind = true;
+                onError(data);
+            });
+    };
+
+    //修改密码
     $scope.changePassWord = function () {
-        
+        var oldpsw = document.getElementById('change_oldpsw').value;
+        var psw1 = document.getElementById('change_psw1').value;
+        var psw2 = document.getElementById('change_psw2').value;
+        if (0 == psw1.length){
+            layer.msg('密码不能为空!');
+            return;
+        }
+        if (psw1 != psw2){
+            layer.msg('两次输入密码不同!');
+            return;
+        }
+        $http.get("changePsw/"+oldpsw+"/"+psw1)
+            .success(
+                function (data, status, header, config) {
+                    if (0 != data.status){
+                        $scope.showChange = true;
+                        layer.msg(data.msg);
+                    }else {
+                        $scope.showName = '修改密码';
+                        $scope.showChange = false;
+                        layer.msg(data.msg);
+                    }
+                }
+            ).error(
+            function (data) {
+                $scope.showChange = true;
+                onError(data);
+            });
+    };
+
+    //修改QQ 姓名等...
+    $scope.setField = function setField (field) {
+        var val = document.getElementById(field).value;
+        console.log(val);
     };
 }]);
 

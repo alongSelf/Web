@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-12 01:37:20
+Date: 2016-07-12 17:56:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,7 +49,7 @@ CREATE TABLE `category` (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('17', '工口小学生', '577fa4544e9c9.jpg', '工口小学生图片', '1');
+INSERT INTO `category` VALUES ('17', '工口小学生', '57845a18ec8c6.jpg', '工口小学生图片', '1');
 
 -- ----------------------------
 -- Table structure for `config`
@@ -143,11 +143,11 @@ CREATE TABLE `shopitem` (
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
-INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img src=\"/ueditor/php/upload/image/20160708/1467983004119155.jpg\" title=\"1467983004119155.jpg\" alt=\"007.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '577fa476146c8.jpg', '[\"577fa49526870.jpg\",\"577fa49558174.jpg\",\"577fa4958292e.jpg\"]', '{\"颜色\":[\"红\",\"黄\"]}', '1', '1');
-INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img src=\"/ueditor/php/upload/image/20160708/1467983058208704.jpg\" title=\"1467983058208704.jpg\" alt=\"015.jpg\"/></p>', '工口小学生2', '456', '450', '-1', '45', '577fa4ab72a8d.jpg', '[\"577fa4c976003.jpg\",\"577fa4c99e87d.jpg\",\"577fa4c9cf5c8.jpg\"]', '{\"尺寸\":[\"M\",\"L\"]}', '1', '1');
-INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img src=\"/ueditor/php/upload/image/20160708/1467983099289173.jpg\" title=\"1467983099289173.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '577fa4df35a56.jpg', '[\"577fa4f291771.jpg\",\"577fa4f2c0964.jpg\",\"577fa4f2ea17e.jpg\"]', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img src=\"/ueditor/php/upload/image/20160708/1467983151346104.jpg\" title=\"1467983151346104.jpg\" alt=\"067.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '577fa50a84370.jpg', '[\"577fa522eea4c.jpg\",\"577fa52322c9d.jpg\",\"577fa52348e06.jpg\"]', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img src=\"/ueditor/php/upload/image/20160709/1468077714106804.jpg\" title=\"1468077714106804.jpg\" alt=\"0149.jpg\"/></p><p><img src=\"/ueditor/php/upload/image/20160709/1468077728252295.jpg\" title=\"1468077728252295.jpg\" alt=\"053.jpg\"/></p>', '小学生5', '580', '500', '-1', '1001', '578116687ed5c.jpg', '[\"5781168155a8f.jpg\",\"5781168180e01.jpg\",\"57811681a7a58.jpg\"]', '', '0', '1');
+INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img src=\"/ueditor/php/upload/image/20160712/1468291811967225.jpg\" title=\"1468291811967225.jpg\" alt=\"053.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '57845abb84a12.jpg', '[\"57845ada7c5ca.jpg\",\"57845ada995de.jpg\",\"57845adab797b.jpg\"]', '{\"颜色\":[\"红\",\"黄\"]}', '1', '1');
+INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img src=\"/ueditor/php/upload/image/20160712/1468291758958016.jpg\" title=\"1468291758958016.jpg\" alt=\"026.jpg\"/></p>', '工口小学生2', '456', '450', '-1', '45', '57845a999e3e9.jpg', '[\"57845aa52bcbc.jpg\",\"57845aa54e38c.jpg\",\"57845aa5681a2.jpg\"]', '{\"尺寸\":[\"M\",\"L\"]}', '1', '1');
+INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img src=\"/ueditor/php/upload/image/20160712/1468291729503730.jpg\" title=\"1468291729503730.jpg\" alt=\"021.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '57845a7db104b.jpg', '[\"57845a8a1a532.jpg\",\"57845a8a356d0.jpg\",\"57845a8a567bc.jpg\"]', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img src=\"/ueditor/php/upload/image/20160712/1468291697328934.jpg\" title=\"1468291697328934.jpg\" alt=\"011.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '57845a55129cb.jpg', '[\"57845a6120d83.jpg\",\"57845a6714784.jpg\",\"57845a6732f09.jpg\"]', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><br/></p><p><img src=\"/ueditor/php/upload/image/20160712/1468291655221484.jpg\" title=\"1468291655221484.jpg\" alt=\"005.jpg\"/></p><p><img src=\"/ueditor/php/upload/image/20160712/1468291660215546.jpg\" title=\"1468291660215546.jpg\" alt=\"006.jpg\"/></p>', '小学生5', '580', '500', '-1', '1001', '57845a2e70b80.jpg', '[\"57845a3b24306.jpg\",\"57845a3b3f952.jpg\",\"57845a3b5cee0.jpg\"]', '', '0', '1');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -168,9 +168,10 @@ CREATE TABLE `users` (
   `errorcount` tinyint(4) DEFAULT '0' COMMENT '错误次数',
   `errortime` bigint(20) DEFAULT '0' COMMENT '最后次错误时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10002 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('10000', '', '张三', 'spread.jpg', '大毛毛虫', '279133271@qq.com', '15882276717', 'eyJpdiI6ImVEQUtQNXd5eEZSeEo1Q1VpYllTV2c9PSIsInZhbHVlIjoidzI0Q1FEWmlEQmlYSk9PMFlCdXJVdz09IiwibWFjIjoiNGY0YzFhMTM4ZjVjNTZkYjBhNTFmMzI4ZTJlODdiMWNmZGYyNzkyYzE3NmUzNGI4NGNlNDliOWI4NzE1MTE0ZCJ9', '855554', '279133271', '582', '1', '1468256036');
+INSERT INTO `users` VALUES ('10000', '', '张三', 'spread.jpg', '大毛毛虫', '279133271@qq.com', '18148188289', 'eyJpdiI6Im93WXhndUt1NTV6bFR1ZEg4RzFtc3c9PSIsInZhbHVlIjoiaWppamJRUWxJYW01OFRTeW1MV283Zz09IiwibWFjIjoiZGQ4YzhjNTg2N2MxMmZkNzhmZmY4ZTE1NjNiNDM2YWY5OTIyZDRmZWExMWVkY2I3OTRjNzc3NDBjOGE3MWY5MiJ9', '855554', '279133271', '582', '1', '1468256036');
+INSERT INTO `users` VALUES ('10001', '', '李四', 'spread.jpg', '小毛毛虫', '22887@qq.com', '', '', '855541', '588874', '0', '0', '0');

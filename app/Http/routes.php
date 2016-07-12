@@ -27,6 +27,8 @@ Route::group([], function () {
     Route::get('logOut', 'UserController@logOut');
     Route::get('getUserBase', 'UserController@getUserBase');
     Route::get('getUserInfo', 'UserController@getUserInfo');
+    Route::get('bindAccount/{phone}/{psw}', 'UserController@bindAccount');
+    Route::get('changePsw/{oldpsw}/{newpsw}', 'UserController@changePsw');
 
     //admin
     Route::any('admin/login', 'Admin\LoginController@login');

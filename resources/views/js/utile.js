@@ -38,7 +38,7 @@ function checkInt(strVal, bLayer) {
 }
 
 function checkMobile(str) {
-    var re = /^1\d{10}$/;
+    var re = /^0?1[3|4|5|8][0-9]\d{8}$/;
     if (re.test(str)) {
         return true;
     } else {

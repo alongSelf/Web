@@ -8,14 +8,14 @@
 
         <div ng-if="needLogIn" style="padding-top: 100px">
             <div class="row row-wrap">
-                <div class="col col-20" style="text-align:right;">手机号码:</div>
-                <div class="col"><input  style="width:100%; background-color: #f4f3ff" type="text" id="phone"></div>
+                <span class="col col-25" style="text-align:right; padding-right: 10px;">手机号码:</span>
+                <input class="col" placeholder="请输入电话号码" type="text" id="phone">
             </div>
             <div class="row row-wrap">
-                <div class="col col-20" style="text-align:right;">密码:</div>
-                <div class="col"><input style="width:100%; background-color: #f4f3ff" type="password" id="password"></div>
+                <span class="col col-25" style="text-align:right; padding-right: 10px;">密码:</span>
+                <input class="col" placeholder="请输入密码" type="password" id="password">
             </div>
-            <div style="text-align:center; width: 100%">
+            <div style="text-align:center;">
                 <button class="button button-light" ng-click="logIn()">
                     登录
                 </button>

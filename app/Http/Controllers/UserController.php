@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     private function checkPhone($phone)
     {
-        if(preg_match("/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|189[0-9]{8}$/", $phone)){
+        if(preg_match('/^0?1[3|4|5|8][0-9]\d{8}$/', $phone)){
             return true;
         }else{
             return false;
@@ -104,14 +104,67 @@ class UserController extends Controller
         return $this->rtnLogIn(0, $user);
     }
 
-    public function bindAccount()
+    public function bindAccount($phone, $psw)
     {
+        if (!$this->checkPhone($phone)){
+            return $this->rtnLogIn(1, '亲，请输入正确的号码！');
+        }
+        if (strlen($psw) < 6){
+            return $this->rtnLogIn(1, '密码长度最少6位！');
+        }
 
+        $user = session('user');
+        if (!$user || 0 == count($user)){
+            return $this->rtnLogIn(1, '请登录!');
+        }
+
+        $have = Users::where('phone', $phone)->count();
+        if (0 != $have){
+            return $this->rtnLogIn(1, '号码已经绑定!');
+        }
+
+        $input = [
+            'phone'=>$phone,
+            'psw'=>Crypt::encrypt($psw),
+        ];
+        $re = Users::where('id', $user['id'])->update($input);
+        if ($re){
+            $user = Users::find($user['id']);
+            session(['user'=>$user]);
+
+            return $this->rtnLogIn(0, '绑定成功!');
+        }else{
+            return $this->rtnLogIn(1, '绑定失败，请稍候再试!');
+        }
     }
 
-    public function changePsw()
+    public function changePsw($oldpsw, $newpsw)
     {
+        if (strlen($newpsw) < 6){
+            return $this->rtnLogIn(1, '密码长度最少6位！');
+        }
+        $user = session('user');
+        if (!$user || 0 == count($user)){
+            return $this->rtnLogIn(1, '请登录!');
+        }
+        if (0 == count($user['phone'])){
+            return $this->rtnLogIn(1, '请先绑定号码!');
+        }
 
+        $user = Users::find($user['id']);
+        if (Crypt::decrypt($user['psw']) != $oldpsw){
+            return $this->rtnLogIn(1, '原密码验证失败!');
+        }
+
+        $input = [
+            'psw'=>Crypt::encrypt($newpsw),
+        ];
+        $re = Users::where('id', $user['id'])->update($input);
+        if ($re){
+            return $this->rtnLogIn(0, '密码修改成功!');
+        }else{
+            return $this->rtnLogIn(1, '密码修改失败，请稍候再试!');
+        }
     }
 
     public function setInfo()
