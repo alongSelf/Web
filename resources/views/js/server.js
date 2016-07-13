@@ -32,3 +32,4 @@ appModule.factory('carItemNumFactory', ['$rootScope', function ($rootScope) {
 
     return factory;
 }]);
+

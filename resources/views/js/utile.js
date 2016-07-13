@@ -169,3 +169,11 @@ function uuid() {
     
     return uuid;
 }
+
+function getCityID(Citys, cityNam) {
+    for (i = 0; i < Citys.length; i++){
+        if (Citys[i].areaname == cityNam){
+            return Citys[i].areano;
+        }
+    }
+}

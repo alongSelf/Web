@@ -13,8 +13,10 @@ appModule.filter('toHtml', function () {
        if (input){
            var reg=new RegExp("\r\n","g");
            var reg1=new RegExp(" ","g");
+           var reg3=new RegExp("\n","g");
 
            input = input.replace(reg,"<br/>");
+           input = input.replace(reg3,"<br/>");
            input = input.replace(reg1,"&nbsp");
        }
 

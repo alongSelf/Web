@@ -67,13 +67,14 @@
         <ion-infinite-scroll ng-if="moreData && showEv" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 
-    <ion-footer-bar align-title="left">
-        <button style="width: 49%;" class="button button-balanced ion-bag" ng-click="buy($event)">
-            立即购买
-        </button>
-        <button style="width: 49%;" class="button button-calm ion-ios-cart" ng-click="addInCar($event)">
-            加入购物车
-        </button>
+    <ion-footer-bar>
+        <div class="row" style="padding-top: 0">
+            <div class="col col-left" style="padding-top: 0">
+                <button class="button button-calm ion-ios-cart" style="float: right; width: 40%; padding-top: 0" ng-click="addInCar($event)">
+                    加入购物车
+                </button>
+            </div>
+        </div>
     </ion-footer-bar>
 
 </ion-view>

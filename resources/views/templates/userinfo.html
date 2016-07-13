@@ -35,31 +35,21 @@
                 <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
                 <div>[[userInfo.phone | hidePhone]]</div>
             </label>
-
             <label class="item item-input">
                 <span class="input-label" style="text-align:right; padding-right: 20px">姓名:</span>
-                <input id="name" placeholder="请输入姓名" type="text" ng-model="userInfo.name" ng-change="fieldChanged()">
-            </label>
-            <!--其他信息-->
-            <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">头像:</span>
-                <img src="">
-            </label>
-            <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">昵称:</span>
-                <input id="nickname" placeholder="请输入昵称" type="text" ng-model="userInfo.nickname" ng-change="fieldChanged()">
+                <input placeholder="请输入姓名" type="text" ng-model="userInfo.name" ng-change="fieldChanged()">
             </label>
             <label class="item item-input">
                 <span class="input-label" style="text-align:right; padding-right: 20px">邮箱:</span>
-                <input id="email" placeholder="请输入邮箱" type="email" ng-model="userInfo.email" ng-change="fieldChanged()">
+                <input placeholder="请输入邮箱" type="email" ng-model="userInfo.email" ng-change="fieldChanged()">
             </label>
             <label class="item item-input">
                 <span class="input-label" style="text-align:right; padding-right: 20px">QQ号码:</span>
-                <input id="qq" placeholder="请输入QQ号码" type="text" ng-model="userInfo.qq" ng-change="fieldChanged()">
+                <input placeholder="请输入QQ号码" type="text" ng-model="userInfo.qq" ng-change="fieldChanged()">
             </label>
             <label class="item item-input">
                 <span class="input-label" style="text-align:right; padding-right: 20px">微信号:</span>
-                <input id="weixnumber" placeholder="请输入微信号" type="text" ng-model="userInfo.weixnumber" ng-change="fieldChanged()">
+                <input placeholder="请输入微信号" type="text" ng-model="userInfo.weixnumber" ng-change="fieldChanged()">
             </label>
             <div style="text-align: center" ng-if="showChange">
                 <button class="button button-light" style="width: 50%" ng-click="changeInfo()">

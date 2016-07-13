@@ -6,6 +6,10 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content scroll="true">
-        我来推广
+        <label class="item">
+            <div style="padding-left: 15px;white-space:normal;"
+                 ng-bind-html="config.spread | toHtml | trustHtml">
+            </div>
+        </label>
     </ion-content>
 </ion-view>

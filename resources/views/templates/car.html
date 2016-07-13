@@ -14,7 +14,7 @@
                 <tbody>
                 <tr ng-repeat="item in itemInCar">
                     <td class="goods">
-                        <span ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name | clipStr]]</span>
+                        <span ui-sref="tabs.cariteminfo({itemID: [[item.id]]})">[[item.name | clipStr]]</span>
                         <span style="color: #adadad" ng-if="item.spec">[[item.spec]]</span>
                     </td>
                     <td class="price">
@@ -42,7 +42,7 @@
 
     </ion-content>
 
-    <ion-footer-bar align-title="left" ng-if="showCarInfo">
+    <ion-footer-bar ng-if="showCarInfo">
         <button class="button button-balanced ion-bag" style="width: 49%;" ng-click="checkout()">
             结算
         </button>

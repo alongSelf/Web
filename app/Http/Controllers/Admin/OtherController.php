@@ -42,6 +42,94 @@ class OtherController extends CommonController
         }
     }
 
+    public function changeAgent()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->agent = $input['agent'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '代理介绍更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '代理介绍更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+
+    public function changeSpread()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->spread = $input['spread'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '推广介绍更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '推广介绍更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+
+    public function changeOpenSpread()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->openspread = $input['openspread'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '推广条件更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '推广条件更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+
+    public function changeCommission()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->commission = $input['commission'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '提成更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '提成更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+
     public function noticeIndex()
     {
         $notice = Notice::first();

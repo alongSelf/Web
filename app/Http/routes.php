@@ -29,6 +29,16 @@ Route::group([], function () {
     Route::get('getUserInfo', 'UserController@getUserInfo');
     Route::get('bindAccount/{phone}/{psw}', 'UserController@bindAccount');
     Route::get('changePsw/{oldpsw}/{newpsw}', 'UserController@changePsw');
+    Route::get('changeUserInfo/{info}', 'UserController@changeUserInfo');
+    Route::get('saveAddr/{addr}', 'UserController@saveAddr');
+    Route::get('getAddr', 'UserController@getAddr');
+    Route::get('delAddr/{id}', 'UserController@delAddr');
+
+    Route::get('agent/{name}/{phone}', 'UserController@agent');
+
+
+    Route::get('getArea1', 'UserController@getArea1');
+    Route::get('getChildArea/{parentNo}', 'UserController@getChildArea');
 
     //admin
     Route::any('admin/login', 'Admin\LoginController@login');
@@ -57,6 +67,10 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::get('other/evaluates', 'OtherController@evaluatesIndex');
     Route::any('other/delEvaluates', 'OtherController@delEvaluates');
     Route::any('other/searchEvaluates/{ev_id}', 'OtherController@searchEvaluates');
+    Route::any('other/changeAgent', 'OtherController@changeAgent');
+    Route::any('other/changeSpread', 'OtherController@changeSpread');
+    Route::any('other/changeOpenSpread', 'OtherController@changeOpenSpread');
+    Route::any('other/changeCommission', 'OtherController@changeCommission');
 
     Route::get('user/index', 'UserController@index');
     Route::get('order/index', 'OrderController@index');

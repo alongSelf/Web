@@ -132,6 +132,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('tabs.cariteminfo', {
+            url: "/cariteminfo/:itemID",
+            views: {
+                'car-tab': {
+                    templateUrl: "resources/views/templates/iteminfo.html",
+                    controller: 'iteminfoController'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise("/tabs/home");
 }]);
