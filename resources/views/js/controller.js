@@ -837,63 +837,10 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
-}]);
 
-//全部订单
-appModule.controller('allOrderController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
-}]);
-
-//待付款
-appModule.controller('needPayController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
-}]);
-
-//待收货
-appModule.controller('needConfirmController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
-}]);
-
-//待评价
-appModule.controller('needEvaluateController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
-}]);
-
-//售后
-appModule.controller('customerServiceController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
-}]);
-
-
-//推广收入明细
-appModule.controller('incomeController', ['$scope', '$ionicHistory', function($scope, $ionicHistory){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
-}]);
-
-//推广二维码
-appModule.controller('concernController', ['$scope', '$ionicHistory', function($scope, $ionicHistory){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
-}]);
-
-//推广简介
-appModule.controller('spreadbriefintroductionController', ['$scope', '$ionicHistory', function($scope, $ionicHistory){
-    $scope.goBack = function () {
-        $ionicHistory.goBack();
-    };
+    $scope.allOrder = function () {
+        console.log('allOrder');
+    }
 }]);
 
 //推广
@@ -903,11 +850,14 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', fu
     };
 
     $scope.showQRC = false;
+    $scope.showMemo = true;
+    $scope.showIncome = false;
+    $scope.canShowQRC = false;
     $scope.doRefresh = function () {
         $http.get("showQRC")
             .success(
                 function (data, status, header, config) {
-                    $scope.showQRC = data.msg;
+                    $scope.canShowQRC = data.msg;
                 }
             ).error(
             function (data) {
@@ -919,6 +869,22 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', fu
     };
 
     $scope.doRefresh();
+    
+    $scope.showSpreadMemo = function () {
+        $scope.showMemo = true;
+        $scope.showQRC = false;
+        $scope.showIncome = false;
+    };
+    $scope.showIncomeFc = function () {
+        $scope.showMemo = false;
+        $scope.showQRC = false;
+        $scope.showIncome = true;
+    };
+    $scope.showQRCFc = function () {
+        $scope.showMemo = false;
+        $scope.showQRC = true;
+        $scope.showIncome = false;
+    };
 }]);
 
 //代理
