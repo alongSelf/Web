@@ -10,10 +10,28 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-12 23:49:43
+Date: 2016-07-13 18:02:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `addr`
+-- ----------------------------
+DROP TABLE IF EXISTS `addr`;
+CREATE TABLE `addr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) DEFAULT '0' COMMENT '用户ID',
+  `name` varchar(255) DEFAULT '' COMMENT '收货人名',
+  `phone` varchar(32) DEFAULT '' COMMENT '收货人电话',
+  `addr` text COMMENT '地址',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of addr
+-- ----------------------------
+INSERT INTO `addr` VALUES ('3', '10000', '张三', '15885527974', '四川省 成都市 郫县 郫县2中');
 
 -- ----------------------------
 -- Table structure for `adminuser`
@@ -34,6 +52,23 @@ CREATE TABLE `adminuser` (
 INSERT INTO `adminuser` VALUES ('1', 'admin', 'eyJpdiI6ImVEQUtQNXd5eEZSeEo1Q1VpYllTV2c9PSIsInZhbHVlIjoidzI0Q1FEWmlEQmlYSk9PMFlCdXJVdz09IiwibWFjIjoiNGY0YzFhMTM4ZjVjNTZkYjBhNTFmMzI4ZTJlODdiMWNmZGYyNzkyYzE3NmUzNGI4NGNlNDliOWI4NzE1MTE0ZCJ9', '0', '0');
 
 -- ----------------------------
+-- Table structure for `agent`
+-- ----------------------------
+DROP TABLE IF EXISTS `agent`;
+CREATE TABLE `agent` (
+  `userid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `name` varchar(255) DEFAULT '' COMMENT '名字',
+  `phone` varchar(32) DEFAULT '' COMMENT '电话',
+  `state` int(11) DEFAULT '0' COMMENT '处理状态',
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of agent
+-- ----------------------------
+INSERT INTO `agent` VALUES ('10000', '张三', '15882276718', '0');
+
+-- ----------------------------
 -- Table structure for `category`
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
@@ -49,7 +84,7 @@ CREATE TABLE `category` (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('17', '工口小学生', '577fa4544e9c9.jpg', '工口小学生图片', '1');
+INSERT INTO `category` VALUES ('17', '工口小学生', '578597fb2813b.jpg', '工口小学生图片', '1');
 
 -- ----------------------------
 -- Table structure for `config`
@@ -58,13 +93,17 @@ DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT '',
+  `agent` text COMMENT '代理介绍',
+  `spread` text COMMENT '推广规则介绍',
+  `openspread` int(11) DEFAULT '0' COMMENT '开启推广二维码条件',
+  `commission` float DEFAULT '0' COMMENT '每100元提成多少分',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('2', '微信商城');
+INSERT INTO `config` VALUES ('2', '微信商城', '代理介绍：\n    申请成为线下代理，我们将在2个工作日内给你回复。申请成为线下代理，我们将在2个工作日内给你回复。', '推广介绍：\n    消费满299元即可获得推广二维码，介绍朋友扫码加关注后，朋友每消费100元，你可获得1元提成。', '299', '0.5');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -143,11 +182,11 @@ CREATE TABLE `shopitem` (
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
-INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img src=\"/ueditor/php/upload/image/20160708/1467983004119155.jpg\" title=\"1467983004119155.jpg\" alt=\"007.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '577fa476146c8.jpg', '[\"577fa49526870.jpg\",\"577fa49558174.jpg\",\"577fa4958292e.jpg\"]', '{\"颜色\":[\"红\",\"黄\"]}', '1', '1');
-INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img src=\"/ueditor/php/upload/image/20160708/1467983058208704.jpg\" title=\"1467983058208704.jpg\" alt=\"015.jpg\"/></p>', '工口小学生2', '456', '450', '-1', '45', '577fa4ab72a8d.jpg', '[\"577fa4c976003.jpg\",\"577fa4c99e87d.jpg\",\"577fa4c9cf5c8.jpg\"]', '{\"尺寸\":[\"M\",\"L\"]}', '1', '1');
-INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img src=\"/ueditor/php/upload/image/20160708/1467983099289173.jpg\" title=\"1467983099289173.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '577fa4df35a56.jpg', '[\"577fa4f291771.jpg\",\"577fa4f2c0964.jpg\",\"577fa4f2ea17e.jpg\"]', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img src=\"/ueditor/php/upload/image/20160708/1467983151346104.jpg\" title=\"1467983151346104.jpg\" alt=\"067.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '577fa50a84370.jpg', '[\"577fa522eea4c.jpg\",\"577fa52322c9d.jpg\",\"577fa52348e06.jpg\"]', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img src=\"/ueditor/php/upload/image/20160709/1468077714106804.jpg\" title=\"1468077714106804.jpg\" alt=\"0149.jpg\"/></p><p><img src=\"/ueditor/php/upload/image/20160709/1468077728252295.jpg\" title=\"1468077728252295.jpg\" alt=\"053.jpg\"/></p>', '小学生5', '580', '500', '-1', '1001', '578116687ed5c.jpg', '[\"5781168155a8f.jpg\",\"5781168180e01.jpg\",\"57811681a7a58.jpg\"]', '', '0', '1');
+INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p><img src=\"/ueditor/php/upload/image/20160713/1468373151119198.jpg\" title=\"1468373151119198.jpg\" alt=\"042.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '5785988b297a4.jpg', '[\"578598976b747.jpg\",\"578598978b63c.jpg\",\"57859897a583a.jpg\"]', '{\"颜色\":[\"红\",\"黄\"]}', '1', '1');
+INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '450', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '{\"尺寸\":[\"M\",\"L\"]}', '1', '1');
+INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img src=\"/ueditor/php/upload/image/20160713/1468373099115764.jpg\" title=\"1468373099115764.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '578598558e8bc.jpg', '[\"57859865a4892.jpg\",\"57859865cb5af.jpg\",\"57859865e6365.jpg\"]', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img src=\"/ueditor/php/upload/image/20160713/1468373050130881.jpg\" title=\"1468373050130881.jpg\" alt=\"007.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '57859826496c5.jpg', '[\"578598315cda2.jpg\",\"578598317ae21.jpg\",\"5785983195407.jpg\"]', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img src=\"/ueditor/php/upload/image/20160713/1468373016112859.jpg\" title=\"1468373016112859.jpg\" alt=\"16773985_980x1200_292.jpg\"/></p><p><img src=\"/ueditor/php/upload/image/20160713/1468373021811450.jpg\" title=\"1468373021811450.jpg\" alt=\"16773989_980x1200_292.jpg\"/></p><p><br/></p>', '小学生5', '580', '500', '-1', '1001', '57859803dc314.jpg', '[\"5785980f443af.jpg\",\"5785980f60423.jpg\",\"5785980f7fb47.jpg\"]', '', '0', '1');
 
 -- ----------------------------
 -- Table structure for `t_prov_city_area`
@@ -3529,4 +3568,4 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('10000', '', '张三', 'spread.jpg', '大毛毛虫', '279133271@qq.com', '15882276717', 'eyJpdiI6IkFaXC9JdkJ2M240SmhkNkgzeUNmTzhBPT0iLCJ2YWx1ZSI6IjNpcDRiOVA0S1wvRWlIaUdEYlwvWUFXUT09IiwibWFjIjoiZDk0NjdjODRlZDM1NWNjZTU5NjdkMTQzMjBjMTJlYWQ2ZDIwOGJiMzRhODM0YjE4MTBhZGM4ZjZkYjFjYzQ3YSJ9', '855554', '279133271', '582', '1', '1468256036');
+INSERT INTO `users` VALUES ('10000', '', '', 'spread.jpg', '大毛毛虫', '', '15882276717', 'eyJpdiI6IkFaXC9JdkJ2M240SmhkNkgzeUNmTzhBPT0iLCJ2YWx1ZSI6IjNpcDRiOVA0S1wvRWlIaUdEYlwvWUFXUT09IiwibWFjIjoiZDk0NjdjODRlZDM1NWNjZTU5NjdkMTQzMjBjMTJlYWQ2ZDIwOGJiMzRhODM0YjE4MTBhZGM4ZjZkYjFjYzQ3YSJ9', '', '', '582', '1', '1468256036');
