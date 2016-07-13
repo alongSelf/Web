@@ -5,11 +5,35 @@
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
+
     <ion-content scroll="true">
-        <label class="item">
-            <div style="padding-left: 15px;white-space:normal;"
-                 ng-bind-html="config.spread | toHtml | trustHtml">
+        <ion-refresher on-refresh="doRefresh()"
+                       pulling-text="下拉刷新..."
+                       refreshing-text="加载中...">
+        </ion-refresher>
+
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.spreadbriefintroduction">
+            <div>
+                <img ng-src="resources/views/sysimg/spreadbriefintroduction.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">推广规则</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
             </div>
-        </label>
+        </ion-item>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ng-if="showQRC" ui-sref="tabs.income">
+            <div>
+                <img ng-src="resources/views/sysimg/money.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">收入明细</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
+
+        <!--二维码-->
+        <ion-item class="item-image" style="text-align:left; height: 75px" ng-if="showQRC" ui-sref="tabs.concern">
+            <div>
+                <img ng-src="resources/views/sysimg/concern.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">推广名片</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
     </ion-content>
 </ion-view>

@@ -627,6 +627,12 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
             layer.msg('请输入正确的邮箱地址!');
             return;
         }
+        if (checkStr($scope.userInfo.name)
+            ||checkStr($scope.userInfo.qq)
+            ||checkStr($scope.userInfo.weixnumber)){
+            layer.msg('请输入特殊字符!');
+            return;
+        }
 
         var info = {};
         info.name = $scope.userInfo.name;
@@ -753,8 +759,8 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', func
 
     $scope.saveAddr = function () {
         var addrs = {};
-        if (!$scope.addr.name || 0 == $scope.addr.name.length){
-            layer.msg('请输入收货人姓名！');
+        if (!$scope.addr.name || 0 == $scope.addr.name.length | checkStr($scope.addr.name)){
+            layer.msg('请输入有效的收货人姓名！');
             return;
         }
         addrs.name = $scope.addr.name;
@@ -833,11 +839,86 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
     };
 }]);
 
+//全部订单
+appModule.controller('allOrderController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//待付款
+appModule.controller('needPayController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//待收货
+appModule.controller('needConfirmController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//待评价
+appModule.controller('needEvaluateController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//售后
+appModule.controller('customerServiceController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+
+//推广收入明细
+appModule.controller('incomeController', ['$scope', '$ionicHistory', function($scope, $ionicHistory){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//推广二维码
+appModule.controller('concernController', ['$scope', '$ionicHistory', function($scope, $ionicHistory){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
+//推广简介
+appModule.controller('spreadbriefintroductionController', ['$scope', '$ionicHistory', function($scope, $ionicHistory){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+}]);
+
 //推广
 appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
+
+    $scope.showQRC = false;
+    $scope.doRefresh = function () {
+        $http.get("showQRC")
+            .success(
+                function (data, status, header, config) {
+                    $scope.showQRC = data.msg;
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            }).finally(function() {
+            // 停止广播ion-refresher
+            $scope.$broadcast('scroll.refreshComplete');
+        });
+    };
+
+    $scope.doRefresh();
 }]);
 
 //代理
@@ -848,8 +929,8 @@ appModule.controller('agentController', ['$scope', '$ionicHistory', '$http', fun
 
     $scope.agent = [];
     $scope.myAgent = function () {
-        if (!$scope.agent.name || 0 == $scope.agent.name.length){
-            layer.msg('请输入您的名字！');
+        if (!$scope.agent.name || 0 == $scope.agent.name.length || checkStr($scope.agent.name)){
+            layer.msg('请输入有效的名字！');
             return;
         }
         if (!$scope.agent.phone || 0 == $scope.agent.phone.length || !checkMobile($scope.agent.phone)){

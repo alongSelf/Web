@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\http\Model\Addr;
 use App\http\Model\Agent;
 use App\http\Model\Citys;
+use App\http\Model\Config;
 use App\Http\Model\Users;
 use Illuminate\Support\Facades\Crypt;
 
@@ -22,6 +23,15 @@ class UserController extends Controller
     private function checkMail($mail)
     {
         if(preg_match('/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/', $mail)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private function checkStr($val)
+    {
+        if(preg_match("/[\'.,:;*?~`!@#$%^&+=)(<>{}]|\]|\[|\/|\\\|\"|\|/", $val)){
             return true;
         }else{
             return false;
@@ -187,6 +197,12 @@ class UserController extends Controller
                 return $this->rtnLogIn(1, '请输入有效的有效地址!');
             }
         }
+        if ($this->checkStr($input->name)
+            || $this->checkStr($input->qq)
+            || $this->checkStr($input->weixnumber)){
+            return $this->rtnLogIn(1, '请勿输入特殊字符!');
+        }
+
         $user = session('user');
         if (!$user || 0 == count($user)){
             return $this->rtnLogIn(1, '请登录!');
@@ -229,6 +245,10 @@ class UserController extends Controller
             return $this->rtnLogIn(1, '请输入收货人联系地址!');
         }
 
+        if ($this->checkStr($input->name)){
+            return $this->rtnLogIn(1, '请勿输入特殊字符!');
+        }
+
         $user = session('user');
         if (!$user || 0 == count($user)){
             return $this->rtnLogIn(1, '请登录!');
@@ -263,12 +283,15 @@ class UserController extends Controller
 
     public function delAddr($id)
     {
+        if (!is_numeric($id)){
+            return $this->rtnLogIn(1, '参数错误!');
+        }
         $user = session('user');
         if (!$user || 0 == count($user)){
             return $this->rtnLogIn(1, '请登录!');
         }
 
-        $re = Addr::where('id',$id)->delete();
+        $re = Addr::where('id', $id)->delete();
         if($re){
             $addr = Addr::where('userid', $user['id'])->get();
             return $this->rtnLogIn(0, $addr);
@@ -284,6 +307,9 @@ class UserController extends Controller
         }
         if (0 == strlen($phone) || !$this->checkPhone($phone)){
             return $this->rtnLogIn(1, '请输入联系电话!');
+        }
+        if ($this->checkStr($name)){
+            return $this->rtnLogIn(1, '请勿输入特殊字符!');
         }
 
         $user = session('user');
@@ -308,6 +334,22 @@ class UserController extends Controller
             return $this->rtnLogIn(0, '申请成功!');
         }else{
             return $this->rtnLogIn(1, '申请失败，请稍候再试!');
+        }
+    }
+
+    public function showQRC()
+    {
+        $user = session('user');
+        if (!$user || 0 == count($user)){
+            return $this->rtnLogIn(1, '请登录!');
+        }
+
+        $config = Config::all()[0];
+        $user = Users::select('consume')->find($user['id']);
+        if ($user['consume'] >= $config['openspread']){
+            return $this->rtnLogIn(0, true);
+        }else{
+            return $this->rtnLogIn(0, false);
         }
     }
 }

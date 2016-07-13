@@ -122,6 +122,78 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('tabs.spreadbriefintroduction', {
+            url: "/spreadbriefintroduction",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/spreadbriefintroduction.html",
+                    controller: 'spreadbriefintroductionController'
+                }
+            }
+        })
+        .state('tabs.income', {
+            url: "/income",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/income.html",
+                    controller: 'incomeController'
+                }
+            }
+        })
+        .state('tabs.concern', {
+            url: "/concern",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/concern.html",
+                    controller: 'concernController'
+                }
+            }
+        })
+        .state('tabs.allorder', {
+            url: "/allorder",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/allorder.html",
+                    controller: 'allOrderController'
+                }
+            }
+        })
+        .state('tabs.needpay', {
+            url: "/needpay",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/needpay.html",
+                    controller: 'needPayController'
+                }
+            }
+        })
+        .state('tabs.needconfirm', {
+            url: "/needconfirm",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/needconfirm.html",
+                    controller: 'needConfirmController'
+                }
+            }
+        })
+        .state('tabs.needevaluate', {
+            url: "/needevaluate",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/needevaluate.html",
+                    controller: 'needEvaluateController'
+                }
+            }
+        })
+        .state('tabs.customerservice', {
+            url: "/customerservice",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/customerservice.html",
+                    controller: 'customerServiceController'
+                }
+            }
+        })
         .state('tabs.car', {
             cache: false,
             url: "/car",

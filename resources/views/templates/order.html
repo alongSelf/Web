@@ -6,6 +6,44 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content scroll="true">
-        我的订单
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.allorder">
+            <div>
+                <img ng-src="resources/views/sysimg/order.png" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">全部订单</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.needpay">
+            <div>
+                <img ng-src="resources/views/sysimg/needpay.png" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px" >待付款</i>
+                <div style="float: left; width:30px; height:20px; background-color:#F00; border-radius:25px;">
+                    <div style="height:20px; display:block; color:#FFF; text-align:center">4</div>
+                </div>
+
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.needconfirm">
+            <div>
+                <img ng-src="resources/views/sysimg/confirm.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">待收货</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.needevaluate">
+            <div>
+                <img ng-src="resources/views/sysimg/evaluate.png" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">待评价</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
+        <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.customerservice">
+            <div>
+                <img ng-src="resources/views/sysimg/customerservice.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                <i style="padding-left: 15px">退款/售后</i>
+                <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+            </div>
+        </ion-item>
     </ion-content>
 </ion-view>

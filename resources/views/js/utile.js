@@ -56,9 +56,12 @@ function checkEmail(str){
 }
 
 function checkStr(str) {
-    var containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/);
-
-    return (containSpecial.test(str));
+    var re = /[\'.,:;*?~`!@#$%^&+=)(<>{}]|\]|\[|\/|\\\|"|\|/;
+    if(re.test(str)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 function makeItemList(itemData, clientWidth) {

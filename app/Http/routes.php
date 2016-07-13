@@ -33,8 +33,8 @@ Route::group([], function () {
     Route::get('saveAddr/{addr}', 'UserController@saveAddr');
     Route::get('getAddr', 'UserController@getAddr');
     Route::get('delAddr/{id}', 'UserController@delAddr');
-
     Route::get('agent/{name}/{phone}', 'UserController@agent');
+    Route::get('showQRC', 'UserController@showQRC');
 
 
     Route::get('getArea1', 'UserController@getArea1');
