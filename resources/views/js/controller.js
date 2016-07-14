@@ -149,6 +149,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.isBuy = true;
     $scope.showCon = false;
     $scope.showEv = false;
+    $scope.showInfo = true;
     $scope.PopData = {};
 
     //数据获取
@@ -288,13 +289,20 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();
     });
 
+    $scope.showItemInfo =function () {
+        $scope.showInfo = true;
+        $scope.showCon = false;
+        $scope.showEv = false;
+    };
     $scope.showContent = function () {
         $scope.showCon = true;
         $scope.showEv = false;
+        $scope.showInfo = false;
     };
     $scope.showEvaluate = function () {
         $scope.showCon = false;
         $scope.showEv = true;
+        $scope.showInfo = false;
     };
 
     $scope.Page = 0;
@@ -307,9 +315,9 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                         $scope.moreData = false;
                     }else {
                         if ($scope.Evaluates){
-                            $scope.Evaluates = $scope.Evaluates.concat(data);
+                            $scope.Evaluates = $scope.Evaluates.concat(parseEvaluates(data));
                         }else {
-                            $scope.Evaluates = data;
+                            $scope.Evaluates = parseEvaluates(data);
                         }
                     }
                 }
@@ -484,6 +492,9 @@ appModule.controller('searchController', ['$scope', '$http', function ($scope, $
 //用户中心
 appModule.controller('uerCenterController', ['$scope', '$http', function($scope, $http){
     $scope.needLogIn = true;
+    $scope.logInOrReg = '登录';
+    $scope.clickLoginOrReg = '点击注册';
+    $scope.isRegister = false;
     $scope.doRefresh = function () {
         $http.get("getUserBase")
             .success(
@@ -507,6 +518,17 @@ appModule.controller('uerCenterController', ['$scope', '$http', function($scope,
 
     $scope.doRefresh();
 
+    $scope.register = function () {
+        $scope.isRegister = !$scope.isRegister;
+        if ($scope.isRegister){
+            $scope.logInOrReg = '注册';
+            $scope.clickLoginOrReg = '取消注册';
+        }else{
+            $scope.logInOrReg = '登录';
+            $scope.clickLoginOrReg = '点击注册';
+        }
+    };
+
     $scope.logIn = function () {
         var phone = document.getElementById('phone').value;
         var pwd = document.getElementById('password').value;
@@ -515,22 +537,50 @@ appModule.controller('uerCenterController', ['$scope', '$http', function($scope,
             return;
         }
 
-        $http.get("logIn/"+phone+"/"+pwd)
-            .success(
-                function (data, status, header, config) {
-                    if (0 != data.status){
-                        $scope.needLogIn = true;
+        var regPSW = '';
+        //注册
+        if ($scope.isRegister){
+            regPSW = document.getElementById('regpassword').value;
+            if (pwd.length < 6){
+                layer.msg('密码长度最少6位!');
+                return;
+            }
+            if (regPSW != pwd){
+                layer.msg('两次输入密码不同!');
+                return;
+            }
+
+            $http.get("register/"+phone+"/"+pwd)
+                .success(
+                    function (data, status, header, config) {
                         layer.msg(data.msg);
-                    }else {
-                        $scope.needLogIn = false;
-                        $scope.uerBase = data.msg;
+                        if (0 == data.status){
+                            $scope.register();
+                        }
                     }
-                }
-            ).error(
-            function (data) {
-                $scope.needLogIn = true;
-                onError(data);
-            });
+                ).error(
+                function (data) {
+                    onError(data);
+                });
+        }else {
+            //登录
+            $http.get("logIn/"+phone+"/"+pwd)
+                .success(
+                    function (data, status, header, config) {
+                        if (0 != data.status){
+                            $scope.needLogIn = true;
+                            layer.msg(data.msg);
+                        }else {
+                            $scope.needLogIn = false;
+                            $scope.uerBase = data.msg;
+                        }
+                    }
+                ).error(
+                function (data) {
+                    $scope.needLogIn = true;
+                    onError(data);
+                });
+        }
     };
 
     $scope.logOut = function () {
@@ -546,7 +596,6 @@ appModule.controller('uerCenterController', ['$scope', '$http', function($scope,
     };
 }]);
 
-
 //个人资料
 appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
     $scope.goBack = function () {
@@ -555,26 +604,32 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
 
     $scope.showBind = false;
     $scope.showChange = false;
-    //获取用户信息
-    $http.get("getUserInfo")
-        .success(
-            function (data, status, header, config) {
-                if (0 == data.status){
-                    $scope.userInfo = data.msg;
-                    var phone = $scope.userInfo.phone;
-                    if(phone && 0 != phone.length){
-                        $scope.showBind = false;
+    $scope.doRefresh = function () {
+        //获取用户信息
+        $http.get("getUserInfo")
+            .success(
+                function (data, status, header, config) {
+                    if (0 == data.status){
+                        $scope.userInfo = data.msg;
+                        var phone = $scope.userInfo.phone;
+                        if(phone && 0 != phone.length){
+                            $scope.showBind = false;
+                        }else {
+                            $scope.showBind = true;
+                        }
                     }else {
-                        $scope.showBind = true;
-                    }
-                }else {
 
+                    }
                 }
-            }
-        ).error(
-        function (data) {
-            onError(data);
+            ).error(
+            function (data) {
+                onError(data);
+            }).finally(function() {
+            // 停止广播ion-refresher
+            $scope.$broadcast('scroll.refreshComplete');
         });
+    };
+    $scope.doRefresh();
 
     //绑定账号
     $scope.bindAccount = function () {
@@ -585,18 +640,15 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
             layer.msg('亲，请输入正确的电话号码!');
             return;
         }
-        if (0 == psw1.length){
-            layer.msg('密码不能为空!');
+        if (psw1.length < 6){
+            layer.msg('密码长度最少6位!');
             return;
         }
         if (psw1 != psw2){
             layer.msg('两次输入密码不同!');
             return;
         }
-        if (psw1.length < 6){
-            layer.msg('密码长度最少6位!');
-            return;
-        }
+        
         $http.get("bindAccount/"+phone+"/"+psw1)
             .success(
                 function (data, status, header, config) {
@@ -674,6 +726,16 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', func
     $scope.addr.Area3 = $scope.selectAddrStr;
 
     $scope.loadAddr = function () {
+        $http.get("getArea1")
+            .success(
+                function (data, status, header, config) {
+                    $scope.Area1 = data;
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            });
+
         $http.get("getAddr")
             .success(
                 function (data, status, header, config) {
@@ -686,7 +748,10 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', func
             ).error(
             function (data) {
                 onError(data);
-            });
+            }).finally(function() {
+            // 停止广播ion-refresher
+            $scope.$broadcast('scroll.refreshComplete');
+        });
     };
     $scope.loadAddr();
 
@@ -698,16 +763,6 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', func
         $scope.showAddAddr = false;
     };
 
-    $http.get("getArea1")
-        .success(
-            function (data, status, header, config) {
-                $scope.Area1 = data;
-            }
-        ).error(
-        function (data) {
-            onError(data);
-        });
-    
     $scope.selectArea1 = function () {
         $scope.Area3 = [];
         $scope.addr.Area3 = $scope.selectAddrStr;
@@ -876,11 +931,21 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', fu
         $scope.showIncome = false;
     };
     $scope.showIncomeFc = function () {
+        if (!$scope.canShowQRC){
+            layer.msg('尚未满足开启条件!');
+            return;
+        }
+
         $scope.showMemo = false;
         $scope.showQRC = false;
         $scope.showIncome = true;
     };
     $scope.showQRCFc = function () {
+        if (!$scope.canShowQRC){
+            layer.msg('尚未满足开启条件!');
+            return;
+        }
+
         $scope.showMemo = false;
         $scope.showQRC = true;
         $scope.showIncome = false;

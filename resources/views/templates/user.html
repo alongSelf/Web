@@ -15,10 +15,20 @@
                 <span class="input-label" style="text-align:right; padding-right: 20px">密码:</span>
                 <input id="password" placeholder="请输入密码" type="password">
             </label>
-            <div style="text-align:center;">
-                <button class="button button-light" style="width: 50%" ng-click="logIn()">
-                    登录
-                </button>
+            <label class="item item-input" ng-if="isRegister">
+                <span class="input-label" style="text-align:right; padding-right: 20px">确认密码:</span>
+                <input id="regpassword" placeholder="请再次输入密码" type="password">
+            </label>
+
+            <div class="row">
+                <div class="col">
+                    <button class="fr button button-light" ng-click="register()">[[clickLoginOrReg]]</button>
+                </div>
+                <div class="col">
+                    <button class="fl button button-light" ng-click="logIn()">
+                        [[logInOrReg]]
+                    </button>
+                </div>
             </div>
         </div>
 

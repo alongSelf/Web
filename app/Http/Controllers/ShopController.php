@@ -77,7 +77,7 @@ class ShopController extends Controller
     public function itemEvaluate($id, $page)
     {
         return Evaluates::where('itemid', $id)->
-            skip($page * $this->numPerPage())->take($this->numPerPage())->orderBy('id','desc')->get();
+            skip($page * $this->numPerPage())->take($this->numPerPage())->orderBy('createtime','desc')->get();
     }
 
     public function search($param)

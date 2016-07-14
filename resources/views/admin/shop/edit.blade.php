@@ -131,7 +131,7 @@
             </tr>
 
             <tr>
-                <th><i class="require">*</i>宝贝详情:</th>
+                <th><i class="require">*</i>宝贝详情(图片加上style="width: 100%"):</th>
                 <td>
                     <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.config.js')}}"></script>
                     <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.all.min.js')}}"> </script>

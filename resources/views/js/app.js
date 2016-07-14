@@ -2,7 +2,7 @@
 
 var appModule = angular.module('ionicApp', ['ionic', 'ionicApp.filter', 'ionicApp.server', 'ionicApp.controller', 'ngCookies', 'ionicLazyLoad']);
 
-appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$interpolateProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider) {
+appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', '$interpolateProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $interpolateProvider, $locationProvider) {
     $ionicConfigProvider.tabs.position('bottom');
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');

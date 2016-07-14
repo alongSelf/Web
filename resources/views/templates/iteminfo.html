@@ -8,55 +8,69 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
+    <ion-header-bar align-title="left" class="bar bar-subheader bar-stable">
+        <div class="row">
+            <div class="col button button-clear" ng-click="showItemInfo()">
+                <nobr>商品</nobr>
+            </div>
+            <div class="col button button-clear" ng-click="showContent()">
+                <nobr>详情</nobr>
+            </div>
+            <div class="col button button-clear" ng-click="showEvaluate()">
+                <nobr>评价([[commentNum]])</nobr>
+            </div>
+        </div>
+    </ion-header-bar>
+
     <ion-content scroll="true" lazy-scroll>
         <ion-refresher on-refresh="doRefresh()"
                        pulling-text="下拉刷新..."
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
-                       delegate-handle="delegateHandler">
-            <ion-slide ng-repeat="strImg in slideImg">
-                <img ng-src="uploads/[[strImg]]"
-                     style="height: 200px; width: 100%; border-radius:10px">
-            </ion-slide>
-        </ion-slide-box>
-
         <!--物品信息-->
-        <div style="padding-left:3px; padding-right: 3px">
-            <div>
+        <div style="padding-left:5px; padding-right: 5px">
+            <div ng-if="showInfo">
+                <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
+                               delegate-handle="delegateHandler">
+                    <ion-slide ng-repeat="strImg in slideImg">
+                        <img ng-src="uploads/[[strImg]]"
+                             style="height: 200px; width: 100%; border-radius:10px">
+                    </ion-slide>
+                </ion-slide-box>
                 <div>
                     <p style="font-weight:bold" ng-bind-html="itemInfo.describe | toHtml | trustHtml"></p>
                 </div>
                 <div>
                     <span>
                         <em style="color: red" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
-                        <em style="text-decoration:line-through; color: #adadad" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
+                        <em style="text-decoration:line-through; color: #adadad; font-size:10px" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
                         <em style="padding-left:10px; font-size:10px; color:#999">&nbsp&nbsp[[buynum]]</em>
                     </span>
                 </div>
             </div>
-            <br>
 
-            <!--评价详情等-->
-            <div class="row row-wrap">
-                <div class="col col-20" id="itemContent" ng-click="showContent()">详情</div>
-                <div class="col col-20" id="itemEvaluate" ng-click="showEvaluate()">点评([[commentNum]])</div>
-            </div>
-
-            <div ng-if="showCon">
+            <div ng-if="showCon" style="text-align: center;">
                 <div ng-bind-html="itemInfo.content | trustHtml"></div>
             </div>
 
             <div ng-if="showEv">
-                <ion-list ng-if="Evaluates">
-                    <ion-item class="item-body" ng-repeat="Evaluate in Evaluates">
-                        <em>名字</em>
-                        <em>[[Evaluate.star]]</em>
-                        <br/>
-                        <div style="margin-bottom: 0">[[Evaluate.evaluate]]</div>
-                    </ion-item>
-                </ion-list>
+                <div ng-if="Evaluates">
+                    <label style="border-bottom:#000000 solid 1px; display:block" ng-repeat="Evaluate in Evaluates">
+                        <div class="row" style="padding-top: 0px">
+                            <div class="col col-66">
+                                <em>[[Evaluate.nickname]]</em>
+                                <em style="font-size:5px; padding-left: 5px">[[Evaluate.createtime]]</em>
+                            </div>
+                            <div class="col">
+                                <img ng-src="resources/views/sysimg/star.jpg" style="width: 15px; height: 15px" ng-repeat="i in Evaluate.star">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="font-size:10px; white-space:normal">[[Evaluate.evaluate | toHtml | trustHtml]]</div>
+                        </div>
+                    </label>
+                </div>
 
                 <div ng-if="!Evaluates">
                     <img src="resources/views/sysimg/noevaluates.jpg" style="width: 100%;">
@@ -67,7 +81,7 @@
         <ion-infinite-scroll ng-if="moreData && showEv" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 
-    <ion-footer-bar>
+    <ion-footer-bar ng-if="showInfo">
         <div class="row" style="padding-top: 0">
             <div class="col col-left" style="padding-top: 0">
                 <button class="button button-calm ion-ios-cart" style="float: right; width: 40%; padding-top: 0" ng-click="addInCar($event)">

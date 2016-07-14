@@ -180,3 +180,24 @@ function getCityID(Citys, cityNam) {
         }
     }
 }
+
+function toStrTime(time) {
+    var newDate = new Date();
+    newDate.setTime(time * 1000);
+    return newDate.toLocaleDateString();
+}
+
+function parseEvaluates(Evaluates) {
+    for (i = 0; i < Evaluates.length; i++){
+        var iStar = Evaluates[i].star;
+        var starArray = [];
+        for (j = 0; j < iStar; j++){
+            starArray.push(j);
+        }
+
+        Evaluates[i].createtime = toStrTime(Evaluates[i].createtime);
+        Evaluates[i].star = starArray;
+    }
+
+    return Evaluates;
+}

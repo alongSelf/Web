@@ -23,6 +23,7 @@ Route::group([], function () {
     Route::get('search/{param}', 'ShopController@search');
 
 
+    Route::get('register/{phone}/{psw}', 'UserController@register');
     Route::get('logIn/{phone}/{psw}', 'UserController@logIn');
     Route::get('logOut', 'UserController@logOut');
     Route::get('getUserBase', 'UserController@getUserBase');

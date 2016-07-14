@@ -6,6 +6,11 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content  scroll="true">
+        <ion-refresher on-refresh="doRefresh()"
+                       pulling-text="下拉刷新..."
+                       refreshing-text="加载中...">
+        </ion-refresher>
+
         <!--账号绑定-->
         <div ng-if="showBind">
             <div class="row row-wrap" style="text-align: center">

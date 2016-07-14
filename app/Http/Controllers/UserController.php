@@ -6,6 +6,7 @@ use App\http\Model\Addr;
 use App\http\Model\Agent;
 use App\http\Model\Citys;
 use App\http\Model\Config;
+use App\http\Model\Follower;
 use App\Http\Model\Users;
 use Illuminate\Support\Facades\Crypt;
 
@@ -44,6 +45,40 @@ class UserController extends Controller
             'status' => $code,
             'msg' => $msg,
         ];
+    }
+
+    public function register($phone, $psw)
+    {
+        if (!$this->checkPhone($phone)){
+            return $this->rtnLogIn(1, '亲，请输入正确的号码！');
+        }
+        if (strlen($psw) < 6){
+            return $this->rtnLogIn(1, '密码长度最少6位！');
+        }
+        $count = Users::where('phone', $phone)->count();
+        if (0 != $count){
+            return $this->rtnLogIn(1, '该号码已经注册!');
+        }
+
+        $data = new Users;
+        $data->phone = $phone;
+        $data->psw = Crypt::encrypt($psw);
+        if($data->save()) {
+            //加入到根级粉丝
+            $input = [
+                'groupid'=>$data->id,
+                'leftweight'=>1,
+                'rightweight'=>2,
+                'userid'=>$data->id,
+                'layer'=>0,
+            ];
+            Follower::create($input);
+
+            return $this->rtnLogIn(0, '注册成功!');
+        }
+        else{
+            return $this->rtnLogIn(1, '注册失败，请稍候再试!');
+        }
     }
 
     public function logIn($phone, $psw)
@@ -169,7 +204,7 @@ class UserController extends Controller
         if (!$user || 0 == count($user)){
             return $this->rtnLogIn(1, '请登录!');
         }
-        if (0 == count($user['phone'])){
+        if (!$this->checkPhone($user['phone'])){
             return $this->rtnLogIn(1, '请先绑定号码!');
         }
 

@@ -7,6 +7,10 @@
     </ion-nav-bar>
 
     <ion-content scroll="true">
+        <ion-refresher on-refresh="loadAddr()"
+                       pulling-text="下拉刷新..."
+                       refreshing-text="加载中...">
+        </ion-refresher>
         <!--已有地址-->
         <div ng-if="!showAddAddr">
             <ion-item class="item-avatar" ng-repeat="addrInfo in AddrList">

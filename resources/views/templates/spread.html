@@ -7,9 +7,15 @@
     </ion-nav-bar>
     <ion-header-bar align-title="left" class="bar bar-subheader bar-stable">
         <div class="row">
-            <div class="col col button button-clear" ng-click="showSpreadMemo()"><nobr>推广规则</nobr></div>
-            <div class="col col button button-clear" ng-click="showIncomeFc()"><nobr>收入明细</nobr></div>
-            <div class="col col button button-clear" ng-click="showQRCFc()"><nobr>推广名片</nobr></div>
+            <div class="col button button-clear" ng-click="showSpreadMemo()">
+                <nobr>推广规则</nobr>
+            </div>
+            <div class="col button button-clear" ng-click="showIncomeFc()">
+                <nobr>收入明细</nobr>
+            </div>
+            <div class="col button button-clear" ng-click="showQRCFc()">
+                <nobr>推广名片</nobr>
+            </div>
         </div>
     </ion-header-bar>
     <ion-content scroll="true">
@@ -17,7 +23,7 @@
                        pulling-text="下拉刷新..."
                        refreshing-text="加载中...">
         </ion-refresher>
-        <div ng-if="showMemo" style="padding-left: 15px;white-space:normal;"
+        <div ng-if="showMemo" style="padding-left: 15px; padding-right: 15px;white-space:normal;"
              ng-bind-html="config.spread | toHtml | trustHtml">
         </div>
         <div ng-if="showIncome && canShowQRC" style="padding-left: 15px;white-space:normal;">
