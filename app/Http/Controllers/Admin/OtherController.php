@@ -108,22 +108,86 @@ class OtherController extends CommonController
         }
     }
 
-    public function changeCommission()
+    public function changeCash()
     {
         $input = Input::all();
         if ($input){
             $config = Config::find($input['id']);
-            $config->commission = $input['commission'];
+            $config->cash = $input['cash'];
             $re = $config->update();
             if($re){
                 $data = [
                     'status' => 0,
-                    'msg' => '提成更新成功！',
+                    'msg' => '提现条件更新成功！',
                 ];
             }else{
                 $data = [
                     'status' => 1,
-                    'msg' => '提成更新失败，请稍后重试！',
+                    'msg' => '提现条件更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+
+    public function changeCommission1()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->commission1 = $input['commission'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '一级提成更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '一级更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+    public function changeCommission2()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->commission2 = $input['commission'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '二级提成更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '二级更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+    public function changeCommission3()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->commission3 = $input['commission'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '三级提成更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '三级更新失败，请稍后重试！',
                 ];
             }
             return $data;

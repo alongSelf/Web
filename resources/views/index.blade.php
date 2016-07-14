@@ -15,7 +15,10 @@
     <script src="resources/views/js/app.js"></script>
     <script src="resources/views/js/filter.js"></script>
     <script src="resources/views/js/server.js"></script>
-    <script src="resources/views/js/controller.js"></script>
+    <script src="resources/views/js/shopcontroller.js"></script>
+    <script src="resources/views/js/usercontroller.js"></script>
+    <script src="resources/views/js/spreadcontroller.js"></script>
+    <script src="resources/views/js/paycontroller.js"></script>
 
     <script src="resources/views/js/jquery-1.12.4.js"></script>
     <script src="resources/views/js/layer.js"></script>

@@ -35,7 +35,7 @@ Route::group([], function () {
     Route::get('getAddr', 'UserController@getAddr');
     Route::get('delAddr/{id}', 'UserController@delAddr');
     Route::get('agent/{name}/{phone}', 'UserController@agent');
-    Route::get('showQRC', 'UserController@showQRC');
+    Route::get('canShowQRC', 'UserController@canShowQRC');
 
 
     Route::get('getArea1', 'UserController@getArea1');
@@ -71,7 +71,10 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/changeAgent', 'OtherController@changeAgent');
     Route::any('other/changeSpread', 'OtherController@changeSpread');
     Route::any('other/changeOpenSpread', 'OtherController@changeOpenSpread');
-    Route::any('other/changeCommission', 'OtherController@changeCommission');
+    Route::any('other/changeCash', 'OtherController@changeCash');
+    Route::any('other/changeCommission1', 'OtherController@changeCommission1');
+    Route::any('other/changeCommission2', 'OtherController@changeCommission2');
+    Route::any('other/changeCommission3', 'OtherController@changeCommission3');
 
     Route::get('user/index', 'UserController@index');
     Route::get('order/index', 'OrderController@index');

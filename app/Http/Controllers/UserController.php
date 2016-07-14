@@ -372,19 +372,25 @@ class UserController extends Controller
         }
     }
 
-    public function showQRC()
+    public function canShowQRC()
     {
         $user = session('user');
         if (!$user || 0 == count($user)){
             return $this->rtnLogIn(1, '请登录!');
         }
 
+        //是否显示
+        $rtn = [];
         $config = Config::all()[0];
-        $user = Users::select('consume')->find($user['id']);
+        $user = Users::select('consume', 'income')->find($user['id']);
+        $rtn['Income'] = $user['income'];
+        $rtn['Cash'] = $config['cash'];
         if ($user['consume'] >= $config['openspread']){
-            return $this->rtnLogIn(0, true);
+            $rtn['canShowQRC'] = true;
+            return $this->rtnLogIn(0, $rtn);
         }else{
-            return $this->rtnLogIn(0, false);
+            $rtn['canShowQRC'] = false;
+            return $this->rtnLogIn(0, $rtn);
         }
     }
 }
