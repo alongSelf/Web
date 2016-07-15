@@ -9,15 +9,15 @@
         <div ng-if="needLogIn" style="padding-top: 100px">
             <label class="item item-input">
                 <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
-                <input id="phone" placeholder="请输入手机号码" type="tel">
+                <input id="phone" placeholder="手机号码" type="tel">
             </label>
             <label class="item item-input">
                 <span class="input-label" style="text-align:right; padding-right: 20px">密码:</span>
-                <input id="password" placeholder="请输入密码" type="password">
+                <input id="password" placeholder="密码" type="password">
             </label>
             <label class="item item-input" ng-if="isRegister">
                 <span class="input-label" style="text-align:right; padding-right: 20px">确认密码:</span>
-                <input id="regpassword" placeholder="请再次输入密码" type="password">
+                <input id="regpassword" placeholder="确认密码" type="password">
             </label>
 
             <div class="row">
@@ -82,6 +82,13 @@
                 <div>
                     <img ng-src="resources/views/sysimg/changepsw.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
                     <i style="padding-left: 15px">修改密码</i>
+                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                </div>
+            </ion-item>
+            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.contactus">
+                <div>
+                    <img ng-src="resources/views/sysimg/contactus.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
+                    <i style="padding-left: 15px">联系我们</i>
                     <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
                 </div>
             </ion-item>

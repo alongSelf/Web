@@ -124,6 +124,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('tabs.contactus', {
+            url: "/contactus",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/contactus.html",
+                    controller: 'contactusController'
+                }
+            }
+        })
         .state('tabs.car', {
             cache: false,
             url: "/car",

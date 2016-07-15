@@ -7,16 +7,24 @@
     </ion-nav-bar>
     <ion-header-bar align-title="left" class="bar bar-subheader bar-stable">
         <div class="row">
-            <div class="col button button-clear" ng-click="showSpreadMemo()">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.memoClicked}"
+                 ng-click="showSpreadMemo()">
                 <nobr>推广规则</nobr>
             </div>
-            <div class="col button button-clear" ng-click="showQRCFc()">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.QRCClicked}"
+                 ng-click="showQRCFc()">
                 <nobr>推广名片</nobr>
             </div>
-            <div class="col button button-clear" ng-click="showIncomeFc()">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.incomeClicked}"
+                 ng-click="showIncomeFc()">
                 <nobr>收入明细</nobr>
             </div>
-            <div class="col button button-clear" ng-click="showCashFc()">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.cashClicked}"
+                 ng-click="showCashFc()">
                 <nobr>提现明细</nobr>
             </div>
         </div>
@@ -34,7 +42,7 @@
             </div>
 
             <!--推广二维码，分享-->
-            <div ng-if="showQRC && canShowQRC" style="padding-left: 15px;white-space:normal;">
+            <div ng-if="showQRC && canShowQRC">
                 推广名片
             </div>
 
@@ -42,28 +50,46 @@
             <div ng-if="showIncome && canShowQRC">
                 <div style="border-bottom:#000000 solid 1px; display:block; text-align: center">
                     <div style="padding-top: 15px; padding-bottom: 15px;">
-                        <em style="font-size: 20px;">总收入:</em><em style="color: red; padding-left: 10px">[[Income | currency:'￥']]</em>
+                        <em style="font-size: 20px;">余额:</em><em style="color: red; padding-left: 10px">[[Income/100 | currency:'￥']]</em>
                     </div>
                 </div>
                 <div>
-                    <!--收入明细-->
-                    <ion-list>
-                        <ion-item ng-repeat="item in searchData" ng-cloak>
-                            [[item.name]]
-                        </ion-item>
-                    </ion-list>
+                    <div class="row row-wrap">
+                        <div class="col">名字</div>
+                        <div class="col">消费</div>
+                        <div class="col">提成</div>
+                        <div class="col">余额</div>
+                        <div class="col">时间</div>
+                    </div>
+                    <div class="row row-wrap" ng-repeat="income in incomeInfo">
+                        <div class="col" ng-click="showLevel([[income.followerid]])">[[income.followernam | cutUserName]]</div>
+                        <div class="col">[[income.consume | currency:'￥']]</div>
+                        <div class="col">[[income.income/100 | currency:'￥']]</div>
+                        <div class="col">[[income.balance/100 | currency:'￥']]</div>
+                        <div class="col">[[income.time | toStrDate]]</div>
+                    </div>
                 </div>
             </div>
 
             <!--提现明细-->
-            <div ng-if="showCash && canShowQRC" style="padding-left: 15px;white-space:normal;">
-                <ion-list>
-                    <ion-item ng-repeat="item in searchData" ng-cloak>
-                        [[item.name]]
-                    </ion-item>
-                </ion-list>
+            <div ng-if="showCash && canShowQRC">
+                <div class="row row-wrap">
+                    <div class="col">提现</div>
+                    <div class="col">余额</div>
+                    <div class="col">状态</div>
+                    <div class="col">时间</div>
+                </div>
+                <div class="row row-wrap" ng-repeat="cash in cashInfo">
+                    <div class="col">[[cash.money | currency:'￥']]</div>
+                    <div class="col">[[cash.balance/100 | currency:'￥']]</div>
+                    <div class="col">[[cash.status | toStrCashStatus]]</div>
+                    <div class="col">[[cash.time | toStrDate]]</div>
+                </div>
             </div>
         </div>
+
+        <ion-infinite-scroll ng-if="moreIncomeData && showIncome && canShowQRC" on-infinite="loadIncomeData()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moreCashData && showCash && canShowQRC" on-infinite="loadCashData()" distance="1%" ></ion-infinite-scroll>
 
     </ion-content>
     <ion-footer-bar ng-if="showIncome && canShowQRC">

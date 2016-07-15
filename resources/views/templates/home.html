@@ -38,7 +38,9 @@
                          image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
                 </span>
                 <span>
-                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">[[item.name | clipStr]]</div>
+                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">
+                        [[item.name | clipStr]]
+                    </div>
                 </span>
                 <span>
                     <em style="color: red">[[item.cur_price | currency:'￥']]</em>

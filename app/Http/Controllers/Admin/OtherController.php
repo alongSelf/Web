@@ -251,4 +251,25 @@ class OtherController extends CommonController
         }
         return $data;
     }
+
+    public function contactus()
+    {
+        $config = Config::first();
+        return view('admin.other.contactus', compact('config'));
+    }
+
+    public function changeContactus()
+    {
+        $input = Input::except('_token');;
+        if ($input) {
+            $config = Config::find($input['id']);
+            $config->contactus = $input['contactus'];
+            $re = $config->update();
+            if ($re) {
+                return back()->with('errors', '联系我们更新成功！');
+            } else {
+                return back()->with('errors', '联系我们更新失败，请稍后重试！');
+            }
+        }
+    }
 }

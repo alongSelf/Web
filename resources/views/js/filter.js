@@ -46,3 +46,39 @@ appModule.filter('hidePhone', function () {
         return val1 + '******' + val2;
     }
 });
+
+appModule.filter('toStrDate', function () {
+    return function (input) {
+        var newDate = new Date();
+        newDate.setTime(input * 1000);
+
+        return newDate.toLocaleDateString();
+    }
+});
+
+appModule.filter('cutUserName', function () {
+    return function (input) {
+        if (input.length > 3){
+            var first = input.substr(0, 1);
+            var last = input.substr(input.length - 2, 2);
+
+            input = first+'***'+last;
+        }
+
+        return input;
+    }
+});
+
+appModule.filter('toStrCashStatus', function () {
+    return function (input) {
+        if (0 == input){
+            return '处理中';
+        }
+        if (1 == input){
+            return '完成';
+        }
+        if (2 == input){
+            return '取消';
+        }
+    }
+});

@@ -193,6 +193,7 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
             return;
         }
         if (checkStr($scope.userInfo.name)
+            ||checkStr($scope.userInfo.nickname)
             ||checkStr($scope.userInfo.qq)
             ||checkStr($scope.userInfo.weixnumber)){
             layer.msg('请输入特殊字符!');
@@ -201,6 +202,7 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
 
         var info = {};
         info.name = $scope.userInfo.name;
+        info.nickname = $scope.userInfo.nickname;
         info.email = $scope.userInfo.email;
         info.qq = $scope.userInfo.qq;
         info.weixnumber = $scope.userInfo.weixnumber;
@@ -435,5 +437,12 @@ appModule.controller('changePSWController', ['$scope', '$ionicHistory', '$http',
             function (data) {
                 onError(data);
             });
+    };
+}]);
+
+//联系我们
+appModule.controller('contactusController', ['$scope', '$ionicHistory', function($scope, $ionicHistory){
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
     };
 }]);

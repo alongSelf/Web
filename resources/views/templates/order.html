@@ -7,20 +7,30 @@
     </ion-nav-bar>
     <ion-header-bar class="bar bar-subheader bar-stable">
         <div class="row">
-            <div class="col button button-clear" ng-click="allOrder()" >
-                <nobr>全部订单</nobr>
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.allClicked}"
+                 ng-click="allOrder()" >
+                <nobr>全部</nobr>
             </div>
-            <div class="col button button-clear">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.payClicked}"
+                 ng-click="payOrder()">
                 <nobr>待付款</nobr>
             </div>
-            <div class="col button button-clear">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.confirmClicked}"
+                 ng-click="confirmOrder()">
                 <nobr>待收货</nobr>
             </div>
-            <div class="col button button-clear">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.evaluateClicked}"
+                 ng-click="evaluateOrder()">
                 <nobr>待评价</nobr>
             </div>
-            <div class="col button button-clear">
-                <nobr>退款/售后</nobr>
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.serviceClicked}"
+                 ng-click="serviceOrder()">
+                <nobr>售后</nobr>
             </div>
         </div>
     </ion-header-bar>

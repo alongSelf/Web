@@ -22,9 +22,15 @@ Route::group([], function () {
     Route::get('itemEvaluate/{id}/{page}', 'ShopController@itemEvaluate');
     Route::get('search/{param}', 'ShopController@search');
 
-
     Route::get('register/{phone}/{psw}', 'UserController@register');
     Route::get('logIn/{phone}/{psw}', 'UserController@logIn');
+
+    //admin
+    Route::any('admin/login', 'Admin\LoginController@login');
+    Route::get('admin/code', 'Admin\LoginController@code');
+});
+
+Route::group(['middleware' => ['user.login']], function () {
     Route::get('logOut', 'UserController@logOut');
     Route::get('getUserBase', 'UserController@getUserBase');
     Route::get('getUserInfo', 'UserController@getUserInfo');
@@ -34,16 +40,16 @@ Route::group([], function () {
     Route::get('saveAddr/{addr}', 'UserController@saveAddr');
     Route::get('getAddr', 'UserController@getAddr');
     Route::get('delAddr/{id}', 'UserController@delAddr');
+
     Route::get('agent/{name}/{phone}', 'UserController@agent');
+    Route::get('agentShow', 'UserController@agentShow');
     Route::get('canShowQRC', 'UserController@canShowQRC');
-
-
+    Route::get('loadIncomeData/{page}', 'UserController@loadIncomeData');
+    Route::get('loadCashData/{page}', 'UserController@loadCashData');
+    Route::get('cash/{money}', 'UserController@cash');
+    Route::get('showLevel/{followerid}', 'UserController@showLevel');
     Route::get('getArea1', 'UserController@getArea1');
     Route::get('getChildArea/{parentNo}', 'UserController@getChildArea');
-
-    //admin
-    Route::any('admin/login', 'Admin\LoginController@login');
-    Route::get('admin/code', 'Admin\LoginController@code');
 });
 
 Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'Admin'], function () {
@@ -75,6 +81,8 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/changeCommission1', 'OtherController@changeCommission1');
     Route::any('other/changeCommission2', 'OtherController@changeCommission2');
     Route::any('other/changeCommission3', 'OtherController@changeCommission3');
+    Route::any('other/contactus', 'OtherController@contactus');
+    Route::any('other/changeContactus', 'OtherController@changeContactus');
 
     Route::get('user/index', 'UserController@index');
     Route::get('order/index', 'OrderController@index');

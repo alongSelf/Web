@@ -10,13 +10,19 @@
 
     <ion-header-bar align-title="left" class="bar bar-subheader bar-stable">
         <div class="row">
-            <div class="col button button-clear" ng-click="showItemInfo()">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.itemClicked}"
+                 ng-click="showItemInfo()">
                 <nobr>商品</nobr>
             </div>
-            <div class="col button button-clear" ng-click="showContent()">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.itemInfoClicked}"
+                 ng-click="showContent()">
                 <nobr>详情</nobr>
             </div>
-            <div class="col button button-clear" ng-click="showEvaluate()">
+            <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.evaluateClicked}"
+                 ng-click="showEvaluate()">
                 <nobr>评价([[commentNum]])</nobr>
             </div>
         </div>
@@ -59,8 +65,8 @@
                     <label style="border-bottom:#000000 solid 1px; display:block" ng-repeat="Evaluate in Evaluates">
                         <div class="row" style="padding-top: 0px">
                             <div class="col col-66">
-                                <em>[[Evaluate.nickname]]</em>
-                                <em style="font-size:5px; padding-left: 5px">[[Evaluate.createtime]]</em>
+                                <em>[[Evaluate.nickname | cutUserName]]</em>
+                                <em style="font-size:5px; padding-left: 5px">[[Evaluate.createtime | toStrDate]]</em>
                             </div>
                             <div class="col">
                                 <img ng-src="resources/views/sysimg/star.jpg" style="width: 15px; height: 15px" ng-repeat="i in Evaluate.star">

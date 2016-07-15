@@ -289,20 +289,34 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();
     });
 
+    $scope.subBar = [];
+    $scope.subBar.itemClicked = true;
     $scope.showItemInfo =function () {
         $scope.showInfo = true;
         $scope.showCon = false;
         $scope.showEv = false;
+
+        $scope.subBar.itemClicked = true;
+        $scope.subBar.itemInfoClicked = false;
+        $scope.subBar.evaluateClicked = false;
     };
     $scope.showContent = function () {
         $scope.showCon = true;
         $scope.showEv = false;
         $scope.showInfo = false;
+
+        $scope.subBar.itemClicked = false;
+        $scope.subBar.itemInfoClicked = true;
+        $scope.subBar.evaluateClicked = false;
     };
     $scope.showEvaluate = function () {
         $scope.showCon = false;
         $scope.showEv = true;
         $scope.showInfo = false;
+
+        $scope.subBar.itemClicked = false;
+        $scope.subBar.itemInfoClicked = false;
+        $scope.subBar.evaluateClicked = true;
     };
 
     $scope.Page = 0;
@@ -318,7 +332,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                             $scope.Evaluates = $scope.Evaluates.concat(parseEvaluates(data));
                         }else {
                             $scope.Evaluates = parseEvaluates(data);
-                        }
+                        }                        
                     }
                 }
             ).error(
