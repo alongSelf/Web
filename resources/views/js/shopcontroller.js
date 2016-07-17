@@ -257,22 +257,12 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         }
     });
 
-    //购买
-    $scope.buy = function($event){
-        $scope.isBuy = true;
-        $scope.popover.show($event);
-        if($scope.itemSpec){
-            $scope.PopData.itemSpec = $scope.itemSpec[0];
-        }
-
-        $scope.PopData.chooseNum = $scope.PopData.itemNums[0];
-    };
     //加进购物车
     $scope.addInCar = function($event){
         $scope.isBuy = false;
         $scope.popover.show($event);
         if($scope.itemSpec){
-            $scope.PopData.itemSpec = $scope.itemSpec[0];
+            $scope.PopData.itemSpec = $scope.itemSpec[0].val;
         }
 
         $scope.PopData.chooseNum = $scope.PopData.itemNums[0];

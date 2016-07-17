@@ -235,7 +235,7 @@
                     <td>\
                         <dl class="spec_attr">\
                             <dt>规格名：<input type="text" name="spec_name"> <span onclick="add_spec_value(this)"><i class="fa fa-plus-circle"></i></span></dt>\
-                            <dd>规格值：<input type="text" name="spec_value" onchange="spec_total(this)"></dd>\
+                            <dd>规格值：<input type="text" placeholder="规格值@价格" name="spec_value" onchange="spec_total(this)"></dd>\
                         </dl>\
                     </td>\
                 </tr>';
@@ -244,7 +244,7 @@
             $(specTable).append(attr);
         }
         function add_spec_value(obj){
-            var input = '<input type="text" name="spec_value" onchange="spec_total(this)">';
+            var input = '<input type="text" placeholder="规格值@价格" name="spec_value" onchange="spec_total(this)">';
             $(obj).parents('dl').find('dd').append(input);
         }
         function spec_total(obj){
@@ -262,7 +262,13 @@
                     $(this).find("[name='spec_value']").each(function(j) {
                         var specV = $(this).val();
                         if (0 != specV.length){
-                            specValue[j] = specV;
+                            var valInfo = specV.split('@');
+                            var info = {}
+                            info.val = valInfo[0];
+                            if (2 == valInfo.length){
+                                info.price = parseInt(valInfo[1]);
+                            }
+                            specValue[j] = info;
                         }
                     });
 
