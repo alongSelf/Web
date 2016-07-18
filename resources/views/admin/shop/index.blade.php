@@ -45,6 +45,7 @@
                     <th class="tc" width="5%">ID</th>
                     <th class="tc" width="5%">活动物品</th>
                     <th class="tc" width="5%">主页显示</th>
+                    <th class="tc" width="5%">是否显示</th>
                     <th>主图片</th>
                     <th>名称</th>
                     <th>类别</th>
@@ -59,6 +60,7 @@
                         <td class="tc">{{$v->id}}</td>
                         <td>{{$v->activity}}</td>
                         <td>{{$v->showindex}}</td>
+                        <td>{{$v->display}}</td>
                         <td><img src="{{asset('uploads/'.$v->indeximg)}}" style="width: 50px; height: 50px"/></td>
                         <td><a target=_blank" href="{{url('/').'#/tabs/iteminfo/?itemID='.$v->id}}">{{$v->name}}</a></td>
                         <td>{{$v->category}}</td>
@@ -68,7 +70,7 @@
                         <td>{{$v->buynum}}</td>
                         <td>
                             <a href="{{url('admin/shop/'.$v->id.'/edit')}}">修改</a>
-                            <a href="javascript:;" onclick="delShop({{$v->id}})">删除</a>
+                            <a href="javascript:;" onclick="delShop({{$v->id}})">隐藏/显示</a>
                         </td>
                     </tr>
                 @endforeach
@@ -85,7 +87,7 @@
 <script>
     //删除分类
     function delShop(item_id) {
-        layer.confirm('您确定要删除该商品吗？', {
+        layer.confirm('您确定要隐藏/显示该商品吗？', {
             btn: ['确定','取消'] //按钮
         }, function(){
             $.post("{{url('admin/shop/')}}/"+item_id,{'_method':'delete','_token':"{{csrf_token()}}"},function (data) {

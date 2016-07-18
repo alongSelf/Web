@@ -146,7 +146,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.cur_price = '';
     $scope.buynum = '';
     $scope.isCancel = true;
-    $scope.isBuy = true;
     $scope.showCon = false;
     $scope.showEv = false;
     $scope.showInfo = true;
@@ -212,15 +211,20 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             return;
         }
 
-        $scope.PopData.itemSpec = "";
+        $scope.PopData.itemSpecStr='';
+        $scope.PopData.itemSpec = [];
         for(var specNam in $scope.itemSpec){
-            var specVal = document.getElementById(specNam).value;
-            $scope.PopData.itemSpec += (specNam + ":" + specVal + "  ");
+            var specInfo = {}
+            specInfo.name = specNam;
+            specInfo.val = $scope.PopData[specNam].Spec;
+
+            $scope.PopData.itemSpecStr += (specNam + ":" + $scope.PopData[specNam].Spec + "  ");
+            $scope.PopData.itemSpec.push(specInfo);
         }
 
-        if (0 != $scope.PopData.itemSpec.length){
-            $scope.PopData.itemSpec = $scope.PopData.itemSpec.substring(0,
-                $scope.PopData.itemSpec.length - 2);
+        if (0 != $scope.PopData.itemSpecStr.length){
+            $scope.PopData.itemSpecStr = $scope.PopData.itemSpecStr.substring(0,
+                $scope.PopData.itemSpecStr.length - 2);
         }
 
         $scope.isCancel = false;
@@ -233,39 +237,56 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             return;
         }
 
-        if ($scope.isBuy){
-            alert('发起购买');
+        var car = $cookieStore.get('car');
+        if(!car){
+            car = [];
         }
-        else {
-            var car = $cookieStore.get('car');
-            if(!car){
-                car = [];
-            }
 
-            var info = {};
-            info.carID = uuid();
-            info.id = $scope.itemInfo.id;
-            info.name = $scope.itemInfo.name;
-            info.spec = $scope.PopData.itemSpec;
-            info.num = $scope.PopData.chooseNum;//这个是字符串......
-            info.price = $scope.itemInfo.cur_price;
+        var info = {};
+        info.carID = uuid();
+        info.id = $scope.itemInfo.id;
+        info.name = $scope.itemInfo.name;
+        info.spec = $scope.PopData.itemSpec;
+        info.specStr = $scope.PopData.itemSpecStr;
+        info.num = $scope.PopData.chooseNum;//这个是字符串......
+        info.price = $scope.PopData.cur_price;
 
-            car.push(info);
-            $cookieStore.put("car", car);
+        car.push(info);
+        $cookieStore.put("car", car);
 
-            carItemNumFactory.setCarItemNum(getCarItemNum(car));
-        }
+        carItemNumFactory.setCarItemNum(getCarItemNum(car));
     });
 
     //加进购物车
     $scope.addInCar = function($event){
-        $scope.isBuy = false;
+        $scope.PopData.cur_price = $scope.itemInfo.cur_price;
+
         $scope.popover.show($event);
-        if($scope.itemSpec){
-            $scope.PopData.itemSpec = $scope.itemSpec[0].val;
+        for(var specNam in $scope.itemSpec){
+            if (0 != $scope.itemSpec[specNam].length){
+                $scope.PopData[specNam] = [];
+                $scope.PopData[specNam].Spec = $scope.itemSpec[specNam][0].val;
+                if ($scope.itemSpec[specNam][0].price){
+                    $scope.PopData.cur_price = $scope.itemSpec[specNam][0].price;
+                }
+
+            }
         }
 
         $scope.PopData.chooseNum = $scope.PopData.itemNums[0];
+    };
+
+    $scope.PopData.showPrice = function (key) {
+        var val = $scope.PopData[key].Spec;
+        for (var specNam in $scope.itemSpec){
+            for (var index in $scope.itemSpec[specNam]){
+                if ($scope.itemSpec[specNam][index].val == val){
+                    if ($scope.itemSpec[specNam][index].price){
+                        $scope.PopData.cur_price = $scope.itemSpec[specNam][index].price;
+                    }
+                }
+            }
+        }
     };
 
     $scope.index = 0;
@@ -340,7 +361,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 }]);
 
 //购物车
-appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', function($scope, $cookieStore, $ionicPopup, carItemNumFactory){
+appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', '$http', '$location', function($scope, $cookieStore, $ionicPopup, carItemNumFactory, $http, $location){
     var carInfo = $cookieStore.get('car');
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
@@ -364,7 +385,44 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
 
         bPopuped = true;
 
-        alert('发起购买');
+        //订单信息生成
+        var orderMsg = {}
+        orderMsg.price = getCarPriceTotal(carInfo);
+        orderMsg.items = [];
+        for (i = 0; i < carInfo.length; i++){
+            var itemInfo = {};
+            itemInfo.id = carInfo[i].id;
+            itemInfo.spec = carInfo[i].spec;
+            itemInfo.num = parseInt(carInfo[i].num);
+            itemInfo.price = carInfo[i].price;
+
+            orderMsg.items.push(itemInfo);
+        }
+        $http.get("newOrder/"+JSON.stringify(orderMsg))
+            .success(
+                function (data, status, header, config) {
+                    dd(data);
+                    if (-1 == data.status){
+                        layer.msg(data.msg);
+                        $location.path("/tabs/user")
+                    }else if(0 != data.status){
+                        layer.msg(data.msg);
+                    }else {
+                        layer.msg(data.msg);
+                        //订单生成成功 清理购物车
+                        $cookieStore.remove('car');
+                        $scope.itemInCar = [];
+                        carItemNumFactory.setCarItemNum(0);
+                        $scope.priceTotal = 0;
+                        $scope.showCarInfo = false;
+
+                        //开始支付
+                    }
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            });
 
         bPopuped = false;
     };

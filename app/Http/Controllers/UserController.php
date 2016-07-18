@@ -12,54 +12,19 @@ use App\http\Model\Income;
 use App\Http\Model\Users;
 use Illuminate\Support\Facades\Crypt;
 
-class UserController extends Controller
+class UserController extends CommController
 {
-    private function checkPhone($phone)
-    {
-        if(preg_match('/^0?1[3|4|5|8][0-9]\d{8}$/', $phone)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    private function checkMail($mail)
-    {
-        if(preg_match('/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/', $mail)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    private function checkStr($val)
-    {
-        if(preg_match("/[\'.,:;*?~`!@#$%^&+=)(<>{}]|\]|\[|\/|\\\|\"|\|/", $val)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    private function rtnLogIn($code, $msg)
-    {
-        return $data = [
-            'status' => $code,
-            'msg' => $msg,
-        ];
-    }
-
     public function register($phone, $psw)
     {
         if (!$this->checkPhone($phone)){
-            return $this->rtnLogIn(1, '亲，请输入正确的号码！');
+            return $this->rtnMsg(1, '亲，请输入正确的号码！');
         }
         if (strlen($psw) < 6){
-            return $this->rtnLogIn(1, '密码长度最少6位！');
+            return $this->rtnMsg(1, '密码长度最少6位！');
         }
         $count = Users::where('phone', $phone)->count();
         if (0 != $count){
-            return $this->rtnLogIn(1, '该号码已经注册!');
+            return $this->rtnMsg(1, '该号码已经注册!');
         }
 
         $data = new Users;
@@ -76,27 +41,27 @@ class UserController extends Controller
             ];
             Follower::create($input);
 
-            return $this->rtnLogIn(0, '注册成功!');
+            return $this->rtnMsg(0, '注册成功!');
         }
         else{
-            return $this->rtnLogIn(1, '注册失败，请稍候再试!');
+            return $this->rtnMsg(1, '注册失败，请稍候再试!');
         }
     }
 
     public function logIn($phone, $psw)
     {
         if (!$this->checkPhone($phone)){
-            return $this->rtnLogIn(1, '亲，请输入正确的号码！');
+            return $this->rtnMsg(1, '亲，请输入正确的号码！');
         }
 
         $user = Users::where('phone', $phone)->first();
         if (!$user || 0 == count($user)){
-            return $this->rtnLogIn(1, '号码不存在!');
+            return $this->rtnMsg(1, '号码不存在!');
         }
 
         if ($user->errorcount >= 5) {
             if ((time() - $user->errortime) < 5 * 60) {
-                return $this->rtnLogIn(1, '操作太频繁，请稍候再试！');
+                return $this->rtnMsg(1, '操作太频繁，请稍候再试！');
             }
             else {
                 $user->errorcount = 0;
@@ -112,7 +77,7 @@ class UserController extends Controller
 
             $user->update();
 
-            return $this->rtnLogIn(1, '密码错误！');
+            return $this->rtnMsg(1, '密码错误！');
         }
 
         session(['user'=>$user]);
@@ -123,7 +88,7 @@ class UserController extends Controller
             'icon'=>$user->icon,
         ];
 
-        return $this->rtnLogIn(0, $userBase);
+        return $this->rtnMsg(0, $userBase);
     }
 
     public function logOut()
@@ -137,7 +102,7 @@ class UserController extends Controller
     {
         $user = session('user');
         $user = Users::select('id', 'consume', 'nickname', 'icon')->find($user['id']);
-        return $this->rtnLogIn(0, $user);
+        return $this->rtnMsg(0, $user);
     }
 
     public function getUserInfo()
@@ -146,22 +111,22 @@ class UserController extends Controller
         $user = Users::find($user->id);
         $user->psw = null;
 
-        return $this->rtnLogIn(0, $user);
+        return $this->rtnMsg(0, $user);
     }
 
     public function bindAccount($phone, $psw)
     {
         if (!$this->checkPhone($phone)){
-            return $this->rtnLogIn(1, '亲，请输入正确的号码！');
+            return $this->rtnMsg(1, '亲，请输入正确的号码！');
         }
         if (strlen($psw) < 6){
-            return $this->rtnLogIn(1, '密码长度最少6位！');
+            return $this->rtnMsg(1, '密码长度最少6位！');
         }
 
         $user = session('user');
         $have = Users::where('phone', $phone)->count();
         if (0 != $have){
-            return $this->rtnLogIn(1, '号码已经绑定!');
+            return $this->rtnMsg(1, '号码已经绑定!');
         }
 
         $input = [
@@ -173,25 +138,25 @@ class UserController extends Controller
             $user = Users::find($user['id']);
             session(['user'=>$user]);
 
-            return $this->rtnLogIn(0, '绑定成功!');
+            return $this->rtnMsg(0, '绑定成功!');
         }else{
-            return $this->rtnLogIn(1, '绑定失败，请稍候再试!');
+            return $this->rtnMsg(1, '绑定失败，请稍候再试!');
         }
     }
 
     public function changePsw($oldpsw, $newpsw)
     {
         if (strlen($newpsw) < 6){
-            return $this->rtnLogIn(1, '密码长度最少6位！');
+            return $this->rtnMsg(1, '密码长度最少6位！');
         }
         $user = session('user');
         if (!$this->checkPhone($user['phone'])){
-            return $this->rtnLogIn(1, '请先绑定号码!');
+            return $this->rtnMsg(1, '请先绑定号码!');
         }
 
         $user = Users::find($user['id']);
         if (Crypt::decrypt($user['psw']) != $oldpsw){
-            return $this->rtnLogIn(1, '原密码验证失败!');
+            return $this->rtnMsg(1, '原密码验证失败!');
         }
 
         $input = [
@@ -199,9 +164,9 @@ class UserController extends Controller
         ];
         $re = Users::where('id', $user['id'])->update($input);
         if ($re){
-            return $this->rtnLogIn(0, '密码修改成功!');
+            return $this->rtnMsg(0, '密码修改成功!');
         }else{
-            return $this->rtnLogIn(1, '密码修改失败，请稍候再试!');
+            return $this->rtnMsg(1, '密码修改失败，请稍候再试!');
         }
     }
 
@@ -210,20 +175,20 @@ class UserController extends Controller
         $input = json_decode($info);
         if (0 != strlen($input->email)){
             if (!$this->checkMail($input->email)){
-                return $this->rtnLogIn(1, '请输入有效的有效地址!');
+                return $this->rtnMsg(1, '请输入有效的有效地址!');
             }
         }
         if ($this->checkStr($input->name)
             || $this->checkStr($input->nickname)
             || $this->checkStr($input->qq)
             || $this->checkStr($input->weixnumber)){
-            return $this->rtnLogIn(1, '请勿输入特殊字符!');
+            return $this->rtnMsg(1, '请勿输入特殊字符!');
         }
 
         $user = session('user');
         $nickCount = Users::where('nickname', $input->nickname)->where('id', '<>', $user['id'])->count();
         if (0 != $nickCount){
-            return $this->rtnLogIn(1, '昵称重复啦!');
+            return $this->rtnMsg(1, '昵称重复啦!');
         }
 
         $input = [
@@ -236,9 +201,9 @@ class UserController extends Controller
 
         $re = Users::where('id', $user['id'])->update($input);
         if ($re){
-            return $this->rtnLogIn(0, '资料修改成功!');
+            return $this->rtnMsg(0, '资料修改成功!');
         }else{
-            return $this->rtnLogIn(1, '资料修改失败，请稍候再试!');
+            return $this->rtnMsg(1, '资料修改失败，请稍候再试!');
         }
     }
 
@@ -255,17 +220,17 @@ class UserController extends Controller
     {
         $input = json_decode($addr);
         if (0 == strlen($input->name)){
-            return $this->rtnLogIn(1, '请输入收货人姓名!');
+            return $this->rtnMsg(1, '请输入收货人姓名!');
         }
         if (0 == strlen($input->phone) || !$this->checkPhone($input->phone)){
-            return $this->rtnLogIn(1, '请输入有效的收货人联系电话!');
+            return $this->rtnMsg(1, '请输入有效的收货人联系电话!');
         }
         if (0 == strlen($input->addr)){
-            return $this->rtnLogIn(1, '请输入收货人联系地址!');
+            return $this->rtnMsg(1, '请输入收货人联系地址!');
         }
 
         if ($this->checkStr($input->name)){
-            return $this->rtnLogIn(1, '请勿输入特殊字符!');
+            return $this->rtnMsg(1, '请勿输入特殊字符!');
         }
 
         $user = session('user');
@@ -278,9 +243,9 @@ class UserController extends Controller
 
         $re = Addr::create($input);
         if ($re){
-            return $this->rtnLogIn(0, '保存收货地址成功!');
+            return $this->rtnMsg(0, '保存收货地址成功!');
         }else{
-            return $this->rtnLogIn(1, '保存收货地址失败，请稍候再试!');
+            return $this->rtnMsg(1, '保存收货地址失败，请稍候再试!');
         }
     }
 
@@ -289,21 +254,21 @@ class UserController extends Controller
         $user = session('user');
         $addr = Addr::where('userid', $user['id'])->get();
 
-        return $this->rtnLogIn(0, $addr);
+        return $this->rtnMsg(0, $addr);
     }
 
     public function delAddr($id)
     {
         if (!is_numeric($id)){
-            return $this->rtnLogIn(1, '参数错误!');
+            return $this->rtnMsg(1, '参数错误!');
         }
         $user = session('user');
         $re = Addr::where('id', $id)->delete();
         if($re){
             $addr = Addr::where('userid', $user['id'])->get();
-            return $this->rtnLogIn(0, $addr);
+            return $this->rtnMsg(0, $addr);
         }else{
-            return $this->rtnLogIn(1, '删除失败，请稍候再试!');
+            return $this->rtnMsg(1, '删除失败，请稍候再试!');
         }
     }
 
@@ -312,28 +277,28 @@ class UserController extends Controller
         $user = session('user');
         $have = Agent::where('userid', $user['id'])->count();
         if (0 != $have){
-            return $this->rtnLogIn(0, false);
+            return $this->rtnMsg(0, false);
         }else{
-            return $this->rtnLogIn(0, true);
+            return $this->rtnMsg(0, true);
         }
     }
     
     public function agent($name, $phone)
     {
         if (0 == strlen($name)){
-            return $this->rtnLogIn(1, '请输入真实姓名!');
+            return $this->rtnMsg(1, '请输入真实姓名!');
         }
         if (0 == strlen($phone) || !$this->checkPhone($phone)){
-            return $this->rtnLogIn(1, '请输入联系电话!');
+            return $this->rtnMsg(1, '请输入联系电话!');
         }
         if ($this->checkStr($name)){
-            return $this->rtnLogIn(1, '请勿输入特殊字符!');
+            return $this->rtnMsg(1, '请勿输入特殊字符!');
         }
 
         $user = session('user');
         $have = Agent::where('userid', $user['id'])->count();
         if (0 != $have){
-            return $this->rtnLogIn(1, '你已经申请过了，不需要重新申请!');
+            return $this->rtnMsg(1, '你已经申请过了，不需要重新申请!');
         }
 
         $input = [
@@ -345,9 +310,9 @@ class UserController extends Controller
 
         $re = Agent::create($input);
         if ($re){
-            return $this->rtnLogIn(0, '申请成功!');
+            return $this->rtnMsg(0, '申请成功!');
         }else{
-            return $this->rtnLogIn(1, '申请失败，请稍候再试!');
+            return $this->rtnMsg(1, '申请失败，请稍候再试!');
         }
     }
 
@@ -363,10 +328,10 @@ class UserController extends Controller
         $rtn['Cash'] = $config['cash'];
         if ($user['consume'] >= $config['openspread']){
             $rtn['canShowQRC'] = true;
-            return $this->rtnLogIn(0, $rtn);
+            return $this->rtnMsg(0, $rtn);
         }else{
             $rtn['canShowQRC'] = false;
-            return $this->rtnLogIn(0, $rtn);
+            return $this->rtnMsg(0, $rtn);
         }
     }
 
@@ -382,13 +347,13 @@ class UserController extends Controller
             skip($page * $this->numPerPage())->take($this->numPerPage())->
             orderBy('time','desc')->get();
 
-        return $this->rtnLogIn(0, $income);
+        return $this->rtnMsg(0, $income);
     }
 
     public function loadCashData($page)
     {
         if (!is_numeric($page)){
-            return $this->rtnLogIn(1, '参数错误!');
+            return $this->rtnMsg(1, '参数错误!');
         }
 
         $user = session('user');
@@ -396,22 +361,22 @@ class UserController extends Controller
         skip($page * $this->numPerPage())->take($this->numPerPage())->
         orderBy('time','desc')->get();
 
-        return $this->rtnLogIn(0, $cash);
+        return $this->rtnMsg(0, $cash);
     }
 
     public function cash($money)
     {
         if (!is_numeric($money)){
-            return $this->rtnLogIn(1, '参数错误!');
+            return $this->rtnMsg(1, '参数错误!');
         }
         $user = session('user');
         $config = Config::all()[0];
         if ($config['cash'] > $money){
-            return $this->rtnLogIn(1, '提现金额最少'.$config['cash'].'元!');
+            return $this->rtnMsg(1, '提现金额最少'.$config['cash'].'元!');
         }
         $user = Users::find($user['id']);
         if ($money * 100 > $user['income']){
-            return $this->rtnLogIn(1, '余额不足!');
+            return $this->rtnMsg(1, '余额不足!');
         }
 
         $data = new Cash;
@@ -425,26 +390,26 @@ class UserController extends Controller
             $re = $user->update();
             if (!$re){
                 $data->delete();
-                return $this->rtnLogIn(1, '提现申请失败，请稍候再试!');
+                return $this->rtnMsg(1, '提现申请失败，请稍候再试!');
             }
 
-            return $this->rtnLogIn(0, '提现申请成功!');
+            return $this->rtnMsg(0, '提现申请成功!');
         }
         else{
-            return $this->rtnLogIn(1, '提现申请失败，请稍候再试!');
+            return $this->rtnMsg(1, '提现申请失败，请稍候再试!');
         }
     }
 
     public function showLevel($followerid)
     {
         if (!is_numeric($followerid)){
-            return $this->rtnLogIn(1, '参数错误!');
+            return $this->rtnMsg(1, '参数错误!');
         }
 
         $user = session('user');
         $myLayer = Follower::where('userid', $user['id'])->first();
         $followerLayer = Follower::where('userid', $followerid)->first();
 
-        return $this->rtnLogIn(0, $followerLayer['layer'] - $myLayer['layer']);
+        return $this->rtnMsg(0, $followerLayer['layer'] - $myLayer['layer']);
     }
 }

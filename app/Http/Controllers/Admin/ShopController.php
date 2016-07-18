@@ -162,22 +162,21 @@ class ShopController extends CommonController
     public function destroy($item_id)
     {
         $item = ShopItem::find($item_id);
-        $re = ShopItem::where('id', $item_id)->delete();
+        if(1 == $item->display){
+            $item->display = 0;
+        }else{
+            $item->display = 1;
+        }
+        $re = $item->update();
         if($re){
-            $this->removeFile($item->indeximg);
-            $showImg =  json_decode($item->showimg);
-            $contentImg = json_decode($item->content);
-            for($i = 0; $i < count($showImg); $i++){
-                $this->removeFile($showImg[$i]);
-            }
             $data = [
                 'status' => 0,
-                'msg' => '宝贝删除成功！',
+                'msg' => '宝贝隐藏/显示成功！',
             ];
         }else{
             $data = [
                 'status' => 1,
-                'msg' => '宝贝删除失败，请稍后重试！',
+                'msg' => '宝贝隐藏/显示失败，请稍后重试！',
             ];
         }
         return $data;

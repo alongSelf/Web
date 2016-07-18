@@ -7,11 +7,11 @@
                      image-lazy-src="uploads/[[itemInfo.indeximg]]" image-lazy-loader="bubbles">
                 <span>[[itemInfo.name]]</span>
             </div>
-            <div style="color: red;">[[itemInfo.cur_price | currency:'￥']]</div>
+            <div style="color: red;">[[PopData.cur_price | currency:'￥']]</div>
             <div ng-if="itemSpec">
                 <div ng-repeat="(key,value) in itemSpec">
                     <span>[[key]]:</span>
-                    <select id="[[key]]" style="width: 95%">
+                    <select style="width: 95%" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
                         <option ng-repeat="spec in value">[[spec.val]]</option>
                     </select>
                 </div>

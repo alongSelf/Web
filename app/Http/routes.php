@@ -25,11 +25,8 @@ Route::group([], function () {
     Route::get('register/{phone}/{psw}', 'UserController@register');
     Route::get('logIn/{phone}/{psw}', 'UserController@logIn');
 
-    //admin
-    Route::any('admin/login', 'Admin\LoginController@login');
-    Route::get('admin/code', 'Admin\LoginController@code');
+    Route::get('newOrder/{order}', 'OrderController@newOrder');
 });
-
 Route::group(['middleware' => ['user.login']], function () {
     Route::get('logOut', 'UserController@logOut');
     Route::get('getUserBase', 'UserController@getUserBase');
@@ -50,8 +47,15 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::get('showLevel/{followerid}', 'UserController@showLevel');
     Route::get('getArea1', 'UserController@getArea1');
     Route::get('getChildArea/{parentNo}', 'UserController@getChildArea');
+    
+    
 });
 
+Route::group([], function () {
+    //admin
+    Route::any('admin/login', 'Admin\LoginController@login');
+    Route::get('admin/code', 'Admin\LoginController@code');
+});
 Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'Admin'], function () {
     Route::any('upload', 'CommonController@upload');
 

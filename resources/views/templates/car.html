@@ -15,7 +15,7 @@
                 <tr ng-repeat="item in itemInCar">
                     <td class="goods">
                         <span ui-sref="tabs.cariteminfo({itemID: [[item.id]]})">[[item.name | clipStr]]</span>
-                        <span style="color: #adadad" ng-if="item.spec">[[item.spec]]</span>
+                        <span style="color: #adadad" ng-if="item.spec">[[item.specStr]]</span>
                     </td>
                     <td class="price">
                         [[item.price | currency:'￥']]

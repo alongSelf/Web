@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-15 17:23:10
+Date: 2016-07-18 18:33:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -227,7 +227,7 @@ INSERT INTO `notice` VALUES ('1', '公告滚出来');
 -- ----------------------------
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(64) NOT NULL DEFAULT '' COMMENT 'id',
   `userid` int(11) DEFAULT '0' COMMENT '用户ID',
   `paychannel` int(11) DEFAULT '0' COMMENT '0 微信支付',
   `payinfo` text COMMENT '第3方支付信息',
@@ -240,6 +240,15 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES ('578c987d36879', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831869', '0');
+INSERT INTO `orders` VALUES ('578c98b46319e', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831924', '0');
+INSERT INTO `orders` VALUES ('578c98b5837aa', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831925', '0');
+INSERT INTO `orders` VALUES ('578c98b662d18', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831926', '0');
+INSERT INTO `orders` VALUES ('578c99576cb74', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468832087', '0');
+INSERT INTO `orders` VALUES ('578c9e31241f5', '10008', '0', null, '{\"price\":200,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"L\"},{\"name\":\"颜色\",\"val\":\"黄\"}],\"num\":1,\"price\":200}]}', '1468833329', '0');
+INSERT INTO `orders` VALUES ('578ca0e428901', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":150}]}', '1468834020', '0');
+INSERT INTO `orders` VALUES ('578caeeb80e38', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":150}]}', '1468837611', '0');
+INSERT INTO `orders` VALUES ('578cb0608e328', '10008', '0', null, '{\"price\":602,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":24,\"spec\":[],\"num\":1,\"price\":451}]}', '1468837984', '0');
 
 -- ----------------------------
 -- Table structure for `shopitem`
@@ -260,17 +269,18 @@ CREATE TABLE `shopitem` (
   `spec` text COMMENT '规格',
   `activity` tinyint(4) DEFAULT '0' COMMENT '活动',
   `showindex` tinyint(4) DEFAULT '0' COMMENT '是否在主页显示',
+  `display` tinyint(4) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
-INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373151119198.jpg\" title=\"1468373151119198.jpg\" alt=\"042.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '5785988b297a4.jpg', '[\"578598976b747.jpg\",\"578598978b63c.jpg\",\"57859897a583a.jpg\"]', '{\"颜色\":[\"红\",\"黄\"]}', '1', '1');
-INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '450', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '{\"尺寸\":[\"M\",\"L\"]}', '1', '1');
-INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373099115764.jpg\" title=\"1468373099115764.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '578598558e8bc.jpg', '[\"57859865a4892.jpg\",\"57859865cb5af.jpg\",\"57859865e6365.jpg\"]', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373050130881.jpg\" title=\"1468373050130881.jpg\" alt=\"007.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '57859826496c5.jpg', '[\"578598315cda2.jpg\",\"578598317ae21.jpg\",\"5785983195407.jpg\"]', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373016112859.jpg\" title=\"1468373016112859.jpg\" alt=\"16773985_980x1200_292.jpg\"/></p><p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373021811450.jpg\" title=\"1468373021811450.jpg\" alt=\"16773989_980x1200_292.jpg\"/></p><p><br/></p>', '小学生5', '580', '500', '-1', '1001', '57859803dc314.jpg', '[\"5785980f443af.jpg\",\"5785980f60423.jpg\",\"5785980f7fb47.jpg\"]', '', '0', '1');
+INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373151119198.jpg\" title=\"1468373151119198.jpg\" alt=\"042.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '5785988b297a4.jpg', '[\"578598976b747.jpg\",\"578598978b63c.jpg\",\"57859897a583a.jpg\"]', '{\"尺寸\":[{\"val\":\"M\",\"price\":151},{\"val\":\"L\",\"price\":200}],\"颜色\":[{\"val\":\"红\"},{\"val\":\"黄\"},{\"val\":\"蓝\"}]}', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '451', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373099115764.jpg\" title=\"1468373099115764.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '578598558e8bc.jpg', '[\"57859865a4892.jpg\",\"57859865cb5af.jpg\",\"57859865e6365.jpg\"]', '', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373050130881.jpg\" title=\"1468373050130881.jpg\" alt=\"007.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '57859826496c5.jpg', '[\"578598315cda2.jpg\",\"578598317ae21.jpg\",\"5785983195407.jpg\"]', '', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373016112859.jpg\" title=\"1468373016112859.jpg\" alt=\"16773985_980x1200_292.jpg\"/></p><p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373021811450.jpg\" title=\"1468373021811450.jpg\" alt=\"16773989_980x1200_292.jpg\"/></p><p><br/></p>', '小学生5', '580', '500', '-1', '1001', '57859803dc314.jpg', '[\"5785980f443af.jpg\",\"5785980f60423.jpg\",\"5785980f7fb47.jpg\"]', '', '0', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_prov_city_area`
@@ -3653,6 +3663,6 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('10008', '', '张三1', 'deficon.jpg', '大毛毛虫', '279133271@qq.com', '15882276717', 'eyJpdiI6InVwWkg1UXhnVEdJUEtya2VQRVpHN3c9PSIsInZhbHVlIjoiSDBURFJDYmxHdml6ZjFZUFJNcUsydz09IiwibWFjIjoiNGM1MDIxNmM0NzBkYzA4MmY3Y2M2Nzc1NTFmZmNhOWU5YWJhMDUwNDU2ZjM1YzliNDkzZGE4NjM0M2Y3MWE3OCJ9', '574126165', '279133271', '300', '13780', '0', '0');
+INSERT INTO `users` VALUES ('10008', '', '张三', 'deficon.jpg', '大毛毛虫', '279133271@qq.com', '15882276717', 'eyJpdiI6InVwWkg1UXhnVEdJUEtya2VQRVpHN3c9PSIsInZhbHVlIjoiSDBURFJDYmxHdml6ZjFZUFJNcUsydz09IiwibWFjIjoiNGM1MDIxNmM0NzBkYzA4MmY3Y2M2Nzc1NTFmZmNhOWU5YWJhMDUwNDU2ZjM1YzliNDkzZGE4NjM0M2Y3MWE3OCJ9', '574126165', '279133271', '300', '13780', '0', '0');
 INSERT INTO `users` VALUES ('10009', '', '', 'deficon.jpg', '大毛毛虫1', '', '', '', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10010', '', '', 'deficon.jpg', '', '', '15882276841', 'eyJpdiI6IlBLWTEzSGFKK0FLTTkwaXNKeHFVS2c9PSIsInZhbHVlIjoib0h3amJJR2dPYW5PZ0tKdFNZXC9FQnc9PSIsIm1hYyI6ImM2YWMzOTczZDBjZTgyOGQwNjBiNGVkMTc5MWM2MTNlZTE4NGZiYTU0MzY3MGNlMTU1M2NmYmU3MjVmMzRiYTkifQ==', '', null, '0', '0', '0', '0');

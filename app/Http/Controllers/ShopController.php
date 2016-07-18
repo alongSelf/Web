@@ -8,7 +8,7 @@ use App\http\Model\Evaluates;
 use App\http\Model\Notice;
 use App\http\model\ShopItem;
 
-class ShopController extends Controller
+class ShopController extends CommController
 {
     public function index()
     {
@@ -35,14 +35,14 @@ class ShopController extends Controller
     private function getIndexItem($page)
     {
         return ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
-            where('showindex', 1)->where('stock', '<>', 0)->
+            where('showindex', 1)->where('stock', '<>', 0)->where('display', 1)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
     }
 
     public function indexItem()
     {
         $activityItem = ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
-            where('activity', 1)->where('stock', '<>', 0)->get();
+            where('activity', 1)->where('stock', '<>', 0)->where('display', 1)->get();
         $homeItem = $this->getIndexItem(0);
         $notice = Notice::orderBy('id','desc')->first();
 
@@ -57,7 +57,7 @@ class ShopController extends Controller
 
     private function getCategoryInfo($id, $page)
     {
-        return ShopItem::where('category', $id)->where('stock', '<>', 0)->
+        return ShopItem::where('category', $id)->where('stock', '<>', 0)->where('display', 1)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
     }
 
