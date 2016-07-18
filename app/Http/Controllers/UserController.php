@@ -334,12 +334,7 @@ class UserController extends CommController
             return $this->rtnMsg(0, $rtn);
         }
     }
-
-    private function numPerPage()
-    {
-        return 20;
-    }
-
+    
     public function loadIncomeData($page)
     {
         $user = session('user');

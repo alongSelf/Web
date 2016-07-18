@@ -9,7 +9,6 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     $scope.Page = 0;
     $scope.moreData = true;
     $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
-
     $scope.doRefresh = function () {
         $http.get("indexItem")
             .success(
@@ -367,7 +366,6 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     $scope.priceTotal = getCarPriceTotal(carInfo);
     $scope.showCarInfo = false;
     $scope.itemNums = ['1','2','3','4','5','6','7','8','9','10'];
-    var bPopuped = false;//解决ie会弹出2次
 
     if (carInfo && carInfo.length > 0){
         $scope.showCarInfo = true;
@@ -378,12 +376,6 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
         if (!carInfo || 0 == carInfo.length){
             return;
         }
-
-        if (bPopuped){
-            return;
-        }
-
-        bPopuped = true;
 
         //订单信息生成
         var orderMsg = {}
@@ -398,33 +390,23 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
 
             orderMsg.items.push(itemInfo);
         }
-        $http.get("newOrder/"+JSON.stringify(orderMsg))
-            .success(
-                function (data, status, header, config) {
-                    dd(data);
-                    if (-1 == data.status){
-                        layer.msg(data.msg);
-                        $location.path("/tabs/user")
-                    }else if(0 != data.status){
-                        layer.msg(data.msg);
-                    }else {
-                        layer.msg(data.msg);
-                        //订单生成成功 清理购物车
-                        $cookieStore.remove('car');
-                        $scope.itemInCar = [];
-                        carItemNumFactory.setCarItemNum(0);
-                        $scope.priceTotal = 0;
-                        $scope.showCarInfo = false;
+        $.post("newOrder",{'_token':$('meta[name="_token"]').attr('content'),'order':JSON.stringify(orderMsg)},function(data){
+            if (-1 == data.status){
+                layer.msg(data.msg);
+                $location.path("/tabs/user")
+            }else if(0 != data.status){
+                layer.msg(data.msg);
+            }else {
+                //订单生成成功 清理购物车
+                $cookieStore.remove('car');
+                $scope.itemInCar = [];
+                carItemNumFactory.setCarItemNum(0);
+                $scope.priceTotal = 0;
+                $scope.showCarInfo = false;
 
-                        //开始支付
-                    }
-                }
-            ).error(
-            function (data) {
-                onError(data);
-            });
-
-        bPopuped = false;
+                //开始支付
+            }
+        });
     };
 
     //清空购物车

@@ -25,7 +25,7 @@ Route::group([], function () {
     Route::get('register/{phone}/{psw}', 'UserController@register');
     Route::get('logIn/{phone}/{psw}', 'UserController@logIn');
 
-    Route::get('newOrder/{order}', 'OrderController@newOrder');
+    Route::post('newOrder', 'OrderController@newOrder');
 });
 Route::group(['middleware' => ['user.login']], function () {
     Route::get('logOut', 'UserController@logOut');
@@ -47,9 +47,10 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::get('showLevel/{followerid}', 'UserController@showLevel');
     Route::get('getArea1', 'UserController@getArea1');
     Route::get('getChildArea/{parentNo}', 'UserController@getChildArea');
-    
-    
+
+    Route::get('showOrder/{page}/{type}', 'OrderController@showOrder');
 });
+
 
 Route::group([], function () {
     //admin

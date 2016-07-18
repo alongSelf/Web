@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-18 18:33:50
+Date: 2016-07-19 00:21:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -233,22 +233,20 @@ CREATE TABLE `orders` (
   `payinfo` text COMMENT '第3方支付信息',
   `iteminfo` text COMMENT '购买的物品信息',
   `createtime` bigint(20) unsigned DEFAULT '0' COMMENT '创建时间',
-  `status` int(11) DEFAULT '0' COMMENT '0待支付  1待发货 2 待收货 3完成 4退货 5售后 6取消',
+  `status` int(11) DEFAULT '0' COMMENT '0待付款  1待发货 2待评价 3完成 4售后 5取消',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('578c987d36879', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831869', '0');
-INSERT INTO `orders` VALUES ('578c98b46319e', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831924', '0');
-INSERT INTO `orders` VALUES ('578c98b5837aa', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831925', '0');
-INSERT INTO `orders` VALUES ('578c98b662d18', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468831926', '0');
-INSERT INTO `orders` VALUES ('578c99576cb74', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":\"尺寸:M  颜色:红\",\"num\":1,\"price\":150}]}', '1468832087', '0');
-INSERT INTO `orders` VALUES ('578c9e31241f5', '10008', '0', null, '{\"price\":200,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"L\"},{\"name\":\"颜色\",\"val\":\"黄\"}],\"num\":1,\"price\":200}]}', '1468833329', '0');
-INSERT INTO `orders` VALUES ('578ca0e428901', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":150}]}', '1468834020', '0');
-INSERT INTO `orders` VALUES ('578caeeb80e38', '10008', '0', null, '{\"price\":150,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":150}]}', '1468837611', '0');
-INSERT INTO `orders` VALUES ('578cb0608e328', '10008', '0', null, '{\"price\":602,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":24,\"spec\":[],\"num\":1,\"price\":451}]}', '1468837984', '0');
+INSERT INTO `orders` VALUES ('578ce77905767', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468852089', '0');
+INSERT INTO `orders` VALUES ('578cf30e2541b', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468855054', '0');
+INSERT INTO `orders` VALUES ('578cf319f0ca8', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468855065', '1');
+INSERT INTO `orders` VALUES ('578cf33e29741', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468855102', '2');
+INSERT INTO `orders` VALUES ('578cfa88484ee', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468856968', '3');
+INSERT INTO `orders` VALUES ('578cfa90d1a28', '10008', '0', null, '{\"price\":451,\"items\":[{\"id\":24,\"spec\":[],\"num\":1,\"price\":451}]}', '1468856976', '4');
+INSERT INTO `orders` VALUES ('578cfa9b64a6b', '10008', '0', null, '{\"price\":580,\"items\":[{\"id\":26,\"spec\":[],\"num\":1,\"price\":580}]}', '1468856987', '5');
 
 -- ----------------------------
 -- Table structure for `shopitem`

@@ -18,11 +18,6 @@
                 <nobr>待付款</nobr>
             </div>
             <div class="col button button-clear"
-                 ng-class="{'button-calm': subBar.confirmClicked}"
-                 ng-click="confirmOrder()">
-                <nobr>待收货</nobr>
-            </div>
-            <div class="col button button-clear"
                  ng-class="{'button-calm': subBar.evaluateClicked}"
                  ng-click="evaluateOrder()">
                 <nobr>待评价</nobr>
@@ -40,5 +35,8 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
+        <div ng-repeat="data in showData">[[data.id]]</div>
+
+        <ion-infinite-scroll ng-if="moreData" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 </ion-view>

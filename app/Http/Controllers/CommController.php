@@ -45,6 +45,11 @@ class CommController extends Controller
         }
     }
 
+    public function numPerPage()
+    {
+        return 10;
+    }
+
     public function getID()
     {
         return uniqid();

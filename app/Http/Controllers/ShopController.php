@@ -27,11 +27,6 @@ class ShopController extends CommController
         return $categs;
     }
 
-    private function numPerPage()
-    {
-        return 10;
-    }
-
     private function getIndexItem($page)
     {
         return ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->

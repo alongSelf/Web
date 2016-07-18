@@ -6,6 +6,7 @@ use App\http\Model\Config;
 use App\http\Model\Orders;
 use App\http\Model\ShopItem;
 use App\Http\Model\Users;
+use Illuminate\Support\Facades\Input;
 
 class OrderController extends CommController
 {
@@ -22,12 +23,13 @@ class OrderController extends CommController
         return true;
     }
 
-    public function newOrder($order)
+    public function newOrder()
     {
         if (!$this->isLogIn()){
             return $this->rtnMsg(-1, '请先登录!');
         }
 
+        $order = Input::get('order');
         $orderJson = json_decode($order);
         $totalPrice = 0;
         for ($i = 0; $i < count($orderJson->items); $i++) {
@@ -102,5 +104,43 @@ class OrderController extends CommController
         }else{
             return $this->rtnMsg(1, '创建订单失败，请稍候再试!');
         }
+    }
+
+    //$type 0全部  1 待付款 2待评价 3售后
+    //0待付款  1待发货 2待评价 3完成 4售后 5取消
+    public function showOrder($page, $type)
+    {
+        $user = session('user');
+
+        switch ($type){
+            case 0://全部
+            {
+                $order = Orders::where('userid', $user['id'])->orderBy('createtime','desc')->
+                    skip($page * $this->numPerPage())->take($this->numPerPage())->get();
+            }
+            break;
+            case 1://待付款
+            {
+                $order = Orders::where('userid', $user['id'])->where('status', 0)->orderBy('createtime','desc')->
+                    skip($page * $this->numPerPage())->take($this->numPerPage())->get();
+            }
+            break;
+            case 2://待评价
+            {
+                $order = Orders::where('userid', $user['id'])->where('status', 2)->orderBy('createtime','desc')->
+                    skip($page * $this->numPerPage())->take($this->numPerPage())->get();
+            }
+            break;
+            case 3://售后
+            {
+                $order = Orders::where('userid', $user['id'])->where('status', 4)->orderBy('createtime','desc')->
+                    skip($page * $this->numPerPage())->take($this->numPerPage())->get();
+            }
+            break;
+            default:
+                break;
+        }
+
+        return $this->rtnMsg(0, $order);
     }
 }
