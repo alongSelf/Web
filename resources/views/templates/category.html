@@ -14,7 +14,7 @@
         </ion-refresher>
 
         <div class="row row-wrap" ng-repeat="items in itemList">
-            <div class="col col-[[perItemWidth]]" ng-repeat="item in items">
+            <div style="text-align: center" class="col col-[[perItemWidth]]" ng-repeat="item in items">
                 <span>
                     <img style="height: 160px; width: 160px; border-radius:10px"
                          ui-sref="tabs.finditeminfo({itemID: [[item.id]]})"
