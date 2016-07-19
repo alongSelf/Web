@@ -43,7 +43,9 @@
 
             <!--推广二维码，分享-->
             <div ng-if="showQRC && canShowQRC">
-                推广名片
+                <div>
+                    拥有粉丝数:[[followerCount]]
+                </div>
             </div>
 
             <!--收入明细-->
@@ -73,11 +75,13 @@
 
             <!--提现明细-->
             <div ng-if="showCash && canShowQRC">
-                <div class="row row-wrap">
-                    <div class="col">提现</div>
-                    <div class="col">余额</div>
-                    <div class="col">状态</div>
-                    <div class="col">时间</div>
+                <div style="border-bottom:#000000 solid 1px; display:block;">
+                    <div class="row row-wrap">
+                        <div class="col">提现</div>
+                        <div class="col">余额</div>
+                        <div class="col">状态</div>
+                        <div class="col">时间</div>
+                    </div>
                 </div>
                 <div class="row row-wrap" ng-repeat="cash in cashInfo">
                     <div class="col">[[cash.money | currency:'￥']]</div>

@@ -40,7 +40,7 @@ Route::group(['middleware' => ['user.login']], function () {
 
     Route::get('agent/{name}/{phone}', 'UserController@agent');
     Route::get('agentShow', 'UserController@agentShow');
-    Route::get('canShowQRC', 'UserController@canShowQRC');
+    Route::get('spreadInfo', 'UserController@spreadInfo');
     Route::get('loadIncomeData/{page}', 'UserController@loadIncomeData');
     Route::get('loadCashData/{page}', 'UserController@loadCashData');
     Route::get('cash/{money}', 'UserController@cash');

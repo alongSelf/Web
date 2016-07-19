@@ -31,15 +31,7 @@ class UserController extends CommController
         $data->phone = $phone;
         $data->psw = Crypt::encrypt($psw);
         if($data->save()) {
-            //加入到根级粉丝
-            $input = [
-                'groupid'=>$data->id,
-                'leftweight'=>1,
-                'rightweight'=>2,
-                'userid'=>$data->id,
-                'layer'=>0,
-            ];
-            Follower::create($input);
+            (new Follower)->addRoot($data->id);
 
             return $this->rtnMsg(0, '注册成功!');
         }
@@ -316,17 +308,21 @@ class UserController extends CommController
         }
     }
 
-    public function canShowQRC()
+    public function spreadInfo()
     {
         $user = session('user');
+        $userID = $user['id'];
 
         //是否显示
         $rtn = [];
         $config = Config::all()[0];
-        $user = Users::select('consume', 'income')->find($user['id']);
+        $user = Users::select('consume', 'income')->find($userID);
         $rtn['Income'] = $user['income'];
         $rtn['Cash'] = $config['cash'];
+        $rtn['follower'] = 0;
         if ($user['consume'] >= $config['openspread']){
+            $rtn['follower'] = (new Follower)->getFollowerCount($userID);
+
             $rtn['canShowQRC'] = true;
             return $this->rtnMsg(0, $rtn);
         }else{

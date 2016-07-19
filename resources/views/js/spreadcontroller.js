@@ -17,12 +17,13 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$
     $scope.Cash = 0;//提现条件元
     var bPopuped = false;
     $scope.doRefresh = function () {
-        $http.get("canShowQRC")
+        $http.get("spreadInfo")
             .success(
                 function (data, status, header, config) {
                     $scope.canShowQRC = data.msg.canShowQRC;
                     $scope.Income = data.msg.Income;
                     $scope.Cash = data.msg.Cash;
+                    $scope.followerCount = data.msg.follower;
 
                     $scope.incomePage = 0;
                     $scope.moreIncomeData = true;
