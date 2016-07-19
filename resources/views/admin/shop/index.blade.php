@@ -62,7 +62,7 @@
                         <td>{{$v->showindex}}</td>
                         <td>{{$v->display}}</td>
                         <td><img src="{{asset('uploads/'.$v->indeximg)}}" style="width: 50px; height: 50px"/></td>
-                        <td><a target=_blank" href="{{url('/').'#/tabs/iteminfo/?itemID='.$v->id}}">{{$v->name}}</a></td>
+                        <td><a target=_blank" href="{{url('/').'#/tabs/iteminfo/'.$v->id}}">{{$v->name}}</a></td>
                         <td>{{$v->category}}</td>
                         <td>{{$v->prime_price}}</td>
                         <td>{{$v->cur_price}}</td>

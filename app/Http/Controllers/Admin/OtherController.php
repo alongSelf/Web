@@ -252,6 +252,30 @@ class OtherController extends CommonController
         return $data;
     }
 
+    public function disPlayEvaluates()
+    {
+        $input = Input::except('_token');
+        $evaluates = Evaluates::find($input['id']);
+        if (0 != $evaluates['display']){
+            $evaluates['display'] = 0;
+        }else{
+            $evaluates['display'] = 1;
+        }
+        $re = $evaluates->update();
+        if($re){
+            $data = [
+                'status' => 0,
+                'msg' => '评论显示/隐藏成功！',
+            ];
+        }else{
+            $data = [
+                'status' => 1,
+                'msg' => '评论显示/隐藏失败，请稍后重试！',
+            ];
+        }
+        return $data;
+    }
+
     public function contactus()
     {
         $config = Config::first();

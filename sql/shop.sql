@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-19 00:21:55
+Date: 2016-07-19 17:48:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -148,17 +148,18 @@ CREATE TABLE `evaluates` (
   `nickname` varchar(255) DEFAULT '' COMMENT '昵称',
   `orderid` int(11) DEFAULT '0' COMMENT '订单ID',
   `createtime` bigint(20) DEFAULT '0',
+  `display` tinyint(4) DEFAULT '0' COMMENT '是否显示',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of evaluates
 -- ----------------------------
-INSERT INTO `evaluates` VALUES ('1', '23', '5', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '2', '毛毛虫1', '0', '1403058804');
-INSERT INTO `evaluates` VALUES ('2', '23', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫2', '0', '1403058804');
-INSERT INTO `evaluates` VALUES ('3', '23', '3', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫3', '0', '1403058804');
-INSERT INTO `evaluates` VALUES ('4', '23', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫4', '0', '1404058804');
-INSERT INTO `evaluates` VALUES ('5', '23', '1', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫5', '0', '1403068804');
+INSERT INTO `evaluates` VALUES ('1', '23', '5', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '2', '毛毛虫1', '0', '1403058804', '1');
+INSERT INTO `evaluates` VALUES ('2', '23', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫2', '0', '1403058804', '1');
+INSERT INTO `evaluates` VALUES ('3', '23', '3', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫3', '0', '1403058804', '0');
+INSERT INTO `evaluates` VALUES ('4', '23', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫4', '0', '1404058804', '0');
+INSERT INTO `evaluates` VALUES ('5', '23', '1', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫5', '0', '1403068804', '0');
 
 -- ----------------------------
 -- Table structure for `follower`
@@ -231,6 +232,7 @@ CREATE TABLE `orders` (
   `userid` int(11) DEFAULT '0' COMMENT '用户ID',
   `paychannel` int(11) DEFAULT '0' COMMENT '0 微信支付',
   `payinfo` text COMMENT '第3方支付信息',
+  `price` int(11) DEFAULT '0' COMMENT '总价',
   `iteminfo` text COMMENT '购买的物品信息',
   `createtime` bigint(20) unsigned DEFAULT '0' COMMENT '创建时间',
   `status` int(11) DEFAULT '0' COMMENT '0待付款  1待发货 2待评价 3完成 4售后 5取消',
@@ -240,13 +242,7 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('578ce77905767', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468852089', '0');
-INSERT INTO `orders` VALUES ('578cf30e2541b', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468855054', '0');
-INSERT INTO `orders` VALUES ('578cf319f0ca8', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468855065', '1');
-INSERT INTO `orders` VALUES ('578cf33e29741', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468855102', '2');
-INSERT INTO `orders` VALUES ('578cfa88484ee', '10008', '0', null, '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468856968', '3');
-INSERT INTO `orders` VALUES ('578cfa90d1a28', '10008', '0', null, '{\"price\":451,\"items\":[{\"id\":24,\"spec\":[],\"num\":1,\"price\":451}]}', '1468856976', '4');
-INSERT INTO `orders` VALUES ('578cfa9b64a6b', '10008', '0', null, '{\"price\":580,\"items\":[{\"id\":26,\"spec\":[],\"num\":1,\"price\":580}]}', '1468856987', '5');
+INSERT INTO `orders` VALUES ('578df26642674', '10008', '0', null, '1000', '{\"price\":1000,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"L\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":200},{\"id\":25,\"spec\":[],\"num\":1,\"price\":800}]}', '1468920422', '0');
 
 -- ----------------------------
 -- Table structure for `shopitem`
@@ -275,7 +271,7 @@ CREATE TABLE `shopitem` (
 -- Records of shopitem
 -- ----------------------------
 INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373151119198.jpg\" title=\"1468373151119198.jpg\" alt=\"042.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '5785988b297a4.jpg', '[\"578598976b747.jpg\",\"578598978b63c.jpg\",\"57859897a583a.jpg\"]', '{\"尺寸\":[{\"val\":\"M\",\"price\":151},{\"val\":\"L\",\"price\":200}],\"颜色\":[{\"val\":\"红\"},{\"val\":\"黄\"},{\"val\":\"蓝\"}]}', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '451', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '', '1', '1', '1');
+INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '451', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '', '1', '1', '0');
 INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373099115764.jpg\" title=\"1468373099115764.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '578598558e8bc.jpg', '[\"57859865a4892.jpg\",\"57859865cb5af.jpg\",\"57859865e6365.jpg\"]', '', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373050130881.jpg\" title=\"1468373050130881.jpg\" alt=\"007.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '57859826496c5.jpg', '[\"578598315cda2.jpg\",\"578598317ae21.jpg\",\"5785983195407.jpg\"]', '', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373016112859.jpg\" title=\"1468373016112859.jpg\" alt=\"16773985_980x1200_292.jpg\"/></p><p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373021811450.jpg\" title=\"1468373021811450.jpg\" alt=\"16773989_980x1200_292.jpg\"/></p><p><br/></p>', '小学生5', '580', '500', '-1', '1001', '57859803dc314.jpg', '[\"5785980f443af.jpg\",\"5785980f60423.jpg\",\"5785980f7fb47.jpg\"]', '', '0', '1', '1');

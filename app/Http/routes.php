@@ -78,6 +78,7 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/changeNotice', 'OtherController@changeNotice');
     Route::get('other/evaluates', 'OtherController@evaluatesIndex');
     Route::any('other/delEvaluates', 'OtherController@delEvaluates');
+    Route::any('other/disPlayEvaluates', 'OtherController@disPlayEvaluates');
     Route::any('other/searchEvaluates/{ev_id}', 'OtherController@searchEvaluates');
     Route::any('other/changeAgent', 'OtherController@changeAgent');
     Route::any('other/changeSpread', 'OtherController@changeSpread');

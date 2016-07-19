@@ -35,6 +35,7 @@
                         <th class="tc" width="5%">用户ID</th>
                         <th class="tc" width="5%">订单ID</th>
                         <th class="tc" width="5%">评分</th>
+                        <th class="tc" width="5%">是否显示</th>
                         <th>评价</th>
                         <th>时间</th>
                         <th>操作</th>
@@ -46,6 +47,7 @@
                             <td>{{$ev->userid}}</td>
                             <td>{{$ev->orderid}}</td>
                             <td>{{$ev->star}}</td>
+                            <td>{{$ev->display}}</td>
                             <td>{{$ev->evaluate}}</td>
                             <td>
                                 <?php
@@ -54,6 +56,7 @@
                             </td>
                             <td>
                                 <a href="javascript:;" onclick="delEvaluates({{$ev->id}})">删除</a>
+                                <a href="javascript:;" onclick="disPlayEvaluates({{$ev->id}})">显示/隐藏</a>
                             </td>
                         </tr>
                     @endforeach
@@ -84,6 +87,17 @@
 //            layer.msg('的确很重要', {icon: 1});
             }, function(){
 
+            });
+        }
+
+        function disPlayEvaluates(id) {
+            $.post("{{url('admin/other/disPlayEvaluates')}}", {'id':id,'_token':"{{csrf_token()}}"},function (data) {
+                if(data.status==0){
+                    location.href = location.href;
+                    layer.msg(data.msg, {icon: 6});
+                }else{
+                    layer.msg(data.msg, {icon: 5});
+                }
             });
         }
 

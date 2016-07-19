@@ -64,14 +64,14 @@ class ShopController extends CommController
     public function itemInfo($id)
     {
         $itemInfo = ShopItem::find($id);
-        $comment = Evaluates::where('itemid', $id)->count();
+        $comment = Evaluates::where('itemid', $id)->where('display', 1)->count();
         $itemInfo->commentNum = $comment;
         return $itemInfo;
     }
 
     public function itemEvaluate($id, $page)
     {
-        return Evaluates::where('itemid', $id)->
+        return Evaluates::where('itemid', $id)->where('display', 1)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->orderBy('createtime','desc')->get();
     }
 

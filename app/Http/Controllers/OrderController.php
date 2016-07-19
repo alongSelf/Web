@@ -93,6 +93,7 @@ class OrderController extends CommController
         $input = [
             'id'=>$orderid,
             'userid'=>$user['id'],
+            'price'=>$orderJson->price,
             'iteminfo'=>$order,
             'createtime'=>time(),
             'status'=>0,
