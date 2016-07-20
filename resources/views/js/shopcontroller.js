@@ -417,6 +417,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     };
 
     //清空购物车
+    var bPopuped = false;
     $scope.clear = function(){
         carInfo = $cookieStore.get('car');
         if (!carInfo || 0 == carInfo.length){
