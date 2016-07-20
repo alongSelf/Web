@@ -38,6 +38,11 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.pages.service.page = 0;
         $scope.pages.service.data = [];
 
+        $scope.pages.delivery = [];
+        $scope.pages.delivery.more = true;
+        $scope.pages.delivery.page = 0;
+        $scope.pages.delivery.data = [];
+
         $scope.$broadcast('scroll.refreshComplete');
     };
     $scope.doRefresh();
@@ -49,6 +54,8 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = false;
         $scope.subBar.serviceClicked = false;
+        $scope.subBar.deliveryClicked = false;
+
         $scope.type = 0;
         $scope.moreData = $scope.pages.all.more;
         $scope.curPage = $scope.pages.all.page;
@@ -59,6 +66,8 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.subBar.payClicked = true;
         $scope.subBar.evaluateClicked = false;
         $scope.subBar.serviceClicked = false;
+        $scope.subBar.deliveryClicked = false;
+
         $scope.type = 1;
         $scope.moreData = $scope.pages.pay.more;
         $scope.curPage = $scope.pages.pay.page;
@@ -69,6 +78,8 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = true;
         $scope.subBar.serviceClicked = false;
+        $scope.subBar.deliveryClicked = false;
+
         $scope.type = 2;
         $scope.moreData = $scope.pages.evaluate.more;
         $scope.curPage = $scope.pages.evaluate.page;
@@ -79,12 +90,26 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = false;
         $scope.subBar.serviceClicked = true;
+        $scope.subBar.deliveryClicked = false;
+
         $scope.type = 3;
         $scope.moreData = $scope.pages.service.more;
         $scope.curPage = $scope.pages.service.page;
         $scope.showData = $scope.pages.service.data;
 
         dd($scope.pages.service.data);
+    };
+    $scope.deliveryOrder = function () {
+        $scope.subBar.allClicked = false;
+        $scope.subBar.payClicked = false;
+        $scope.subBar.evaluateClicked = false;
+        $scope.subBar.serviceClicked = false;
+        $scope.subBar.deliveryClicked = true;
+
+        $scope.type = 4;
+        $scope.moreData = $scope.pages.delivery.more;
+        $scope.curPage = $scope.pages.delivery.page;
+        $scope.showData = $scope.pages.delivery.data;
     };
 
     $scope.setPageVal = function (type, setType, val) {
@@ -136,7 +161,19 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
             }else {
 
             }
-        }else{
+        }else if(4 == type){
+            if('more' == setType){
+                $scope.pages.delivery.more = val;
+            }else if('page' == setType){
+                $scope.pages.delivery.page = val;
+            }else if ('data' == setType){
+                if(0 != val.length){
+                    $scope.pages.delivery.data = $scope.pages.delivery.data.concat(val);
+                }
+            }else {
+
+            }
+        }else {
 
         }
     };

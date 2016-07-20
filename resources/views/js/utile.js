@@ -194,3 +194,11 @@ function parseEvaluates(Evaluates) {
 
     return Evaluates;
 }
+
+function pswMin() {
+    return 6;
+}
+
+function pswMax() {
+    return 12;
+}

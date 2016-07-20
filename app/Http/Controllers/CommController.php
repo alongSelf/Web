@@ -54,4 +54,13 @@ class CommController extends Controller
     {
         return uniqid();
     }
+
+    public function pswMin()
+    {
+        return 6;
+    }
+    public function pswMax()
+    {
+        return 12;
+    }
 }

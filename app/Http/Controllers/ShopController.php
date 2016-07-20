@@ -29,6 +29,10 @@ class ShopController extends CommController
 
     private function getIndexItem($page)
     {
+        if (!is_numeric($page)){
+            return;
+        }
+        
         return ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
             where('showindex', 1)->where('stock', '<>', 0)->where('display', 1)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
@@ -47,22 +51,40 @@ class ShopController extends CommController
 
     public function loadMoreIndexItem($page)
     {
+        if (!is_numeric($page)){
+            return;
+        }
+        
         return $this->getIndexItem($page);
     }
 
     private function getCategoryInfo($id, $page)
     {
+        if (!is_numeric($id)
+            || !is_numeric($page)){
+            return;
+        }
+        
         return ShopItem::where('category', $id)->where('stock', '<>', 0)->where('display', 1)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
     }
 
     public function categoryInfo($id, $page)
     {
+        if (!is_numeric($id)
+            || !is_numeric($page)){
+            return;
+        }
+        
         return $this->getCategoryInfo($id, $page);
     }
 
     public function itemInfo($id)
     {
+        if (!is_numeric($id)){
+            return;
+        }
+        
         $itemInfo = ShopItem::find($id);
         $comment = Evaluates::where('itemid', $id)->where('display', 1)->count();
         $itemInfo->commentNum = $comment;
@@ -71,12 +93,21 @@ class ShopController extends CommController
 
     public function itemEvaluate($id, $page)
     {
+        if (!is_numeric($id) 
+            || !is_numeric($page)){
+            return;
+        }
+        
         return Evaluates::where('itemid', $id)->where('display', 1)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->orderBy('createtime','desc')->get();
     }
 
     public function search($param)
     {
+        if ($this->checkStr($param)){
+            return;
+        }
+        
         $searchInfo = ShopItem::select('id', 'name')->
             where('stock', '<>', 0)->where('name','like','%'.$param.'%')->get();
 

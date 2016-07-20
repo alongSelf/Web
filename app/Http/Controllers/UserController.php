@@ -11,17 +11,23 @@ use App\http\Model\Follower;
 use App\http\Model\Income;
 use App\Http\Model\Users;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends CommController
 {
-    public function register($phone, $psw)
+    public function register()
     {
+        $input = Input::except('_token');        
+        $phone = $input['phone'];
+        $psw = $input['psw'];
+
         if (!$this->checkPhone($phone)){
             return $this->rtnMsg(1, '亲，请输入正确的号码！');
         }
-        if (strlen($psw) < 6){
-            return $this->rtnMsg(1, '密码长度最少6位！');
+        if (strlen($psw) < $this->pswMin() || strlen($psw) > $this->pswMax()){
+            return $this->rtnMsg(1, '密码长度最少'.$this->pswMin().'位最多'.$this->pswMax().'位!');
         }
+
         $count = Users::where('phone', $phone)->count();
         if (0 != $count){
             return $this->rtnMsg(1, '该号码已经注册!');
@@ -40,10 +46,17 @@ class UserController extends CommController
         }
     }
 
-    public function logIn($phone, $psw)
+    public function logIn()
     {
+        $input = Input::except('_token');
+        $phone = $input['phone'];
+        $psw = $input['psw'];
+
         if (!$this->checkPhone($phone)){
             return $this->rtnMsg(1, '亲，请输入正确的号码！');
+        }
+        if (strlen($psw) < $this->pswMin() || strlen($psw) > $this->pswMax()){
+            return $this->rtnMsg(1, '密码长度最少'.$this->pswMin().'位最多'.$this->pswMax().'位!');
         }
 
         $user = Users::where('phone', $phone)->first();
@@ -106,13 +119,17 @@ class UserController extends CommController
         return $this->rtnMsg(0, $user);
     }
 
-    public function bindAccount($phone, $psw)
+    public function bindAccount()
     {
+        $input = Input::except('_token');
+        $phone = $input['phone'];
+        $psw = $input['psw'];
+        
         if (!$this->checkPhone($phone)){
             return $this->rtnMsg(1, '亲，请输入正确的号码！');
         }
-        if (strlen($psw) < 6){
-            return $this->rtnMsg(1, '密码长度最少6位！');
+        if (strlen($psw) < $this->pswMin() || strlen($psw) > $this->pswMax()){
+            return $this->rtnMsg(1, '密码长度最少'.$this->pswMin().'位最多'.$this->pswMax().'位!');
         }
 
         $user = session('user');
@@ -136,10 +153,14 @@ class UserController extends CommController
         }
     }
 
-    public function changePsw($oldpsw, $newpsw)
+    public function changePsw()
     {
-        if (strlen($newpsw) < 6){
-            return $this->rtnMsg(1, '密码长度最少6位！');
+        $input = Input::except('_token');
+        $oldpsw = $input['old'];
+        $newpsw = $input['new'];
+
+        if (strlen($newpsw) < $this->pswMin() || strlen($newpsw) > $this->pswMax()){
+            return $this->rtnMsg(1, '密码长度最少'.$this->pswMin().'位最多'.$this->pswMax().'位!');
         }
         $user = session('user');
         if (!$this->checkPhone($user['phone'])){
@@ -162,9 +183,10 @@ class UserController extends CommController
         }
     }
 
-    public function changeUserInfo($info)
+    public function changeUserInfo()
     {
-        $input = json_decode($info);
+        $input = json_decode(Input::get('data'));
+        
         if (0 != strlen($input->email)){
             if (!$this->checkMail($input->email)){
                 return $this->rtnMsg(1, '请输入有效的有效地址!');
@@ -175,6 +197,25 @@ class UserController extends CommController
             || $this->checkStr($input->qq)
             || $this->checkStr($input->weixnumber)){
             return $this->rtnMsg(1, '请勿输入特殊字符!');
+        }
+
+        if (strlen($input->name) < 2 || strlen($input->name) > 64){
+            return $this->rtnMsg(1, '姓名最少2位最多64位!');
+        }
+        if (strlen($input->nickname) < 2 || strlen($input->nickname) > 64){
+            return $this->rtnMsg(1, '昵称最少2位最多64位!');
+        }
+        if (strlen($input->email) < 5 || strlen($input->email) > 64){
+            return $this->rtnMsg(1, '邮箱最少5位最多64位!');
+        }
+        if (!is_numeric($input->qq)){
+            return $this->rtnMsg(1, '请输入有效的QQ号码!');
+        }
+        if (strlen($input->qq) < 4 || strlen($input->qq) > 15){
+            return $this->rtnMsg(1, 'QQ号码最少4位最多15位!');
+        }
+        if (strlen($input->weixnumber) < 2 || strlen($input->weixnumber) > 64){
+            return $this->rtnMsg(1, '微信号最少2位最多64位!');
         }
 
         $user = session('user');
@@ -208,9 +249,10 @@ class UserController extends CommController
         return Citys::where('parentno', $parentNo)->get();
     }
 
-    public function saveAddr($addr)
+    public function saveAddr()
     {
-        $input = json_decode($addr);
+        $input = json_decode(Input::get('data'));
+        
         if (0 == strlen($input->name)){
             return $this->rtnMsg(1, '请输入收货人姓名!');
         }
@@ -220,7 +262,9 @@ class UserController extends CommController
         if (0 == strlen($input->addr)){
             return $this->rtnMsg(1, '请输入收货人联系地址!');
         }
-
+        if (strlen($input->name) < 2 || strlen($input->name) > 64){
+            return $this->rtnMsg(1, '收货人姓名最少2位最多64位！');
+        }
         if ($this->checkStr($input->name)){
             return $this->rtnMsg(1, '请勿输入特殊字符!');
         }
@@ -249,8 +293,10 @@ class UserController extends CommController
         return $this->rtnMsg(0, $addr);
     }
 
-    public function delAddr($id)
+    public function delAddr()
     {
+        $id = Input::get('id');
+
         if (!is_numeric($id)){
             return $this->rtnMsg(1, '参数错误!');
         }
@@ -275,8 +321,12 @@ class UserController extends CommController
         }
     }
     
-    public function agent($name, $phone)
+    public function agent()
     {
+        $input = Input::except('_token');
+        $phone = $input['phone'];
+        $name = $input['name'];
+        
         if (0 == strlen($name)){
             return $this->rtnMsg(1, '请输入真实姓名!');
         }
@@ -285,6 +335,9 @@ class UserController extends CommController
         }
         if ($this->checkStr($name)){
             return $this->rtnMsg(1, '请勿输入特殊字符!');
+        }
+        if (strlen($name) < 2 || strlen($name) > 64){
+            return $this->rtnMsg(1, '姓名最少2位最多64位！');
         }
 
         $user = session('user');
@@ -333,6 +386,10 @@ class UserController extends CommController
     
     public function loadIncomeData($page)
     {
+        if (!is_numeric($page)){
+            return $this->rtnMsg(1, '参数错误!');
+        }
+
         $user = session('user');
         $income = Income::where('userid', $user['id'])->
             skip($page * $this->numPerPage())->take($this->numPerPage())->
@@ -355,8 +412,10 @@ class UserController extends CommController
         return $this->rtnMsg(0, $cash);
     }
 
-    public function cash($money)
+    public function cash()
     {
+        $money = Input::get('money');
+
         if (!is_numeric($money)){
             return $this->rtnMsg(1, '参数错误!');
         }

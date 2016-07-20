@@ -18,6 +18,11 @@
                 <nobr>待付款</nobr>
             </div>
             <div class="col button button-clear"
+                 ng-class="{'button-calm': subBar.deliveryClicked}"
+                 ng-click="deliveryOrder()">
+                <nobr>待发货</nobr>
+            </div>
+            <div class="col button button-clear"
                  ng-class="{'button-calm': subBar.evaluateClicked}"
                  ng-click="evaluateOrder()">
                 <nobr>待评价</nobr>

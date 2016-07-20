@@ -3,7 +3,7 @@
 var appModule = angular.module('ionicApp.spreadcontroller', ['ionicApp.server']);
 
 //推广
-appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$ionicPopup', function($scope, $ionicHistory, $http, $ionicPopup){
+appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$ionicPopup', '$ionicLoading', function($scope, $ionicHistory, $http, $ionicPopup, $ionicLoading){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
@@ -145,19 +145,17 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$
                             e.preventDefault();
                         }
                         else{
-                            $http.get("cash/"+$scope.cashMoney.money)
-                                .success(
-                                    function (data, status, header, config) {
-                                        if (0 == data.status) {
-                                            $scope.Income = $scope.Income - $scope.cashMoney.money * 100;
-                                            $scope.moreCashData = true;
-                                        }
-                                        layer.msg(data.msg);
-                                    }
-                                ).error(
-                                function (data) {
-                                    onError(data);
-                                });
+                            $ionicLoading.show({
+                                template: 'Working...'
+                            });
+                            $.post("cash",{'_token':$('meta[name="_token"]').attr('content'),'money':$scope.cashMoney.money},function(data){
+                                if (0 == data.status) {
+                                    $scope.Income = $scope.Income - $scope.cashMoney.money * 100;
+                                    $scope.moreCashData = true;
+                                }
+                                layer.msg(data.msg);
+                                $ionicLoading.hide();
+                            });
 
                             bPopuped = false;
                         }
@@ -251,7 +249,7 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$
 }]);
 
 //代理
-appModule.controller('agentController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+appModule.controller('agentController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', function($scope, $ionicHistory, $http, $ionicLoading){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
@@ -274,7 +272,11 @@ appModule.controller('agentController', ['$scope', '$ionicHistory', '$http', fun
     $scope.agent = [];
     $scope.myAgent = function () {
         if (!$scope.agent.name || 0 == $scope.agent.name.length || checkStr($scope.agent.name)){
-            layer.msg('请输入有效的名字！');
+            layer.msg('请输入有效的姓名！');
+            return;
+        }
+        if ($scope.agent.name.length < 2 || $scope.agent.name.length > 64){
+            layer.msg('姓名最少2位最多64位！');
             return;
         }
         if (!$scope.agent.phone || 0 == $scope.agent.phone.length || !checkMobile($scope.agent.phone)){
@@ -282,19 +284,17 @@ appModule.controller('agentController', ['$scope', '$ionicHistory', '$http', fun
             return;
         }
 
-        $http.get("agent/"+$scope.agent.name + "/" + $scope.agent.phone)
-            .success(
-                function (data, status, header, config) {
-                    if (0 != data.status){
-                        layer.msg(data.msg);
-                    }else {
-                        layer.msg(data.msg);
-                        $scope.needShow = false;
-                    }
-                }
-            ).error(
-            function (data) {
-                onError(data);
-            });
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("agent",{'_token':$('meta[name="_token"]').attr('content'),'name':$scope.agent.name, 'phone':$scope.agent.phone},function(data){
+            if (0 != data.status){
+                layer.msg(data.msg);
+            }else {
+                layer.msg(data.msg);
+                $scope.needShow = false;
+            }
+            $ionicLoading.hide();
+        });
     }
 }]);

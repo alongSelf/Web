@@ -3,7 +3,7 @@
 var appModule = angular.module('ionicApp.usercontroller', ['ionicApp.server']);
 
 //用户中心
-appModule.controller('uerCenterController', ['$scope', '$http', function($scope, $http){
+appModule.controller('uerCenterController', ['$scope', '$http', '$ionicLoading', function($scope, $http, $ionicLoading){
     $scope.needLogIn = true;
     $scope.logInOrReg = '登录';
     $scope.clickLoginOrReg = '点击注册';
@@ -53,46 +53,40 @@ appModule.controller('uerCenterController', ['$scope', '$http', function($scope,
         var regPSW = '';
         //注册
         if ($scope.isRegister){
-            regPSW = document.getElementById('regpassword').value;
-            if (pwd.length < 6){
-                layer.msg('密码长度最少6位!');
-                return;
-            }
+            regPSW = document.getElementById('regpassword').value;            
             if (regPSW != pwd){
                 layer.msg('两次输入密码不同!');
                 return;
             }
+            if (pwd.length < pswMin() || pwd.length > pswMax()){
+                layer.msg('密码长度最少'+pswMin()+'位最多'+pswMax()+'位!');
+                return;
+            }
 
-            $http.get("register/"+phone+"/"+pwd)
-                .success(
-                    function (data, status, header, config) {
-                        layer.msg(data.msg);
-                        if (0 == data.status){
-                            $scope.register();
-                        }
-                    }
-                ).error(
-                function (data) {
-                    onError(data);
-                });
+            $ionicLoading.show({
+                template: 'Working...'
+            });
+            $.post("register",{'_token':$('meta[name="_token"]').attr('content'),'phone':phone, 'psw':pwd},function(data){
+                layer.msg(data.msg);
+                if (0 == data.status){
+                    $scope.register();
+                }
+                $ionicLoading.hide();
+            });
         }else {
-            //登录
-            $http.get("logIn/"+phone+"/"+pwd)
-                .success(
-                    function (data, status, header, config) {
-                        if (0 != data.status){
-                            $scope.needLogIn = true;
-                            layer.msg(data.msg);
-                        }else {
-                            $scope.needLogIn = false;
-                            $scope.uerBase = data.msg;
-                        }
-                    }
-                ).error(
-                function (data) {
+            $ionicLoading.show({
+                template: 'Working...'
+            });
+            $.post("logIn",{'_token':$('meta[name="_token"]').attr('content'),'phone':phone, 'psw':pwd},function(data){
+                if (0 != data.status){
                     $scope.needLogIn = true;
-                    onError(data);
-                });
+                    layer.msg(data.msg);
+                }else {
+                    $scope.needLogIn = false;
+                    $scope.uerBase = data.msg;
+                }
+                $ionicLoading.hide();
+            });
         }
     };
 
@@ -110,7 +104,7 @@ appModule.controller('uerCenterController', ['$scope', '$http', function($scope,
 }]);
 
 //个人资料
-appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', function($scope, $ionicHistory, $http, $ionicLoading){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
@@ -153,32 +147,28 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
             layer.msg('亲，请输入正确的电话号码!');
             return;
         }
-        if (psw1.length < 6){
-            layer.msg('密码长度最少6位!');
+        if (psw1.length < pswMin() || psw1.length > pswMax()){
+            layer.msg('密码长度最少'+pswMin()+'位最多'+pswMax()+'位!');
             return;
         }
         if (psw1 != psw2){
             layer.msg('两次输入密码不同!');
             return;
         }
-        
-        $http.get("bindAccount/"+phone+"/"+psw1)
-            .success(
-                function (data, status, header, config) {
-                    if (0 != data.status){
-                        $scope.showBind = true;
-                        layer.msg(data.msg);
-                    }else {
-                        $scope.userInfo.phone = phone;
-                        $scope.showBind = false;
-                        layer.msg(data.msg);
-                    }
-                }
-            ).error(
-            function (data) {
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("bindAccount",{'_token':$('meta[name="_token"]').attr('content'),'phone':phone, 'psw':psw1},function(data){
+            if (0 != data.status){
                 $scope.showBind = true;
-                onError(data);
-            });
+                layer.msg(data.msg);
+            }else {
+                $scope.userInfo.phone = phone;
+                $scope.showBind = false;
+                layer.msg(data.msg);
+            }
+            $ionicLoading.hide();
+        });
     };
 
     //是否修改
@@ -200,6 +190,31 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
             return;
         }
 
+        if ($scope.userInfo.name.length < 2 || $scope.userInfo.name.length > 64){
+            layer.msg('姓名最少2位最多64位!');
+            return;
+        }
+        if ($scope.userInfo.nickname.length < 2 || $scope.userInfo.nickname.length > 64){
+            layer.msg('昵称最少2位最多64位!');
+            return;
+        }
+        if ($scope.userInfo.email.length < 5 || $scope.userInfo.email.length > 64){
+            layer.msg('邮箱最少5位最多64位!');
+            return;
+        }
+        if (isNaN($scope.userInfo.qq)){
+            layer.msg('请输入有效的QQ号码!');
+            return;
+        }
+        if ($scope.userInfo.qq.length < 4 || $scope.userInfo.qq.length > 15){
+            layer.msg('QQ号码最少4位最多15位!');
+            return;
+        }
+        if ($scope.userInfo.weixnumber.length < 2 || $scope.userInfo.weixnumber.length > 64){
+            layer.msg('微信号最少2位最多64位!');
+            return;
+        }
+
         var info = {};
         info.name = $scope.userInfo.name;
         info.nickname = $scope.userInfo.nickname;
@@ -207,27 +222,24 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
         info.qq = $scope.userInfo.qq;
         info.weixnumber = $scope.userInfo.weixnumber;
 
-        $http.get("changeUserInfo/"+JSON.stringify(info))
-            .success(
-                function (data, status, header, config) {
-                    if (0 != data.status){
-                        $scope.showChange = true;
-                        layer.msg(data.msg);
-                    }else {
-                        $scope.showChange = false;
-                        layer.msg(data.msg);
-                    }
-                }
-            ).error(
-            function (data) {
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("changeUserInfo",{'_token':$('meta[name="_token"]').attr('content'),'data':JSON.stringify(info)},function(data){
+            if (0 != data.status){
                 $scope.showChange = true;
-                onError(data);
-            });
+                layer.msg(data.msg);
+            }else {
+                $scope.showChange = false;
+                layer.msg(data.msg);
+            }
+            $ionicLoading.hide();
+        });
     };
 }]);
 
 //地址
-appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', function($scope, $ionicHistory, $http, $ionicLoading){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
@@ -333,6 +345,10 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', func
             layer.msg('请输入有效的收货人姓名！');
             return;
         }
+        if ($scope.addr.name.length < 2 || $scope.addr.name.length > 64){
+            layer.msg('收货人姓名最少2位最多64位！');
+            return;
+        }
         addrs.name = $scope.addr.name;
 
         if (!$scope.addr.tel || 0 == $scope.addr.tel.length || !checkMobile($scope.addr.tel)){
@@ -367,43 +383,39 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', func
 
         addrs.addr = addrInfo;
 
-        $http.get("saveAddr/"+JSON.stringify(addrs))
-            .success(
-                function (data, status, header, config) {
-                    if (0 != data.status){
-                        layer.msg(data.msg);
-                    }else {
-                        layer.msg(data.msg);
-                        $scope.showAddAddr = false;
-                        $scope.loadAddr();
-                    }
-                }
-            ).error(
-            function (data) {
-                onError(data);
-            });
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("saveAddr",{'_token':$('meta[name="_token"]').attr('content'),'data':JSON.stringify(addrs)},function(data){
+            if (0 != data.status){
+                layer.msg(data.msg);
+            }else {
+                layer.msg(data.msg);
+                $scope.showAddAddr = false;
+                $scope.loadAddr();
+            }
+            $ionicLoading.hide();
+        });
     };
 
     $scope.delAddr = function (addrID) {
-        $http.get("delAddr/"+addrID)
-            .success(
-                function (data, status, header, config) {
-                    if (0 != data.status){
-                        layer.msg(data.msg);
-                    }else {
-                        $scope.AddrList = data.msg;
-                    }
-                }
-            ).error(
-            function (data) {
-                onError(data);
-            });
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("delAddr",{'_token':$('meta[name="_token"]').attr('content'),'id':addrID},function(data){
+            if (0 != data.status){
+                layer.msg(data.msg);
+            }else {
+                $scope.AddrList = data.msg;
+            }
+            $ionicLoading.hide();
+        });
     };
 
 }]);
 
 //密码修改
-appModule.controller('changePSWController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+appModule.controller('changePSWController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', function($scope, $ionicHistory, $http, $ionicLoading){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
@@ -421,22 +433,25 @@ appModule.controller('changePSWController', ['$scope', '$ionicHistory', '$http',
             layer.msg('两次输入密码不同!');
             return;
         }
-        $http.get("changePsw/"+oldpsw+"/"+psw1)
-            .success(
-                function (data, status, header, config) {
-                    if (0 != data.status){
-                        layer.msg(data.msg);
-                    }else {
-                        layer.msg(data.msg);
-                        document.getElementById('change_oldpsw').value = "";
-                        document.getElementById('change_psw1').value = "";
-                        document.getElementById('change_psw2').value = "";
-                    }
-                }
-            ).error(
-            function (data) {
-                onError(data);
-            });
+        if (psw1.length < pswMin() || psw1.length > pswMax()){
+            layer.msg('密码长度最少'+pswMin()+'位最多'+pswMax()+'位!');
+            return;
+        }
+
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("changePsw",{'_token':$('meta[name="_token"]').attr('content'),'old':oldpsw, 'new':psw1},function(data){
+            if (0 != data.status){
+                layer.msg(data.msg);
+            }else {
+                layer.msg(data.msg);
+                document.getElementById('change_oldpsw').value = "";
+                document.getElementById('change_psw1').value = "";
+                document.getElementById('change_psw2').value = "";
+            }
+            $ionicLoading.hide();
+        });
     };
 }]);
 

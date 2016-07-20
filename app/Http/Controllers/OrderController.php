@@ -138,6 +138,12 @@ class OrderController extends CommController
                     skip($page * $this->numPerPage())->take($this->numPerPage())->get();
             }
             break;
+            case 4://代发货
+            {
+                $order = Orders::where('userid', $user['id'])->where('status', 1)->orderBy('createtime','desc')->
+                skip($page * $this->numPerPage())->take($this->numPerPage())->get();
+            }
+            break;
             default:
                 break;
         }

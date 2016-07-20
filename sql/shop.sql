@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-20 00:24:03
+Date: 2016-07-20 17:45:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,14 +26,14 @@ CREATE TABLE `addr` (
   `phone` varchar(32) DEFAULT '' COMMENT '收货人电话',
   `addr` text COMMENT '地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of addr
 -- ----------------------------
 INSERT INTO `addr` VALUES ('3', '10000', '张三', '15885527974', '四川省 成都市 郫县 郫县2中');
 INSERT INTO `addr` VALUES ('4', '10000', '李四', '15882276718', '北京市 朝阳区 天朝路');
-INSERT INTO `addr` VALUES ('5', '10008', '张三1', '15882276171', '山西省 大同市 大同县 大同街');
+INSERT INTO `addr` VALUES ('8', '10008', '张三', '15882276717', '北京市 东城区 嘻嘻嘻');
 
 -- ----------------------------
 -- Table structure for `adminuser`
@@ -68,7 +68,8 @@ CREATE TABLE `agent` (
 -- ----------------------------
 -- Records of agent
 -- ----------------------------
-INSERT INTO `agent` VALUES ('10008', '张三', '15882276717', '0');
+INSERT INTO `agent` VALUES ('10007', '张三', '15882276717', '0');
+INSERT INTO `agent` VALUES ('10008', '张33', '15822279999', '0');
 
 -- ----------------------------
 -- Table structure for `cash`
@@ -82,7 +83,7 @@ CREATE TABLE `cash` (
   `status` int(11) DEFAULT '0' COMMENT '0申请中，1完成，2取消',
   `time` bigint(20) DEFAULT '0' COMMENT '提现时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cash
@@ -93,6 +94,7 @@ INSERT INTO `cash` VALUES ('13', '10008', '51', '34900', '0', '1468552878');
 INSERT INTO `cash` VALUES ('14', '10008', '50', '29880', '0', '1468558457');
 INSERT INTO `cash` VALUES ('15', '10008', '50', '24880', '0', '1468558594');
 INSERT INTO `cash` VALUES ('16', '10008', '111', '13780', '0', '1468561053');
+INSERT INTO `cash` VALUES ('17', '10008', '53', '8480', '0', '1469005209');
 
 -- ----------------------------
 -- Table structure for `category`
@@ -173,7 +175,7 @@ CREATE TABLE `follower` (
   `userid` int(11) DEFAULT '0' COMMENT '用户ID',
   `layer` int(11) DEFAULT '0' COMMENT '所在层',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of follower
@@ -187,6 +189,7 @@ INSERT INTO `follower` VALUES ('7', '10008', '5', '6', '10004', '4');
 INSERT INTO `follower` VALUES ('8', '10008', '14', '15', '10003', '1');
 INSERT INTO `follower` VALUES ('9', '10008', '8', '9', '10002', '3');
 INSERT INTO `follower` VALUES ('10', '10008', '10', '11', '10001', '3');
+INSERT INTO `follower` VALUES ('11', '10012', '1', '2', '10012', '0');
 
 -- ----------------------------
 -- Table structure for `income`
@@ -247,7 +250,12 @@ CREATE TABLE `orders` (
 -- Records of orders
 -- ----------------------------
 INSERT INTO `orders` VALUES ('578df26642674', '10008', '0', null, '1000', '{\"price\":1000,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"L\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":200},{\"id\":25,\"spec\":[],\"num\":1,\"price\":800}]}', '1468920422', '0');
-INSERT INTO `orders` VALUES ('578e3875b4df1', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468938357', '0');
+INSERT INTO `orders` VALUES ('578e3875b4df1', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468938357', '1');
+INSERT INTO `orders` VALUES ('578ee9ca47f68', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468983754', '2');
+INSERT INTO `orders` VALUES ('578ee9cef07c4', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468983758', '4');
+INSERT INTO `orders` VALUES ('578ee9d31d9b0', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468983763', '0');
+INSERT INTO `orders` VALUES ('578f3f1c36327', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1469005596', '0');
+INSERT INTO `orders` VALUES ('578f4537306bf', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1469007159', '0');
 
 -- ----------------------------
 -- Table structure for `shopitem`
@@ -3657,12 +3665,13 @@ CREATE TABLE `users` (
   `errorcount` tinyint(4) DEFAULT '0' COMMENT '错误次数',
   `errortime` bigint(20) DEFAULT '0' COMMENT '最后次错误时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10012 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10013 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('10008', '', '张三', 'deficon.jpg', '大毛毛虫', '279133271@qq.com', '15882276717', 'eyJpdiI6InVwWkg1UXhnVEdJUEtya2VQRVpHN3c9PSIsInZhbHVlIjoiSDBURFJDYmxHdml6ZjFZUFJNcUsydz09IiwibWFjIjoiNGM1MDIxNmM0NzBkYzA4MmY3Y2M2Nzc1NTFmZmNhOWU5YWJhMDUwNDU2ZjM1YzliNDkzZGE4NjM0M2Y3MWE3OCJ9', '574126165', '279133271', '300', '13780', '0', '0');
+INSERT INTO `users` VALUES ('10008', '', '张三', 'deficon.jpg', '毛毛虫', '279133271@qq.com.cc', '15882276717', 'eyJpdiI6IlROYlhVNFpJbVJLd3VrdDFtVmlBcEE9PSIsInZhbHVlIjoic3NLXC81dklrbVRqXC9NSWNON2xIUEpRPT0iLCJtYWMiOiIzYzZhOGQ5YzNiMjM1ZjcyMjVlNmZlMzJiOWJmNDRjZTgxMmIyODkyODY0Njg2MDIwODNlY2E2YmVmZTY5ZjJlIn0=', '574126165', '279133271', '300', '8480', '2', '1469007170');
 INSERT INTO `users` VALUES ('10009', '', '', 'deficon.jpg', '大毛毛虫1', '', '', '', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10010', '', '', 'deficon.jpg', '', '', '15882276841', 'eyJpdiI6IlBLWTEzSGFKK0FLTTkwaXNKeHFVS2c9PSIsInZhbHVlIjoib0h3amJJR2dPYW5PZ0tKdFNZXC9FQnc9PSIsIm1hYyI6ImM2YWMzOTczZDBjZTgyOGQwNjBiNGVkMTc5MWM2MTNlZTE4NGZiYTU0MzY3MGNlMTU1M2NmYmU3MjVmMzRiYTkifQ==', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10011', '', '', 'deficon.jpg', '', '', '15882276718', 'eyJpdiI6IlwvZjRqOXEzM2E0MlE2K09Cd1VlRUJBPT0iLCJ2YWx1ZSI6IkU3WUZHVFNQVkcwTnZiKytNMFwvZkR3PT0iLCJtYWMiOiJiNTlhODYxYzY5NDUxM2RhNDhhNTE1NjY3YTY5Y2ZkMDZlMjZjNzJmOWNlN2QyMDRiZGFiNWYzOTUwZjRmMTZiIn0=', '', null, '0', '0', '0', '0');
+INSERT INTO `users` VALUES ('10012', '', '', 'deficon.jpg', '', '', '15882276707', 'eyJpdiI6Ik5xNE83dVp3TUh2djhvZ3lhZGY4Rmc9PSIsInZhbHVlIjoiK20zeHE4SGltXC9aVm9Menc5WTNWR1E9PSIsIm1hYyI6ImU3NmFiNjFiYmQ0MGUxYzM2M2Q5NzE4ZGMwNmYwMTJmNGJkOWZiMGM2ZDY2MWFiYmQzZjQ4YTgyMmUxYTAyNmMifQ==', '', null, '0', '0', '0', '0');

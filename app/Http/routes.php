@@ -22,8 +22,8 @@ Route::group([], function () {
     Route::get('itemEvaluate/{id}/{page}', 'ShopController@itemEvaluate');
     Route::get('search/{param}', 'ShopController@search');
 
-    Route::get('register/{phone}/{psw}', 'UserController@register');
-    Route::get('logIn/{phone}/{psw}', 'UserController@logIn');
+    Route::post('register', 'UserController@register');
+    Route::post('logIn', 'UserController@logIn');
 
     Route::post('newOrder', 'OrderController@newOrder');
 });
@@ -31,19 +31,19 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::get('logOut', 'UserController@logOut');
     Route::get('getUserBase', 'UserController@getUserBase');
     Route::get('getUserInfo', 'UserController@getUserInfo');
-    Route::get('bindAccount/{phone}/{psw}', 'UserController@bindAccount');
-    Route::get('changePsw/{oldpsw}/{newpsw}', 'UserController@changePsw');
-    Route::get('changeUserInfo/{info}', 'UserController@changeUserInfo');
-    Route::get('saveAddr/{addr}', 'UserController@saveAddr');
+    Route::post('bindAccount', 'UserController@bindAccount');
+    Route::post('changePsw', 'UserController@changePsw');
+    Route::post('changeUserInfo', 'UserController@changeUserInfo');
+    Route::post('saveAddr', 'UserController@saveAddr');
     Route::get('getAddr', 'UserController@getAddr');
-    Route::get('delAddr/{id}', 'UserController@delAddr');
+    Route::post('delAddr', 'UserController@delAddr');
 
-    Route::get('agent/{name}/{phone}', 'UserController@agent');
+    Route::post('agent', 'UserController@agent');
     Route::get('agentShow', 'UserController@agentShow');
     Route::get('spreadInfo', 'UserController@spreadInfo');
     Route::get('loadIncomeData/{page}', 'UserController@loadIncomeData');
     Route::get('loadCashData/{page}', 'UserController@loadCashData');
-    Route::get('cash/{money}', 'UserController@cash');
+    Route::post('cash', 'UserController@cash');
     Route::get('showLevel/{followerid}', 'UserController@showLevel');
     Route::get('getArea1', 'UserController@getArea1');
     Route::get('getChildArea/{parentNo}', 'UserController@getChildArea');
