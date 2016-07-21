@@ -182,10 +182,15 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $http.get("showOrder/" + $scope.curPage + '/'+ $scope.type)
             .success(
                 function (data, status, header, config) {
+                    dd(data);
                     if (0 != data.status){
                         layer.msg(data.msg);
                     }else {
                         if(0 != data.msg.length){
+                            for (var i = 0; i < data.msg.length; i++){
+                                data.msg[i].iteminfo = JSON.parse(data.msg[i].iteminfo);
+                            }
+
                             $scope.setPageVal($scope.type, 'data', data.msg);
                             $scope.showData = $scope.showData.concat(data.msg);
                         }else {

@@ -28,14 +28,7 @@ class CommController extends Controller
             return false;
         }
     }
-    public function rtnMsg($code, $msg)
-    {
-        return $data = [
-            'status' => $code,
-            'msg' => $msg,
-        ];
-    }
-
+    
     public function isLogIn()
     {
         if (session('user')){

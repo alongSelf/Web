@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-20 17:45:33
+Date: 2016-07-21 17:45:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -237,25 +237,22 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` varchar(64) NOT NULL DEFAULT '' COMMENT 'id',
   `userid` int(11) DEFAULT '0' COMMENT '用户ID',
-  `paychannel` int(11) DEFAULT '0' COMMENT '0 微信支付',
+  `paychannel` int(11) DEFAULT '0' COMMENT '1微信支付 2支付宝',
   `payinfo` text COMMENT '第3方支付信息',
   `price` int(11) DEFAULT '0' COMMENT '总价',
   `iteminfo` text COMMENT '购买的物品信息',
   `createtime` bigint(20) unsigned DEFAULT '0' COMMENT '创建时间',
-  `status` int(11) DEFAULT '0' COMMENT '0待付款  1待发货 2待评价 3完成 4售后 5取消',
+  `status` int(11) DEFAULT '0' COMMENT '0待付款  1待发货 2待评价 3完成 4取消',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('578df26642674', '10008', '0', null, '1000', '{\"price\":1000,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"L\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":200},{\"id\":25,\"spec\":[],\"num\":1,\"price\":800}]}', '1468920422', '0');
-INSERT INTO `orders` VALUES ('578e3875b4df1', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468938357', '1');
-INSERT INTO `orders` VALUES ('578ee9ca47f68', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468983754', '2');
-INSERT INTO `orders` VALUES ('578ee9cef07c4', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468983758', '4');
-INSERT INTO `orders` VALUES ('578ee9d31d9b0', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1468983763', '0');
-INSERT INTO `orders` VALUES ('578f3f1c36327', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1469005596', '0');
-INSERT INTO `orders` VALUES ('578f4537306bf', '10008', '0', null, '151', '{\"price\":151,\"items\":[{\"id\":23,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151}]}', '1469007159', '0');
+INSERT INTO `orders` VALUES ('5790443c39705', '10008', '0', null, '731', '{\"price\":731,\"items\":[{\"id\":23,\"name\":\"工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1\",\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '1469072444', '0');
+INSERT INTO `orders` VALUES ('57904445b9bee', '10008', '1', null, '800', '{\"price\":800,\"items\":[{\"id\":25,\"name\":\"工口小学生3\",\"spec\":[],\"num\":1,\"price\":800}]}', '1469072453', '1');
+INSERT INTO `orders` VALUES ('5790444d534ff', '10008', '2', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '1469072461', '2');
+INSERT INTO `orders` VALUES ('5790445430bd8', '10008', '1', null, '500', '{\"price\":500,\"items\":[{\"id\":27,\"name\":\"小学生5\",\"spec\":[],\"num\":1,\"price\":500}]}', '1469072468', '3');
 
 -- ----------------------------
 -- Table structure for `shopitem`

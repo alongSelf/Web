@@ -27,11 +27,6 @@
                  ng-click="evaluateOrder()">
                 <nobr>待评价</nobr>
             </div>
-            <div class="col button button-clear"
-                 ng-class="{'button-calm': subBar.serviceClicked}"
-                 ng-click="serviceOrder()">
-                <nobr>售后</nobr>
-            </div>
         </div>
     </ion-header-bar>
     <ion-content scroll="true">
@@ -40,8 +35,60 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div ng-repeat="data in showData">[[data.id]]</div>
-
+        <div style="border-bottom:#000000 solid 1px; display:block;
+                    background:url(resources/views/sysimg/[[data.status | orderBgImg]]) right no-repeat;
+                    background-size:120px 120px"
+            ng-repeat="data in showData">
+            <div class="row">
+                <div class="col col-50">
+                    <em>订单号：[[data.id]]</em>
+                </div>
+                <div class="col">
+                    <em>合计：</em><em style="color: red">[[data.price | currency:'￥']]</em>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <em>日期：</em><em>[[data.createtime | toStrDate]]</em>
+                </div>
+                <div class="col">
+                    <em>支付：</em>
+                    <img ng-src="resources/views/sysimg/[[data.paychannel | toChannelImg]]"
+                         ng-if="data.status != 0"
+                         style="width: 20px; height: 20px;border-radius:50%">
+                </div>
+            </div>
+            <div class="row" ng-repeat="itemInfo in data.iteminfo.items">
+                <div class="col col-50" ui-sref="tabs.orderiteminfo({itemID: [[itemInfo.id]]})">
+                    <img ng-src="uploads/[[itemInfo.img]]"
+                         style="width: 50px; height: 50px; border-radius:10px; float: left">
+                    <span>[[itemInfo.name | clipStr]]</span>
+                    <br>
+                    <span style="color: #adadad; font-size:10px;">[[itemInfo.spec | specToStr]]</span>
+                </div>
+                <div class="col">
+                    <span>数量：[[itemInfo.num]]</span>
+                    <br>
+                    <span>单价：[[itemInfo.price | currency:'￥']]</span>
+                </div>
+            </div>
+            <div ng-if="data.status == 0" style="text-align: right; padding-right: 10%">
+                    <span>
+                        取消
+                    </span>
+                    <span>
+                        付款
+                    </span>
+            </div>
+            <div style="text-align: right; padding-right: 10%"
+                 ng-if="data.status == 1">
+                待发货
+            </div>
+            <div style="text-align: right; padding-right: 10%"
+                 ng-if="data.status == 2">
+                评价
+            </div>
+        </div>
         <ion-infinite-scroll ng-if="moreData" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 </ion-view>

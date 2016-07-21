@@ -202,3 +202,8 @@ function pswMin() {
 function pswMax() {
     return 12;
 }
+
+function errLogin()
+{
+    return 10000;
+}

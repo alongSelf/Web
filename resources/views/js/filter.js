@@ -82,3 +82,35 @@ appModule.filter('toStrCashStatus', function () {
         }
     }
 });
+
+appModule.filter('toChannelImg', function () {
+    return function (input) {
+        if (1 == input){
+            return 'wx.jpg';
+        }
+        if (2 == input){
+            return 'zfb.jpg';
+        }
+    }
+});
+
+appModule.filter('specToStr', function () {
+    return function (input) {
+        var outPut = '';
+        for (var i = 0; i < input.length; i++){
+            outPut = outPut + input[i].name + '：' + input[i].val + '  ';
+        }
+
+        return outPut;
+    }
+});
+
+appModule.filter('orderBgImg', function () {
+    return function (input) {
+        if (3 == input){
+            return 'complete.jpg';
+        }else {
+            return 'empty.jpg';
+        }
+    }
+});

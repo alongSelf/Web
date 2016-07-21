@@ -1,47 +1,48 @@
 <!--购物车-->
 <ion-view view-title="购物车">
     <ion-content scroll="true" lazy-scroll>
-        <div class="carbox" ng-if="showCarInfo">
-            <table id="cartTable">
-                <thead>
-                <tr>
-                    <th>商品</th>
-                    <th>单价</th>
-                    <th width="150px">数量</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="item in itemInCar">
-                    <td class="goods">
-                        <span ui-sref="tabs.cariteminfo({itemID: [[item.id]]})">[[item.name | clipStr]]</span>
-                        <span style="color: #adadad" ng-if="item.spec">[[item.specStr]]</span>
-                    </td>
-                    <td class="price">
-                        [[item.price | currency:'￥']]
-                    </td>
-                    <td class="count">
-                        <select ng-model="item.num" ng-change="numChange(item.carID, item.num)" style="width: 100%">
+
+        <div style="border-bottom:#000000 solid 1px; display:block;" ng-repeat="item in itemInCar">
+            <div class="row">
+                <div class="col col-50" ui-sref="tabs.cariteminfo({itemID: [[item.id]]})">
+                    <img ng-src="uploads/[[item.img]]"
+                         style="width: 50px; height: 50px; border-radius:10px; float: left">
+                    <span>
+                        [[item.name | clipStr]]
+                    </span>
+                    <br>
+                    <span style="color: #adadad; font-size:10px;">
+                        [[item.spec | specToStr]]
+                    </span>
+                </div>
+                <div class="col">
+                    <span >数量：
+                        <select ng-model="item.num"
+                                ng-change="numChange(item.carID, item.num)">
                             <option ng-repeat="num in itemNums" ng-selected="num == item.num" id="[[num]]">[[num]]</option>
                         </select>
-                    <td class="operation" ng-click="delete(item.carID)">
-                       <i class="ion-trash-a" ></i>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <div class="foot" id="foot">
-                <div class="fr">合计：<span class="priceTotal">[[priceTotal | currency:'￥']]</span></div>
+                    </span>
+                    <br>
+                    <span>
+                        单价：[[item.price | currency:'￥']]
+                    </span>
+                </div>
+                <div class="col col-10" style="height: 100%">
+                    <img ng-src="resources/views/sysimg/Delete.png"
+                         style="width: 30px; height: 30px; border-radius:50%; padding-top: 10px;"
+                         ng-click="delete(item.carID)">
+                </div>
             </div>
         </div>
 
+        <div class="foot" id="foot" ng-if="showCarInfo">
+            <div class="fr">合计：<span class="priceTotal">[[priceTotal | currency:'￥']]</span></div>
+        </div>
         <div style="width: 100%; height: 100%" ng-if="!showCarInfo">
             <img style="width: 100%; height: 100%" ng-src="resources/views/sysimg/emptycar.png"/>
         </div>
 
     </ion-content>
-
     <ion-footer-bar ng-if="showCarInfo">
         <button class="button button-balanced ion-bag" style="width: 49%;" ng-click="checkout()">
             结算
@@ -50,5 +51,4 @@
             清空
         </button>
     </ion-footer-bar>
-
 </ion-view>

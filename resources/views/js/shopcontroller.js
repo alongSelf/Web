@@ -245,6 +245,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         info.carID = uuid();
         info.id = $scope.itemInfo.id;
         info.name = $scope.itemInfo.name;
+        info.img = $scope.itemInfo.indeximg;
         info.spec = $scope.PopData.itemSpec;
         info.specStr = $scope.PopData.itemSpecStr;
         info.num = $scope.PopData.chooseNum;//这个是字符串......

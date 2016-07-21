@@ -133,6 +133,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('tabs.orderiteminfo', {
+            url: "/orderiteminfo/:itemID",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/iteminfo.html",
+                    controller: 'iteminfoController'
+                }
+            }
+        })
         .state('tabs.car', {
             cache: false,
             url: "/car",
