@@ -163,4 +163,53 @@ class OrderController extends CommController
 
         return rtnMsg(0, $order);
     }
+
+    public function cancelOrder()
+    {
+        $user = session('user');
+        $orderID = Input::get('id');
+
+        $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 0)->first();
+        if (!$order){
+            return rtnMsg(1, '未找到该订单!');
+        }
+
+        $order->status = 4;
+        $res = $order->update();
+        if ($res) {
+            return rtnMsg(0, '订单已取消!');
+        } else {
+            return rtnMsg(1, '订单取消失败，请稍后重试！');
+        }
+    }
+
+    public function getOrder($id)
+    {
+        $user = session('user');
+        $order = Orders::where('id', $id)->where('userid', $user['id'])->first();
+        if (!$order){
+            return rtnMsg(1, '无效的订单!');
+        }
+
+        $iteminfo = json_decode($order['iteminfo']);
+        for ($j = 0; $j < count($iteminfo->items); $j++){
+            $id = $iteminfo->items[$j]->id;
+            $shop = ShopItem::find($id);
+            $iteminfo->items[$j]->name = $shop['name'];
+            $iteminfo->items[$j]->img = $shop['indeximg'];
+        }
+        $order['iteminfo'] = json_encode($iteminfo);
+
+        return rtnMsg(0, $order);
+    }
+
+    public function evaluate()
+    {
+        $user = session('user');
+        $orderID = Input::get('id');
+        $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 2)->first();
+        if (!$order){
+            return rtnMsg(1, '无效的订单!');
+        }
+    }
 }

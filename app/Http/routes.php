@@ -49,6 +49,9 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::get('getChildArea/{parentNo}', 'UserController@getChildArea');
 
     Route::get('showOrder/{page}/{type}', 'OrderController@showOrder');
+    Route::post('cancelOrder', 'OrderController@cancelOrder');
+    Route::post('evaluate', 'OrderController@evaluate');
+    Route::get('getOrder/{id}', 'OrderController@getOrder');
 });
 
 

@@ -361,7 +361,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 }]);
 
 //购物车
-appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', '$http', '$location', '$ionicLoading', function($scope, $cookieStore, $ionicPopup, carItemNumFactory, $http, $location, $ionicLoading){
+appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', '$http', '$location', '$ionicLoading', '$state', function($scope, $cookieStore, $ionicPopup, carItemNumFactory, $http, $location, $ionicLoading, $state){
     var carInfo = $cookieStore.get('car');
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
@@ -412,6 +412,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
                 $scope.showCarInfo = false;
 
                 //开始支付
+                $state.go('tabs.carPay', {orderID: orderID});
             }
             $ionicLoading.hide();
         });

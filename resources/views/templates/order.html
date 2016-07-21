@@ -73,12 +73,12 @@
                 </div>
             </div>
             <div ng-if="data.status == 0" style="text-align: right; padding-right: 10%">
-                    <span>
+                    <button style="color: red" ng-click="Cancel(data.id)">
                         取消
-                    </span>
-                    <span>
+                    </button>
+                    <button style="color: blue;" ng-click="Pay(data.id)">
                         付款
-                    </span>
+                    </button>
             </div>
             <div style="text-align: right; padding-right: 10%"
                  ng-if="data.status == 1">
@@ -86,9 +86,15 @@
             </div>
             <div style="text-align: right; padding-right: 10%"
                  ng-if="data.status == 2">
-                评价
+                <button style="color: red" ng-click="Evaluate(data.id)">
+                    评价
+                </button>
             </div>
         </div>
-        <ion-infinite-scroll ng-if="moreData" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+
+        <ion-infinite-scroll ng-if="moreData && 0 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moreData && 1 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moreData && 2 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moreData && 4 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 </ion-view>

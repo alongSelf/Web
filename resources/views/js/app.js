@@ -142,6 +142,24 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 }
             }
         })
+        .state('tabs.orderPay', {
+            url: "/orderPay/:orderID",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/pay.html",
+                    controller: 'payController'
+                }
+            }
+        })
+        .state('tabs.evaluate', {
+            url: "/evaluate/:orderID",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/evaluate.html",
+                    controller: 'evController'
+                }
+            }
+        })
         .state('tabs.car', {
             cache: false,
             url: "/car",
@@ -158,6 +176,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 'car-tab': {
                     templateUrl: "resources/views/templates/iteminfo.html",
                     controller: 'iteminfoController'
+                }
+            }
+        })
+        .state('tabs.carPay', {
+            url: "/carPay/:orderID",
+            views: {
+                'car-tab': {
+                    templateUrl: "resources/views/templates/pay.html",
+                    controller: 'payController'
                 }
             }
         })

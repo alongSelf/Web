@@ -3,7 +3,7 @@
 var appModule = angular.module('ionicApp.paycontroller', ['ionicApp.server']);
 
 //订单
-appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', function($scope, $ionicHistory, $http){
+appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$state', function($scope, $ionicHistory, $http, $ionicLoading, $state){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
@@ -33,11 +33,6 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.pages.evaluate.page = 0;
         $scope.pages.evaluate.data = [];
 
-        $scope.pages.service = [];
-        $scope.pages.service.more = true;
-        $scope.pages.service.page = 0;
-        $scope.pages.service.data = [];
-
         $scope.pages.delivery = [];
         $scope.pages.delivery.more = true;
         $scope.pages.delivery.page = 0;
@@ -53,7 +48,6 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.subBar.allClicked = true;
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = false;
-        $scope.subBar.serviceClicked = false;
         $scope.subBar.deliveryClicked = false;
 
         $scope.type = 0;
@@ -65,7 +59,6 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.subBar.allClicked = false;
         $scope.subBar.payClicked = true;
         $scope.subBar.evaluateClicked = false;
-        $scope.subBar.serviceClicked = false;
         $scope.subBar.deliveryClicked = false;
 
         $scope.type = 1;
@@ -77,7 +70,6 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.subBar.allClicked = false;
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = true;
-        $scope.subBar.serviceClicked = false;
         $scope.subBar.deliveryClicked = false;
 
         $scope.type = 2;
@@ -85,25 +77,10 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $scope.curPage = $scope.pages.evaluate.page;
         $scope.showData = $scope.pages.evaluate.data;
     };
-    $scope.serviceOrder = function () {
-        $scope.subBar.allClicked = false;
-        $scope.subBar.payClicked = false;
-        $scope.subBar.evaluateClicked = false;
-        $scope.subBar.serviceClicked = true;
-        $scope.subBar.deliveryClicked = false;
-
-        $scope.type = 3;
-        $scope.moreData = $scope.pages.service.more;
-        $scope.curPage = $scope.pages.service.page;
-        $scope.showData = $scope.pages.service.data;
-
-        dd($scope.pages.service.data);
-    };
     $scope.deliveryOrder = function () {
         $scope.subBar.allClicked = false;
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = false;
-        $scope.subBar.serviceClicked = false;
         $scope.subBar.deliveryClicked = true;
 
         $scope.type = 4;
@@ -149,18 +126,6 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
             }else {
 
             }
-        }else if(3 == type){
-            if('more' == setType){
-                $scope.pages.service.more = val;
-            }else if('page' == setType){
-                $scope.pages.service.page = val;
-            }else if ('data' == setType){
-                if(0 != val.length){
-                    $scope.pages.service.data = $scope.pages.service.data.concat(val);
-                }
-            }else {
-
-            }
         }else if(4 == type){
             if('more' == setType){
                 $scope.pages.delivery.more = val;
@@ -182,7 +147,6 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
         $http.get("showOrder/" + $scope.curPage + '/'+ $scope.type)
             .success(
                 function (data, status, header, config) {
-                    dd(data);
                     if (0 != data.status){
                         layer.msg(data.msg);
                     }else {
@@ -213,4 +177,79 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', fun
     };
 
     $scope.loadMore();
+
+    $scope.Cancel = function (orderID) {
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("cancelOrder",{'_token':$('meta[name="_token"]').attr('content'),'id':orderID},function(data){
+            if (0 == data.status) {
+                $scope.pages.all.data = removeOrder(orderID, $scope.pages.all.data);
+                $scope.pages.pay.data = removeOrder(orderID, $scope.pages.pay.data);
+                if (0 == $scope.type){
+                    $scope.showData = $scope.pages.all.data;
+                }else {
+                    $scope.showData = $scope.pages.pay.data;
+                }
+            }else {
+                layer.msg(data.msg);
+            }
+            $ionicLoading.hide();
+        });
+    };
+    $scope.Pay = function (orderID) {
+        $state.go('tabs.orderPay', {orderID: orderID});
+    };
+    $scope.Evaluate = function (orderID) {
+        $state.go('tabs.evaluate', {orderID: orderID});
+    };
+}]);
+
+function getOrder($scope, $http)
+{
+    $http.get("getOrder/" + $scope.orderID)
+        .success(
+            function (data, status, header, config) {
+                if (0 != data.status){
+                    layer.msg(data.msg);
+                }else {
+                    $scope.Order = data.msg;
+                }
+            }
+        ).error(
+        function (data) {
+            onError(data);
+        }
+    );
+}
+
+appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$ionicPopup', '$stateParams', function($scope, $ionicHistory, $http, $ionicLoading, $ionicPopup, $stateParams){
+    $scope.orderID = $stateParams.orderID;
+    var bPopuped = false;
+    $scope.goBack = function () {
+        if (bPopuped){
+            return;
+        }
+        bPopuped = true;
+        var confirmPopup = $ionicPopup.confirm({
+            title: '',
+            template: '确定放弃本次支付?'
+        });
+        confirmPopup.then(function(res) {
+            bPopuped = false;
+            if(res) {
+                $ionicHistory.goBack();
+            }
+        });
+    };
+    getOrder($scope, $http);
+}]);
+
+appModule.controller('evController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$stateParams', function($scope, $ionicHistory, $http, $ionicLoading, $stateParams){
+    $scope.orderID = $stateParams.orderID;
+    $scope.goBack = function () {       
+        $ionicHistory.goBack();
+    };
+
+    getOrder($scope, $http);
 }]);

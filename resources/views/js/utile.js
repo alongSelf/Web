@@ -207,3 +207,14 @@ function errLogin()
 {
     return 10000;
 }
+
+function removeOrder(orderID, orderList) {
+    for (var i = 0; i < orderList.length; i++){
+        if (orderList[i].id == orderID){
+            orderList.splice(i, 1);
+            break;
+        }
+    }
+
+    return orderList;
+}
