@@ -64,7 +64,7 @@ appModule.controller('uerCenterController', ['$scope', '$http', '$ionicLoading',
             }
 
             $ionicLoading.show({
-                template: 'Working...'
+                template: getLoading()
             });
             $.post("register",{'_token':$('meta[name="_token"]').attr('content'),'phone':phone, 'psw':pwd},function(data){
                 layer.msg(data.msg);
@@ -75,7 +75,7 @@ appModule.controller('uerCenterController', ['$scope', '$http', '$ionicLoading',
             });
         }else {
             $ionicLoading.show({
-                template: 'Working...'
+                template: getLoading()
             });
             $.post("logIn",{'_token':$('meta[name="_token"]').attr('content'),'phone':phone, 'psw':pwd},function(data){
                 if (0 != data.status){
@@ -156,7 +156,7 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
             return;
         }
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("bindAccount",{'_token':$('meta[name="_token"]').attr('content'),'phone':phone, 'psw':psw1},function(data){
             if (0 != data.status){
@@ -223,7 +223,7 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
         info.weixnumber = $scope.userInfo.weixnumber;
 
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("changeUserInfo",{'_token':$('meta[name="_token"]').attr('content'),'data':JSON.stringify(info)},function(data){
             if (0 != data.status){
@@ -384,7 +384,7 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', '$io
         addrs.addr = addrInfo;
 
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("saveAddr",{'_token':$('meta[name="_token"]').attr('content'),'data':JSON.stringify(addrs)},function(data){
             if (0 != data.status){
@@ -400,7 +400,7 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', '$io
 
     $scope.delAddr = function (addrID) {
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("delAddr",{'_token':$('meta[name="_token"]').attr('content'),'id':addrID},function(data){
             if (0 != data.status){
@@ -439,7 +439,7 @@ appModule.controller('changePSWController', ['$scope', '$ionicHistory', '$http',
         }
 
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("changePsw",{'_token':$('meta[name="_token"]').attr('content'),'old':oldpsw, 'new':psw1},function(data){
             if (0 != data.status){

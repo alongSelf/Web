@@ -99,4 +99,8 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::get('user/search/{val}/{type}', 'UserController@search');
     
     Route::get('order/index', 'OrderController@index');
+    Route::get('order/searchByStatues/{type}', 'OrderController@searchByStatues');
+    Route::get('order/searchByOrderID/{orderID}', 'OrderController@searchByOrderID');
+    Route::get('order/searchByUserID/{userID}', 'OrderController@searchByUserID');
+    Route::get('order/show/{orderID}', 'OrderController@show');
 });

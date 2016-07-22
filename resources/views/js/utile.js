@@ -233,3 +233,7 @@ function arrangeLogistics(logistics) {
 
     return logistics;
 }
+
+function getLoading() {
+    return 'Loading...';
+}

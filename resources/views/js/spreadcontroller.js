@@ -146,7 +146,7 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$
                         }
                         else{
                             $ionicLoading.show({
-                                template: 'Working...'
+                                template: getLoading()
                             });
                             $.post("cash",{'_token':$('meta[name="_token"]').attr('content'),'money':$scope.cashMoney.money},function(data){
                                 if (0 == data.status) {
@@ -285,7 +285,7 @@ appModule.controller('agentController', ['$scope', '$ionicHistory', '$http', '$i
         }
 
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("agent",{'_token':$('meta[name="_token"]').attr('content'),'name':$scope.agent.name, 'phone':$scope.agent.phone},function(data){
             if (0 != data.status){

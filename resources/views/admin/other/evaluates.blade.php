@@ -55,7 +55,7 @@
                                 ?>
                             </td>
                             <td>
-                                <a href="javascript:;" onclick="delEvaluates({{$ev->id}})">删除</a>
+                                <!--<a href="javascript:;" onclick="delEvaluates({{$ev->id}})">删除</a>-->
                                 <a href="javascript:;" onclick="disPlayEvaluates({{$ev->id}})">显示/隐藏</a>
                             </td>
                         </tr>

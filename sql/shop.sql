@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-22 18:26:13
+Date: 2016-07-23 01:22:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -243,6 +243,7 @@ CREATE TABLE `orders` (
   `price` int(11) DEFAULT '0' COMMENT '总价',
   `iteminfo` text COMMENT '购买的物品信息',
   `logistics` text COMMENT '物流信息',
+  `addr` text COMMENT '收货地址',
   `createtime` bigint(20) unsigned DEFAULT '0' COMMENT '创建时间',
   `status` int(11) DEFAULT '0' COMMENT '0待付款  1待发货 2待评价 3完成 4取消',
   PRIMARY KEY (`id`)
@@ -251,10 +252,10 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('5790443c39705', '10008', '0', null, '731', '{\"price\":731,\"items\":[{\"id\":23,\"name\":\"工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1\",\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '{\"ShipperCode\":\"ZTO\",\"LogisticCode\":\"407324997603\"}', '1469072444', '2');
-INSERT INTO `orders` VALUES ('57904445b9bee', '10008', '1', null, '800', '{\"price\":800,\"items\":[{\"id\":25,\"name\":\"工口小学生3\",\"spec\":[],\"num\":1,\"price\":800}]}', null, '1469072453', '1');
-INSERT INTO `orders` VALUES ('5790444d534ff', '10008', '2', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', null, '1469072461', '2');
-INSERT INTO `orders` VALUES ('5790445430bd8', '10008', '1', null, '500', '{\"price\":500,\"items\":[{\"id\":27,\"name\":\"小学生5\",\"spec\":[],\"num\":1,\"price\":500}]}', null, '1469072468', '3');
+INSERT INTO `orders` VALUES ('5790443c39705', '10008', '0', null, '731', '{\"price\":731,\"items\":[{\"id\":23,\"name\":\"工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1\",\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '{\"ShipperCode\":\"ZTO\",\"LogisticCode\":\"407324997603\"}', null, '1469072444', '2');
+INSERT INTO `orders` VALUES ('57904445b9bee', '10008', '1', null, '800', '{\"price\":800,\"items\":[{\"id\":25,\"name\":\"工口小学生3\",\"spec\":[],\"num\":1,\"price\":800}]}', null, null, '1469072453', '1');
+INSERT INTO `orders` VALUES ('5790444d534ff', '10008', '2', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', null, null, '1469072461', '2');
+INSERT INTO `orders` VALUES ('5790445430bd8', '10008', '1', null, '500', '{\"price\":500,\"items\":[{\"id\":27,\"name\":\"小学生5\",\"spec\":[],\"num\":1,\"price\":500}]}', null, null, '1469072468', '3');
 
 -- ----------------------------
 -- Table structure for `shippercode`

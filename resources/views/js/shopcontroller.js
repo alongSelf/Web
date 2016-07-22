@@ -379,7 +379,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
         }
 
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
 
         //订单信息生成

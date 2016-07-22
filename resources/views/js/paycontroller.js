@@ -180,7 +180,7 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
 
     $scope.Cancel = function (orderID) {
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("cancelOrder",{'_token':$('meta[name="_token"]').attr('content'),'id':orderID},function(data){
             if (0 == data.status) {
@@ -267,7 +267,7 @@ appModule.controller('evController', ['$scope', '$ionicHistory', '$http', '$ioni
         }
 
         $ionicLoading.show({
-            template: 'Working...'
+            template: getLoading()
         });
         $.post("evaluate",{'_token':$('meta[name="_token"]').attr('content'),
             'itemid':itemID, 'star':pf, 'evaluate':ev, 'orderid':orderID},function(data){
@@ -304,6 +304,9 @@ appModule.controller('logisticsController', ['$scope', '$ionicHistory', '$http',
     };
 
     $scope.showLogistics = false;
+    $ionicLoading.show({
+        template: getLoading()
+    });
     $http.get("logistics/" + $scope.orderID)
         .success(
             function (data, status, header, config) {
@@ -318,6 +321,8 @@ appModule.controller('logisticsController', ['$scope', '$ionicHistory', '$http',
         ).error(
         function (data) {
             onError(data);
+        }).finally(function () {
+            $ionicLoading.hide();
         }
     );
 }]);
