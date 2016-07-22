@@ -17,7 +17,7 @@ class ShopController extends CommController
 
     public function getConfig()
     {
-        $config = Config::all()[0];
+        $config = Config::select('title', 'contactus', 'agent', 'spread', 'openspread', 'cash')->first();
         return $config;
     }
 

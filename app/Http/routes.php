@@ -51,7 +51,8 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::get('showOrder/{page}/{type}', 'OrderController@showOrder');
     Route::post('cancelOrder', 'OrderController@cancelOrder');
     Route::post('evaluate', 'OrderController@evaluate');
-    Route::get('getOrder/{id}', 'OrderController@getOrder');
+    Route::get('getOrder/{id}/{showEv}', 'OrderController@getOrder');
+    Route::get('logistics/{orderID}', 'OrderController@logistics');
 });
 
 
@@ -94,5 +95,8 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/changeContactus', 'OtherController@changeContactus');
 
     Route::get('user/index', 'UserController@index');
+    Route::any('user/resetPSW', 'UserController@resetPSW');
+    Route::get('user/search/{val}/{type}', 'UserController@search');
+    
     Route::get('order/index', 'OrderController@index');
 });

@@ -218,3 +218,18 @@ function removeOrder(orderID, orderList) {
 
     return orderList;
 }
+
+function arrangeLogistics(logistics) {
+    var lastDate = '';
+    for (var i = 0; i < logistics.length; i++){
+        var dateList = logistics[i].AcceptTime.split(" ");
+        if (lastDate != dateList[0]){
+            lastDate = dateList[0]
+        }
+        else {
+            logistics[i].AcceptTime = dateList[1];
+        }
+    }
+
+    return logistics;
+}

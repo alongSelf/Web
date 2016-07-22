@@ -1,0 +1,35 @@
+<ion-view view-title="物流信息">
+    <ion-nav-bar class="bar-dark" align-title="center">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-reply" ng-click="goBack()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content scroll="true">
+        <div ng-if="showLogistics">
+            <div class="row item">
+                <div class="col">
+                    <span>承运公司：</span>
+                    <br>
+                    <span style="padding-left:10px; font-size:10px; color:#999">[[Logistics.shipperName]]</span>
+                </div>
+                <div class="col">
+                    <span>运单编号：</span>
+                    <br>
+                    <span style="padding-left:10px; font-size:10px; color:#999">[[Logistics.logisticCode]]</span>
+                </div>
+            </div>
+
+            <div ng-repeat="info in Logistics.logistics">
+                <div class="row item">
+                    <div class="col">
+                        <div style="float: right">[[info.AcceptTime]]</div>
+                    </div>
+                    <div class="col">
+                        <div style="white-space:normal">[[info.AcceptStation]]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

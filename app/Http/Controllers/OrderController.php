@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\http\Model\Config;
+use App\http\Model\Evaluates;
 use App\http\Model\Orders;
+use App\http\Model\ShipperCode;
 use App\http\Model\ShopItem;
 use App\Http\Model\Users;
 use Illuminate\Support\Facades\Input;
@@ -171,7 +173,7 @@ class OrderController extends CommController
 
         $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 0)->first();
         if (!$order){
-            return rtnMsg(1, '未找到该订单!');
+            return rtnMsg(1, '无效的订单!');
         }
 
         $order->status = 4;
@@ -183,7 +185,7 @@ class OrderController extends CommController
         }
     }
 
-    public function getOrder($id)
+    public function getOrder($id, $showEv)
     {
         $user = session('user');
         $order = Orders::where('id', $id)->where('userid', $user['id'])->first();
@@ -193,8 +195,20 @@ class OrderController extends CommController
 
         $iteminfo = json_decode($order['iteminfo']);
         for ($j = 0; $j < count($iteminfo->items); $j++){
-            $id = $iteminfo->items[$j]->id;
-            $shop = ShopItem::find($id);
+            $itemID = $iteminfo->items[$j]->id;
+            $shop = ShopItem::find($itemID);
+            if (1 == $showEv){
+                $evaluates = Evaluates::where('itemid', $itemID)->where('orderid', $id)->first();
+                if ($evaluates){
+                    $iteminfo->items[$j]->showEV = false;
+                }else{
+                    $iteminfo->items[$j]->showEV = true;
+                }
+                $iteminfo->items[$j]->index = $j;
+                $iteminfo->items[$j]->pfid = 'ps'.$j;
+                $iteminfo->items[$j]->evid = 'ev'.$j;
+            }
+            
             $iteminfo->items[$j]->name = $shop['name'];
             $iteminfo->items[$j]->img = $shop['indeximg'];
         }
@@ -206,10 +220,101 @@ class OrderController extends CommController
     public function evaluate()
     {
         $user = session('user');
-        $orderID = Input::get('id');
-        $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 2)->first();
+        $input = Input::except('_token');
+        if (!is_numeric($input['star']) ||
+            !is_numeric($input['itemid'])){
+            return rtnMsg(1, '参数错误');
+        }
+        if ($input['star'] < 1 || $input['star'] > 5){
+            return rtnMsg(1, '参数错误!');
+        }
+        if ($this->checkStr($input['evaluate'])){
+            return rtnMsg(1, '参数错误!');
+        }
+        
+        $order = Orders::where('id', $input['orderid'])->where('userid', $user['id'])->where('status', 2)->first();
         if (!$order){
             return rtnMsg(1, '无效的订单!');
         }
+
+        $orderItem = json_decode($order['iteminfo']);
+        $itemCount = count($orderItem->items);
+
+        $evaluate = Evaluates::where('itemid', $input['itemid'])->where('orderid', $input['orderid'])
+            ->where('userid', $user['id'])->first();
+        if ($evaluate){
+            return rtnMsg(1, '已经评价过了!');
+        }
+
+        $user = Users::find($user['id']);
+        $input['userid'] = $user['id'];
+        $input['nickname'] = $user['nickname'];
+        $input['createtime'] = time();
+        $input['display'] = 0;
+
+        $re = Evaluates::create($input);
+        if ($re){
+            $evCount = Evaluates::where('orderid', $input['orderid'])
+                ->where('userid', $user['id'])->count();
+            if ($evCount >= $itemCount){
+                $order = Orders::find($input['orderid']);
+                $order->status = 3;
+                $order->update();
+            }
+            return rtnMsg(0, '评价成功');
+        }else{
+            return rtnMsg(1, '评价失败，请稍候再试!');
+        }
+    }
+
+    public function logistics($orderID)
+    {
+        $config = Config::select('logistics')->first();
+        if (!$config){
+            return rtnMsg(1, '查询失败，请稍候再试!');
+        }
+
+        $user = session('user');
+        $order = Orders::select('logistics')->where('id', $orderID)->where('userid', $user['id'])->first();
+        if (!$order){
+            return rtnMsg(1, '查询失败，请稍候再试!');
+        }
+        $userLogistics = json_decode($order['logistics']);
+        if (!$userLogistics){
+            return rtnMsg(1, '查询失败，请稍候再试!');
+        }
+        $shipperCode = ShipperCode::select('name')->where('code', $userLogistics->ShipperCode)->first();
+        if (!$shipperCode){
+            return rtnMsg(1, '查询失败，请稍候再试!');
+        }
+
+        $logisticsInfo = json_decode($config['logistics']);
+
+        $requestData = array();
+        $requestData['OrderCode'] = $orderID;
+        $requestData['ShipperCode'] = $userLogistics->ShipperCode;
+        $requestData['LogisticCode'] = $userLogistics->LogisticCode;
+
+        $requestData= json_encode($requestData);
+
+        $datas = array(
+            'EBusinessID' => $logisticsInfo->userID,
+            'RequestType' => '1002',
+            'RequestData' => urlencode($requestData) ,
+            'DataType' => '2',
+        );
+        $datas['DataSign'] = kn_encrypt($requestData, $logisticsInfo->apiKey);
+
+        $result = sendPost('http://api.kdniao.cc/api/exrecommend/', $datas);
+        if (!$result){
+            return rtnMsg(1, '查询失败，请稍候再试!');
+        }
+
+        $rtnMsg = array();
+        $rtnMsg['logistics'] = json_decode($result)->Traces;
+        $rtnMsg['shipperName'] = $shipperCode['name'];
+        $rtnMsg['logisticCode'] = $userLogistics->LogisticCode;
+
+        return rtnMsg(0, $rtnMsg);
     }
 }

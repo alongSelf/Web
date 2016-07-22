@@ -203,16 +203,20 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     $scope.Evaluate = function (orderID) {
         $state.go('tabs.evaluate', {orderID: orderID});
     };
+    $scope.Logistics = function (orderID) {
+        $state.go('tabs.logistics', {orderID: orderID});
+    };
 }]);
 
-function getOrder($scope, $http)
+function getOrder($scope, $http, showEv)
 {
-    $http.get("getOrder/" + $scope.orderID)
+    $http.get("getOrder/" + $scope.orderID + '/' + showEv)
         .success(
             function (data, status, header, config) {
                 if (0 != data.status){
                     layer.msg(data.msg);
                 }else {
+                    data.msg.iteminfo = JSON.parse(data.msg.iteminfo);
                     $scope.Order = data.msg;
                 }
             }
@@ -223,6 +227,7 @@ function getOrder($scope, $http)
     );
 }
 
+//支付
 appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$ionicPopup', '$stateParams', function($scope, $ionicHistory, $http, $ionicLoading, $ionicPopup, $stateParams){
     $scope.orderID = $stateParams.orderID;
     var bPopuped = false;
@@ -242,14 +247,77 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
             }
         });
     };
-    getOrder($scope, $http);
+    //getOrder($scope, $http, 0);
 }]);
 
+//评论
 appModule.controller('evController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$stateParams', function($scope, $ionicHistory, $http, $ionicLoading, $stateParams){
     $scope.orderID = $stateParams.orderID;
     $scope.goBack = function () {       
         $ionicHistory.goBack();
     };
 
-    getOrder($scope, $http);
+    getOrder($scope, $http, 1);    
+    $scope.Evaluate = function (orderID, itemID, index) {
+        var pf = document.getElementById('ps'+index).value;
+        var ev = document.getElementById('ev'+index).value;
+        if (checkStr(ev)){
+            layer.msg('请勿输入特殊字符!');
+            return;
+        }
+
+        $ionicLoading.show({
+            template: 'Working...'
+        });
+        $.post("evaluate",{'_token':$('meta[name="_token"]').attr('content'),
+            'itemid':itemID, 'star':pf, 'evaluate':ev, 'orderid':orderID},function(data){
+            if (0 == data.status) {
+                for (var i = 0; i < $scope.Order.iteminfo.items.length; i++){
+                    if ($scope.Order.iteminfo.items[i].id == itemID){
+                        $scope.Order.iteminfo.items[i].showEV = false;
+                        break;
+                    }
+                }
+                var bRet = true;
+                for (var i = 0; i < $scope.Order.iteminfo.items.length; i++){
+                    if ($scope.Order.iteminfo.items[i].showEV){
+                        bRet = false;
+                        break;
+                    }
+                }
+                if (bRet){
+                    $scope.goBack();
+                }
+            }else {
+                layer.msg(data.msg);
+            }
+            $ionicLoading.hide();
+        });
+    };
+}]);
+
+//物流
+appModule.controller('logisticsController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$stateParams', function($scope, $ionicHistory, $http, $ionicLoading, $stateParams){
+    $scope.orderID = $stateParams.orderID;
+    $scope.goBack = function () {
+        $ionicHistory.goBack();
+    };
+
+    $scope.showLogistics = false;
+    $http.get("logistics/" + $scope.orderID)
+        .success(
+            function (data, status, header, config) {
+                if (0 != data.status){
+                    layer.msg(data.msg);
+                }else {
+                    data.msg.logistics = arrangeLogistics(data.msg.logistics);
+                    $scope.Logistics = data.msg;
+                    $scope.showLogistics = true;
+                }
+            }
+        ).error(
+        function (data) {
+            onError(data);
+        }
+    );
 }]);

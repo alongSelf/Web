@@ -91,6 +91,8 @@ appModule.filter('toChannelImg', function () {
         if (2 == input){
             return 'zfb.jpg';
         }
+
+        return 'empty.jpg';
     }
 });
 

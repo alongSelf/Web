@@ -90,6 +90,7 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
         })
         .state('tabs.order', {
             url: "/order",
+            cache: false,
             views: {
                 'user-tab': {
                     templateUrl: "resources/views/templates/order.html",
@@ -157,6 +158,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
                 'user-tab': {
                     templateUrl: "resources/views/templates/evaluate.html",
                     controller: 'evController'
+                }
+            }
+        })
+        .state('tabs.logistics', {
+            url: "/logistics/:orderID",
+            views: {
+                'user-tab': {
+                    templateUrl: "resources/views/templates/logistics.html",
+                    controller: 'logisticsController'
                 }
             }
         })

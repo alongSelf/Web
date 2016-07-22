@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-21 17:45:54
+Date: 2016-07-22 18:26:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -129,13 +129,14 @@ CREATE TABLE `config` (
   `commission1` float DEFAULT '0' COMMENT '第一级上级每100元提成多少分',
   `commission2` float DEFAULT '0' COMMENT '第二级上级每100元提成多少分',
   `commission3` float DEFAULT '0' COMMENT '第三级上级每100元提成多少分',
+  `logistics` text COMMENT '物流',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('3', '微信商城', '<p style=\"text-align: center;\"><iframe class=\"ueditor_baidumap\" src=\"http://localhost/resources/views/ueditor/dialogs/map/show.html#center=104.27459,30.575241&zoom=13&width=530&height=340&markers=104.255474,30.574433&markerStyles=l,A\" frameborder=\"0\" width=\"534\" height=\"344\"></iframe></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 客服小妹电话xxxxxx</p>', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1');
+INSERT INTO `config` VALUES ('3', '微信商城', '<p style=\"text-align: center;\"><iframe class=\"ueditor_baidumap\" src=\"http://localhost/resources/views/ueditor/dialogs/map/show.html#center=104.27459,30.575241&zoom=13&width=530&height=340&markers=104.255474,30.574433&markerStyles=l,A\" frameborder=\"0\" width=\"534\" height=\"344\"></iframe></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 客服小妹电话xxxxxx</p>', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -148,11 +149,11 @@ CREATE TABLE `evaluates` (
   `evaluate` varchar(255) DEFAULT '' COMMENT '评价',
   `userid` int(11) DEFAULT '0',
   `nickname` varchar(255) DEFAULT '' COMMENT '昵称',
-  `orderid` int(11) DEFAULT '0' COMMENT '订单ID',
+  `orderid` varchar(64) DEFAULT '0' COMMENT '订单ID',
   `createtime` bigint(20) DEFAULT '0',
   `display` tinyint(4) DEFAULT '0' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of evaluates
@@ -241,6 +242,7 @@ CREATE TABLE `orders` (
   `payinfo` text COMMENT '第3方支付信息',
   `price` int(11) DEFAULT '0' COMMENT '总价',
   `iteminfo` text COMMENT '购买的物品信息',
+  `logistics` text COMMENT '物流信息',
   `createtime` bigint(20) unsigned DEFAULT '0' COMMENT '创建时间',
   `status` int(11) DEFAULT '0' COMMENT '0待付款  1待发货 2待评价 3完成 4取消',
   PRIMARY KEY (`id`)
@@ -249,10 +251,127 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('5790443c39705', '10008', '0', null, '731', '{\"price\":731,\"items\":[{\"id\":23,\"name\":\"工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1\",\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '1469072444', '0');
-INSERT INTO `orders` VALUES ('57904445b9bee', '10008', '1', null, '800', '{\"price\":800,\"items\":[{\"id\":25,\"name\":\"工口小学生3\",\"spec\":[],\"num\":1,\"price\":800}]}', '1469072453', '1');
-INSERT INTO `orders` VALUES ('5790444d534ff', '10008', '2', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '1469072461', '2');
-INSERT INTO `orders` VALUES ('5790445430bd8', '10008', '1', null, '500', '{\"price\":500,\"items\":[{\"id\":27,\"name\":\"小学生5\",\"spec\":[],\"num\":1,\"price\":500}]}', '1469072468', '3');
+INSERT INTO `orders` VALUES ('5790443c39705', '10008', '0', null, '731', '{\"price\":731,\"items\":[{\"id\":23,\"name\":\"工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1\",\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '{\"ShipperCode\":\"ZTO\",\"LogisticCode\":\"407324997603\"}', '1469072444', '2');
+INSERT INTO `orders` VALUES ('57904445b9bee', '10008', '1', null, '800', '{\"price\":800,\"items\":[{\"id\":25,\"name\":\"工口小学生3\",\"spec\":[],\"num\":1,\"price\":800}]}', null, '1469072453', '1');
+INSERT INTO `orders` VALUES ('5790444d534ff', '10008', '2', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', null, '1469072461', '2');
+INSERT INTO `orders` VALUES ('5790445430bd8', '10008', '1', null, '500', '{\"price\":500,\"items\":[{\"id\":27,\"name\":\"小学生5\",\"spec\":[],\"num\":1,\"price\":500}]}', null, '1469072468', '3');
+
+-- ----------------------------
+-- Table structure for `shippercode`
+-- ----------------------------
+DROP TABLE IF EXISTS `shippercode`;
+CREATE TABLE `shippercode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(32) DEFAULT '',
+  `name` varchar(64) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of shippercode
+-- ----------------------------
+INSERT INTO `shippercode` VALUES ('1', '编码', '名称');
+INSERT INTO `shippercode` VALUES ('2', 'AJ', '安捷快递');
+INSERT INTO `shippercode` VALUES ('3', 'ANE', '安能物流');
+INSERT INTO `shippercode` VALUES ('4', 'AXD', '安信达快递');
+INSERT INTO `shippercode` VALUES ('5', 'BQXHM', '北青小红帽');
+INSERT INTO `shippercode` VALUES ('6', 'BFDF', '百福东方');
+INSERT INTO `shippercode` VALUES ('7', 'BTWL', '百世快运');
+INSERT INTO `shippercode` VALUES ('8', 'CCES', 'CCES快递');
+INSERT INTO `shippercode` VALUES ('9', 'CITY100', '城市100');
+INSERT INTO `shippercode` VALUES ('10', 'COE', 'COE东方快递');
+INSERT INTO `shippercode` VALUES ('11', 'CSCY', '长沙创一');
+INSERT INTO `shippercode` VALUES ('12', 'DBL', '德邦');
+INSERT INTO `shippercode` VALUES ('13', 'DSWL', 'D速物流');
+INSERT INTO `shippercode` VALUES ('14', 'DTWL', '大田物流');
+INSERT INTO `shippercode` VALUES ('15', 'EMS', 'EMS');
+INSERT INTO `shippercode` VALUES ('16', 'FAST', '快捷速递');
+INSERT INTO `shippercode` VALUES ('17', 'FEDEX', 'FEDEX联邦(国内件）');
+INSERT INTO `shippercode` VALUES ('18', 'FEDEX_GJ', 'FEDEX联邦(国际件）');
+INSERT INTO `shippercode` VALUES ('19', 'FKD', '飞康达');
+INSERT INTO `shippercode` VALUES ('20', 'GDEMS', '广东邮政');
+INSERT INTO `shippercode` VALUES ('21', 'GSD', '共速达');
+INSERT INTO `shippercode` VALUES ('22', 'GTO', '国通快递');
+INSERT INTO `shippercode` VALUES ('23', 'GTSD', '高铁速递');
+INSERT INTO `shippercode` VALUES ('24', 'HFWL', '汇丰物流');
+INSERT INTO `shippercode` VALUES ('25', 'HHTT', '天天快递');
+INSERT INTO `shippercode` VALUES ('26', 'HLWL', '恒路物流');
+INSERT INTO `shippercode` VALUES ('27', 'HOAU', '天地华宇');
+INSERT INTO `shippercode` VALUES ('28', 'hq568', '华强物流');
+INSERT INTO `shippercode` VALUES ('29', 'HTKY', '百世快递');
+INSERT INTO `shippercode` VALUES ('30', 'HXLWL', '华夏龙物流');
+INSERT INTO `shippercode` VALUES ('31', 'HYLSD', '好来运快递');
+INSERT INTO `shippercode` VALUES ('32', 'JGSD', '京广速递');
+INSERT INTO `shippercode` VALUES ('33', 'JIUYE', '九曳供应链');
+INSERT INTO `shippercode` VALUES ('34', 'JJKY', '佳吉快运');
+INSERT INTO `shippercode` VALUES ('35', 'JLDT', '嘉里物流');
+INSERT INTO `shippercode` VALUES ('36', 'JTKD', '捷特快递');
+INSERT INTO `shippercode` VALUES ('37', 'JXD', '急先达');
+INSERT INTO `shippercode` VALUES ('38', 'JYKD', '晋越快递');
+INSERT INTO `shippercode` VALUES ('39', 'JYM', '加运美');
+INSERT INTO `shippercode` VALUES ('40', 'JYWL', '佳怡物流');
+INSERT INTO `shippercode` VALUES ('41', 'KYWL', '跨越物流');
+INSERT INTO `shippercode` VALUES ('42', 'LB', '龙邦快递');
+INSERT INTO `shippercode` VALUES ('43', 'LHT', '联昊通速递');
+INSERT INTO `shippercode` VALUES ('44', 'MHKD', '民航快递');
+INSERT INTO `shippercode` VALUES ('45', 'MLWL', '明亮物流');
+INSERT INTO `shippercode` VALUES ('46', 'NEDA', '能达速递');
+INSERT INTO `shippercode` VALUES ('47', 'PADTF', '平安达腾飞快递');
+INSERT INTO `shippercode` VALUES ('48', 'QCKD', '全晨快递');
+INSERT INTO `shippercode` VALUES ('49', 'QFKD', '全峰快递');
+INSERT INTO `shippercode` VALUES ('50', 'QRT', '全日通快递');
+INSERT INTO `shippercode` VALUES ('51', 'RFD', '如风达');
+INSERT INTO `shippercode` VALUES ('52', 'SAD', '赛澳递');
+INSERT INTO `shippercode` VALUES ('53', 'SAWL', '圣安物流');
+INSERT INTO `shippercode` VALUES ('54', 'SBWL', '盛邦物流');
+INSERT INTO `shippercode` VALUES ('55', 'SDWL', '上大物流');
+INSERT INTO `shippercode` VALUES ('56', 'SF', '顺丰快递');
+INSERT INTO `shippercode` VALUES ('57', 'SFWL', '盛丰物流');
+INSERT INTO `shippercode` VALUES ('58', 'SHWL', '盛辉物流');
+INSERT INTO `shippercode` VALUES ('59', 'ST', '速通物流');
+INSERT INTO `shippercode` VALUES ('60', 'STO', '申通快递');
+INSERT INTO `shippercode` VALUES ('61', 'STWL', '速腾快递');
+INSERT INTO `shippercode` VALUES ('62', 'SURE', '速尔快递');
+INSERT INTO `shippercode` VALUES ('63', 'TSSTO', '唐山申通');
+INSERT INTO `shippercode` VALUES ('64', 'UAPEX', '全一快递');
+INSERT INTO `shippercode` VALUES ('65', 'UC', '优速快递');
+INSERT INTO `shippercode` VALUES ('66', 'WJWL', '万家物流');
+INSERT INTO `shippercode` VALUES ('67', 'WXWL', '万象物流');
+INSERT INTO `shippercode` VALUES ('68', 'XBWL', '新邦物流');
+INSERT INTO `shippercode` VALUES ('69', 'XFEX', '信丰快递');
+INSERT INTO `shippercode` VALUES ('70', 'XYT', '希优特');
+INSERT INTO `shippercode` VALUES ('71', 'XJ', '新杰物流');
+INSERT INTO `shippercode` VALUES ('72', 'YADEX', '源安达快递');
+INSERT INTO `shippercode` VALUES ('73', 'YCWL', '远成物流');
+INSERT INTO `shippercode` VALUES ('74', 'YD', '韵达快递');
+INSERT INTO `shippercode` VALUES ('75', 'YDH', '义达国际物流');
+INSERT INTO `shippercode` VALUES ('76', 'YFEX', '越丰物流');
+INSERT INTO `shippercode` VALUES ('77', 'YFHEX', '原飞航物流');
+INSERT INTO `shippercode` VALUES ('78', 'YFSD', '亚风快递');
+INSERT INTO `shippercode` VALUES ('79', 'YTKD', '运通快递');
+INSERT INTO `shippercode` VALUES ('80', 'YTO', '圆通速递');
+INSERT INTO `shippercode` VALUES ('81', 'YXKD', '亿翔快递');
+INSERT INTO `shippercode` VALUES ('82', 'YZPY', '邮政平邮/小包');
+INSERT INTO `shippercode` VALUES ('83', 'ZENY', '增益快递');
+INSERT INTO `shippercode` VALUES ('84', 'ZHQKD', '汇强快递');
+INSERT INTO `shippercode` VALUES ('85', 'ZJS', '宅急送');
+INSERT INTO `shippercode` VALUES ('86', 'ZTE', '众通快递');
+INSERT INTO `shippercode` VALUES ('87', 'ZTKY', '中铁快运');
+INSERT INTO `shippercode` VALUES ('88', 'ZTO', '中通速递');
+INSERT INTO `shippercode` VALUES ('89', 'ZTWL', '中铁物流');
+INSERT INTO `shippercode` VALUES ('90', 'ZYWL', '中邮物流');
+INSERT INTO `shippercode` VALUES ('91', 'AMAZON', '亚马逊物流');
+INSERT INTO `shippercode` VALUES ('92', 'SUBIDA', '速必达物流');
+INSERT INTO `shippercode` VALUES ('93', 'RFEX', '瑞丰速递');
+INSERT INTO `shippercode` VALUES ('94', 'QUICK', '快客快递');
+INSERT INTO `shippercode` VALUES ('95', 'CJKD', '城际快递');
+INSERT INTO `shippercode` VALUES ('96', 'CNPEX', 'CNPEX中邮快递');
+INSERT INTO `shippercode` VALUES ('97', 'HOTSCM', '鸿桥供应链');
+INSERT INTO `shippercode` VALUES ('98', 'HPTEX', '海派通物流公司');
+INSERT INTO `shippercode` VALUES ('99', 'AYCA', '澳邮专线');
+INSERT INTO `shippercode` VALUES ('100', 'PANEX', '泛捷快递');
+INSERT INTO `shippercode` VALUES ('101', 'PCA', 'PCA Express');
+INSERT INTO `shippercode` VALUES ('102', 'UEQ', 'UEQ Express');
 
 -- ----------------------------
 -- Table structure for `shopitem`
@@ -281,7 +400,7 @@ CREATE TABLE `shopitem` (
 -- Records of shopitem
 -- ----------------------------
 INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373151119198.jpg\" title=\"1468373151119198.jpg\" alt=\"042.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '5785988b297a4.jpg', '[\"578598976b747.jpg\",\"578598978b63c.jpg\",\"57859897a583a.jpg\"]', '{\"尺寸\":[{\"val\":\"M\",\"price\":151},{\"val\":\"L\",\"price\":200}],\"颜色\":[{\"val\":\"红\"},{\"val\":\"黄\"},{\"val\":\"蓝\"}]}', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '451', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '', '1', '1', '0');
+INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '451', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373099115764.jpg\" title=\"1468373099115764.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '578598558e8bc.jpg', '[\"57859865a4892.jpg\",\"57859865cb5af.jpg\",\"57859865e6365.jpg\"]', '', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373050130881.jpg\" title=\"1468373050130881.jpg\" alt=\"007.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '57859826496c5.jpg', '[\"578598315cda2.jpg\",\"578598317ae21.jpg\",\"5785983195407.jpg\"]', '', '1', '1', '1');
 INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373016112859.jpg\" title=\"1468373016112859.jpg\" alt=\"16773985_980x1200_292.jpg\"/></p><p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373021811450.jpg\" title=\"1468373021811450.jpg\" alt=\"16773989_980x1200_292.jpg\"/></p><p><br/></p>', '小学生5', '580', '500', '-1', '1001', '57859803dc314.jpg', '[\"5785980f443af.jpg\",\"5785980f60423.jpg\",\"5785980f7fb47.jpg\"]', '', '0', '1', '1');
@@ -3667,7 +3786,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('10008', '', '张三', 'deficon.jpg', '毛毛虫', '279133271@qq.com.cc', '15882276717', 'eyJpdiI6IlROYlhVNFpJbVJLd3VrdDFtVmlBcEE9PSIsInZhbHVlIjoic3NLXC81dklrbVRqXC9NSWNON2xIUEpRPT0iLCJtYWMiOiIzYzZhOGQ5YzNiMjM1ZjcyMjVlNmZlMzJiOWJmNDRjZTgxMmIyODkyODY0Njg2MDIwODNlY2E2YmVmZTY5ZjJlIn0=', '574126165', '279133271', '300', '8480', '2', '1469007170');
+INSERT INTO `users` VALUES ('10008', '', '张三', 'deficon.jpg', '毛毛虫', '279133271@qq.com.cc', '15882276717', 'eyJpdiI6IkVtdmRkZVpTOEZEcUx6c0xWOXYzWUE9PSIsInZhbHVlIjoiTzEwNXlScTYydkNJakJ1NmRUR3ZPdz09IiwibWFjIjoiNGE0MDRlN2Y4NTNmMmZiZjUzZDQ4ODU1OWM4MDVlMDM0MTVkNDJiMzJhNmQyMmViNWVhZTEwNmQ1MzA3ZGFmZCJ9', '574126165', '279133271', '300', '8480', '3', '1469182515');
 INSERT INTO `users` VALUES ('10009', '', '', 'deficon.jpg', '大毛毛虫1', '', '', '', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10010', '', '', 'deficon.jpg', '', '', '15882276841', 'eyJpdiI6IlBLWTEzSGFKK0FLTTkwaXNKeHFVS2c9PSIsInZhbHVlIjoib0h3amJJR2dPYW5PZ0tKdFNZXC9FQnc9PSIsIm1hYyI6ImM2YWMzOTczZDBjZTgyOGQwNjBiNGVkMTc5MWM2MTNlZTE4NGZiYTU0MzY3MGNlMTU1M2NmYmU3MjVmMzRiYTkifQ==', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10011', '', '', 'deficon.jpg', '', '', '15882276718', 'eyJpdiI6IlwvZjRqOXEzM2E0MlE2K09Cd1VlRUJBPT0iLCJ2YWx1ZSI6IkU3WUZHVFNQVkcwTnZiKytNMFwvZkR3PT0iLCJtYWMiOiJiNTlhODYxYzY5NDUxM2RhNDhhNTE1NjY3YTY5Y2ZkMDZlMjZjNzJmOWNlN2QyMDRiZGFiNWYzOTUwZjRmMTZiIn0=', '', null, '0', '0', '0', '0');
