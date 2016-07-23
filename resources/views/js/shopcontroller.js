@@ -64,8 +64,27 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 
     //页面切换后轮播可以继续
     $scope.$on('$ionicView.beforeEnter',function(){
-        $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();
-    })
+        $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();        
+    });
+
+    $scope.setSlideImgStyle = function () {
+        $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
+        var per = ($scope.innerWidth - 10)/840;
+        $scope.slideImgH = parseInt(465 * per) + 'px';
+
+        $scope.slideImgStyle = {
+            "width" : "100%",
+            "height" : $scope.slideImgH,
+            "border-radius" : "10px"
+        };
+    };
+    $scope.setSlideImgStyle();
+
+    $(window).resize(function(){
+         $scope.$apply(function(){
+             $scope.setSlideImgStyle();
+        });
+    });
 }]);
 
 //分类商品展示
@@ -138,7 +157,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
 }]);
 
 //物品详情
-appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$ionicPopover', '$cookieStore', 'carItemNumFactory', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $ionicPopover, $cookieStore, carItemNumFactory){
+appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHistory', '$ionicSlideBoxDelegate', '$http', '$sce', '$ionicPopover', '$cookieStore', 'carItemNumFactory', '$window', function($scope, $stateParams, $ionicHistory, $ionicSlideBoxDelegate, $http, $sce, $ionicPopover, $cookieStore, carItemNumFactory, $window){
     $scope.itemID = $stateParams.itemID;
     $scope.itemInfo = [];
     $scope.slideImg = [];
@@ -358,6 +377,25 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     };
 
     $scope.loadMore();
+
+    $scope.setSlideImgStyle = function () {
+        $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
+        var per = ($scope.innerWidth - 10)/840;
+        $scope.slideImgH = parseInt(465 * per) + 'px';
+
+        $scope.slideImgStyle = {
+            "width" : "100%",
+            "height" : $scope.slideImgH,
+            "border-radius" : "10px"
+        };
+    };
+    $scope.setSlideImgStyle();
+
+    $(window).resize(function(){
+        $scope.$apply(function(){
+            $scope.setSlideImgStyle();
+        });
+    });
 }]);
 
 //购物车

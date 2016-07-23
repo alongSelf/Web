@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-23 01:22:11
+Date: 2016-07-23 21:28:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -153,7 +153,7 @@ CREATE TABLE `evaluates` (
   `createtime` bigint(20) DEFAULT '0',
   `display` tinyint(4) DEFAULT '0' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of evaluates
@@ -390,21 +390,17 @@ CREATE TABLE `shopitem` (
   `buynum` int(11) DEFAULT NULL COMMENT '购买人数',
   `indeximg` varchar(255) DEFAULT '' COMMENT '主图片',
   `showimg` text COMMENT '展示图片',
+  `activity` tinyint(4) DEFAULT '0' COMMENT '活动 主页轮播显示 0不显示 1显示',
+  `activityimg` varchar(255) DEFAULT '' COMMENT '主页轮播图片',
   `spec` text COMMENT '规格',
-  `activity` tinyint(4) DEFAULT '0' COMMENT '活动',
   `showindex` tinyint(4) DEFAULT '0' COMMENT '是否在主页显示',
   `display` tinyint(4) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
-INSERT INTO `shopitem` VALUES ('23', '工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1', '17', '<p style=\"text-align: center;\"><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373151119198.jpg\" title=\"1468373151119198.jpg\" alt=\"042.jpg\"/></p>', '工口小学生1', '130', '120', '-1', '13', '5785988b297a4.jpg', '[\"578598976b747.jpg\",\"578598978b63c.jpg\",\"57859897a583a.jpg\"]', '{\"尺寸\":[{\"val\":\"M\",\"price\":151},{\"val\":\"L\",\"price\":200}],\"颜色\":[{\"val\":\"红\"},{\"val\":\"黄\"},{\"val\":\"蓝\"}]}', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('24', '工口小学生2', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373123325148.jpg\" title=\"1468373123325148.jpg\" alt=\"029.jpg\"/></p>', '工口小学生2', '456', '451', '-1', '45', '5785987352542.jpg', '[\"5785987c56357.jpg\",\"5785987c79384.jpg\",\"5785987c98e91.jpg\"]', '', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('25', '工口小学生3', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373099115764.jpg\" title=\"1468373099115764.jpg\" alt=\"022.jpg\"/></p>', '工口小学生3', '892', '800', '-1', '1', '578598558e8bc.jpg', '[\"57859865a4892.jpg\",\"57859865cb5af.jpg\",\"57859865e6365.jpg\"]', '', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('26', '工口小学生4', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373050130881.jpg\" title=\"1468373050130881.jpg\" alt=\"007.jpg\"/></p>', '工口小学生4', '800', '580', '-1', '678', '57859826496c5.jpg', '[\"578598315cda2.jpg\",\"578598317ae21.jpg\",\"5785983195407.jpg\"]', '', '1', '1', '1');
-INSERT INTO `shopitem` VALUES ('27', '小学生5', '17', '<p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373016112859.jpg\" title=\"1468373016112859.jpg\" alt=\"16773985_980x1200_292.jpg\"/></p><p><img style=\"width: 100%\" src=\"/ueditor/php/upload/image/20160713/1468373021811450.jpg\" title=\"1468373021811450.jpg\" alt=\"16773989_980x1200_292.jpg\"/></p><p><br/></p>', '小学生5', '580', '500', '-1', '1001', '57859803dc314.jpg', '[\"5785980f443af.jpg\",\"5785980f60423.jpg\",\"5785980f7fb47.jpg\"]', '', '0', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_prov_city_area`

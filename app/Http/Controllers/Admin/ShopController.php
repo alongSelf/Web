@@ -125,6 +125,9 @@ class ShopController extends CommonController
                 if ($data->indeximg != $input['indeximg']){
                     $this->removeFile($data->indeximg);
                 }
+                if ($data->activityimg != $input['activityimg']){
+                    $this->removeFile($data->activityimg);
+                }
 
                 if ($data->showimg != $input['showimg']){
                     $oldShowImg =  json_decode($data->showimg);

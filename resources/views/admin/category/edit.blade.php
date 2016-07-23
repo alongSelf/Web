@@ -52,10 +52,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>图标：</th>
+                    <th><i class="require">*</i>图标(40x40)：</th>
                     <td>
                         <input type="text" size="50" name="img" value="{{$data->img}}">
-                        <input id="file_upload" name="file_upload" type="file" multiple="true">
+                        <input id="file_upload" name="file_upload" type="file" multiple="false">
                         <img alt="" id="category_img" style="width: 100px; height:100px; border-radius:50%;" src="{{asset('uploads/'.$data->img)}}">
                     </td>
                 </tr>

@@ -59,10 +59,10 @@
             </tr>
 
             <tr>
-                <th><i class="require">*</i>主图片：</th>
+                <th><i class="require">*</i>封面图(160x160)：</th>
                 <td>
                     <input type="text" size="50" name="indeximg" hidden="true" value="{{$item->indeximg}}">
-                    <input id="indeximg_upload" name="indeximg_upload" type="file" multiple="true">
+                    <input id="indeximg_upload" name="indeximg_upload" type="file" multiple="false">
                     <img alt="" id="index_img" style="max-width: 350px; max-height:200px;" src="{{asset('uploads/'.$item->indeximg)}}">
                 </td>
             </tr>
@@ -104,6 +104,14 @@
                 </td>
             </tr>
             <tr>
+                <th><i class="require">*</i>首页轮播图(840x465)：</th>
+                <td>
+                    <input type="text" size="50" name="activityimg" hidden="true" value="">
+                    <input id="activityimg_upload" name="activityimg_upload" type="file" multiple="false">
+                    <img alt="" id="activity_img" style="max-width: 350px; max-height:200px;" src="{{asset('uploads/'.$item->activityimg)}}">
+                </td>
+            </tr>
+            <tr>
                 <th><i class="require">*</i>首页显示(0否1是)：</th>
                 <td>
                     <input type="number" name="showindex" value="{{$item->showindex}}">
@@ -123,7 +131,7 @@
             </tr>
 
             <tr>
-                <th><i class="require">*</i>物品详情轮播图(至少3张)：</th>
+                <th><i class="require">*</i>物品详情轮播图(至少3张 840x465)：</th>
                 <td id="showimgtd">
                     <input type="text" id="showimg" name="showimg" value="{{$item->showimg}}" hidden="true">
                     <input id="showimg_upload" name="showimg_upload" type="file" multiple="true">
@@ -232,6 +240,23 @@
             'onUploadSuccess' : function(file, data, response) {
                 $('input[name=indeximg]').val(data);
                 $('#index_img').attr('src','/uploads/'+data);
+            }
+        });
+    });
+
+    //首页轮播
+    $(function() {
+        $('#activityimg_upload').uploadify({
+            'buttonText' : '图片上传',
+            'formData'     : {
+                'timestamp' : '<?php echo $timestamp;?>',
+                '_token'     : "{{csrf_token()}}"
+            },
+            'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
+            'uploader' : "{{url('admin/upload')}}",
+            'onUploadSuccess' : function(file, data, response) {
+                $('input[name=activityimg]').val(data);
+                $('#activity_img').attr('src','/uploads/'+data);
             }
         });
     });

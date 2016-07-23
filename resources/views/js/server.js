@@ -7,9 +7,6 @@ appModule.run(['$rootScope', '$http', '$cookieStore', '$window', function($rootS
     $rootScope.config = [];
     $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
 
-    var clientWidth = $window.innerWidth;
-    $rootScope.clientWidth = clientWidth > 850 ? 850: clientWidth;
-
     $http.get("getConfig")
         .success(
             function(data, status, header, config){
@@ -32,4 +29,3 @@ appModule.factory('carItemNumFactory', ['$rootScope', function ($rootScope) {
 
     return factory;
 }]);
-
