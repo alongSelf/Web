@@ -272,8 +272,7 @@
                 return [{
                     src: data['url'],
                     _src: data['url'],
-                    width: data['width'] || '',
-                    height: data['height'] || '',
+                    width: '100%',
                     border: data['border'] || '',
                     floatStyle: data['align'] || '',
                     vspace: data['vhSpace'] || '',
