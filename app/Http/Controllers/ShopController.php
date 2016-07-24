@@ -33,15 +33,13 @@ class ShopController extends CommController
             return;
         }
         
-        return ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'indeximg')->
-            where('showindex', 1)->where('stock', '<>', 0)->where('display', 1)->
+        return ShopItem::where('showindex', 1)->where('stock', '<>', 0)->where('display', 1)->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
     }
 
     public function indexItem()
     {
-        $activityItem = ShopItem::select('id', 'name', 'prime_price', 'cur_price', 'buynum', 'activityimg')->
-            where('activity', 1)->where('stock', '<>', 0)->where('display', 1)->get();
+        $activityItem = ShopItem::where('activity', 1)->where('stock', '<>', 0)->where('display', 1)->get();
         $homeItem = $this->getIndexItem(0);
         $notice = Notice::orderBy('id','desc')->first();
 

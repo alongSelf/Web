@@ -6,32 +6,31 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div>
-            <!-- 轮播  至少要3个图...不然ion-slide-box 有 bug... -->
-            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
-                           delegate-handle="delegateHandler">
-                <ion-slide ng-repeat="actItem in activityItem">
-                    <img ng-src="uploads/[[actItem.activityimg]]"
-                         ui-sref="tabs.iteminfo({itemID: [[actItem.id]]})"
-                         ng-style="slideImgStyle">
-                </ion-slide>
-            </ion-slide-box>
 
-            <div class="row" ng-if="Notice">
-                <div class="col col-10">
-                    <img ng-src="resources/views/sysimg/ic_scroll_bar.gif" style="width: 100%; height: 100%;">
-                </div>
-                <div class="col col-90">
-                    <marquee direction="left" scrollamount="3">
-                        [[Notice]]
-                    </marquee>
-                </div>
+        <!-- 轮播  至少要3个图...不然ion-slide-box 有 bug... -->
+        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
+                       delegate-handle="delegateHandler">
+            <ion-slide ng-repeat="actItem in activityItem">
+                <img ng-src="uploads/[[actItem.activityimg]]"
+                     ui-sref="tabs.iteminfo({itemID: [[actItem.id]]})"
+                     ng-style="slideImgStyle">
+            </ion-slide>
+        </ion-slide-box>
+
+        <div class="row" ng-if="Notice">
+            <div class="col col-10">
+                <img ng-src="resources/views/sysimg/ic_scroll_bar.gif" style="width: 100%; height: 100%;">
+            </div>
+            <div class="col col-90">
+                <marquee direction="left" scrollamount="3">
+                    [[Notice]]
+                </marquee>
             </div>
         </div>
 
         <!--首页物品展示-->
-        <div class="row row-wrap" ng-repeat="items in itemList">
-            <div style="text-align: center" class="col col-[[perItemWidth]]" ng-repeat="item in items">
+        <div class="row row-wrap">
+            <div style="text-align: center" class="col" ng-repeat="item in itemList">
                 <span>
                     <img style="height: 160px; width: 160px; border-radius:10px"
                          ui-sref="tabs.iteminfo({itemID: [[item.id]]})"

@@ -35,52 +35,50 @@
         </ion-refresher>
 
         <!--物品信息-->
-        <div>
-            <div ng-if="showInfo">
-                <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
-                               delegate-handle="delegateHandler">
-                    <ion-slide ng-repeat="strImg in slideImg">
-                        <img ng-src="uploads/[[strImg]]"
-                             ng-style="slideImgStyle">
-                    </ion-slide>
-                </ion-slide-box>
-                <div>
-                    <p style="font-weight:bold" ng-bind-html="itemInfo.describe | toHtml | trustHtml"></p>
-                </div>
-                <div>
+        <div ng-if="showInfo">
+            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 pager-click="go(index)"
+                           delegate-handle="delegateHandler">
+                <ion-slide ng-repeat="strImg in slideImg">
+                    <img ng-src="uploads/[[strImg]]"
+                         ng-style="slideImgStyle">
+                </ion-slide>
+            </ion-slide-box>
+            <div>
+                <p style="font-weight:bold" ng-bind-html="itemInfo.describe | toHtml | trustHtml"></p>
+            </div>
+            <div>
                     <span>
                         <em style="color: red" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
                         <em style="text-decoration:line-through; color: #adadad; font-size:10px" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
                         <em style="padding-left:10px; font-size:10px; color:#999">&nbsp&nbsp[[buynum]]</em>
                     </span>
-                </div>
+            </div>
+        </div>
+
+        <div ng-if="showCon">
+            <img ng-src="uploads/[[itemInfo.content]]" style="width: 100%;">
+        </div>
+
+        <div ng-if="showEv">
+            <div ng-if="Evaluates">
+                <label style="border-bottom:#000000 solid 1px; display:block" ng-repeat="Evaluate in Evaluates">
+                    <div class="row" style="padding-top: 0px">
+                        <div class="col col-66">
+                            <em>[[Evaluate.nickname | cutUserName]]</em>
+                            <em style="font-size:5px; padding-left: 5px">[[Evaluate.createtime | toStrDate]]</em>
+                        </div>
+                        <div class="col">
+                            <img ng-src="resources/views/sysimg/star.jpg" style="width: 15px; height: 15px" ng-repeat="i in Evaluate.star">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="font-size:10px; white-space:normal">[[Evaluate.evaluate | toHtml | trustHtml]]</div>
+                    </div>
+                </label>
             </div>
 
-            <div ng-if="showCon" style="text-align: center;">
-                <div ng-bind-html="itemInfo.content | trustHtml"></div>
-            </div>
-
-            <div ng-if="showEv">
-                <div ng-if="Evaluates">
-                    <label style="border-bottom:#000000 solid 1px; display:block" ng-repeat="Evaluate in Evaluates">
-                        <div class="row" style="padding-top: 0px">
-                            <div class="col col-66">
-                                <em>[[Evaluate.nickname | cutUserName]]</em>
-                                <em style="font-size:5px; padding-left: 5px">[[Evaluate.createtime | toStrDate]]</em>
-                            </div>
-                            <div class="col">
-                                <img ng-src="resources/views/sysimg/star.jpg" style="width: 15px; height: 15px" ng-repeat="i in Evaluate.star">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col" style="font-size:10px; white-space:normal">[[Evaluate.evaluate | toHtml | trustHtml]]</div>
-                        </div>
-                    </label>
-                </div>
-
-                <div ng-if="!Evaluates">
-                    <img src="resources/views/sysimg/noevaluates.jpg" style="width: 100%;">
-                </div>
+            <div ng-if="!Evaluates">
+                <img src="resources/views/sysimg/noevaluates.jpg" style="width: 100%;">
             </div>
         </div>
 

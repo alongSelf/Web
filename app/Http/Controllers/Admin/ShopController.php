@@ -61,7 +61,7 @@ class ShopController extends CommonController
         $message = [
             'name.required'=>'物品名称不能为空！',
             'category.required'=>'物品分类不能为空！',
-            'content.required'=>'宝贝详情不能为空！',
+            'content.required'=>'图文详情不能为空！',
             'describe.required'=>'物品文字描述不能为空！',
             'prime_price.required'=>'原价不能为空！',
             'cur_price.required'=>'当前价格不能为空！',
@@ -108,7 +108,7 @@ class ShopController extends CommonController
         $message = [
             'name.required'=>'物品名称不能为空！',
             'category.required'=>'物品分类不能为空！',
-            'content.required'=>'宝贝详情不能为空！',
+            'content.required'=>'图文详情不能为空！',
             'describe.required'=>'物品文字描述不能为空！',
             'prime_price.required'=>'原价不能为空！',
             'cur_price.required'=>'当前价格不能为空！',
@@ -127,6 +127,9 @@ class ShopController extends CommonController
                 }
                 if ($data->activityimg != $input['activityimg']){
                     $this->removeFile($data->activityimg);
+                }
+                if ($data->content != $input['content']){
+                    $this->removeFile($data->content);
                 }
 
                 if ($data->showimg != $input['showimg']){

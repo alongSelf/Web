@@ -8,17 +8,19 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     $scope.itemList = [];
     $scope.Page = 0;
     $scope.moreData = true;
-    $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
     $scope.doRefresh = function () {
         $http.get("indexItem")
             .success(
                 function (data, status, header, config) {
                     $scope.Page = 0;
                     $scope.moreData = true;
+                    $scope.itemList = [];
 
                     $scope.activityItem = data.activityItem;
-                    $scope.itemList = makeItemList(data.homeItem, $scope.innerWidth);
                     $scope.Notice = data.notice.notice;
+                    if (0 != data.homeItem.length){
+                        $scope.itemList = $scope.itemList.concat(data.homeItem);
+                    }
 
                     //更新轮播
                     $ionicSlideBoxDelegate.$getByHandle('delegateHandler').update();
@@ -44,7 +46,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
                     if (0 == data.length){
                         $scope.moreData = false;
                     }else {
-                        appendItemList($scope.itemList, data, $scope.innerWidth);
+                        $scope.itemList = $scope.itemList.concat(data);
                     }
                 }
             ).error(
@@ -69,7 +71,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 
     $scope.setSlideImgStyle = function () {
         $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
-        var per = ($scope.innerWidth - 10)/840;
+        var per = $scope.innerWidth/850;
         $scope.slideImgH = parseInt(465 * per) + 'px';
 
         $scope.slideImgStyle = {
@@ -94,16 +96,17 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     $scope.Page = 0;
     $scope.moreData = true;
     $scope.showBuild = false;
-    $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
 
     $scope.doRefresh = function () {
+        $scope.Page = 0;
         $http.get("categoryInfo/" + $scope.categoryID + '/'+ $scope.Page)
             .success(
                 function(data, status, header, config){
-                    $scope.Page = 0;
                     $scope.moreData = true;
+                    $scope.itemList = [];
 
-                    $scope.itemList = makeItemList(data, $scope.innerWidth);
+
+                    $scope.itemList = $scope.itemList.concat(data);
                     if (0 == $scope.itemList.length){
                         $scope.showBuild = true;
                     }
@@ -131,7 +134,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
                     if (0 == data.length){
                         $scope.moreData = false;
                     }else {
-                        appendItemList($scope.itemList, data, $scope.innerWidth);
+                        $scope.itemList = $scope.itemList.concat(data);
                     }
 
                     if (0 == $scope.itemList.length){
@@ -209,7 +212,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         checkInt(strVal, true);
     };
     //弹出选项
-    $scope.PopData.itemNums = ['1','2','3','4','5','6','7','8','9','10'];
     $scope.popover = $ionicPopover.fromTemplateUrl('resources/views/templates/buyitempopup.html', {
         scope: $scope
     });
@@ -269,6 +271,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         info.specStr = $scope.PopData.itemSpecStr;
         info.num = $scope.PopData.chooseNum;//这个是字符串......
         info.price = $scope.PopData.cur_price;
+        info.unit = $scope.itemInfo.unit;
 
         car.push(info);
         $cookieStore.put("car", car);
@@ -292,7 +295,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             }
         }
 
-        $scope.PopData.chooseNum = $scope.PopData.itemNums[0];
+        $scope.PopData.chooseNum = 1;
     };
 
     $scope.PopData.showPrice = function (key) {
@@ -306,7 +309,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                 }
             }
         }
-    };
+    };    
 
     $scope.index = 0;
     $scope.go = function(index){
@@ -380,7 +383,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
     $scope.setSlideImgStyle = function () {
         $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
-        var per = ($scope.innerWidth - 10)/840;
+        var per = $scope.innerWidth/850;
         $scope.slideImgH = parseInt(465 * per) + 'px';
 
         $scope.slideImgStyle = {
@@ -404,7 +407,6 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
     $scope.showCarInfo = false;
-    $scope.itemNums = ['1','2','3','4','5','6','7','8','9','10'];
 
     if (carInfo && carInfo.length > 0){
         $scope.showCarInfo = true;

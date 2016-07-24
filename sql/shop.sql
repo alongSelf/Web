@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-23 21:28:02
+Date: 2016-07-24 23:57:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -112,7 +112,7 @@ CREATE TABLE `category` (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('17', '工口小学生', '578597fb2813b.jpg', '工口小学生图片', '1');
+INSERT INTO `category` VALUES ('17', '工口小学生', '579394c41225c.jpg', '工口小学生图片', '1');
 
 -- ----------------------------
 -- Table structure for `config`
@@ -136,7 +136,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('3', '微信商城', '<p style=\"text-align: center;\"><iframe class=\"ueditor_baidumap\" src=\"http://localhost/resources/views/ueditor/dialogs/map/show.html#center=104.27459,30.575241&zoom=13&width=530&height=340&markers=104.255474,30.574433&markerStyles=l,A\" frameborder=\"0\" width=\"534\" height=\"344\"></iframe></p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 客服小妹电话xxxxxx</p>', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}');
+INSERT INTO `config` VALUES ('3', '微信商城', '<p style=\"text-align: center;\"><iframe width=\"100%\" height=\"344\" class=\"ueditor_baidumap\" src=\"http://localhost/resources/views/ueditor/dialogs/map/show.html#center=104.071216,30.57603&zoom=13&width=530&height=340&markers=104.071216,30.576279&markerStyles=l,A\" frameborder=\"0\"></iframe></p>', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -153,7 +153,7 @@ CREATE TABLE `evaluates` (
   `createtime` bigint(20) DEFAULT '0',
   `display` tinyint(4) DEFAULT '0' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of evaluates
@@ -163,6 +163,7 @@ INSERT INTO `evaluates` VALUES ('2', '23', '4', '在一个div中嵌入一个与�
 INSERT INTO `evaluates` VALUES ('3', '23', '3', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫3', '0', '1403058804', '0');
 INSERT INTO `evaluates` VALUES ('4', '23', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫4', '0', '1404058804', '0');
 INSERT INTO `evaluates` VALUES ('5', '23', '1', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫5', '0', '1403068804', '0');
+INSERT INTO `evaluates` VALUES ('6', '23', '4', '', '10008', '毛毛虫', '5790443c39705', '1469351196', '0');
 
 -- ----------------------------
 -- Table structure for `follower`
@@ -256,6 +257,7 @@ INSERT INTO `orders` VALUES ('5790443c39705', '10008', '0', null, '731', '{\"pri
 INSERT INTO `orders` VALUES ('57904445b9bee', '10008', '1', null, '800', '{\"price\":800,\"items\":[{\"id\":25,\"name\":\"工口小学生3\",\"spec\":[],\"num\":1,\"price\":800}]}', null, null, '1469072453', '1');
 INSERT INTO `orders` VALUES ('5790444d534ff', '10008', '2', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', null, null, '1469072461', '2');
 INSERT INTO `orders` VALUES ('5790445430bd8', '10008', '1', null, '500', '{\"price\":500,\"items\":[{\"id\":27,\"name\":\"小学生5\",\"spec\":[],\"num\":1,\"price\":500}]}', null, null, '1469072468', '3');
+INSERT INTO `orders` VALUES ('579485640068a', '10008', '0', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"spec\":[],\"num\":1,\"price\":580}]}', null, null, '1469351268', '4');
 
 -- ----------------------------
 -- Table structure for `shippercode`
@@ -381,6 +383,7 @@ DROP TABLE IF EXISTS `shopitem`;
 CREATE TABLE `shopitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT '' COMMENT '名称',
+  `unit` varchar(32) DEFAULT '' COMMENT '单位',
   `category` int(11) DEFAULT '0' COMMENT '类别ID',
   `content` text COMMENT '商品图集',
   `describe` varchar(255) DEFAULT NULL COMMENT '描述',

@@ -13,8 +13,8 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div class="row row-wrap" ng-repeat="items in itemList">
-            <div style="text-align: center" class="col col-[[perItemWidth]]" ng-repeat="item in items">
+        <div class="row row-wrap">
+            <div style="text-align: center" class="col" ng-repeat="item in itemList">
                 <span>
                     <img style="height: 160px; width: 160px; border-radius:10px"
                          ui-sref="tabs.finditeminfo({itemID: [[item.id]]})"

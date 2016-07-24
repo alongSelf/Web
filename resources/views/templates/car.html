@@ -16,12 +16,10 @@
                     </span>
                 </div>
                 <div class="col">
-                    <span >数量：
-                        <select ng-model="item.num"
-                                ng-change="numChange(item.carID, item.num)">
-                            <option ng-repeat="num in itemNums" ng-selected="num == item.num" id="[[num]]">[[num]]</option>
-                        </select>
-                    </span>
+                    <em >数量：</em>
+                    <input ng-model="item.num" style="width: 80px" ng-change="numChange(item.carID, item.num)" placeholder="请输入数量" value="PopData.chooseNum">
+                    </input>
+                    <em>[[item.unit]]</em>
                     <br>
                     <span>
                         单价：[[item.price | currency:'￥']]

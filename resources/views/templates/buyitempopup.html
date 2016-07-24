@@ -11,17 +11,18 @@
             <div ng-if="itemSpec">
                 <div ng-repeat="(key,value) in itemSpec">
                     <span>[[key]]:</span>
-                    <select style="width: 95%" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
+                    <select style="width: 80px" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
                         <option ng-repeat="spec in value">[[spec.val]]</option>
                     </select>
+                    <div style="height: 10px"></div>
                 </div>
             </div>
 
             <div>
-                <span>数量:</span>
-                <select ng-model="PopData.chooseNum" style="width: 95%">
-                    <option id="[[num]]" ng-repeat="num in PopData.itemNums">[[num]]</option>
-                </select>
+                <em>数量:</em>
+                <input style="width: 80px" ng-model="PopData.chooseNum" ng-change="checkInput(PopData.chooseNum)" placeholder="请输入数量" value="PopData.chooseNum">
+                </input>
+                <em>[[itemInfo.unit]]</em>
             </div>
         </div>
     </ion-content>

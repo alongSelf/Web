@@ -39,7 +39,7 @@
             <table class="add_tab">
                 <tbody>
                 <tr>
-                    <th width="70"><i class="require">*</i>分类：</th>
+                    <th width="250"><i class="require">*</i>分类：</th>
                     <td>
                         <select style="width: 20%" name="category">
                             @foreach($cate as $c)
@@ -57,9 +57,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <th><i class="require">*</i>售卖单位：</th>
+                    <td>
+                        <input type="text" name="unit" value="">
+                    </td>
+                </tr>
+                <tr>
                     <th><i class="require">*</i>封面图(160x160)：</th>
                     <td>
-                        <input type="text" size="50" name="indeximg" hidden="true" value="">
+                        <input type="text" size="50" name="indeximg" value="">
                         <input id="indeximg_upload" name="indeximg_upload" type="file" multiple="false">
                         <img alt="" id="index_img" style="max-width: 350px; max-height:200px;" src="">
                     </td>
@@ -102,9 +108,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>首页轮播图(840x465)：</th>
+                    <th><i class="require">*</i>首页轮播图(850x465)：</th>
                     <td>
-                        <input type="text" size="50" name="activityimg" hidden="true" value="">
+                        <input type="text" size="50" name="activityimg" value="">
                         <input id="activityimg_upload" name="activityimg_upload" type="file" multiple="false">
                         <img alt="" id="activity_img" style="max-width: 350px; max-height:200px;" src="">
                     </td>
@@ -129,29 +135,19 @@
                 </tr>
 
                 <tr>
-                    <th><i class="require">*</i>物品详情轮播图(至少3张 840x465)：</th>
+                    <th><i class="require">*</i>物品详情轮播图(至少3张 850x465)：</th>
                     <td id="showimgtd">
-                        <input type="text" id="showimg" name="showimg" value="" hidden="true">
+                        <input type="text" id="showimg" name="showimg" value=""  hidden="true">
                         <input id="showimg_upload" name="showimg_upload" type="file" multiple="true">
                     </td>
                 </tr>
 
                 <tr>
-                    <th><i class="require">*</i>宝贝详情(图片加上style="width: 100%"):</th>
+                    <th><i class="require">*</i>图文详情(850X):</th>
                     <td>
-                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.config.js')}}"></script>
-                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.all.min.js')}}"> </script>
-                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/lang/zh-cn/zh-cn.js')}}"></script>
-                        <script id="editor" name="content" type="text/plain" style="width:860px;height:500px;"></script>
-                        <script type="text/javascript">
-                            var ue = UE.getEditor('editor');
-                        </script>
-                        <style>
-                            .edui-default{line-height: 28px;}
-                            div.edui-combox-body,div.edui-button-body,div.edui-splitbutton-body
-                            {overflow: hidden; height:20px;}
-                            div.edui-box{overflow: hidden; height:22px;}
-                        </style>
+                        <input type="text" size="50" name="content" value="">
+                        <input id="content_upload" name="content_upload" type="file" multiple="false">
+                        <img alt="" id="content_img" style="max-width: 850px;" src="">
                     </td>
                 </tr>
 
@@ -240,6 +236,23 @@
 
             showimg.value = JSON.stringify(allImg);
         }
+
+        //图文详情
+        $(function() {
+            $('#content_upload').uploadify({
+                'buttonText' : '图片上传',
+                'formData'     : {
+                    'timestamp' : '<?php echo $timestamp;?>',
+                    '_token'     : "{{csrf_token()}}"
+                },
+                'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
+                'uploader' : "{{url('admin/upload')}}",
+                'onUploadSuccess' : function(file, data, response) {
+                    $('input[name=content]').val(data);
+                    $('#content_img').attr('src','/uploads/'+data);
+                }
+            });
+        });
 
         function showimg_total(obj) {
             var inputVal = obj.value;

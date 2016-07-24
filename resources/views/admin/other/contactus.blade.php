@@ -37,9 +37,7 @@
                         <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.config.js')}}"></script>
                         <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.all.min.js')}}"> </script>
                         <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/lang/zh-cn/zh-cn.js')}}"></script>
-                        <script id="editor" name="contactus" type="text/plain" style="width:860px;height:500px;">
-                            {!! $config->contactus !!}
-                        </script>
+                        <script id="editor" name="contactus" type="text/plain" style="width:860px;height:500px;">{!! $config->contactus !!}</script>
                         <script type="text/javascript">
                             var ue = UE.getEditor('editor');
                         </script>
