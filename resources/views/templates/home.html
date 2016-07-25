@@ -19,7 +19,7 @@
 
         <div class="row" ng-if="Notice">
             <div class="col col-10">
-                <img ng-src="resources/views/sysimg/ic_scroll_bar.gif" style="width: 100%; height: 100%;">
+                <img ng-src="resources/views/sysimg/ic_scroll_bar.gif" class="st_noticeGif">
             </div>
             <div class="col col-90">
                 <marquee direction="left" scrollamount="3">
@@ -30,9 +30,9 @@
 
         <!--首页物品展示-->
         <div class="row row-wrap">
-            <div style="text-align: center" class="col" ng-repeat="item in itemList">
+            <div class="col st_taCenter" ng-repeat="item in itemList">
                 <span>
-                    <img style="height: 160px; width: 160px; border-radius:10px"
+                    <img class="st_showImg"
                          ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
                          image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
                 </span>
@@ -42,8 +42,8 @@
                     </div>
                 </span>
                 <span>
-                    <em style="color: red">[[item.cur_price | currency:'￥']]</em>
-                    <em style="padding-left:10px; font-size:10px; color:#999">[[item.buynum]]人付款</em>
+                    <em class="st_price">[[item.cur_price | currency:'￥']]</em>
+                    <em class="st_buynum">[[item.buynum]]人付款</em>
                 </span>
             </div>
         </div>

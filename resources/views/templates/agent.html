@@ -7,27 +7,27 @@
     </ion-nav-bar>
     <ion-content scroll="true">
         <label class="item">
-            <div style="padding-left: 15px;white-space:normal;"
+            <div class="st_agentMemo"
                  ng-bind-html="config.agent | toHtml | trustHtml">
             </div>
         </label>
         <div ng-if="needShow">
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">真实姓名:</span>
+                <span class="input-label st_inputLabel">真实姓名:</span>
                 <input placeholder="真实姓名" type="text" ng-model="agent.name">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
+                <span class="input-label st_inputLabel">手机号码:</span>
                 <input placeholder="手机号码" type="tel" ng-model="agent.phone">
             </label>
 
-            <div style="text-align:center;">
+            <div class="st_taCenter">
                 <button class="button button-light" ng-click="myAgent()">
                     申请代理
                 </button>
             </div>
         </div>
-        <div ng-if="!needShow" style="text-align: center">
+        <div ng-if="!needShow" class="st_taCenter">
             你已申请了代理.
         </div>
     </ion-content>

@@ -35,9 +35,9 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div style="padding-left: 5px; padding-right: 5px;">
+        <div>
             <!--简介-->
-            <div ng-if="showMemo" style="white-space:normal;"
+            <div ng-if="showMemo" class="st_agentMemo"
                  ng-bind-html="config.spread | toHtml | trustHtml">
             </div>
 
@@ -50,7 +50,7 @@
 
             <!--收入明细-->
             <div ng-if="showIncome && canShowQRC">
-                <div style="border-bottom:#000000 solid 1px; display:block; text-align: center">
+                <div class="st_underline st_taCenter">
                     <div style="padding-top: 15px; padding-bottom: 15px;">
                         <em style="font-size: 20px;">余额:</em><em style="color: red; padding-left: 10px">[[Income/100 | currency:'￥']]</em>
                     </div>
@@ -75,7 +75,7 @@
 
             <!--提现明细-->
             <div ng-if="showCash && canShowQRC">
-                <div style="border-bottom:#000000 solid 1px; display:block;">
+                <div class="st_underline">
                     <div class="row row-wrap">
                         <div class="col">提现</div>
                         <div class="col">余额</div>
@@ -97,8 +97,8 @@
 
     </ion-content>
     <ion-footer-bar ng-if="showIncome && canShowQRC">
-        <div class="row" style="padding-top: 0">
-            <div class="col col-left" style="padding-top: 0">
+        <div class="row st_pTop0">
+            <div class="col col-left st_pTop0">
                 <button class="button button-calm" style="float: right; width: 40%; padding-top: 0" ng-click="cash()">
                     申请提现
                 </button>

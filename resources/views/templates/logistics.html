@@ -11,19 +11,19 @@
                 <div class="col">
                     <span>承运公司：</span>
                     <br>
-                    <span style="padding-left:10px; font-size:10px; color:#999">[[Logistics.shipperName]]</span>
+                    <span class="st_buynum">[[Logistics.shipperName]]</span>
                 </div>
                 <div class="col">
                     <span>运单编号：</span>
                     <br>
-                    <span style="padding-left:10px; font-size:10px; color:#999">[[Logistics.logisticCode]]</span>
+                    <span class="st_buynum">[[Logistics.logisticCode]]</span>
                 </div>
             </div>
 
             <div ng-repeat="info in Logistics.logistics">
                 <div class="row item">
                     <div class="col">
-                        <div style="float: right">[[info.AcceptTime]]</div>
+                        <div class="fr">[[info.AcceptTime]]</div>
                     </div>
                     <div class="col">
                         <div style="white-space:normal">[[info.AcceptStation]]</div>

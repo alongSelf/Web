@@ -15,43 +15,43 @@
         <div ng-if="!showAddAddr">
             <ion-item class="item-avatar" ng-repeat="addrInfo in AddrList">
                 <img ng-src="resources/views/sysimg/Delete.png"
-                     style="width: 25px; height: 25px" ng-click="delAddr([[addrInfo.id]])">
+                     class="st_delAddr" ng-click="delAddr([[addrInfo.id]])">
                 <div>[[addrInfo.name]]&nbsp&nbsp&nbsp&nbsp[[addrInfo.phone]]</div>
-                <div style="font-size:10px; color:#999">[[addrInfo.addr]]</div>
+                <div class="st_addInfo">[[addrInfo.addr]]</div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 30px" ng-click="addAddr()">
+            <ion-item class="item-image st_newAddr" ng-click="addAddr()">
                 <i style="padding-left: 15px; padding-top: 5px">新增收货地址</i>
-                <i class="icon ion-ios-plus-outline fr" style="padding-right: 15px"></i>
+                <i class="icon ion-ios-plus-outline fr st_newAddrIcon"></i>
             </ion-item>
         </div>
 
         <!--新加弹出-->
         <div ng-if="showAddAddr">
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">姓名:</span>
+                <span class="input-label st_inputLabel">姓名:</span>
                 <input placeholder="收件人姓名"  ng-model="addr.name" type="text">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">手机:</span>
+                <span class="input-label st_inputLabel">手机:</span>
                 <input placeholder="收件人手机号" ng-model="addr.tel" type="tel">
             </label>
 
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">省/市:</span>
+                <span class="input-label st_inputLabel">省/市:</span>
                 <select ng-model="addr.Area1" ng-change="selectArea1()">
                     <option>[[selectAddrStr]]</option>
                     <option ng-repeat="area in Area1">[[area.areaname]]</option>
                 </select>
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">市/区:</span>
+                <span class="input-label st_inputLabel">市/区:</span>
                 <select ng-model="addr.Area2" ng-change="selectArea2()">
                     <option>[[selectAddrStr]]</option>
                     <option ng-repeat="area in Area2">[[area.areaname]]</option>
                 </select>
             </label>
             <label class="item item-input" ng-if="showArea3">
-                <span class="input-label" style="text-align:right; padding-right: 20px">区/县:</span>
+                <span class="input-label st_inputLabel">区/县:</span>
                 <select ng-model="addr.Area3">
                     <option>[[selectAddrStr]]</option>
                     <option ng-repeat="area in Area3">[[area.areaname]]</option>
@@ -59,10 +59,10 @@
             </label>
 
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">详细:</span>
+                <span class="input-label st_inputLabel">详细:</span>
                 <input placeholder="详细地址" ng-model="addr.street" type="text">
             </label>
-            <div style="text-align:center;">
+            <div class="st_taCenter">
                 <button class="button button-light" ng-click="cancelAddAddr()">
                     取消
                 </button>

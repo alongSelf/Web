@@ -35,16 +35,15 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div style="border-bottom:#000000 solid 1px; display:block;
-                    background:url(resources/views/sysimg/[[data.status | orderBgImg]]) right no-repeat;
-                    background-size:120px 120px"
+        <div class="st_underline"
+             style="background:url(resources/views/sysimg/[[data.status | orderBgImg]]) right no-repeat;background-size:120px 120px;"
             ng-repeat="data in showData">
             <div class="row">
                 <div class="col col-50">
                     <em>订单号：[[data.id]]</em>
                 </div>
                 <div class="col">
-                    <em>合计：</em><em style="color: red">[[data.price | currency:'￥']]</em>
+                    <em>合计：</em><em class="st_price">[[data.price | currency:'￥']]</em>
                 </div>
             </div>
             <div class="row">
@@ -55,16 +54,16 @@
                     <em>支付：</em>
                     <img ng-src="resources/views/sysimg/[[data.paychannel | toChannelImg]]"
                          ng-if="data.status != 0"
-                         style="width: 20px; height: 20px;border-radius:50%">
+                         class="st_payIcon">
                 </div>
             </div>
             <div class="row" ng-repeat="itemInfo in data.iteminfo.items">
                 <div class="col col-50" ui-sref="tabs.orderiteminfo({itemID: [[itemInfo.id]]})">
                     <img ng-src="uploads/[[itemInfo.img]]"
-                         style="width: 50px; height: 50px; border-radius:10px; float: left">
+                         class="st_carImg">
                     <span>[[itemInfo.name | clipStr]]</span>
                     <br>
-                    <span style="color: #adadad; font-size:10px;">[[itemInfo.spec | specToStr]]</span>
+                    <span class="st_addInfo">[[itemInfo.spec | specToStr]]</span>
                 </div>
                 <div class="col">
                     <span>数量：[[itemInfo.num]]</span>
@@ -72,7 +71,7 @@
                     <span>单价：[[itemInfo.price | currency:'￥']]</span>
                 </div>
             </div>
-            <div ng-if="data.status == 0" style="text-align: right; padding-right: 10%">
+            <div ng-if="data.status == 0" class="st_orderOp">
                     <button style="color: red" ng-click="Cancel(data.id)">
                         取消
                     </button>
@@ -80,11 +79,11 @@
                         付款
                     </button>
             </div>
-            <div style="text-align: right; padding-right: 10%"
+            <div class="st_orderOp"
                  ng-if="data.status == 1">
                 待发货
             </div>
-            <div style="text-align: right; padding-right: 10%"
+            <div class="st_orderOp"
                  ng-if="data.status == 2">
                 <button ng-click="Logistics(data.id)">查看物流</button>
                 <button style="color: red" ng-click="Evaluate(data.id)">

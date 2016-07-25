@@ -6,12 +6,12 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content scroll="true">
-        <div ng-repeat="itemInfo in Order.iteminfo.items" style="border-bottom:#000000 solid 1px; display:block;">
+        <div ng-repeat="itemInfo in Order.iteminfo.items" class="st_underline">
             <div ng-if="itemInfo.showEV">
                 <div class="row">
                     <div class="col col-50">
                         <img ng-src="uploads/[[itemInfo.img]]"
-                             style="width: 50px; height: 50px; border-radius:10px; float: left">
+                             class="st_carImg">
                         <span>[[itemInfo.name | clipStr]]</span>
                     </div>
                     <div class="col col-50">
@@ -26,14 +26,14 @@
                         分
                     </span>
                         <br>
-                        <button style="float: right" ng-click="Evaluate(Order.id, itemInfo.id, itemInfo.index)">
+                        <button class="fr" ng-click="Evaluate(Order.id, itemInfo.id, itemInfo.index)">
                             提交
                         </button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <textarea id="[[itemInfo.evid]]" style="width: 100%" placeholder="商品是否给力？快分享你的购买心得吧~"></textarea>
+                        <textarea id="[[itemInfo.evid]]" class="st_W100" placeholder="商品是否给力？快分享你的购买心得吧~"></textarea>
                     </div>
                 </div>
             </div>

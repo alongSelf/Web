@@ -1,17 +1,17 @@
 <!--加入购物车、立即购买弹出页-->
 <ion-popover-view >
     <ion-content scroll="true" lazy-scroll>
-        <div style="padding-left:3px; padding-right: 3px">
+        <div class="st_buyPop">
             <div>
-                <img style="width: 50px; height: 60px; border-radius:10px;"
+                <img class="st_buyPopImg"
                      image-lazy-src="uploads/[[itemInfo.indeximg]]" image-lazy-loader="bubbles">
                 <span>[[itemInfo.name]]</span>
             </div>
-            <div style="color: red;">[[PopData.cur_price | currency:'￥']]</div>
+            <div class="st_price">[[PopData.cur_price | currency:'￥']]</div>
             <div ng-if="itemSpec">
                 <div ng-repeat="(key,value) in itemSpec">
                     <span>[[key]]:</span>
-                    <select style="width: 80px" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
+                    <select class="st_buyPopInput" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
                         <option ng-repeat="spec in value">[[spec.val]]</option>
                     </select>
                     <div style="height: 10px"></div>
@@ -20,7 +20,7 @@
 
             <div>
                 <em>数量:</em>
-                <input style="width: 80px" ng-model="PopData.chooseNum" ng-change="checkInput(PopData.chooseNum)" placeholder="请输入数量" value="PopData.chooseNum">
+                <input class="st_buyPopInput" ng-model="PopData.chooseNum" ng-change="checkInput(PopData.chooseNum)" placeholder="请输入数量" value="PopData.chooseNum">
                 </input>
                 <em>[[itemInfo.unit]]</em>
             </div>
@@ -28,10 +28,10 @@
     </ion-content>
 
     <ion-footer-bar align-title="left">
-        <button class="button button-light" style="width: 49%;" ng-click="cancel()">
+        <button class="button button-light st_buyPopButton" ng-click="cancel()">
             取消
         </button>
-        <button class="button button-calm" style="width: 49%;" ng-click="confirm()">
+        <button class="button button-calm st_buyPopButton" ng-click="confirm()">
             确定
         </button>
     </ion-footer-bar>

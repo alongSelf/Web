@@ -8,15 +8,15 @@
 
         <div ng-if="needLogIn" style="padding-top: 100px">
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
+                <span class="input-label st_inputLabel">手机号码:</span>
                 <input id="phone" placeholder="手机号码" type="tel">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">密码:</span>
+                <span class="input-label st_inputLabel">密码:</span>
                 <input id="password" placeholder="密码" type="password">
             </label>
             <label class="item item-input" ng-if="isRegister">
-                <span class="input-label" style="text-align:right; padding-right: 20px">确认密码:</span>
+                <span class="input-label st_inputLabel">确认密码:</span>
                 <input id="regpassword" placeholder="确认密码" type="password">
             </label>
 
@@ -33,7 +33,8 @@
         </div>
 
         <div ng-if="!needLogIn">
-            <ion-item class="item-image" style="background-image: url('resources/views/sysimg/userback.jpg'); background-repeat: no-repeat;background-size:100% 100%">
+            <ion-item class="item-image"
+                      style="background-image: url('resources/views/sysimg/userback.jpg'); background-repeat: no-repeat;background-size:100% 100%">
                 <div>
                     <img ng-src="uploads/[[uerBase.icon]]" style="width: 80px; height: 80px;border-radius:50%">
                     <div style="margin-bottom: 0; font-weight: bold; color: white">[[uerBase.nickname]]</div>
@@ -43,53 +44,53 @@
                     </div>
                 </div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.userinfo">
+            <ion-item class="item-image st_userList" ui-sref="tabs.userinfo">
                 <div>
-                    <img ng-src="resources/views/sysimg/userinfo.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
-                    <i style="padding-left: 15px">个人资料</i>
-                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                    <img ng-src="resources/views/sysimg/userinfo.jpg" style="width: 50px; height: 50px; border-radius:50%; padding-top:5px; padding-bottom: 5px;">
+                    <i class="st_userList_Font">个人资料</i>
+                    <i class="icon ion-chevron-right fr st_userList_LeftIcon"></i>
                 </div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.addr">
+            <ion-item class="item-image st_userList" ui-sref="tabs.addr">
                 <div>
-                    <img ng-src="resources/views/sysimg/addr.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
-                    <i style="padding-left: 15px">收货地址</i>
-                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                    <img ng-src="resources/views/sysimg/addr.jpg" style="width: 50px; height: 50px; border-radius:50%; padding-top:5px; padding-bottom: 5px;">
+                    <i class="st_userList_Font">收货地址</i>
+                    <i class="icon ion-chevron-right fr st_userList_LeftIcon"></i>
                 </div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.order">
+            <ion-item class="item-image st_userList" ui-sref="tabs.order">
                 <div>
-                    <img ng-src="resources/views/sysimg/myorder.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
-                    <i style="padding-left: 15px">我的订单</i>
-                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                    <img ng-src="resources/views/sysimg/myorder.jpg" style="width: 50px; height: 50px; border-radius:50%; padding-top:5px; padding-bottom: 5px;">
+                    <i class="st_userList_Font">我的订单</i>
+                    <i class="icon ion-chevron-right fr st_userList_LeftIcon"></i>
                 </div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.spread">
+            <ion-item class="item-image st_userList" ui-sref="tabs.spread">
                 <div>
-                    <img ng-src="resources/views/sysimg/spread.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
-                    <i style="padding-left: 15px">我来推广</i>
-                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                    <img ng-src="resources/views/sysimg/spread.jpg" style="width: 50px; height: 50px; border-radius:50%; padding-top:5px; padding-bottom: 5px;">
+                    <i class="st_userList_Font">我来推广</i>
+                    <i class="icon ion-chevron-right fr st_userList_LeftIcon"></i>
                 </div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.agent">
+            <ion-item class="item-image st_userList" ui-sref="tabs.agent">
                 <div>
-                    <img ng-src="resources/views/sysimg/agent.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
-                    <i style="padding-left: 15px">我来代理</i>
-                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                    <img ng-src="resources/views/sysimg/agent.jpg" style="width: 50px; height: 50px; border-radius:50%; padding-top:5px; padding-bottom: 5px;">
+                    <i class="st_userList_Font">我来代理</i>
+                    <i class="icon ion-chevron-right fr st_userList_LeftIcon"></i>
                 </div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.changepsw">
+            <ion-item class="item-image st_userList" ui-sref="tabs.changepsw">
                 <div>
-                    <img ng-src="resources/views/sysimg/changepsw.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
-                    <i style="padding-left: 15px">修改密码</i>
-                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                    <img ng-src="resources/views/sysimg/changepsw.jpg" style="width: 50px; height: 50px; border-radius:50%; padding-top:5px; padding-bottom: 5px;">
+                    <i class="st_userList_Font">修改密码</i>
+                    <i class="icon ion-chevron-right fr st_userList_LeftIcon"></i>
                 </div>
             </ion-item>
-            <ion-item class="item-image" style="text-align:left; height: 75px" ui-sref="tabs.contactus">
+            <ion-item class="item-image st_userList" ui-sref="tabs.contactus">
                 <div>
-                    <img ng-src="resources/views/sysimg/contactus.jpg" style="width: 50px; height: 50px; border-radius:50%;padding-top:5px; padding-bottom: 5px;">
-                    <i style="padding-left: 15px">联系我们</i>
-                    <i class="icon ion-chevron-right fr" style="padding-top: 13px"></i>
+                    <img ng-src="resources/views/sysimg/contactus.jpg" style="width: 50px; height: 50px; border-radius:50%; padding-top:5px; padding-bottom: 5px;">
+                    <i class="st_userList_Font">联系我们</i>
+                    <i class="icon ion-chevron-right fr st_userList_LeftIcon"></i>
                 </div>
             </ion-item>
             <ion-item class="item-image" style="text-align:center; height: 75px">

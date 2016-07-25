@@ -13,19 +13,19 @@
 
         <!--账号绑定-->
         <div ng-if="showBind">
-            <div class="row row-wrap" style="text-align: center">
+            <div class="row row-wrap st_taCenter">
                 <div class="col">账号绑定</div>
             </div>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
+                <span class="input-label st_inputLabel">手机号码:</span>
                 <input id="bind_phone" placeholder="请输入手机号码" type="tel">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">密码:</span>
+                <span class="input-label st_inputLabel">密码:</span>
                 <input id="bind_psw1" placeholder="密码" type="password">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">确认密码:</span>
+                <span class="input-label st_inputLabel">确认密码:</span>
                 <input id="bind_psw2" placeholder="确认密码" type="password">
             </label>
             <div style="text-align: center">
@@ -37,30 +37,30 @@
         <!--相信信息-->
         <div ng-if="!showBind">
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">手机号码:</span>
+                <span class="input-label st_inputLabel">手机号码:</span>
                 <div>[[userInfo.phone | hidePhone]]</div>
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">姓名:</span>
+                <span class="input-label st_inputLabel">姓名:</span>
                 <input placeholder="姓名" type="text" ng-model="userInfo.name" ng-change="fieldChanged()">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">昵称:</span>
+                <span class="input-label st_inputLabel">昵称:</span>
                 <input placeholder="昵称" type="text" ng-model="userInfo.nickname" ng-change="fieldChanged()">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">邮箱:</span>
+                <span class="input-label st_inputLabel">邮箱:</span>
                 <input placeholder="邮箱" type="email" ng-model="userInfo.email" ng-change="fieldChanged()">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">QQ号码:</span>
+                <span class="input-label st_inputLabel">QQ号码:</span>
                 <input placeholder="QQ号码" type="text" ng-model="userInfo.qq" ng-change="fieldChanged()">
             </label>
             <label class="item item-input">
-                <span class="input-label" style="text-align:right; padding-right: 20px">微信号:</span>
+                <span class="input-label st_inputLabel">微信号:</span>
                 <input placeholder="微信号" type="text" ng-model="userInfo.weixnumber" ng-change="fieldChanged()">
             </label>
-            <div style="text-align: center" ng-if="showChange">
+            <div class="st_taCenter" ng-if="showChange">
                 <button class="button button-light" style="width: 50%" ng-click="changeInfo()">
                     修改
                 </button>

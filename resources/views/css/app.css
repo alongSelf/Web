@@ -4,5 +4,39 @@
 .fl{float:left;}
 .fc{text-align:center;}
 
+.st_body{max-width:850px; margin:0 auto;}
+.st_mainview{max-width:850px;}
+.st_noticeGif{width: 100%; height: 100%;}
+.st_taCenter{text-align: center;}
+.st_showImg{height: 160px; width: 160px; border-radius:10px;}
+.st_price{color: red;}
+.st_primePrice{text-decoration:line-through; color: #adadad; font-size:10px;}
+.st_pTop0{padding-top: 0;}
+.st_starImg{width: 15px; height: 15px;}
+.st_evTime{font-size:5px; padding-left: 5px;}
+.st_ev{font-size:10px; white-space:normal;}
+.st_buynum{padding-left:10px; font-size:10px; color:#999;}
+.st_buildWebsit{width: 100%; height: 500px;}
+.st_delAddr{width: 25px; height: 25px;}
+.st_addInfo{font-size:10px; color:#999;}
+.st_newAddr{text-align:left; height: 30px;}
+.st_newAddrIcon{padding-right: 15px;}
+.st_inputLabel{text-align:right; padding-right: 20px;}
+.st_agentMemo{padding-left: 15px;white-space:normal;}
+.st_buyPop{padding-left:3px; padding-right: 3px;}
+.st_buyPopImg{width: 50px; height: 60px; border-radius:10px;}
+.st_buyPopInput{width: 80px;}
+.st_buyPopButton{width: 49%;}
+.st_underline{border-bottom:#000000 solid 1px; display:block;}
+.st_carImg{width: 50px; height: 50px; border-radius:10px; float: left;}
+.st_deleteImg{width: 30px; height: 30px; border-radius:50%; padding-top: 10px;}
+.st_W100{width: 100%;}
+.st_H100{height: 100%;}
+.st_payIcon{width: 20px; height: 20px;border-radius:50%;}
+.st_orderOp{text-align: right; padding-right: 10%;}
+.st_userList{text-align:left; height: 75px;}
+.st_userList_Font{padding-left: 15px;}
+.st_userList_LeftIcon{padding-top: 13px;}
+
 .foot{margin-top:10px; color:#666;height:30px;border:1px solid #c8c8c8;background-color:#eaeaea;background-image:linear-gradient(RGB(241,241,241),RGB(226,226,226));position:relative;z-index:8;}
 .priceTotal{color:red;font-family:"Microsoft Yahei";font-weight:bold; margin-right: 50px;}

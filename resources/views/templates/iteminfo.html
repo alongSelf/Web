@@ -48,37 +48,38 @@
             </div>
             <div>
                     <span>
-                        <em style="color: red" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
-                        <em style="text-decoration:line-through; color: #adadad; font-size:10px" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
-                        <em style="padding-left:10px; font-size:10px; color:#999">&nbsp&nbsp[[buynum]]</em>
+                        <em class="st_price" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
+                        <em class="st_primePrice" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
+                        <em class="st_buynum">&nbsp&nbsp[[buynum]]</em>
                     </span>
             </div>
         </div>
 
         <div ng-if="showCon">
-            <img ng-src="uploads/[[itemInfo.content]]" style="width: 100%;">
+            <img ng-src="uploads/[[itemInfo.content]]" class="st_W100">
         </div>
 
         <div ng-if="showEv">
             <div ng-if="Evaluates">
-                <label style="border-bottom:#000000 solid 1px; display:block" ng-repeat="Evaluate in Evaluates">
-                    <div class="row" style="padding-top: 0px">
+                <label class="st_underline" ng-repeat="Evaluate in Evaluates">
+                    <div class="row st_pTop0">
                         <div class="col col-66">
                             <em>[[Evaluate.nickname | cutUserName]]</em>
-                            <em style="font-size:5px; padding-left: 5px">[[Evaluate.createtime | toStrDate]]</em>
+                            <em class="st_evTime">[[Evaluate.createtime | toStrDate]]</em>
                         </div>
                         <div class="col">
-                            <img ng-src="resources/views/sysimg/star.jpg" style="width: 15px; height: 15px" ng-repeat="i in Evaluate.star">
+                            <img ng-src="resources/views/sysimg/star.jpg" class="st_starImg"
+                                 ng-repeat="i in Evaluate.star">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col" style="font-size:10px; white-space:normal">[[Evaluate.evaluate | toHtml | trustHtml]]</div>
+                        <div class="col st_ev">[[Evaluate.evaluate | toHtml | trustHtml]]</div>
                     </div>
                 </label>
             </div>
 
             <div ng-if="!Evaluates">
-                <img src="resources/views/sysimg/noevaluates.jpg" style="width: 100%;">
+                <img src="resources/views/sysimg/noevaluates.jpg" class="st_W100">
             </div>
         </div>
 
@@ -86,9 +87,9 @@
     </ion-content>
 
     <ion-footer-bar ng-if="showInfo">
-        <div class="row" style="padding-top: 0">
-            <div class="col col-left" style="padding-top: 0">
-                <button class="button button-calm ion-ios-cart" style="float: right; width: 40%; padding-top: 0" ng-click="addInCar($event)">
+        <div class="row st_pTop0">
+            <div class="col col-left st_pTop0">
+                <button class="button button-calm ion-ios-cart fr st_pTop0" style="width: 40%;" ng-click="addInCar($event)">
                     加入购物车
                 </button>
             </div>
