@@ -97,6 +97,13 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::get('user/index', 'UserController@index');
     Route::any('user/resetPSW', 'UserController@resetPSW');
     Route::get('user/search/{val}/{type}', 'UserController@search');
+    Route::get('user/agent/{phone?}', 'UserController@agent');
+    Route::any('user/changeAgent', 'UserController@changeAgent');
+    Route::get('user/cash', 'UserController@cash');
+    Route::any('user/cashCancel', 'UserController@cashCancel');
+    Route::any('user/cashPay', 'UserController@cashPay');
+    Route::get('user/income/{userID?}', 'UserController@income');
+    Route::get('user/follower/{condition}/{userID?}', 'UserController@follower');
     
     Route::get('order/index', 'OrderController@index');
     Route::get('order/searchByStatues/{type}', 'OrderController@searchByStatues');

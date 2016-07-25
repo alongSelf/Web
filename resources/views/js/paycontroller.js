@@ -12,38 +12,36 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     $scope.moreData = true;
     $scope.curPage = 0;
     $scope.showData = [];
-    $scope.doRefresh = function () {
-        $scope.moreData = true;
-        $scope.curPage = 0;
-        $scope.showData = [];
-
+    $scope.subBar = [];
+    $scope.subBar.allClicked = true;
+    $scope.initData = function () {
         $scope.pages = [];
         $scope.pages.all = [];
         $scope.pages.all.more = true;
         $scope.pages.all.page = 0;
         $scope.pages.all.data = [];
+        $scope.pages.all.loaded = true;
 
         $scope.pages.pay = [];
         $scope.pages.pay.more = true;
         $scope.pages.pay.page = 0;
         $scope.pages.pay.data = [];
+        $scope.pages.pay.loaded = false;
 
         $scope.pages.evaluate = [];
         $scope.pages.evaluate.more = true;
         $scope.pages.evaluate.page = 0;
         $scope.pages.evaluate.data = [];
+        $scope.pages.evaluate.loaded = false;
 
         $scope.pages.delivery = [];
         $scope.pages.delivery.more = true;
         $scope.pages.delivery.page = 0;
         $scope.pages.delivery.data = [];
-
-        $scope.$broadcast('scroll.refreshComplete');
+        $scope.pages.delivery.loaded = false;
     };
-    $scope.doRefresh();
+    $scope.initData();
 
-    $scope.subBar = [];
-    $scope.subBar.allClicked = true;
     $scope.allOrder = function () {
         $scope.subBar.allClicked = true;
         $scope.subBar.payClicked = false;
@@ -65,6 +63,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
         $scope.moreData = $scope.pages.pay.more;
         $scope.curPage = $scope.pages.pay.page;
         $scope.showData = $scope.pages.pay.data;
+        if (!$scope.pages.pay.loaded){
+            $scope.loadOrder(true);
+        }
     };
     $scope.evaluateOrder = function () {
         $scope.subBar.allClicked = false;
@@ -76,6 +77,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
         $scope.moreData = $scope.pages.evaluate.more;
         $scope.curPage = $scope.pages.evaluate.page;
         $scope.showData = $scope.pages.evaluate.data;
+        if (!$scope.pages.evaluate.loaded){
+            $scope.loadOrder(true);
+        }
     };
     $scope.deliveryOrder = function () {
         $scope.subBar.allClicked = false;
@@ -87,6 +91,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
         $scope.moreData = $scope.pages.delivery.more;
         $scope.curPage = $scope.pages.delivery.page;
         $scope.showData = $scope.pages.delivery.data;
+        if (!$scope.pages.delivery.loaded){
+            $scope.loadOrder(true);
+        }
     };
 
     $scope.setPageVal = function (type, setType, val) {
@@ -143,7 +150,8 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
         }
     };
 
-    $scope.loadMore = function () {
+    $scope.loadOrder = function (bRefresh) {
+        dd($scope.curPage+'  '+$scope.type)
         $http.get("showOrder/" + $scope.curPage + '/'+ $scope.type)
             .success(
                 function (data, status, header, config) {
@@ -169,14 +177,31 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
                 $scope.curPage--;
                 $scope.setPageVal($scope.type, 'page', $scope.curPage);
             }).finally(function () {
-                $scope.$broadcast('scroll.infiniteScrollComplete');
+                if (bRefresh){
+                    $scope.$broadcast('scroll.refreshComplete');
+                }else {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
             }
         );
         $scope.curPage++;
         $scope.setPageVal($scope.type, 'page', $scope.curPage);
     };
 
-    $scope.loadMore();
+    $scope.doRefresh = function () {
+        $scope.moreData = true;
+        $scope.curPage = 0;
+        $scope.showData = [];
+
+        $scope.initData();
+
+        $scope.loadOrder(true);
+    };
+    $scope.doRefresh();
+
+    $scope.loadMore = function () {
+        $scope.loadOrder(false);
+    };
 
     $scope.Cancel = function (orderID) {
         $ionicLoading.show({

@@ -421,8 +421,8 @@ class UserController extends CommController
         }
         $user = session('user');
         $config = Config::all()[0];
-        if ($config['cash'] > $money){
-            return rtnMsg(1, '提现金额最少'.$config['cash'].'元!');
+        if ($config['cash'] > $money || 0 != $money % $config['cash']){
+            return rtnMsg(1, '提现金额必须为'.$config['cash'].'的整数倍!');
         }
         $user = Users::find($user['id']);
         if ($money * 100 > $user['income']){

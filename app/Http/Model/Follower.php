@@ -30,7 +30,8 @@ class Follower extends Model
         $followerCount = $this->where('groupid', $myFollow['groupid'])->
             where('leftweight', '>', $myFollow['leftweight'])->
             where('rightweight', '<', $myFollow['rightweight'])->
-            where('layer', '>', $myFollow['layer'])->where('layer', '<=', $myFollow['layer'] + $this->getMaxLayer())->count();
+            where('layer', '>', $myFollow['layer'])->where('layer', '<=', $myFollow['layer'] + $this->getMaxLayer())
+            ->count();
 
         return $followerCount;
     }
@@ -42,7 +43,8 @@ class Follower extends Model
         $follower = $this->where('groupid', $myFollow['groupid'])->
             where('leftweight', '>', $myFollow['leftweight'])->
             where('rightweight', '<', $myFollow['rightweight'])->
-            where('layer', '>', $myFollow['layer'])->where('layer', '<=', $myFollow['layer'] + $this->getMaxLayer())->get();
+            where('layer', '>', $myFollow['layer'])->where('layer', '<=', $myFollow['layer'] + $this->getMaxLayer())
+            ->orderBy('layer')->paginate(10);
 
         return $follower;
     }
@@ -54,7 +56,8 @@ class Follower extends Model
         $chief = $this->where('groupid', $myFollow['groupid'])->
             where('leftweight', '<', $myFollow['leftweight'])->
             where('rightweight', '>', $myFollow['rightweight'])->
-            where('layer', '<', $myFollow['layer'])->where('layer', '>=', $myFollow['layer'] - $this->getMaxLayer())->get();
+            where('layer', '<', $myFollow['layer'])->where('layer', '>=', $myFollow['layer'] - $this->getMaxLayer())
+            ->orderBy('layer', 'desc')->paginate(10);
 
         return $chief;
     }
@@ -71,6 +74,17 @@ class Follower extends Model
         ];
 
         $this->create($input);
+    }
+
+    public function getRoot()
+    {
+        $root = $this->where('leftweight', 1)->paginate(10);
+        foreach ($root as $key=>$val){
+            $count =  $this->where('groupid', $val['groupid'])->count();
+            $root[$key]->count=$count;
+        }
+
+        return $root;
     }
 
     //添加粉丝

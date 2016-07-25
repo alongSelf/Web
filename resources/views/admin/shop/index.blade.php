@@ -27,7 +27,8 @@
                 @endforeach
             </select>
 
-            <input type="text" id="search" name="search" value=""><input type="button" onclick="searchbynam()" value="搜索(物品名)">
+            <input type="text" id="search" placeholder="物品名" name="search" value="">
+            <input type="button" onclick="searchbynam()" value="搜索">
         </div>
 
         <br>

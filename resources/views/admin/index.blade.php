@@ -33,11 +33,10 @@
 			<h3><i class="fa fa-fw fa-user"></i>用户管理</h3>
 			<ul class="sub_menu" style="display: block;">
 				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>用户列表</a></li>
-				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>收货地址</a></li>
-				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>代理申请</a></li>
-				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>提现明细</a></li>
-				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>提成明细</a></li>
-				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>粉丝</a></li>
+				<li><a href="{{url('admin/user/agent')}}" target="main"><i class="fa fa-fw fa-edit"></i>代理申请</a></li>
+				<li><a href="{{url('admin/user/cash')}}" target="main"><i class="fa fa-fw fa-edit"></i>提现申请</a></li>
+				<li><a href="{{url('admin/user/income')}}" target="main"><i class="fa fa-fw fa-edit"></i>提成明细</a></li>
+				<li><a href="{{url('admin/user/follower/junior')}}" target="main"><i class="fa fa-fw fa-edit"></i>粉丝</a></li>
 			</ul>
 		</li>
 
@@ -57,13 +56,6 @@
 				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>点评</a></li>
 				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>物流</a></li>
 				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信</a></li>
-			</ul>
-		</li>
-
-		<li>
-			<h3><i class="fa fa-fw fa-photo"></i>统计</h3>
-			<ul class="sub_menu" style="display: block;">
-				<li><a href="{{url('admin/other/config')}}" target="main"><i class="fa fa-fw fa-edit"></i>配置</a></li>
 			</ul>
 		</li>
 	</ul>

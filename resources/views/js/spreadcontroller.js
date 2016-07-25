@@ -139,8 +139,8 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$
                             layer.msg('请输入整数!');
                             e.preventDefault();
                         }
-                        else if ($scope.cashMoney.money < $scope.Cash){
-                            var errormsg = '提现金额最少'+$scope.Cash+'元!';
+                        else if ($scope.cashMoney.money < $scope.Cash || 0 != $scope.cashMoney.money % $scope.Cash){
+                            var errormsg = '提现金额必须为'+$scope.Cash+'的整数倍!';
                             layer.msg(errormsg);
                             e.preventDefault();
                         }

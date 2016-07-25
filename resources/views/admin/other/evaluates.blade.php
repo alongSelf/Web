@@ -18,7 +18,8 @@
         <div class="result_content">
             <div class="short_wrap">
                 <a href="{{url('admin/other/evaluates')}}"><i class="fa"></i>全部点评</a>
-                <input type="text" id="search" name="search" value=""><input type="button" onclick="searchbyID()" value="搜索(物品ID)">
+                <input type="text" id="search" name="search" placeholder="物品ID" value="">
+                <input type="button" onclick="searchbyID()" value="搜索">
             </div>
 
             <br>
