@@ -90,7 +90,6 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
         })
         .state('tabs.order', {
             url: "/order",
-            cache: false,
             views: {
                 'user-tab': {
                     templateUrl: "resources/views/templates/order.html",

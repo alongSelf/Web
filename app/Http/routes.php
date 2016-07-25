@@ -93,6 +93,10 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/changeCommission3', 'OtherController@changeCommission3');
     Route::any('other/contactus', 'OtherController@contactus');
     Route::any('other/changeContactus', 'OtherController@changeContactus');
+    Route::get('other/showLogistics', 'OtherController@showLogistics');
+    Route::any('other/setLogistics', 'OtherController@setLogistics');
+    Route::get('other/showWXSet', 'OtherController@showWXSet');
+    Route::any('other/setWXSet', 'OtherController@setWXSet');
 
     Route::get('user/index', 'UserController@index');
     Route::any('user/resetPSW', 'UserController@resetPSW');
@@ -110,4 +114,5 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::get('order/searchByOrderID/{orderID}', 'OrderController@searchByOrderID');
     Route::get('order/searchByUserID/{userID}', 'OrderController@searchByUserID');
     Route::get('order/show/{orderID}', 'OrderController@show');
+    Route::any('order/delivery', 'OrderController@delivery');
 });

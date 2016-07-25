@@ -34,7 +34,7 @@
 			<ul class="sub_menu" style="display: block;">
 				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>用户列表</a></li>
 				<li><a href="{{url('admin/user/agent')}}" target="main"><i class="fa fa-fw fa-edit"></i>代理申请</a></li>
-				<li><a href="{{url('admin/user/cash')}}" target="main"><i class="fa fa-fw fa-edit"></i>提现申请</a></li>
+				<li><a href="{{url('admin/user/cash')}}" target="main"><i class="fa fa-fw fa-edit"></i>提现申请(未完)</a></li>
 				<li><a href="{{url('admin/user/income')}}" target="main"><i class="fa fa-fw fa-edit"></i>提成明细</a></li>
 				<li><a href="{{url('admin/user/follower/junior')}}" target="main"><i class="fa fa-fw fa-edit"></i>粉丝</a></li>
 			</ul>
@@ -54,8 +54,8 @@
 				<li><a href="{{url('admin/other/notice')}}" target="main"><i class="fa fa-fw fa-edit"></i>公告</a></li>
 				<li><a href="{{url('admin/other/contactus')}}" target="main"><i class="fa fa-fw fa-edit"></i>联系我们</a></li>
 				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>点评</a></li>
-				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>物流</a></li>
-				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信</a></li>
+				<li><a href="{{url('admin/other/showLogistics')}}" target="main"><i class="fa fa-fw fa-edit"></i>物流</a></li>
+				<li><a href="{{url('admin/other/showWXSet')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信(未完)</a></li>
 			</ul>
 		</li>
 	</ul>

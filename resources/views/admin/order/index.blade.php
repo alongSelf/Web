@@ -39,6 +39,7 @@
                         <th>支付渠道</th>
                         <th>总金额(元)</th>
                         <th>物品</th>
+                        <th>物流</th>
                         <th>状态</th>
                         <th>创建时间</th>
                         <th>操作</th>
@@ -62,6 +63,7 @@
                             </td>
                             <td>{{$v->price}}</td>
                             <td>{!!$v->iteminfo!!}</td>
+                            <td>{!!$v->logistics!!}</td>
                             <td>
                                 <?php
                                 if (0 == $v->status){

@@ -269,11 +269,6 @@ class OrderController extends CommController
 
     public function logistics($orderID)
     {
-        $config = Config::select('logistics')->first();
-        if (!$config){
-            return rtnMsg(1, '查询失败，请稍候再试!');
-        }
-
         $user = session('user');
         $order = Orders::select('logistics')->where('id', $orderID)->where('userid', $user['id'])->first();
         if (!$order){
@@ -288,30 +283,10 @@ class OrderController extends CommController
             return rtnMsg(1, '查询失败，请稍候再试!');
         }
 
-        $logisticsInfo = json_decode($config['logistics']);
-
-        $requestData = array();
-        $requestData['OrderCode'] = $orderID;
-        $requestData['ShipperCode'] = $userLogistics->ShipperCode;
-        $requestData['LogisticCode'] = $userLogistics->LogisticCode;
-
-        $requestData= json_encode($requestData);
-
-        $datas = array(
-            'EBusinessID' => $logisticsInfo->userID,
-            'RequestType' => '1002',
-            'RequestData' => urlencode($requestData) ,
-            'DataType' => '2',
-        );
-        $datas['DataSign'] = kn_encrypt($requestData, $logisticsInfo->apiKey);
-
-        $result = sendPost('http://api.kdniao.cc/api/exrecommend/', $datas);
-        if (!$result){
-            return rtnMsg(1, '查询失败，请稍候再试!');
-        }
+        $Traces = selectLogistics($userLogistics->ShipperCode, $userLogistics->LogisticCode, $orderID);
 
         $rtnMsg = array();
-        $rtnMsg['logistics'] = json_decode($result)->Traces;
+        $rtnMsg['logistics'] = $Traces;
         $rtnMsg['shipperName'] = $shipperCode['name'];
         $rtnMsg['logisticCode'] = $userLogistics->LogisticCode;
 

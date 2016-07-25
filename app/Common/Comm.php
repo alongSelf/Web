@@ -1,5 +1,7 @@
 <?php
 
+use App\http\Model\Config;
+
 function rtnMsg($code, $msg)
 {
     return $data = [
@@ -44,4 +46,31 @@ function sendPost($url, $datas) {
  */
 function kn_encrypt($data, $appkey) {
     return urlencode(base64_encode(md5($data.$appkey)));
+}
+
+function selectLogistics($ShipperCode, $LogisticCode, $orderID){
+    $requestData = array();
+    $requestData['OrderCode'] = $orderID;
+    $requestData['ShipperCode'] = $ShipperCode;
+    $requestData['LogisticCode'] = $LogisticCode;
+
+    $requestData= json_encode($requestData);
+
+    $config = Config::select('logistics')->first();
+    $logisticsInfo = json_decode($config['logistics']);
+
+    $datas = array(
+        'EBusinessID' => $logisticsInfo->userID,
+        'RequestType' => '1002',
+        'RequestData' => urlencode($requestData) ,
+        'DataType' => '2',
+    );
+    $datas['DataSign'] = kn_encrypt($requestData, $logisticsInfo->apiKey);
+
+    $result = sendPost('http://api.kdniao.cc/api/exrecommend/', $datas);
+    if (!$result){
+        return [];
+    }
+
+    return json_decode($result)->Traces;
 }

@@ -85,7 +85,6 @@ class OtherController extends CommonController
             return $data;
         }
     }
-
     public function changeOpenSpread()
     {
         $input = Input::all();
@@ -199,7 +198,6 @@ class OtherController extends CommonController
         $notice = Notice::first();
         return view('admin.other.notice', compact('notice'));
     }
-
     public function changeNotice()
     {
         $input = Input::all();
@@ -227,13 +225,11 @@ class OtherController extends CommonController
         $evaluates = Evaluates::orderBy('itemid')->paginate(10);
         return view('admin.other.evaluates', compact('evaluates'));
     }
-
     public function searchEvaluates($ev_id)
     {
         $evaluates = Evaluates::where('itemid', $ev_id)->orderBy('id','desc')->paginate(10);
         return view('admin.other.evaluates', compact('evaluates'));
     }
-
     public function delEvaluates()
     {
         $input = Input::except('_token');
@@ -251,7 +247,6 @@ class OtherController extends CommonController
         }
         return $data;
     }
-
     public function disPlayEvaluates()
     {
         $input = Input::except('_token');
@@ -281,10 +276,9 @@ class OtherController extends CommonController
         $config = Config::first();
         return view('admin.other.contactus', compact('config'));
     }
-
     public function changeContactus()
     {
-        $input = Input::except('_token');;
+        $input = Input::except('_token');
         if ($input) {
             $config = Config::find($input['id']);
             $config->contactus = $input['contactus'];
@@ -295,5 +289,50 @@ class OtherController extends CommonController
                 return back()->with('errors', '联系我们更新失败，请稍后重试！');
             }
         }
+    }
+
+    public function showLogistics()
+    {
+        $config = Config::first();
+        $logistics = json_decode($config['logistics']);
+        $id = $config['id'];
+        if ($logistics && $logistics->userID){
+            $userID = $logistics->userID;
+        }else{
+            $userID = '';
+        }
+        if ($logistics && $logistics->apiKey){
+            $apiKey = $logistics->apiKey;
+        }else{
+            $apiKey = '';
+        }
+
+        return view('admin.other.logistics', compact('id', 'userID', 'apiKey'));
+    }
+    public function setLogistics()
+    {
+        $input = Input::except('_token');
+        $id = $input['id'];
+
+        $logistics['userID'] = $input['userID'];
+        $logistics['apiKey'] = $input['apiKey'];
+
+        $config = Config::first();
+        $config->logistics = json_encode($logistics);
+
+        if ($config->update()) {
+            return back()->with('errors', '更新成功！');
+        } else {
+            return back()->with('errors', '更新失败，请稍后重试！');
+        }
+    }
+
+    public function showWXSet()
+    {
+        return view('admin.other.wx');
+    }
+    public function setWXSet()
+    {
+
     }
 }
