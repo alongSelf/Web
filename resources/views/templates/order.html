@@ -92,9 +92,6 @@
             </div>
         </div>
 
-        <ion-infinite-scroll ng-if="moreData && 0 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
-        <ion-infinite-scroll ng-if="moreData && 1 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
-        <ion-infinite-scroll ng-if="moreData && 2 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
-        <ion-infinite-scroll ng-if="moreData && 4 == type" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moreData" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 </ion-view>
