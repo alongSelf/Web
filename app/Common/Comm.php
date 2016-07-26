@@ -68,9 +68,58 @@ function selectLogistics($ShipperCode, $LogisticCode, $orderID){
     $datas['DataSign'] = kn_encrypt($requestData, $logisticsInfo->apiKey);
 
     $result = sendPost('http://api.kdniao.cc/api/exrecommend/', $datas);
-    if (!$result){
-        return [];
+
+    return json_decode($result);
+}
+
+function sendPost2($url, $datas) {
+    $temps = array();
+    foreach ($datas as $key => $value) {
+        $temps[] = sprintf('%s=%s', $key, $value);
+    }
+    $post_data = implode('&', $temps);
+    $url_info = parse_url($url);
+    if($url_info['port']=='')
+    {
+        $url_info['port']=80;
     }
 
-    return json_decode($result)->Traces;
+    $httpheader = "POST " . $url_info['path'] . " HTTP/1.0\r\n";
+    $httpheader.= "Host:" . $url_info['host'] . "\r\n";
+    $httpheader.= "Content-Type:application/x-www-form-urlencoded\r\n";
+    $httpheader.= "Content-Length:" . strlen($post_data) . "\r\n";
+    $httpheader.= "Connection:close\r\n\r\n";
+    $httpheader.= $post_data;
+    $fd = fsockopen($url_info['host'], $url_info['port']);
+    fwrite($fd, $httpheader);
+    $gets = "";
+    while (!feof($fd)) {
+        if (($header = @fgets($fd)) && ($header == "\r\n" || $header == "\n")) {
+            break;
+        }
+    }
+    while (!feof($fd)) {
+        $gets.= fread($fd, 128);
+    }
+    fclose($fd);
+
+    return $gets;
+}
+
+function submitEOrder($requestData){
+    $config = Config::select('logistics')->first();
+    $logisticsInfo = json_decode($config['logistics']);
+
+    $datas = array(
+        'EBusinessID' => $logisticsInfo->userID,
+        'RequestType' => '1007',
+        'RequestData' => urlencode($requestData) ,
+        'DataType' => '2',
+    );
+    $datas['DataSign'] = kn_encrypt($requestData, $logisticsInfo->apiKey);
+
+    //正式接口  http://api.kdniao.cc/api/EOrderService  测试接口 http://testapi.kdniao.cc:8081/api/EOrderService
+    $result=sendPost2('http://testapi.kdniao.cc:8081/api/EOrderService', $datas);
+
+    return $result;
 }

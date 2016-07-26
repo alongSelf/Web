@@ -44,7 +44,7 @@ class OrderController extends CommController
 
         $jsonAddr['name'] = $addr['name'];
         $jsonAddr['phone'] = $addr['phone'];
-        $jsonAddr['addr'] = $addr['addr'];
+        $jsonAddr['addr'] = json_decode($addr['addr']);
 
         $totalPrice = 0;
         for ($i = 0; $i < count($orderJson->items); $i++) {
@@ -296,10 +296,13 @@ class OrderController extends CommController
             return rtnMsg(1, '查询失败，请稍候再试!');
         }
 
-        $Traces = selectLogistics($userLogistics->ShipperCode, $userLogistics->LogisticCode, $orderID);
+        $result = selectLogistics($userLogistics->ShipperCode, $userLogistics->LogisticCode, $orderID);
+        if (!$result->Success){
+            return rtnMsg(1, $result->Reason);
+        }
 
         $rtnMsg = array();
-        $rtnMsg['logistics'] = $Traces;
+        $rtnMsg['logistics'] = $result->Traces;
         $rtnMsg['shipperName'] = $shipperCode['name'];
         $rtnMsg['logisticCode'] = $userLogistics->LogisticCode;
 

@@ -115,8 +115,7 @@
                 <th>收货人地址：</th>
                 <td>
                     <?php
-                    $addr = json_decode($data->addr->addr);
-                    echo $addr->province . ' ' . $addr->city . ' ' . $addr->county. ' ' .$addr->address;
+                    echo $data->addr->addr->province . ' ' . $data->addr->addr->city . ' ' . $data->addr->addr->county. ' ' .$data->addr->addr->address;
                     ?>
                 </td>
             </tr>
@@ -140,6 +139,12 @@
                         <input type="text" style="width: 200px" id="LogisticCode" placeholder="运单号" value="">
                         <br>
                         <input type="button" onclick="delivery()" value="发货">
+                    </td>
+                </tr>
+                <tr>
+                    <th>在线下运单：</th>
+                    <td>
+                        <input type="button" onclick="deliveryOnLine()" value="在线下运单">
                     </td>
                 </tr>
             @endif
@@ -185,8 +190,13 @@
 
             });
         }
-        
+        var poped = false;
         function deliveryOnLine() {
+            if (poped){
+                return;
+            }
+
+            poped = true;
             var orderID = document.getElementById('orderID').value;
             var ShipperCodeDoc = document.getElementById('ShipperCode');
             var index = ShipperCodeDoc.selectedIndex;
@@ -200,14 +210,21 @@
             }, function(){
                 $.post("{{url('admin/order/deliveryOnLine')}}",
                         {'_token':"{{csrf_token()}}", 'ShipperCode':ShipperCode, 'orderID':orderID},function (data) {
+                            console.log (data.msg);
                             if(data.status==0){
+                                location.href = location.href;
                                 layer.msg(data.msg, {icon: 6});
-                            }else{
+                            }else if(-1 == data.status) {
+                                layer.msg(data.msg.Reason, {icon: 5});
+                                document.getElementById('LogisticCode').value = data.msg.LogisticCode;
+                            }else {
                                 layer.msg(data.msg, {icon: 5});
                             }
                         });
-            }, function(){
 
+                poped = false;
+            }, function(){
+                poped = false;
             });
         }
 
