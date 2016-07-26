@@ -27,29 +27,36 @@
     <!--结果集标题与导航组件 结束-->
     <div class="result_wrap">
         <form action="{{url('admin/other/changeContactus')}}" method="post">
-            <input type="hidden" name="_method" value="put">
             <input type="hidden" name="id" value="{{$config->id}}">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
                 <tr>
+                    <th width="200">服务热线：</th>
                     <td>
-                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.config.js')}}"></script>
-                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/ueditor.all.min.js')}}"> </script>
-                        <script type="text/javascript" charset="utf-8" src="{{asset('resources/views/ueditor/lang/zh-cn/zh-cn.js')}}"></script>
-                        <script id="editor" name="contactus" type="text/plain" style="width:860px;height:500px;">{!! $config->contactus !!}</script>
-                        <script type="text/javascript">
-                            var ue = UE.getEditor('editor');
-                        </script>
-                        <style>
-                            .edui-default{line-height: 28px;}
-                            div.edui-combox-body,div.edui-button-body,div.edui-splitbutton-body
-                            {overflow: hidden; height:20px;}
-                            div.edui-box{overflow: hidden; height:22px;}
-                        </style>
+                        <textarea style="width: 30%" name="phone">{{$config->contactus->phone}}</textarea>
                     </td>
                 </tr>
                 <tr>
+                    <th>客户服务邮箱：</th>
+                    <td>
+                        <textarea style="width: 30%" name="email">{{$config->contactus->email}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>客服QQ：</th>
+                    <td>
+                        <textarea style="width: 30%" name="qq">{{$config->contactus->qq}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>邮递信息：</th>
+                    <td>
+                        <textarea style="width: 30%" name="postAddr">{{$config->contactus->postAddr}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
                     <td>
                         <input type="submit" value="提交">
                         <input type="button" class="back" onclick="history.go(-1)" value="返回">

@@ -16,7 +16,7 @@
         <table class="add_tab">
             <tbody>
                 <tr>
-                    <th width="200"><i class="require">*</i>软件名：</th>
+                    <th width="300"><i class="require">*</i>软件名：</th>
                     <td>
                         <input type="text" onchange="changeTitle(this, {{$config->id}})" value="{{$config->title}}">
                     </td>

@@ -287,6 +287,10 @@ class UserController extends CommController
 
     public function getAddr()
     {
+        if (!$this->isLogIn()){
+            return rtnMsg(errLogin(), '请先登录!');
+        }
+
         $user = session('user');
         $addr = Addr::where('userid', $user['id'])->get();
 

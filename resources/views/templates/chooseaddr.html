@@ -1,0 +1,24 @@
+<!--结算弹出页-->
+<ion-popover-view>
+    <ion-header-bar>
+        <div class="title">选择收货地址:</div>
+    </ion-header-bar>
+    <ion-content scroll="true" lazy-scroll>
+        <ion-item id="[[addrInfo.id]]" class="item"
+                  ng-repeat="addrInfo in AddrList"
+                  ng-style="chooseStyle[[addrInfo.id]]"
+                  ng-click="chooseAddr([[addrInfo.id]])">
+            <div>[[addrInfo.name]]&nbsp&nbsp&nbsp&nbsp[[addrInfo.phone]]</div>
+            <div class="st_addInfo">[[addrInfo.addr | fmtAddr]]</div>
+        </ion-item>
+    </ion-content>
+
+    <ion-footer-bar align-title="left">
+        <button class="button button-light st_buyPopButton" ng-click="cancel()">
+            取消
+        </button>
+        <button class="button button-balanced st_buyPopButton" ng-click="confirm()">
+            确定
+        </button>
+    </ion-footer-bar>
+</ion-popover-view>

@@ -29,8 +29,8 @@
         </div>
 
         <!--首页物品展示-->
-        <div class="row row-wrap">
-            <div class="col st_taCenter" ng-repeat="item in itemList">
+        <div class="row row-wrap" ng-repeat="items in itemList">
+            <div class="col col-[[perItemWidth]] st_taCenter" ng-repeat="item in items">
                 <span>
                     <img class="st_showImg"
                          ui-sref="tabs.iteminfo({itemID: [[item.id]]})"

@@ -26,6 +26,7 @@ Route::group([], function () {
     Route::post('logIn', 'UserController@logIn');
 
     Route::post('newOrder', 'OrderController@newOrder');
+    Route::get('getAddr', 'UserController@getAddr');
 });
 Route::group(['middleware' => ['user.login']], function () {
     Route::get('logOut', 'UserController@logOut');
@@ -34,8 +35,7 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::post('bindAccount', 'UserController@bindAccount');
     Route::post('changePsw', 'UserController@changePsw');
     Route::post('changeUserInfo', 'UserController@changeUserInfo');
-    Route::post('saveAddr', 'UserController@saveAddr');
-    Route::get('getAddr', 'UserController@getAddr');
+    Route::post('saveAddr', 'UserController@saveAddr');    
     Route::post('delAddr', 'UserController@delAddr');
 
     Route::post('agent', 'UserController@agent');
@@ -115,4 +115,5 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::get('order/searchByUserID/{userID}', 'OrderController@searchByUserID');
     Route::get('order/show/{orderID}', 'OrderController@show');
     Route::any('order/delivery', 'OrderController@delivery');
+    Route::any('order/deliveryOnLine', 'OrderController@deliveryOnLine');
 });

@@ -6,7 +6,23 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content scroll="true">
-        <div ng-bind-html="config.contactus | trustHtml">
+        <div>
+            <label class="item item-input">
+                <span class="input-label st_inputLabel">服务热线：</span>
+                <div ng-bind-html="config.contactus.phone | toHtml | trustHtml"></div>
+            </label>
+            <label class="item item-input">
+                <span class="input-label st_inputLabel">客服务邮箱：</span>
+                <div ng-bind-html="config.contactus.email | toHtml | trustHtml"></div>
+            </label>
+            <label class="item item-input">
+                <span class="input-label st_inputLabel">客服QQ：</span>
+                <div ng-bind-html="config.contactus.qq | toHtml | trustHtml"></div>
+            </label>
+            <label class="item item-input">
+                <span class="input-label st_inputLabel">邮递信息：</span>
+                <div ng-bind-html="config.contactus.postAddr | toHtml | trustHtml"></div>
+            </label>
         </div>
     </ion-content>
 </ion-view>

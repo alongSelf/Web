@@ -10,6 +10,7 @@ appModule.run(['$rootScope', '$http', '$cookieStore', '$window', function($rootS
     $http.get("getConfig")
         .success(
             function(data, status, header, config){
+                data.contactus = JSON.parse(data.contactus);
                 $rootScope.config = data;
                 document.title = data.title;
             }

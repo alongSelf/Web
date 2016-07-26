@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\http\Model\Addr;
 use App\http\Model\Config;
 use App\http\Model\Evaluates;
 use App\http\Model\Orders;
@@ -31,8 +32,20 @@ class OrderController extends CommController
             return rtnMsg(errLogin(), '请先登录!');
         }
 
+        $user = session('user');
         $order = Input::get('order');
         $orderJson = json_decode($order);
+
+        //地址
+        $addr = Addr::where('id', $orderJson->addrID)->where('userid', $user['id'])->first();
+        if (!$addr){
+            return rtnMsg(1, '参数错误!');
+        }
+
+        $jsonAddr['name'] = $addr['name'];
+        $jsonAddr['phone'] = $addr['phone'];
+        $jsonAddr['addr'] = $addr['addr'];
+
         $totalPrice = 0;
         for ($i = 0; $i < count($orderJson->items); $i++) {
             $orderItem = $orderJson->items[$i];
@@ -89,7 +102,6 @@ class OrderController extends CommController
             return rtnMsg(1, '参数错误!');
         }
 
-        $user = session('user');
         $orderid = $this->getID();
 
         $input = [
@@ -97,6 +109,7 @@ class OrderController extends CommController
             'userid'=>$user['id'],
             'price'=>$orderJson->price,
             'iteminfo'=>$order,
+            'addr'=>json_encode($jsonAddr),
             'createtime'=>time(),
             'status'=>0,
         ];

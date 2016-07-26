@@ -151,7 +151,6 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     };
 
     $scope.loadOrder = function (bRefresh) {
-        dd($scope.curPage+'  '+$scope.type)
         $http.get("showOrder/" + $scope.curPage + '/'+ $scope.type)
             .success(
                 function (data, status, header, config) {
@@ -161,6 +160,7 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
                         if(0 != data.msg.length){
                             for (var i = 0; i < data.msg.length; i++){
                                 data.msg[i].iteminfo = JSON.parse(data.msg[i].iteminfo);
+                                data.msg[i].addr = JSON.parse(data.msg[i].addr);
                             }
 
                             $scope.setPageVal($scope.type, 'data', data.msg);

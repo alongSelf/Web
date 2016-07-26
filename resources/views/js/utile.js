@@ -13,6 +13,7 @@ function onError(data) {
 };
 
 function checkInt(strVal, bLayer) {
+    return true;
     if (0 == strVal.length){
         return false;
     }
@@ -20,7 +21,7 @@ function checkInt(strVal, bLayer) {
     var strCheck = /^\+?[1-9][0-9]*$/;
     if (!strCheck.test(strVal)){
         if(bLayer){
-            layer.msg('亲,请输入整数...');
+            layer.msg('亲,请输入数字...');
         }
         return false;
     }
@@ -61,6 +62,94 @@ function checkStr(str) {
     }else{
         return false;
     }
+}
+
+function getItemListImgH() {
+    return 170;
+}
+
+function getColStyle(per) {
+    dd(per);
+    var col = new Array(25, 33, 34, 40, 50, 60, 66, 67, 75, 80, 90);
+    for (var i = 0; i < col.length; i++){
+        if (per >= col[i]){
+            continue;
+        }
+
+        return col[i];
+    }
+
+    return 90;
+}
+
+function makeItemList(itemData, clientWidth) {
+    var itemList = new Array;
+    if (!itemData){
+        return itemList;
+    }
+
+    var itemCount = itemData.length;
+    var lineNum = parseInt(clientWidth / getItemListImgH());//每列多少个
+    lineNum = lineNum > 4 ? 4 : lineNum;
+    var rowNum = Math.ceil(itemCount / lineNum);//多少行
+    var iIndex = 0;
+
+    for (var i = 0; i < rowNum; i++){
+        var itemTmp = new Array;
+        for (var j = 0; j < lineNum; j++){
+            if (iIndex >= itemCount){
+                itemList.push(itemTmp);
+                return itemList;
+            }
+
+            itemTmp.push(itemData[iIndex]);
+            iIndex++;
+        }
+
+        itemList.push(itemTmp);
+    }
+
+    return itemList;
+}
+
+function appendItemList(itemOldeData, itemNewData, clientWidth) {
+    var lineNum = parseInt(clientWidth / getItemListImgH());//每列多少个
+    lineNum = lineNum > 4 ? 4 : lineNum;
+    var oldItemNum = itemOldeData.length;
+    var iAdded = 0;
+    if (0 != oldItemNum){
+        //补齐
+        if (itemOldeData[oldItemNum - 1].length != lineNum){
+            iAdded = lineNum - itemOldeData[oldItemNum - 1].length;
+            for (var i = 0; i < iAdded; i++){
+                itemOldeData[oldItemNum - 1].push(itemNewData[i]);
+            }
+        }
+    }
+
+    if (iAdded >= itemNewData.length){
+        return itemOldeData;
+    }
+
+    while (true){
+        var itemTmp = new Array;
+        for (var j = 0; j < lineNum; j++){
+            if (iAdded >= itemNewData.length){
+                itemOldeData.push(itemTmp);
+                return itemOldeData;
+            }
+
+            itemTmp.push(itemNewData[iAdded]);
+            iAdded++;
+        }
+
+        itemOldeData.push(itemTmp);
+        if (iAdded >= itemNewData.length) {
+            break;
+        }
+    }
+
+    return itemOldeData;
 }
 
 function getCarItemNum(carInfo) {

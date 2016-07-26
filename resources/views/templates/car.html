@@ -44,7 +44,7 @@
 
     </ion-content>
     <ion-footer-bar ng-if="showCarInfo">
-        <button class="button button-balanced ion-bag st_buyPopButton" ng-click="checkout()">
+        <button class="button button-balanced ion-bag st_buyPopButton" ng-click="checkout($event)">
             结算
         </button>
         <button class="button button-energized ion-trash-a st_buyPopButton" ng-click="clear()">

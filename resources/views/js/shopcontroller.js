@@ -8,6 +8,9 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     $scope.itemList = [];
     $scope.Page = 0;
     $scope.moreData = true;
+    var innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
+    $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
+
     $scope.doRefresh = function () {
         $http.get("indexItem")
             .success(
@@ -19,7 +22,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
                     $scope.activityItem = data.activityItem;
                     $scope.Notice = data.notice.notice;
                     if (0 != data.homeItem.length){
-                        $scope.itemList = $scope.itemList.concat(data.homeItem);
+                        $scope.itemList = makeItemList(data.homeItem, innerWidth);
                     }
 
                     //更新轮播
@@ -46,7 +49,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
                     if (0 == data.length){
                         $scope.moreData = false;
                     }else {
-                        $scope.itemList = $scope.itemList.concat(data);
+                        $scope.itemList = appendItemList($scope.itemList, data,innerWidth);
                     }
                 }
             ).error(
@@ -96,6 +99,8 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     $scope.Page = 0;
     $scope.moreData = true;
     $scope.showBuild = false;
+    var innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
+    $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
 
     $scope.doRefresh = function () {
         $scope.Page = 0;
@@ -105,8 +110,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
                     $scope.moreData = true;
                     $scope.itemList = [];
 
-
-                    $scope.itemList = $scope.itemList.concat(data);
+                    $scope.itemList = makeItemList(data, innerWidth);
                     if (0 == $scope.itemList.length){
                         $scope.showBuild = true;
                     }
@@ -134,7 +138,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
                     if (0 == data.length){
                         $scope.moreData = false;
                     }else {
-                        $scope.itemList = $scope.itemList.concat(data);
+                        $scope.itemList = appendItemList($scope.itemList, data,innerWidth);
                     }
 
                     if (0 == $scope.itemList.length){
@@ -402,7 +406,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 }]);
 
 //购物车
-appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', '$http', '$location', '$ionicLoading', '$state', function($scope, $cookieStore, $ionicPopup, carItemNumFactory, $http, $location, $ionicLoading, $state){
+appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 'carItemNumFactory', '$http', '$location', '$ionicLoading', '$state','$ionicPopover', function($scope, $cookieStore, $ionicPopup, carItemNumFactory, $http, $location, $ionicLoading, $state, $ionicPopover){
     var carInfo = $cookieStore.get('car');
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
@@ -412,19 +416,56 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
         $scope.showCarInfo = true;
     }
 
-    $scope.checkout = function(){
-        carInfo = $cookieStore.get('car');
-        if (!carInfo || 0 == carInfo.length){
+    $scope.chooseAddr = function (addrID) {
+        $scope.AddrId = addrID;
+        for (var  i = 0; i < $scope.AddrList.length; i++){
+            var id = $scope.AddrList[i].id;
+            if (addrID == id){
+                $scope['chooseStyle'+id] =  {
+                    "background-color" : "#CCCCCC"
+                };
+            }else{
+                $scope['chooseStyle'+id] =  {
+                    "background-color" : "#fff"
+                };
+            }
+        }
+    };
+    //弹出选项
+    $scope.popover = $ionicPopover.fromTemplateUrl('resources/views/templates/chooseaddr.html', {
+        scope: $scope
+    });
+    $ionicPopover.fromTemplateUrl('resources/views/templates/chooseaddr.html', {
+        scope: $scope
+    }).then(function(popover) {
+        $scope.popover = popover;
+    });
+    //取消
+    $scope.cancel = function() {
+        $scope.isCancel = true;
+        $scope.popover.hide();
+    };
+    //确定
+    $scope.confirm = function() {
+        if (0 == $scope.AddrId){
+            layer.msg('请选择收货地址！');
             return;
         }
 
-        $ionicLoading.show({
-            template: getLoading()
-        });
+        $scope.isCancel = false;
+        $scope.popover.hide();
+    };
+    // 在隐藏浮动框后执行
+    $scope.$on('popover.hidden', function() {
+        // 执行代码
+        if ($scope.isCancel || 0 == $scope.AddrId){
+            return;
+        }
 
         //订单信息生成
         var orderMsg = {}
         orderMsg.price = getCarPriceTotal(carInfo);
+        orderMsg.addrID = $scope.AddrId;
         orderMsg.items = [];
         for (i = 0; i < carInfo.length; i++){
             var itemInfo = {};
@@ -454,7 +495,42 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
                 //开始支付
                 $state.go('tabs.carPay', {orderID: orderID});
             }
-            $ionicLoading.hide();
+
+        });
+    });
+
+        //结算
+    $scope.checkout = function($event){
+        carInfo = $cookieStore.get('car');
+        if (!carInfo || 0 == carInfo.length){
+            return;
+        }
+
+        $ionicLoading.show({
+            template: getLoading()
+        });
+
+        $http.get("getAddr")
+            .success(
+                function (data, status, header, config) {
+                    if (0 != data.status){
+                        layer.msg(data.msg);
+                    }else {
+                        if (0 == data.msg.length){
+                            layer.msg('请在用户中心完善你的收货地址!');
+                            return;
+                        };
+
+                        $scope.AddrList = data.msg;
+                        $scope.AddrId = 0;
+                        $scope.popover.show($event);
+                    }
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            }).finally(function() {
+                $ionicLoading.hide();
         });
     };
 

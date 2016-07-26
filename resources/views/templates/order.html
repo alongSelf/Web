@@ -71,6 +71,15 @@
                     <span>单价：[[itemInfo.price | currency:'￥']]</span>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <em>收货人：</em><em>[[data.addr.name]]&nbsp&nbsp</em>
+                    <em class="st_addInfo">[[data.addr.phone | hidePhone]]</em>
+                </div>
+                <div class="col">
+                    <em>地址：</em><em class="st_addInfo">[[data.addr.addr | fmtAddr]]</em>
+                </div>
+            </div>
             <div ng-if="data.status == 0" class="st_orderOp">
                     <button style="color: red" ng-click="Cancel(data.id)">
                         取消

@@ -32,13 +32,34 @@
                 <tr>
                     <th>用户ID：</th>
                     <td>
-                        <input type="text" name="userID" value="{{$userID}}">
+                        <input type="text" name="userID" value="{{$logistics->userID}}">
                     </td>
                 </tr>
                 <tr>
                     <th>apiKey：</th>
                     <td>
-                        <input type="text" style="width: 50%" name="apiKey" value="{{$apiKey}}">
+                        <input type="text" style="width: 50%" name="apiKey" value="{{$logistics->apiKey}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>姓名：</th>
+                    <td>
+                        <input type="text" style="width: 50%" name="name" value="{{$logisticsAddr->name}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>电话：</th>
+                    <td>
+                        <input type="text" style="width: 50%" name="phone" value="{{$logisticsAddr->phone}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>地址：</th>
+                    <td>
+                        <input type="text" placeholder="省" name="province" value="{{$logisticsAddr->province}}">
+                        <input type="text" placeholder="市" name="city" value="{{$logisticsAddr->city}}">
+                        <input type="text" placeholder="区/县" name="county" value="{{$logisticsAddr->county}}">
+                        <input type="text" placeholder="详细地址" name="address" value="{{$logisticsAddr->address}}">
                     </td>
                 </tr>
                 <tr>

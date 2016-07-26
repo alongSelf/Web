@@ -114,16 +114,16 @@
                 </td>
                 <th>收货人地址：</th>
                 <td>
-                    {{$data->addr->addr}}
+                    <?php
+                    $addr = json_decode($data->addr->addr);
+                    echo $addr->province . ' ' . $addr->city . ' ' . $addr->county. ' ' .$addr->address;
+                    ?>
                 </td>
-                <th>
-                    <input type="button" onclick="printAddr()" value="打印">
-                </th>
             </tr>
             <!--发货-->
             @if($data->status == 1)
                 <tr>
-                    <th>物流：</th>
+                    <th>承运公司：</th>
                     <td>
                         <select id="ShipperCode">
                             @foreach($shippercode as $sh)
@@ -132,7 +132,13 @@
                                 </option>
                             @endforeach
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>运单号：</th>
+                    <td>
                         <input type="text" style="width: 200px" id="LogisticCode" placeholder="运单号" value="">
+                        <br>
                         <input type="button" onclick="delivery()" value="发货">
                     </td>
                 </tr>
@@ -163,6 +169,7 @@
 
             var msg = '承运公司：' + ShipperName + '  运单号：' +LogisticCode + '?';
             layer.confirm(msg, {
+                title: '线下发货',
                 btn: ['确定','取消'] //按钮
             }, function(){
                 $.post("{{url('admin/order/delivery')}}",
@@ -179,8 +186,29 @@
             });
         }
         
-        function printAddr() {
+        function deliveryOnLine() {
             var orderID = document.getElementById('orderID').value;
+            var ShipperCodeDoc = document.getElementById('ShipperCode');
+            var index = ShipperCodeDoc.selectedIndex;
+            var ShipperName = ShipperCodeDoc.options[index].text;
+            var ShipperCode = ShipperCodeDoc.options[index].value;
+
+            var msg = '向 ' + ShipperName + ' 下单发货?';
+            layer.confirm(msg, {
+                title: '在线发货',
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.post("{{url('admin/order/deliveryOnLine')}}",
+                        {'_token':"{{csrf_token()}}", 'ShipperCode':ShipperCode, 'orderID':orderID},function (data) {
+                            if(data.status==0){
+                                layer.msg(data.msg, {icon: 6});
+                            }else{
+                                layer.msg(data.msg, {icon: 5});
+                            }
+                        });
+            }, function(){
+
+            });
         }
 
     </script>

@@ -274,6 +274,7 @@ class OtherController extends CommonController
     public function contactus()
     {
         $config = Config::first();
+        $config['contactus'] = json_decode($config['contactus']);
         return view('admin.other.contactus', compact('config'));
     }
     public function changeContactus()
@@ -281,7 +282,12 @@ class OtherController extends CommonController
         $input = Input::except('_token');
         if ($input) {
             $config = Config::find($input['id']);
-            $config->contactus = $input['contactus'];
+
+            $data['phone'] = $input['phone'];
+            $data['email'] = $input['email'];
+            $data['qq'] = $input['qq'];
+            $data['postAddr'] = $input['postAddr'];
+            $config->contactus = json_encode($data);
             $re = $config->update();
             if ($re) {
                 return back()->with('errors', '联系我们更新成功！');
@@ -296,18 +302,9 @@ class OtherController extends CommonController
         $config = Config::first();
         $logistics = json_decode($config['logistics']);
         $id = $config['id'];
-        if ($logistics && $logistics->userID){
-            $userID = $logistics->userID;
-        }else{
-            $userID = '';
-        }
-        if ($logistics && $logistics->apiKey){
-            $apiKey = $logistics->apiKey;
-        }else{
-            $apiKey = '';
-        }
+        $logisticsAddr = json_decode($config['logisticsaddr']);
 
-        return view('admin.other.logistics', compact('id', 'userID', 'apiKey'));
+        return view('admin.other.logistics', compact('id', 'logistics', 'logisticsAddr'));
     }
     public function setLogistics()
     {
@@ -317,8 +314,16 @@ class OtherController extends CommonController
         $logistics['userID'] = $input['userID'];
         $logistics['apiKey'] = $input['apiKey'];
 
+        $logisticsAddr['name'] = $input['name'];
+        $logisticsAddr['phone'] = $input['phone'];
+        $logisticsAddr['province'] = $input['province'];
+        $logisticsAddr['city'] = $input['city'];
+        $logisticsAddr['county'] = $input['county'];
+        $logisticsAddr['address'] = $input['address'];
+
         $config = Config::first();
         $config->logistics = json_encode($logistics);
+        $config->logisticsaddr = json_encode($logisticsAddr);
 
         if ($config->update()) {
             return back()->with('errors', '更新成功！');

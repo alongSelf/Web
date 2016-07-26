@@ -178,4 +178,24 @@ class OrderController extends CommonController
             'msg' => '发货成功！',
         ];
     }
+
+    public function deliveryOnLine(){
+        $input = Input::except('_token');
+        $rules = [
+            'ShipperCode'=>'required',
+            'orderID'=>'required',
+        ];
+        $message = [
+            'ShipperCode.required'=>'承运公司不能为空！',
+            'orderID.required'=>'订单ID不能为空！',
+        ];
+
+        $validator = Validator::make($input,$rules,$message);
+        if (!$validator->passes()){
+            return [
+                'status' => 1,
+                'msg' => '参数错误！',
+            ];
+        }
+    }
 }

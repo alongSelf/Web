@@ -17,7 +17,7 @@
                 <img ng-src="resources/views/sysimg/Delete.png"
                      class="st_delAddr" ng-click="delAddr([[addrInfo.id]])">
                 <div>[[addrInfo.name]]&nbsp&nbsp&nbsp&nbsp[[addrInfo.phone]]</div>
-                <div class="st_addInfo">[[addrInfo.addr]]</div>
+                <div class="st_addInfo">[[addrInfo.addr | fmtAddr]]</div>
             </ion-item>
             <ion-item class="item-image st_newAddr" ng-click="addAddr()">
                 <i style="padding-left: 15px; padding-top: 5px">新增收货地址</i>

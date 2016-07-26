@@ -361,27 +361,31 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', '$io
             layer.msg('请选择收货人所在地址！');
             return;
         }
-        var addrInfo = $scope.addr.Area1;
+        var addrInfo = {}
+        addrInfo.province = $scope.addr.Area1;
         if (!$scope.addr.Area2 ||  $scope.selectAddrStr == $scope.addr.Area2){
             layer.msg('请选择收货人所在地址！');
             return;
         }
-        addrInfo = addrInfo + ' ' + $scope.addr.Area2;
+        addrInfo.city = $scope.addr.Area2;
+
+        addrInfo.county = '';
         if ($scope.showArea3){
             if (!$scope.addr.Area3 ||  $scope.selectAddrStr == $scope.addr.Area3){
                 layer.msg('请选择收货人所在地址！');
                 return;
             }
 
-            addrInfo = addrInfo + ' ' + $scope.addr.Area3;
+            addrInfo.county = $scope.addr.Area3;
         }
+
         if (!$scope.addr.street || 0 == $scope.addr.street.length){
             layer.msg('请选择收货人详细地址！');
             return;
         }
-        addrInfo = addrInfo + ' ' + $scope.addr.street;
+        addrInfo.address = $scope.addr.street;
 
-        addrs.addr = addrInfo;
+        addrs.addr = JSON.stringify(addrInfo);
 
         $ionicLoading.show({
             template: getLoading()

@@ -13,19 +13,19 @@
                        refreshing-text="加载中...">
         </ion-refresher>
 
-        <div class="row row-wrap">
-            <div class="col st_taCenter" ng-repeat="item in itemList">
+        <div class="row row-wrap" ng-repeat="items in itemList">
+            <div class="col col-[[perItemWidth]] st_taCenter" ng-repeat="item in items">
                 <span>
                     <img class="st_showImg"
-                         ui-sref="tabs.finditeminfo({itemID: [[item.id]]})"
+                         ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
                          image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
                 </span>
                 <span>
-                    <div ui-sref="tabs.finditeminfo({itemID: [[item.id]]})">
+                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">
                         [[item.name | clipStr]]
                     </div>
                 </span>
-                 <span>
+                <span>
                     <em class="st_price">[[item.cur_price | currency:'￥']]</em>
                     <em class="st_buynum">[[item.buynum]]人付款</em>
                 </span>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-24 23:57:04
+Date: 2016-07-26 18:06:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,14 +26,13 @@ CREATE TABLE `addr` (
   `phone` varchar(32) DEFAULT '' COMMENT '收货人电话',
   `addr` text COMMENT '地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of addr
 -- ----------------------------
-INSERT INTO `addr` VALUES ('3', '10000', '张三', '15885527974', '四川省 成都市 郫县 郫县2中');
-INSERT INTO `addr` VALUES ('4', '10000', '李四', '15882276718', '北京市 朝阳区 天朝路');
-INSERT INTO `addr` VALUES ('8', '10008', '张三', '15882276717', '北京市 东城区 嘻嘻嘻');
+INSERT INTO `addr` VALUES ('12', '10008', '张三', '15882276717', '{\"province\":\"\",\"city\":\"北京市\",\"address\":\"XXX号\",\"county\":\"东城区\"}');
+INSERT INTO `addr` VALUES ('13', '10008', '阿达的', '15882254674', '{\"province\":\"北京市\",\"city\":\"东城区\",\"county\":\"\",\"address\":\"嘻嘻嘻\"}');
 
 -- ----------------------------
 -- Table structure for `adminuser`
@@ -68,8 +67,9 @@ CREATE TABLE `agent` (
 -- ----------------------------
 -- Records of agent
 -- ----------------------------
-INSERT INTO `agent` VALUES ('10007', '张三', '15882276717', '0');
-INSERT INTO `agent` VALUES ('10008', '张33', '15822279999', '0');
+INSERT INTO `agent` VALUES ('10000', '张1', '15882276717', '1');
+INSERT INTO `agent` VALUES ('10001', '张2', '15882276718', '1');
+INSERT INTO `agent` VALUES ('10002', '张3', '15882276719', '1');
 
 -- ----------------------------
 -- Table structure for `cash`
@@ -83,18 +83,20 @@ CREATE TABLE `cash` (
   `status` int(11) DEFAULT '0' COMMENT '0申请中，1完成，2取消',
   `time` bigint(20) DEFAULT '0' COMMENT '提现时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cash
 -- ----------------------------
-INSERT INTO `cash` VALUES ('11', '10008', '50', '45000', '0', '1468552771');
-INSERT INTO `cash` VALUES ('12', '10008', '51', '39950', '0', '1468552791');
-INSERT INTO `cash` VALUES ('13', '10008', '51', '34900', '0', '1468552878');
-INSERT INTO `cash` VALUES ('14', '10008', '50', '29880', '0', '1468558457');
-INSERT INTO `cash` VALUES ('15', '10008', '50', '24880', '0', '1468558594');
-INSERT INTO `cash` VALUES ('16', '10008', '111', '13780', '0', '1468561053');
-INSERT INTO `cash` VALUES ('17', '10008', '53', '8480', '0', '1469005209');
+INSERT INTO `cash` VALUES ('11', '10008', '50', '45000', '2', '1468552771');
+INSERT INTO `cash` VALUES ('12', '10008', '51', '39950', '2', '1468552791');
+INSERT INTO `cash` VALUES ('13', '10008', '51', '34900', '1', '1468552878');
+INSERT INTO `cash` VALUES ('14', '10008', '50', '29880', '2', '1468558457');
+INSERT INTO `cash` VALUES ('15', '10008', '50', '24880', '2', '1468558594');
+INSERT INTO `cash` VALUES ('16', '10008', '111', '13780', '1', '1468561053');
+INSERT INTO `cash` VALUES ('17', '10008', '53', '8480', '1', '1469005209');
+INSERT INTO `cash` VALUES ('18', '10008', '100', '838000', '1', '1469427018');
+INSERT INTO `cash` VALUES ('19', '10008', '100', '828000', '2', '1469427024');
 
 -- ----------------------------
 -- Table structure for `category`
@@ -107,12 +109,13 @@ CREATE TABLE `category` (
   `describe` varchar(255) DEFAULT '',
   `sort` tinyint(4) DEFAULT '0' COMMENT '排序规则',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('17', '工口小学生', '579394c41225c.jpg', '工口小学生图片', '1');
+INSERT INTO `category` VALUES ('18', '测试分类1', '5795673c6164a.jpg', '测试分类简介1', '1');
+INSERT INTO `category` VALUES ('19', '测试分类2', '579567500a96a.jpg', '测试分类2简介', '2');
 
 -- ----------------------------
 -- Table structure for `config`
@@ -130,13 +133,14 @@ CREATE TABLE `config` (
   `commission2` float DEFAULT '0' COMMENT '第二级上级每100元提成多少分',
   `commission3` float DEFAULT '0' COMMENT '第三级上级每100元提成多少分',
   `logistics` text COMMENT '物流',
+  `logisticsaddr` text COMMENT '在线发货地址信息',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('3', '微信商城', '<p style=\"text-align: center;\"><iframe width=\"100%\" height=\"344\" class=\"ueditor_baidumap\" src=\"http://localhost/resources/views/ueditor/dialogs/map/show.html#center=104.071216,30.57603&zoom=13&width=530&height=340&markers=104.071216,30.576279&markerStyles=l,A\" frameborder=\"0\"></iframe></p>', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}');
+INSERT INTO `config` VALUES ('3', '微信商城', '{\"phone\":\"15882279747\\r\\n13328585252\\r\\n15788255222\\r\\n028-6687222\",\"email\":\"7812212qq.com\\r\\n2451@163.com\",\"qq\":\"5845222\\r\\n1541512\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\",\"city\":\"\\u5317\\u4eac\\u5e02\",\"county\":\"\\u4e1c\\u57ce\\u533a\",\"address\":\"XXX\\u53f7\"}');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -158,12 +162,12 @@ CREATE TABLE `evaluates` (
 -- ----------------------------
 -- Records of evaluates
 -- ----------------------------
-INSERT INTO `evaluates` VALUES ('1', '23', '5', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '2', '毛毛虫1', '0', '1403058804', '1');
-INSERT INTO `evaluates` VALUES ('2', '23', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫2', '0', '1403058804', '1');
-INSERT INTO `evaluates` VALUES ('3', '23', '3', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫3', '0', '1403058804', '0');
-INSERT INTO `evaluates` VALUES ('4', '23', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫4', '0', '1404058804', '0');
-INSERT INTO `evaluates` VALUES ('5', '23', '1', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫5', '0', '1403068804', '0');
-INSERT INTO `evaluates` VALUES ('6', '23', '4', '', '10008', '毛毛虫', '5790443c39705', '1469351196', '0');
+INSERT INTO `evaluates` VALUES ('1', '29', '5', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '2', '毛毛虫1', '0', '1403058804', '1');
+INSERT INTO `evaluates` VALUES ('2', '29', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫2', '0', '1403058804', '1');
+INSERT INTO `evaluates` VALUES ('3', '29', '3', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫3', '0', '1403058804', '0');
+INSERT INTO `evaluates` VALUES ('4', '29', '4', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫4', '0', '1404058804', '0');
+INSERT INTO `evaluates` VALUES ('5', '29', '1', '在一个div中嵌入一个与该div大小一样的image正好合适，但是在image上加一个<a>该div里就放不下怎么解决？', '0', '毛毛虫5', '0', '1403068804', '0');
+INSERT INTO `evaluates` VALUES ('6', '29', '4', '', '10008', '毛毛虫', '5790443c39705', '1469351196', '0');
 
 -- ----------------------------
 -- Table structure for `follower`
@@ -253,11 +257,10 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('5790443c39705', '10008', '0', null, '731', '{\"price\":731,\"items\":[{\"id\":23,\"name\":\"工口小学生1工口小学生1工口小学生1工口小学生1工口小学生1\",\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"},{\"name\":\"颜色\",\"val\":\"红\"}],\"num\":1,\"price\":151},{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', '{\"ShipperCode\":\"ZTO\",\"LogisticCode\":\"407324997603\"}', null, '1469072444', '2');
-INSERT INTO `orders` VALUES ('57904445b9bee', '10008', '1', null, '800', '{\"price\":800,\"items\":[{\"id\":25,\"name\":\"工口小学生3\",\"spec\":[],\"num\":1,\"price\":800}]}', null, null, '1469072453', '1');
-INSERT INTO `orders` VALUES ('5790444d534ff', '10008', '2', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"name\":\"工口小学生4\",\"spec\":[],\"num\":1,\"price\":580}]}', null, null, '1469072461', '2');
-INSERT INTO `orders` VALUES ('5790445430bd8', '10008', '1', null, '500', '{\"price\":500,\"items\":[{\"id\":27,\"name\":\"小学生5\",\"spec\":[],\"num\":1,\"price\":500}]}', null, null, '1469072468', '3');
-INSERT INTO `orders` VALUES ('579485640068a', '10008', '0', null, '580', '{\"price\":580,\"items\":[{\"id\":26,\"spec\":[],\"num\":1,\"price\":580}]}', null, null, '1469351268', '4');
+INSERT INTO `orders` VALUES ('5796f41176442', '10008', '1', null, '100', '{\"price\":100,\"addrID\":11,\"items\":[{\"id\":29,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"}],\"num\":1,\"price\":100}]}', null, '{\"name\":\"\\u5f20\\u4e092\",\"phone\":\"15882276718\",\"addr\":\"{\\\"province\\\":\\\"\\u5317\\u4eac\\u5e02\\\",\\\"city\\\":\\\"\\u5317\\u4eac\\u5e02\\\",\\\"address\\\":\\\"\\u897f\\u57ce\\u5927\\u9053150\\u53f7\\\",\\\"county\\\":\\\"\\u897f\\u57ce\\u533a\\\"}\"}', '1469510673', '1');
+INSERT INTO `orders` VALUES ('5796f46d348eb', '10008', '0', null, '100', '{\"price\":100,\"addrID\":11,\"items\":[{\"id\":29,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"}],\"num\":1,\"price\":100}]}', null, '{\"name\":\"\\u5f20\\u4e092\",\"phone\":\"15882276718\",\"addr\":\"{\\\"province\\\":\\\"\\u5317\\u4eac\\u5e02\\\",\\\"city\\\":\\\"\\u5317\\u4eac\\u5e02\\\",\\\"address\\\":\\\"\\u897f\\u57ce\\u5927\\u9053150\\u53f7\\\",\\\"county\\\":\\\"\\u897f\\u57ce\\u533a\\\"}\"}', '1469510765', '0');
+INSERT INTO `orders` VALUES ('5796fd68a6918', '10008', '0', null, '100', '{\"price\":100,\"addrID\":11,\"items\":[{\"id\":29,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"}],\"num\":1,\"price\":100}]}', null, '{\"name\":\"\\u5f20\\u4e092\",\"phone\":\"15882276718\",\"addr\":\"{\\\"province\\\":\\\"\\u5317\\u4eac\\u5e02\\\",\\\"city\\\":\\\"\\u5317\\u4eac\\u5e02\\\",\\\"address\\\":\\\"\\u897f\\u57ce\\u5927\\u9053150\\u53f7\\\",\\\"county\\\":\\\"\\u897f\\u57ce\\u533a\\\"}\"}', '1469513064', '0');
+INSERT INTO `orders` VALUES ('5797091ccec8b', '10008', '0', null, '100', '{\"price\":100,\"addrID\":12,\"items\":[{\"id\":29,\"spec\":[{\"name\":\"尺寸\",\"val\":\"M\"}],\"num\":1,\"price\":100}]}', null, '{\"name\":\"\\u5f20\\u4e09\",\"phone\":\"15882276717\",\"addr\":\"{\\\"province\\\":\\\"\\\",\\\"city\\\":\\\"\\u5317\\u4eac\\u5e02\\\",\\\"address\\\":\\\"XXX\\u53f7\\\",\\\"county\\\":\\\"\\u4e1c\\u57ce\\u533a\\\"}\"}', '1469516060', '0');
 
 -- ----------------------------
 -- Table structure for `shippercode`
@@ -273,7 +276,6 @@ CREATE TABLE `shippercode` (
 -- ----------------------------
 -- Records of shippercode
 -- ----------------------------
-INSERT INTO `shippercode` VALUES ('1', '编码', '名称');
 INSERT INTO `shippercode` VALUES ('2', 'AJ', '安捷快递');
 INSERT INTO `shippercode` VALUES ('3', 'ANE', '安能物流');
 INSERT INTO `shippercode` VALUES ('4', 'AXD', '安信达快递');
@@ -373,8 +375,6 @@ INSERT INTO `shippercode` VALUES ('97', 'HOTSCM', '鸿桥供应链');
 INSERT INTO `shippercode` VALUES ('98', 'HPTEX', '海派通物流公司');
 INSERT INTO `shippercode` VALUES ('99', 'AYCA', '澳邮专线');
 INSERT INTO `shippercode` VALUES ('100', 'PANEX', '泛捷快递');
-INSERT INTO `shippercode` VALUES ('101', 'PCA', 'PCA Express');
-INSERT INTO `shippercode` VALUES ('102', 'UEQ', 'UEQ Express');
 
 -- ----------------------------
 -- Table structure for `shopitem`
@@ -399,11 +399,17 @@ CREATE TABLE `shopitem` (
   `showindex` tinyint(4) DEFAULT '0' COMMENT '是否在主页显示',
   `display` tinyint(4) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
+INSERT INTO `shopitem` VALUES ('29', '商品1', '件', '18', '57956794972b3.jpg', '商品1', '520', '410', '-1', '54', '5795676c56aff.jpg', '[\"5795678b30a44.jpg\",\"5795678b615fa.jpg\",\"5795678b87508.jpg\"]', '1', '57956780217b4.jpg', '{\"尺寸\":[{\"val\":\"M\",\"price\":100},{\"val\":\"L\",\"price\":120}]}', '1', '1');
+INSERT INTO `shopitem` VALUES ('30', '商品2', '㎡', '18', '579567d06adbe.jpg', '商品2', '840', '800', '-1', '0', '579567ac21c1a.jpg', '[\"579567c7f08a8.jpg\",\"579567c82777e.jpg\",\"579567c8524ad.jpg\"]', '1', '579567be52827.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('31', '商品3', '个', '18', '579568015427c.jpg', '商品3', '700', '650', '-1', '0', '579567dfa5c64.jpg', '[\"579567f5ec9be.jpg\",\"579567f6176d3.jpg\",\"579567f638180.jpg\"]', '1', '579567eda0d98.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('32', '商品4', '件', '18', '579717955a19e.jpg', '商品4', '111', '11', '-1', '1', '5797176a72a6f.jpg', '[\"579717909eab1.jpg\",\"57971790bc295.jpg\",\"57971790dcf99.jpg\"]', '1', '5797178a0058a.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('33', '商品5', '个', '18', '579717d24532a.jpg', '商品5', '134', '12', '-1', '0', '579717a4435a6.jpg', '[\"579717c99d774.jpg\",\"579717c9bbb10.jpg\",\"579717c9d96dd.jpg\"]', '0', '579717c0af059.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('34', '商品6', '个', '18', '5797180aa86b7.jpg', '商品6', '1344', '122', '-1', '0', '579717ef54e82.jpg', '[\"57971806008fb.jpg\",\"57971806240f8.jpg\",\"5797180642495.jpg\"]', '0', '579717fcc8e1f.jpg', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_prov_city_area`
@@ -3786,7 +3792,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('10008', '', '张三', 'deficon.jpg', '毛毛虫', '279133271@qq.com.cc', '15882276717', 'eyJpdiI6IkVtdmRkZVpTOEZEcUx6c0xWOXYzWUE9PSIsInZhbHVlIjoiTzEwNXlScTYydkNJakJ1NmRUR3ZPdz09IiwibWFjIjoiNGE0MDRlN2Y4NTNmMmZiZjUzZDQ4ODU1OWM4MDVlMDM0MTVkNDJiMzJhNmQyMmViNWVhZTEwNmQ1MzA3ZGFmZCJ9', '574126165', '279133271', '300', '8480', '3', '1469182515');
+INSERT INTO `users` VALUES ('10008', '', '张三', 'deficon.jpg', '毛毛虫', '279133271@qq.com.cc', '15882276717', 'eyJpdiI6IkVtdmRkZVpTOEZEcUx6c0xWOXYzWUE9PSIsInZhbHVlIjoiTzEwNXlScTYydkNJakJ1NmRUR3ZPdz09IiwibWFjIjoiNGE0MDRlN2Y4NTNmMmZiZjUzZDQ4ODU1OWM4MDVlMDM0MTVkNDJiMzJhNmQyMmViNWVhZTEwNmQ1MzA3ZGFmZCJ9', '574126165', '279133271', '300', '838000', '3', '1469182515');
 INSERT INTO `users` VALUES ('10009', '', '', 'deficon.jpg', '大毛毛虫1', '', '', '', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10010', '', '', 'deficon.jpg', '', '', '15882276841', 'eyJpdiI6IlBLWTEzSGFKK0FLTTkwaXNKeHFVS2c9PSIsInZhbHVlIjoib0h3amJJR2dPYW5PZ0tKdFNZXC9FQnc9PSIsIm1hYyI6ImM2YWMzOTczZDBjZTgyOGQwNjBiNGVkMTc5MWM2MTNlZTE4NGZiYTU0MzY3MGNlMTU1M2NmYmU3MjVmMzRiYTkifQ==', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10011', '', '', 'deficon.jpg', '', '', '15882276718', 'eyJpdiI6IlwvZjRqOXEzM2E0MlE2K09Cd1VlRUJBPT0iLCJ2YWx1ZSI6IkU3WUZHVFNQVkcwTnZiKytNMFwvZkR3PT0iLCJtYWMiOiJiNTlhODYxYzY5NDUxM2RhNDhhNTE1NjY3YTY5Y2ZkMDZlMjZjNzJmOWNlN2QyMDRiZGFiNWYzOTUwZjRmMTZiIn0=', '', null, '0', '0', '0', '0');
