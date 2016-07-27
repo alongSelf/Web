@@ -146,6 +146,11 @@
                     <td>
                         <input type="button" onclick="deliveryOnLine()" value="在线下运单">
                     </td>
+                    <!--
+                    <th>备注：</th>
+                    <td>
+                        德邦,百世快递,申通,韵达,圆通,宅急送需申请 EMS,顺丰,优速,中通可以直接用
+                    </td>-->
                 </tr>
             @endif
             @if($data->status == 2 || $data->status == 3 )
@@ -153,13 +158,23 @@
                     <th>物流：</th>
                     <td>
                         {!! $data->logistics !!}
+                        <input id="printLogistics" type="button" value="打印面单">
                     </td>
                 </tr>
             @endif
             </tbody>
         </table>
+        @if($data->status == 2 || $data->status == 3 )
+            <div id="logisticsOrder">
+                {!! $data->logisticsOrder !!}
+            </div>
+        @endif
     </div>
     <script>
+        $("#printLogistics").click(function(){
+            $("#logisticsOrder").printArea();
+        });
+
         function delivery() {
             var orderID = document.getElementById('orderID').value;
             var ShipperCodeDoc = document.getElementById('ShipperCode');

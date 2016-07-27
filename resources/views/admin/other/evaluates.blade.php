@@ -48,7 +48,13 @@
                             <td>{{$ev->userid}}</td>
                             <td>{{$ev->orderid}}</td>
                             <td>{{$ev->star}}</td>
-                            <td>{{$ev->display}}</td>
+                            <td>
+                                @if($ev->display == 1)
+                                    是
+                                @else
+                                    否
+                                @endif
+                            </td>
                             <td>{{$ev->evaluate}}</td>
                             <td>
                                 <?php
@@ -57,7 +63,13 @@
                             </td>
                             <td>
                                 <!--<a href="javascript:;" onclick="delEvaluates({{$ev->id}})">删除</a>-->
-                                <a href="javascript:;" onclick="disPlayEvaluates({{$ev->id}})">显示/隐藏</a>
+                                <a href="javascript:;" onclick="disPlayEvaluates({{$ev->id}})">
+                                    @if($ev->display == 1)
+                                        隐藏
+                                    @else
+                                        显示
+                                    @endif
+                                </a>
                             </td>
                         </tr>
                     @endforeach

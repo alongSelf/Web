@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\http\Model\Config;
 use App\http\Model\Evaluates;
 use App\http\Model\Notice;
+use App\http\Model\ShipperCode;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -329,6 +330,70 @@ class OtherController extends CommonController
             return back()->with('errors', '更新成功！');
         } else {
             return back()->with('errors', '更新失败，请稍后重试！');
+        }
+    }
+
+    public function showShippercode($name = '')
+    {
+        if (0 == strlen($name)){
+            $data = ShipperCode::paginate(10);
+        }else{
+            $data = ShipperCode::where('name','like','%'.$name.'%')->paginate(10);
+        }
+
+        return view('admin.other.shippercode', compact('name', 'data'));
+    }
+
+    public function setShippercode()
+    {
+        $input = Input::except('_token');
+        $id = $input['id'];
+        $data = ShipperCode::find($id);
+        if (!$data){
+            return [
+                'status' => 1,
+                'msg' => '参数错误！',
+            ];
+        }
+
+        if(1 == $data['display']){
+            $data['display'] = 0;
+        }else{
+            $data['display'] = 1;
+        }
+        if ($data->update()){
+            return [
+                'status' => 0,
+                'msg' => 'OK！',
+            ];
+        }else{
+            return [
+                'status' => 1,
+                'msg' => '更新失败，请稍候再试！',
+            ];
+        }
+    }
+    
+    public function showLAccount($id)
+    {
+        $shippercode = ShipperCode::find($id);
+        $account = json_decode($shippercode['account']);
+
+        return view('admin.other.logisticsaccount', compact('id', 'account'));
+    }
+    public function setLAccount()
+    {
+        $input = Input::except('_token');
+        $account['CustomerName'] = $input['CustomerName'];
+        $account['CustomerPwd'] = $input['CustomerPwd'];
+        $account['SendSite'] = $input['SendSite'];
+
+        $shippercode = ShipperCode::find($input['id']);
+        $shippercode->account = json_encode($account);
+        if($shippercode->update()){
+            return back()->with('errors','更新成功！');
+        }else{
+            return back()->with('errors','更新失败，请稍后重试！');
         }
     }
 

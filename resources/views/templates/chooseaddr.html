@@ -1,16 +1,13 @@
 <!--结算弹出页-->
 <ion-popover-view>
-    <ion-header-bar>
-        <div class="title">选择收货地址:</div>
-    </ion-header-bar>
     <ion-content scroll="true" lazy-scroll>
-        <ion-item id="[[addrInfo.id]]" class="item"
+        <div id="[[addrInfo.id]]" class="st_underline"
                   ng-repeat="addrInfo in AddrList"
                   ng-style="chooseStyle[[addrInfo.id]]"
                   ng-click="chooseAddr([[addrInfo.id]])">
             <div>[[addrInfo.name]]&nbsp&nbsp&nbsp&nbsp[[addrInfo.phone]]</div>
-            <div class="st_addInfo">[[addrInfo.addr | fmtStrAddr]]</div>
-        </ion-item>
+            <div class="st_addInfo">[[addrInfo.addr | fmtAddr]]</div>
+        </div>
     </ion-content>
 
     <ion-footer-bar align-title="left">

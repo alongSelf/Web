@@ -30,6 +30,10 @@
                     </button>
                 </div>
             </div>
+            <label class="item item-input" ng-if="!isRegister">
+                <div class="input-label st_inputLabel" style="text-align: right">忘记密码<br>请联系我们</div>
+                <div class="st_addInfo" ng-bind-html="config.contactus.phone | toHtml | trustHtml"></div>
+            </label>
         </div>
 
         <div ng-if="!needLogIn">

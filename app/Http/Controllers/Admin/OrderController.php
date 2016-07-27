@@ -64,11 +64,11 @@ class OrderController extends CommonController
         $type = 'all';
         $userID = '';
         $orderID = '';
+        $lOrder = '';
         $data = $this->getJsonInfo(Orders::orderBy('id','desc')->paginate(10));
 
-        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID'));
+        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID', 'lOrder'));
     }
-
     public function searchByStatues($type)
     {
         $statues = 0;
@@ -94,27 +94,37 @@ class OrderController extends CommonController
 
         $userID = '';
         $orderID = '';
+        $lOrder = '';
         $data = $this->getJsonInfo(Orders::where('status', $statues)->orderBy('id','desc')->paginate(10));
 
-        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID'));
+        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID', 'lOrder'));
     }
-
     public function searchByOrderID($orderID)
     {
         $userID = '';
+        $lOrder = '';
         $type = 'all';
-        $data = $this->getJsonInfo(Orders::where('id', $orderID)->paginate(10));
+        $data = $this->getJsonInfo(Orders::where('id','like','%'.$orderID.'%')->paginate(10));
 
-        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID'));
+        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID', 'lOrder'));
     }
-
     public function searchByUserID($userID)
     {
         $orderID = '';
+        $lOrder = '';
         $type = 'all';
         $data = $this->getJsonInfo(Orders::where('userid', $userID)->paginate(10));
 
-        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID'));
+        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID', 'lOrder'));
+    }
+    public function searchByLOrder($lOrder)
+    {
+        $userID = '';
+        $orderID = '';
+        $type = 'all';
+        $data = $this->getJsonInfo(Orders::where('logistics','like','%'.$lOrder.'%')->paginate(10));
+
+        return view('admin.order.index', compact('data', 'type', 'orderID', 'userID', 'lOrder'));
     }
 
     public function show($orderID)
@@ -123,11 +133,15 @@ class OrderController extends CommonController
         $data->iteminfo = $this->getItemInfo($data['iteminfo']);
         $logistics = $data['logistics'];
         $data->logistics = $this->getLogistics($logistics);
+        $data->logisticsOrder = '';
+        if (0 != strlen($logistics)){
+            $data->logisticsOrder = json_decode($logistics)->PrintTemplate;
+        }
         $user = Users::find($data['userid']);
         $data->userinfo = $user;
         $data->addr = json_decode($data['addr']);
         if ($data['status'] == 1){
-            $shippercode = ShipperCode::all();
+            $shippercode = ShipperCode::where('display', 1)->get();
         }
 
         return view('admin.order.show', compact('data', 'shippercode'));
@@ -178,8 +192,7 @@ class OrderController extends CommonController
             'status' => 0,
             'msg' => '发货成功！',
         ];
-    }    
-
+    }
     public function deliveryOnLine(){
         $input = Input::except('_token');
         $rules = [
@@ -206,10 +219,19 @@ class OrderController extends CommonController
                 'msg' => '查找订单失败！',
             ];
         }
+        $shippercode = ShipperCode::where('code', $input['ShipperCode'])->first();
+        if (!$shippercode){
+            return [
+                'status' => 1,
+                'msg' => '查找订单失败！',
+            ];
+        }
+
 
         $config = Config::first();
         $senderAddr = json_decode($config['logisticsaddr']);
         $receiverAddr = json_decode($order['addr']);
+        $shipperAccount = json_decode($shippercode['account']);
 
         $sender = [];
         $sender["Name"] = $senderAddr->name;
@@ -233,6 +255,15 @@ class OrderController extends CommonController
         $commodity[] = $commodityOne;
 
         $eorder = [];
+        if (0 != strlen($shipperAccount->CustomerName)){
+            $eorder["CustomerName"] = $shipperAccount->CustomerName;
+        }
+        if (0 != strlen($shipperAccount->CustomerPwd)){
+            $eorder["CustomerPwd"] = $shipperAccount->CustomerPwd;
+        }
+        if (0 != strlen($shipperAccount->SendSite)){
+            $eorder["SendSite"] = $shipperAccount->SendSite;
+        }
         $eorder["ShipperCode"] = $input['ShipperCode'];
         $eorder["OrderCode"] = $input['orderID'];
         $eorder["PayType"] = 1;
@@ -240,6 +271,7 @@ class OrderController extends CommonController
         $eorder["Sender"] = $sender;
         $eorder["Receiver"] = $receiver;
         $eorder["Commodity"] = $commodity;
+        $eorder["IsReturnPrintTemplate"] = 1;
 
         $jsonParam = json_encode($eorder, JSON_UNESCAPED_UNICODE);
         $jsonResult = submitEOrder($jsonParam);
@@ -248,6 +280,7 @@ class OrderController extends CommonController
             $logistics = [];
             $logistics['ShipperCode'] = $result['Order']['ShipperCode'];
             $logistics['LogisticCode'] = $result['Order']['LogisticCode'];
+            $logistics['PrintTemplate'] = $result['PrintTemplate'];
             $order['status'] = 2;
             $order['logistics'] = json_encode($logistics);
             if (!$order->update()){

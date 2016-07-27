@@ -17,7 +17,7 @@
     <!--快捷导航 开始-->
     <div class="result_content">
         <div class="short_wrap">
-            <a href="{{url('admin/shop')}}"><i class="fa"></i>全部宝贝</a>
+            <a href="{{url('admin/shop')}}"><i class="fa"></i>全部商品</a>
 
             <select name="category" onchange="searchbycate(this)">
                 @foreach($cate as $c)
@@ -27,13 +27,13 @@
                 @endforeach
             </select>
 
-            <input type="text" id="search" placeholder="物品名" name="search" value="">
+            <input type="text" id="search" placeholder="商品名" name="search" value="">
             <input type="button" onclick="searchbynam()" value="搜索">
         </div>
 
         <br>
         <div class="short_wrap">
-            <a href="{{url('admin/shop/create')}}"><i class="fa fa-plus"></i>添加宝贝</a>
+            <a href="{{url('admin/shop/create')}}"><i class="fa fa-plus"></i>添加商品</a>
         </div>
     </div>
     <!--快捷导航 结束-->
@@ -44,12 +44,12 @@
             <table class="list_tab">
                 <tr>
                     <th class="tc" width="5%">ID</th>
-                    <th class="tc" width="5%">活动物品</th>
+                    <th class="tc" width="5%">首页轮播</th>
                     <th class="tc" width="5%">主页显示</th>
                     <th class="tc" width="5%">是否显示</th>
-                    <th>主图片</th>
+                    <th>封面图</th>
                     <th>名称</th>
-                    <th>类别</th>
+                    <th>类别ID</th>
                     <th>原价</th>
                     <th>现价</th>
                     <th>库存</th>
@@ -59,9 +59,27 @@
                 @foreach($data as $v)
                     <tr>
                         <td class="tc">{{$v->id}}</td>
-                        <td>{{$v->activity}}</td>
-                        <td>{{$v->showindex}}</td>
-                        <td>{{$v->display}}</td>
+                        <td>
+                            @if($v->activity == 1)
+                                是
+                            @else
+                                否
+                            @endif
+                        </td>
+                        <td>
+                            @if($v->showindex == 1)
+                                是
+                            @else
+                                否
+                            @endif
+                        </td>
+                        <td>
+                            @if($v->display == 1)
+                                是
+                            @else
+                                否
+                            @endif
+                        </td>
                         <td><img src="{{asset('uploads/'.$v->indeximg)}}" style="width: 50px; height: 50px"/></td>
                         <td><a target=_blank" href="{{url('/').'#/tabs/iteminfo/'.$v->id}}">{{$v->name}}</a></td>
                         <td>{{$v->category}}</td>
@@ -71,7 +89,13 @@
                         <td>{{$v->buynum}}</td>
                         <td>
                             <a href="{{url('admin/shop/'.$v->id.'/edit')}}">修改</a>
-                            <a href="javascript:;" onclick="delShop({{$v->id}})">隐藏/显示</a>
+                            <a href="javascript:;" onclick="delShop({{$v->id}})">
+                                @if($v->display == 1)
+                                    隐藏
+                                @else
+                                    显示
+                                @endif
+                            </a>
                         </td>
                     </tr>
                 @endforeach

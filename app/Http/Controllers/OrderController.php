@@ -173,6 +173,8 @@ class OrderController extends CommController
                     $iteminfo->items[$j]->img = $shop['indeximg'];
                 }
                 $order[$i]['iteminfo'] = json_encode($iteminfo);
+                $order[$i]['logistics'] = '';
+                $order[$i]['payinfo'] = '';
             }
         }
 

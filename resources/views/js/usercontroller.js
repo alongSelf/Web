@@ -394,7 +394,6 @@ appModule.controller('addrController', ['$scope', '$ionicHistory', '$http', '$io
             if (0 != data.status){
                 layer.msg(data.msg);
             }else {
-                layer.msg(data.msg);
                 $scope.showAddAddr = false;
                 $scope.loadAddr();
             }

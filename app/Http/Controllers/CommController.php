@@ -45,7 +45,7 @@ class CommController extends Controller
 
     public function getID()
     {
-        return uniqid();
+        return 'L'.strtoupper(uniqid());
     }
 
     public function pswMin()

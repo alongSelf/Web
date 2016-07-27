@@ -119,13 +119,9 @@ appModule.filter('orderBgImg', function () {
 
 appModule.filter('fmtAddr', function () {
     return function (input) {
-        return input.province + ' ' + input.city + ' ' + input.county+ ' ' +input.address;
-    }
-});
-
-appModule.filter('fmtStrAddr', function () {
-    return function (input) {
-        input = JSON.parse(input);
+        if('string' == typeof(input)){
+            input = JSON.parse(input);
+        }
         return input.province + ' ' + input.city + ' ' + input.county+ ' ' +input.address;
     }
 });

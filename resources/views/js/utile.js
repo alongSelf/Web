@@ -68,8 +68,15 @@ function getItemListImgH() {
     return 170;
 }
 
+function getMaxW() {
+    return 850;
+}
+
+function getSlideImgH() {
+    return 465;
+}
+
 function getColStyle(per) {
-    dd(per);
     var col = new Array(25, 33, 34, 40, 50, 60, 66, 67, 75, 80, 90);
     for (var i = 0; i < col.length; i++){
         if (per >= col[i]){
@@ -110,6 +117,35 @@ function makeItemList(itemData, clientWidth) {
     }
 
     return itemList;
+}
+
+function reMakeList(itemList, clientWidth) {
+    var newItemList = new Array;
+    if (!itemList){
+        return newItemList;
+    }
+
+    var lineNum = parseInt(clientWidth / getItemListImgH());//每列多少个
+    lineNum = lineNum > 4 ? 4 : lineNum;
+
+    var itemRow = new Array;
+    for (var i = 0; i < itemList.length; i++){
+        var items = itemList[i];
+        for (var j = 0; j < items.length; j++){
+            if (itemRow.length == lineNum){
+                newItemList.push(itemRow);
+                itemRow = new Array;
+            }
+
+            itemRow.push(items[j]);
+        }
+    }
+
+    if (0 != itemRow.length){
+        newItemList.push(itemRow);
+    }
+
+    return newItemList;
 }
 
 function appendItemList(itemOldeData, itemNewData, clientWidth) {

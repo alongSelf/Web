@@ -40,7 +40,7 @@
             ng-repeat="data in showData">
             <div class="row">
                 <div class="col col-50">
-                    <em>订单号：[[data.id]]</em>
+                    <em>订单号：</em><em class="st_smallFont">[[data.id]]</em>
                 </div>
                 <div class="col">
                     <em>合计：</em><em class="st_price">[[data.price | currency:'￥']]</em>
@@ -48,7 +48,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <em>日期：</em><em>[[data.createtime | toStrDate]]</em>
+                    <em>日期：</em><em class="st_smallFont">[[data.createtime | toStrDate]]</em>
                 </div>
                 <div class="col">
                     <em>支付：</em>
@@ -73,7 +73,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <em>收货人：</em><em>[[data.addr.name]]&nbsp&nbsp</em>
+                    <em>收货人：</em><em class="st_smallFont">[[data.addr.name]]&nbsp&nbsp</em>
                     <em class="st_addInfo">[[data.addr.phone | hidePhone]]</em>
                 </div>
                 <div class="col">

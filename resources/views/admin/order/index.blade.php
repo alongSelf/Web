@@ -24,6 +24,7 @@
             <div style="padding-left: 100px">
                 <input type="text" placeholder="订单ID" onchange="searchByOrderID(this)" value="{{$orderID}}">
                 <input type="text" placeholder="用户ID" onchange="searchByUserID(this)" value="{{$userID}}">
+                <input type="text" placeholder="运单号" onchange="searchByLOrder(this)" value="{{$lOrder}}">
             </div>
         </div>
         <!--快捷导航 结束-->
@@ -127,6 +128,14 @@
                 return;
             }
             window.location.href='{{url('admin/order/searchByUserID')}}/'+userID;
+        }
+        function searchByLOrder(obj) {
+            var lOrder = obj.value;
+            if (!lOrder || 0 == lOrder.length){
+                window.location.href='{{url('admin/order/index')}}';
+                return;
+            }
+            window.location.href='{{url('admin/order/searchByLOrder')}}/'+lOrder;
         }
     </script>
 

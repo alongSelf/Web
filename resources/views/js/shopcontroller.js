@@ -8,7 +8,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     $scope.itemList = [];
     $scope.Page = 0;
     $scope.moreData = true;
-    var innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
+    var innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
     $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
 
     $scope.doRefresh = function () {
@@ -73,9 +73,9 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     });
 
     $scope.setSlideImgStyle = function () {
-        $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
-        var per = $scope.innerWidth/850;
-        $scope.slideImgH = parseInt(465 * per) + 'px';
+        $scope.innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
+        var per = $scope.innerWidth/getMaxW();
+        $scope.slideImgH = parseInt(getSlideImgH() * per) + 'px';
 
         $scope.slideImgStyle = {
             "width" : "100%",
@@ -89,6 +89,10 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
          $scope.$apply(function(){
              $scope.setSlideImgStyle();
         });
+
+        innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
+        $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
+        $scope.itemList = reMakeList($scope.itemList,innerWidth);
     });
 }]);
 
@@ -99,7 +103,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     $scope.Page = 0;
     $scope.moreData = true;
     $scope.showBuild = false;
-    var innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
+    var innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
     $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
 
     $scope.doRefresh = function () {
@@ -129,6 +133,12 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     };
 
     $scope.doRefresh();
+
+    $(window).resize(function(){
+        innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
+        $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
+        $scope.itemList = reMakeList($scope.itemList, innerWidth);
+    });
 
     $scope.loadMore = function () {
         $scope.Page++;
@@ -313,7 +323,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
                 }
             }
         }
-    };    
+    };
 
     $scope.index = 0;
     $scope.go = function(index){
@@ -386,9 +396,9 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.loadMore();
 
     $scope.setSlideImgStyle = function () {
-        $scope.innerWidth = $window.innerWidth > 850 ? 850: $window.innerWidth;
-        var per = $scope.innerWidth/850;
-        $scope.slideImgH = parseInt(465 * per) + 'px';
+        $scope.innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
+        var per = $scope.innerWidth/getMaxW();
+        $scope.slideImgH = parseInt(getSlideImgH() * per) + 'px';
 
         $scope.slideImgStyle = {
             "width" : "100%",
@@ -523,6 +533,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
 
                         $scope.AddrList = data.msg;
                         $scope.AddrId = 0;
+                        $scope.chooseAddr($scope.AddrList[0].id);
                         $scope.popover.show($event);
                     }
                 }
