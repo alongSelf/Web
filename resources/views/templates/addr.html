@@ -14,7 +14,7 @@
         <!--已有地址-->
         <div ng-if="!showAddAddr">
             <ion-item class="item-avatar" ng-repeat="addrInfo in AddrList">
-                <img ng-src="resources/views/sysimg/Delete.png"
+                <img ng-src="resources/views/sysimg/delete.png"
                      class="st_delAddr" ng-click="delAddr([[addrInfo.id]])">
                 <div>[[addrInfo.name]]&nbsp&nbsp&nbsp&nbsp[[addrInfo.phone]]</div>
                 <div class="st_addInfo">[[addrInfo.addr | fmtAddr]]</div>
