@@ -18,7 +18,7 @@ Route::group([], function () {
 });
 
 Route::group([], function () {
-    Route::get('/', 'ShopController@index');
+    Route::any('/', 'ShopController@index');
     Route::get('getConfig', 'ShopController@getConfig');
     Route::get('categorys', 'ShopController@categorys');
     Route::get('indexItem', 'ShopController@indexItem');

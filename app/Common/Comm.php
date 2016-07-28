@@ -1,6 +1,8 @@
 <?php
 
+use App\http\Model\Users;
 use App\http\Model\Config;
+use Illuminate\Support\Facades\Input;
 
 function rtnMsg($code, $msg)
 {
@@ -124,20 +126,51 @@ function submitEOrder($requestData){
     return $result;
 }
 
-function getWXConfig()
+//保存图片并返回名称
+function saveIcon($url)
 {
-    $config = Config::select('wx')->first();
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HEADER, 0);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $file = curl_exec($curl);
+    curl_close($curl);
 
-    return json_decode($config['wx']);
-}
+    // 将文件写入获得的数据
+    $newName = uniqid().'.jpg';
+    $filename = base_path().'/uploads/'.$newName;
 
-function setToken($token){
-    $GLOBALS['wx_access_token'] = $token;
-}
-
-function getToken(){
-    if (array_key_exists('wx_access_token', $GLOBALS)){
-        return $GLOBALS['wx_access_token'];
+    $write = @fopen($filename, "w");
+    if (!$write) {
+        return 'deficon.jpg';
     }
-    return '';
+    if (!fwrite($write, $file )) {
+        fclose ($write);
+        return 'deficon.jpg';
+    }
+
+    fclose ($write);
+
+    return $newName;
+}
+
+function https($url)
+{
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HEADER, 0);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+
+    $data = curl_exec($curl);
+
+    if($error=curl_error($curl)){
+        curl_close($curl);
+        return null;
+    }
+
+    curl_close($curl);
+
+    return json_decode($data);
 }

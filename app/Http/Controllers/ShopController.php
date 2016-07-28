@@ -7,11 +7,15 @@ use App\http\Model\Config;
 use App\http\Model\Evaluates;
 use App\http\Model\Notice;
 use App\http\model\ShopItem;
+use App\http\Model\Users;
+use Illuminate\Support\Facades\Input;
 
 class ShopController extends CommController
 {
     public function index()
     {
+        wxLogIn();
+
         return view('index');
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\http\Model\Config;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 
@@ -44,9 +45,14 @@ class WXController extends CommController
     //python设置token
     public function setAccessToken($token, $sig)
     {
-        $mySig = md5($token.'Lsy20130123$#');
+        $config = Config::first();
+        $pyToken = json_decode($config['wx']);
+        $mySig = md5($token.$pyToken->accessToken);
         if ($sig == $mySig){
             setToken($token);
+            return 0;
+        }else{
+            return 1;
         }
     }
 }

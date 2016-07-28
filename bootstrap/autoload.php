@@ -34,3 +34,4 @@ if (file_exists($compiledPath)) {
 }
 
 require __DIR__.'/../app/Common/Comm.php';
+require __DIR__.'/../app/Common/WX.php';

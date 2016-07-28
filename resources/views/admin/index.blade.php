@@ -56,7 +56,7 @@
 				<li><a href="{{url('admin/other/evaluates')}}" target="main"><i class="fa fa-fw fa-edit"></i>点评</a></li>
 				<li><a href="{{url('admin/other/showLogistics')}}" target="main"><i class="fa fa-fw fa-edit"></i>物流</a></li>
 				<li><a href="{{url('admin/other/showShippercode')}}" target="main"><i class="fa fa-fw fa-edit"></i>承运公司</a></li>
-				<li><a href="{{url('admin/other/showWXSet')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信(未完)</a></li>
+				<li><a href="{{url('admin/other/showWXSet')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信</a></li>
 			</ul>
 		</li>
 	</ul>

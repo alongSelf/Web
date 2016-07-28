@@ -30,21 +30,33 @@
             <table class="add_tab">
                 <tbody>
                 <tr>
+                    <th style="width: 200px">python设置token密码：</th>
+                    <td>
+                        <input type="text" style="width: 50%" placeholder="python设置token密码"  name="accessToken" value="{{$config->wx->accessToken}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>认证参数state：</th>
+                    <td>
+                        <input type="text" style="width: 50%" placeholder="a-z A-Z 0-9最多128字节"  name="state" value="{{$config->wx->state}}">
+                    </td>
+                </tr>
+                <tr>
                     <th>Token(令牌)：</th>
                     <td>
-                        <input type="text" placeholder="令牌"  name="Token" value="{{$config->wx->Token}}">
+                        <input type="text" style="width: 50%" placeholder="令牌"  name="Token" value="{{$config->wx->Token}}">
                     </td>
                 </tr>
                 <tr>
                     <th>AppID(应用ID)：</th>
                     <td>
-                        <input type="text" placeholder="应用ID" name="AppID" value="{{$config->wx->AppID}}">
+                        <input type="text" style="width: 50%" placeholder="应用ID" name="AppID" value="{{$config->wx->AppID}}">
                     </td>
                 </tr>
                 <tr>
                     <th>AppSecret(应用密钥)：</th>
                     <td>
-                        <input type="text" placeholder="应用密钥" name="AppSecret" value="{{$config->wx->AppSecret}}">
+                        <input type="text" style="width: 50%" placeholder="应用密钥" name="AppSecret" value="{{$config->wx->AppSecret}}">
                     </td>
                 </tr>
                 <tr>
