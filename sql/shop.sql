@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-27 17:41:11
+Date: 2016-07-28 09:05:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -203,7 +203,7 @@ CREATE TABLE `income` (
   `balance` float DEFAULT '0' COMMENT '余额分',
   `time` bigint(20) DEFAULT '0' COMMENT '消费时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of income
@@ -395,12 +395,6 @@ CREATE TABLE `shopitem` (
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
-INSERT INTO `shopitem` VALUES ('29', '商品1', '件', '18', '57956794972b3.jpg', '商品1', '520', '410', '-1', '54', '5795676c56aff.jpg', '[\"5795678b30a44.jpg\",\"5795678b615fa.jpg\",\"5795678b87508.jpg\"]', '0', '57956780217b4.jpg', '{\"尺寸\":[{\"val\":\"M\",\"price\":100},{\"val\":\"L\",\"price\":120}]}', '1', '1');
-INSERT INTO `shopitem` VALUES ('30', '商品2', '㎡', '18', '579567d06adbe.jpg', '商品2', '840', '800', '-1', '0', '579567ac21c1a.jpg', '[\"579567c7f08a8.jpg\",\"579567c82777e.jpg\",\"579567c8524ad.jpg\"]', '1', '579567be52827.jpg', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('31', '商品3', '个', '18', '579568015427c.jpg', '商品3', '700', '650', '-1', '0', '579567dfa5c64.jpg', '[\"579567f5ec9be.jpg\",\"579567f6176d3.jpg\",\"579567f638180.jpg\"]', '1', '579567eda0d98.jpg', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('32', '商品4', '件', '18', '579717955a19e.jpg', '商品4', '111', '11', '-1', '1', '5797176a72a6f.jpg', '[\"579717909eab1.jpg\",\"57971790bc295.jpg\",\"57971790dcf99.jpg\"]', '1', '5797178a0058a.jpg', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('33', '商品5', '个', '18', '579717d24532a.jpg', '商品5', '134', '12', '-1', '0', '579717a4435a6.jpg', '[\"579717c99d774.jpg\",\"579717c9bbb10.jpg\",\"579717c9d96dd.jpg\"]', '0', '579717c0af059.jpg', '', '1', '1');
-INSERT INTO `shopitem` VALUES ('34', '商品6', '个', '18', '5797180aa86b7.jpg', '商品6', '1344', '122', '-1', '0', '579717ef54e82.jpg', '[\"57971806008fb.jpg\",\"57971806240f8.jpg\",\"5797180642495.jpg\"]', '0', '579717fcc8e1f.jpg', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_prov_city_area`
