@@ -38,7 +38,11 @@
                         </tr>
                         @foreach($data as $v)
                             <tr>
-                                <td>{{$v->userid}}</td>
+                                <td>
+                                    <a href="javascript:;" onclick="showUser('{{url('admin/user/show')}}/{{$v->userid}}')">
+                                        {{$v->userid}}
+                                    </a>
+                                </td>
                                 <td>{{$v->groupid}}</td>
                                 <td>{{$v->layer}}</td>
                                 <td>{{$v->count}}</td>
@@ -73,7 +77,11 @@
                         </tr>
                         @foreach($data as $v)
                             <tr>
-                                <td class="tc">{{$v->userid}}</td>
+                                <td class="tc">
+                                    <a href="javascript:;" onclick="showUser('{{url('admin/user/show')}}/{{$v->userid}}')">
+                                        {{$v->userid}}
+                                    </a>
+                                </td>
                                 <td>
                                     @if($condition == 'junior')
                                         {{$v->layer - $myLayer->layer}}

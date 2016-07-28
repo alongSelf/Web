@@ -45,7 +45,11 @@
                         <tr>
                             <td>{{$ev->id}}</td>
                             <td>{{$ev->itemid}}</td>
-                            <td>{{$ev->userid}}</td>
+                            <td>
+                                <a href="javascript:;" onclick="showUser('{{url('admin/user/show')}}/{{$ev->userid}}')">
+                                    {{$ev->userid}}
+                                </a>
+                            </td>
                             <td>{{$ev->orderid}}</td>
                             <td>{{$ev->star}}</td>
                             <td>

@@ -399,10 +399,24 @@ class OtherController extends CommonController
 
     public function showWXSet()
     {
-        return view('admin.other.wx');
+        $config = Config::first();
+        $config['wx'] = json_decode($config['wx']);
+
+        return view('admin.other.wx', compact('config'));
     }
     public function setWXSet()
     {
+        $input = Input::except('_token');
+        $wx['Token'] = $input['Token'];
+        $wx['AppID'] = $input['AppID'];
+        $wx['AppSecret'] = $input['AppSecret'];
 
+        $config = Config::first();
+        $config['wx'] = json_encode($wx);
+        if($config->update()){
+            return back()->with('errors','更新成功！');
+        }else{
+            return back()->with('errors','更新失败，请稍后重试！');
+        }
     }
 }

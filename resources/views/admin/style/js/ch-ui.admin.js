@@ -62,5 +62,15 @@ function pic_minus(obj){
 	$(obj).parents('li').remove();
 }
 
+function showUser(url) {
+	layer.open({
+		type: 2,
+		title: '用户信息',
+		shadeClose: true,
+		shade: 0.8,
+		area: ['500px', '90%'],
+		content: url
+	});
+}
 
 

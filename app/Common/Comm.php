@@ -123,3 +123,21 @@ function submitEOrder($requestData){
 
     return $result;
 }
+
+function getWXConfig()
+{
+    $config = Config::select('wx')->first();
+
+    return json_decode($config['wx']);
+}
+
+function setToken($token){
+    $GLOBALS['wx_access_token'] = $token;
+}
+
+function getToken(){
+    if (array_key_exists('wx_access_token', $GLOBALS)){
+        return $GLOBALS['wx_access_token'];
+    }
+    return '';
+}

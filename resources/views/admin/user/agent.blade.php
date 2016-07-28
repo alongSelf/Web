@@ -32,7 +32,11 @@
                     </tr>
                     @foreach($data as $v)
                         <tr>
-                            <td class="tc">{{$v->userid}}</td>
+                            <td class="tc">
+                                <a href="javascript:;" onclick="showUser('{{url('admin/user/show')}}/{{$v->userid}}')">
+                                    {{$v->userid}}
+                                </a>
+                            </td>
                             <td>{{$v->name}}</td>
                             <td>{{$v->phone}}</td>
 

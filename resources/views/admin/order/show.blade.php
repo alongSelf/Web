@@ -82,7 +82,9 @@
             <tr>
                 <th>购买者ID：</th>
                 <td>
-                    {{$data->userinfo->id}}
+                    <a href="javascript:;" onclick="showUser('{{url('admin/user/show')}}/{{$data->userinfo->id}}')">
+                        {{$data->userinfo->id}}
+                    </a>
                 </td>
                 <th>姓名：</th>
                 <td>

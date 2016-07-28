@@ -11,6 +11,7 @@
     <script src="resources/views/ionic/js/ionic.bundle.min.js"></script>
     <script src="resources/views/ionic/js/angular/angular-cookies.min.js"></script>
     <script src="resources/views/ionic/js/ionic-image-lazy-load.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 
     <script src="resources/views/js/utile.js"></script>
     <script src="resources/views/js/app.js"></script>

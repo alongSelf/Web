@@ -11,6 +11,12 @@
 |
 */
 
+//微信相关
+Route::group([], function () {
+    Route::any('WXSVCheck', 'WXController@WXSVCheck');
+    Route::get('accessToken/{token}/{sig}', 'WXController@setAccessToken');
+});
+
 Route::group([], function () {
     Route::get('/', 'ShopController@index');
     Route::get('getConfig', 'ShopController@getConfig');
@@ -103,6 +109,7 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/setWXSet', 'OtherController@setWXSet');
 
     Route::get('user/index', 'UserController@index');
+    Route::get('user/show/{id}', 'UserController@show');
     Route::any('user/resetPSW', 'UserController@resetPSW');
     Route::get('user/search/{val}/{type}', 'UserController@search');
     Route::get('user/agent/{phone?}', 'UserController@agent');

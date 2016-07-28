@@ -23,6 +23,12 @@ class UserController extends CommonController
         return view('admin.user.index', compact('data'));
     }
 
+    public function show($id)
+    {
+        $data = Users::find($id);
+        return view('admin.user.show', compact('data'));
+    }
+
     public function resetPSW()
     {
         $id = Input::get('id');
