@@ -162,7 +162,6 @@ function https($url)
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-
     $data = curl_exec($curl);
 
     if($error=curl_error($curl)){

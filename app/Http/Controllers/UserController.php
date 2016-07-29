@@ -113,10 +113,32 @@ class UserController extends CommController
     public function getUserInfo()
     {
         $user = session('user');
-        $user = Users::find($user->id);
+        $user = Users::find($user['id']);
         $user->psw = null;
 
         return rtnMsg(0, $user);
+    }
+
+    public function updateWXInfo()
+    {
+        $user = session('user');
+        $user = Users::find($user['id']);
+        $wxInfo = getWXUserInfo($user['unionid']);
+        if ($wxInfo
+            && property_exists($wxInfo, 'nickname')
+            && property_exists($wxInfo, 'headimgurl')){
+
+            $user['nickname'] = $wxInfo->nickname;
+            $user['icon'] = saveIcon($wxInfo->headimgurl);
+            if ($user->update()){
+                $user->psw = null;
+                return rtnMsg(0, $user);
+            }else{
+                return rtnMsg(1, '同步失败，请稍候再试！');
+            }
+        }
+
+        return rtnMsg(1, '同步失败，请稍候再试！');
     }
 
     public function bindAccount()

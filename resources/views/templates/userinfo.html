@@ -60,8 +60,11 @@
                 <span class="input-label st_inputLabel">微信号:</span>
                 <input placeholder="微信号" type="text" ng-model="userInfo.weixnumber" ng-change="fieldChanged()">
             </label>
-            <div class="st_taCenter" ng-if="showChange">
-                <button class="button button-light" style="width: 50%" ng-click="changeInfo()">
+            <div class="st_taCenter">
+                <button ng-if="!showChange" class="button button-light" ng-click="updateInfo()">
+                    与微信同步
+                </button>
+                <button ng-if="showChange" class="button button-light" ng-click="changeInfo()">
                     修改
                 </button>
             </div>

@@ -104,6 +104,8 @@ class OrderController extends CommController
 
         $orderid = $this->getID();
 
+        //微信创建订单
+
         $input = [
             'id'=>$orderid,
             'userid'=>$user['id'],
@@ -119,6 +121,29 @@ class OrderController extends CommController
             return rtnMsg(0, $orderid);
         }else{
             return rtnMsg(1, '创建订单失败，请稍候再试!');
+        }
+    }
+
+    public function cancelOrder()
+    {
+        $user = session('user');
+        $orderID = Input::get('id');
+
+        $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 0)->first();
+        if (!$order){
+            return rtnMsg(1, '无效的订单!');
+        }
+
+        if (0 != strlen($order['payinfo'])){
+            //微信查询
+        }
+
+        $order->status = 4;
+        $res = $order->update();
+        if ($res) {
+            return rtnMsg(0, '订单已取消!');
+        } else {
+            return rtnMsg(1, '订单取消失败，请稍后重试！');
         }
     }
 
@@ -172,6 +197,7 @@ class OrderController extends CommController
                     $iteminfo->items[$j]->name = $shop['name'];
                     $iteminfo->items[$j]->img = $shop['indeximg'];
                 }
+
                 $order[$i]['iteminfo'] = json_encode($iteminfo);
                 $order[$i]['logistics'] = '';
                 $order[$i]['payinfo'] = '';
@@ -179,25 +205,6 @@ class OrderController extends CommController
         }
 
         return rtnMsg(0, $order);
-    }
-
-    public function cancelOrder()
-    {
-        $user = session('user');
-        $orderID = Input::get('id');
-
-        $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 0)->first();
-        if (!$order){
-            return rtnMsg(1, '无效的订单!');
-        }
-
-        $order->status = 4;
-        $res = $order->update();
-        if ($res) {
-            return rtnMsg(0, '订单已取消!');
-        } else {
-            return rtnMsg(1, '订单取消失败，请稍后重试！');
-        }
     }
 
     public function getOrder($id, $showEv)

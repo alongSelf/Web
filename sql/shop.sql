@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-07-29 00:31:45
+Date: 2016-07-29 18:08:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -133,7 +133,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('3', '微信商城', '{\"phone\":\"15882279747\\r\\n13328585252\\r\\n15788255222\\r\\n028-6687222\",\"email\":\"7812212qq.com\\r\\n2451@163.com\",\"qq\":\"5845222\\r\\n1541512\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"city\":\"\\u4e1c\\u57ce\\u533a\",\"county\":\"\",\"address\":\"XXX\\u53f7\"}', '{\"Token\":\"lsy20130123\",\"AppID\":\"wxfef18341c18f6b6a\",\"AppSecret\":\"ff4703fec4e23a95976ba2610c1b6c15\",\"accessToken\":\"Lsy20130123$#!+\",\"state\":\"\"}');
+INSERT INTO `config` VALUES ('3', '微信商城', '{\"phone\":\"15882279747\\r\\n13328585252\\r\\n15788255222\\r\\n028-6687222\",\"email\":\"7812212qq.com\\r\\n2451@163.com\",\"qq\":\"5845222\\r\\n1541512\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"city\":\"\\u4e1c\\u57ce\\u533a\",\"county\":\"\",\"address\":\"XXX\\u53f7\"}', '{\"Token\":\"lsy20130123\",\"AppID\":\"wxf0efa98b726fa5d2\",\"AppSecret\":\"ba3458b18881c3ad1789646041a88efd\",\"accessToken\":\"Lsy20130123*&%\",\"state\":\"lsywxstate\",\"payID\":\"\",\"payKey\":\"\"}');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -391,11 +391,17 @@ CREATE TABLE `shopitem` (
   `showindex` tinyint(4) DEFAULT '0' COMMENT '是否在主页显示',
   `display` tinyint(4) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shopitem
 -- ----------------------------
+INSERT INTO `shopitem` VALUES ('29', '商品1', '件', '18', '57956794972b3.jpg', '商品1', '520', '410', '-1', '54', '5795676c56aff.jpg', '[\"5795678b30a44.jpg\",\"5795678b615fa.jpg\",\"5795678b87508.jpg\"]', '0', '57956780217b4.jpg', '{\"尺寸\":[{\"val\":\"M\",\"price\":100},{\"val\":\"L\",\"price\":120}]}', '1', '1');
+INSERT INTO `shopitem` VALUES ('30', '商品2', '㎡', '18', '579567d06adbe.jpg', '商品2', '840', '800', '-1', '0', '579567ac21c1a.jpg', '[\"579567c7f08a8.jpg\",\"579567c82777e.jpg\",\"579567c8524ad.jpg\"]', '1', '579567be52827.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('31', '商品3', '个', '18', '579568015427c.jpg', '商品3', '700', '650', '-1', '0', '579567dfa5c64.jpg', '[\"579567f5ec9be.jpg\",\"579567f6176d3.jpg\",\"579567f638180.jpg\"]', '1', '579567eda0d98.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('32', '商品4', '件', '18', '579717955a19e.jpg', '商品4', '111', '11', '-1', '1', '5797176a72a6f.jpg', '[\"579717909eab1.jpg\",\"57971790bc295.jpg\",\"57971790dcf99.jpg\"]', '1', '5797178a0058a.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('33', '商品5', '个', '18', '579717d24532a.jpg', '商品5', '134', '12', '-1', '0', '579717a4435a6.jpg', '[\"579717c99d774.jpg\",\"579717c9bbb10.jpg\",\"579717c9d96dd.jpg\"]', '0', '579717c0af059.jpg', '', '1', '1');
+INSERT INTO `shopitem` VALUES ('34', '商品6', '个', '18', '5797180aa86b7.jpg', '商品6', '1344', '122', '-1', '0', '579717ef54e82.jpg', '[\"57971806008fb.jpg\",\"57971806240f8.jpg\",\"5797180642495.jpg\"]', '0', '579717fcc8e1f.jpg', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_prov_city_area`
@@ -3773,7 +3779,7 @@ CREATE TABLE `users` (
   `errorcount` tinyint(4) DEFAULT '0' COMMENT '错误次数',
   `errortime` bigint(20) DEFAULT '0' COMMENT '最后次错误时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10013 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10015 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -3783,3 +3789,19 @@ INSERT INTO `users` VALUES ('10009', '', '', 'deficon.jpg', '大毛毛虫1', '',
 INSERT INTO `users` VALUES ('10010', '', '', 'deficon.jpg', '', '', '15882276841', 'eyJpdiI6IlBLWTEzSGFKK0FLTTkwaXNKeHFVS2c9PSIsInZhbHVlIjoib0h3amJJR2dPYW5PZ0tKdFNZXC9FQnc9PSIsIm1hYyI6ImM2YWMzOTczZDBjZTgyOGQwNjBiNGVkMTc5MWM2MTNlZTE4NGZiYTU0MzY3MGNlMTU1M2NmYmU3MjVmMzRiYTkifQ==', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10011', '', '', 'deficon.jpg', '', '', '15882276718', 'eyJpdiI6IlwvZjRqOXEzM2E0MlE2K09Cd1VlRUJBPT0iLCJ2YWx1ZSI6IkU3WUZHVFNQVkcwTnZiKytNMFwvZkR3PT0iLCJtYWMiOiJiNTlhODYxYzY5NDUxM2RhNDhhNTE1NjY3YTY5Y2ZkMDZlMjZjNzJmOWNlN2QyMDRiZGFiNWYzOTUwZjRmMTZiIn0=', '', null, '0', '0', '0', '0');
 INSERT INTO `users` VALUES ('10012', '', '', 'deficon.jpg', '', '', '15882276707', 'eyJpdiI6Ik5xNE83dVp3TUh2djhvZ3lhZGY4Rmc9PSIsInZhbHVlIjoiK20zeHE4SGltXC9aVm9Menc5WTNWR1E9PSIsIm1hYyI6ImU3NmFiNjFiYmQ0MGUxYzM2M2Q5NzE4ZGMwNmYwMTJmNGJkOWZiMGM2ZDY2MWFiYmQzZjQ4YTgyMmUxYTAyNmMifQ==', '', null, '0', '0', '0', '0');
+INSERT INTO `users` VALUES ('10014', 'oU6BGwksdM6in5RdL1pi_W0rlQ4A', '', '579b2ab385cf4.jpg', '18183283859', '', '', '', '', null, '0', '0', '0', '0');
+
+-- ----------------------------
+-- Table structure for `wx_tmp`
+-- ----------------------------
+DROP TABLE IF EXISTS `wx_tmp`;
+CREATE TABLE `wx_tmp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wx_access_token` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of wx_tmp
+-- ----------------------------
+INSERT INTO `wx_tmp` VALUES ('1', 'b917n3n9vPtsU4kv7kw0mLE9x4LtRAyIrcaIAQ6uLLaaTLzYtbmy-imd_hJQCpKT9Y1fQD1WxCE9EAgbo9jw8VajRcb_A-EnFpedovetxFY69K5-A7FXOd7z7BYDGu61JJXaAEAQQE');

@@ -236,6 +236,30 @@ appModule.controller('userInfoController', ['$scope', '$ionicHistory', '$http', 
             $ionicLoading.hide();
         });
     };
+
+    $scope.updateInfo = function () {
+        $http.get("updateWXInfo")
+            .success(
+                function (data, status, header, config) {
+                    if (0 == data.status){
+                        $scope.userInfo = data.msg;
+                        var phone = $scope.userInfo.phone;
+                        if(phone && 0 != phone.length){
+                            $scope.showBind = false;
+                        }else {
+                            $scope.showBind = true;
+                        }
+                        layer.msg('同步完成...');
+                    }else {
+                        layer.msg(data.msg);
+                    }
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            }).finally(function() {       
+        });
+    };
 }]);
 
 //地址

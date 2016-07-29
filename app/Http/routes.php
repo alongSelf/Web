@@ -13,7 +13,7 @@
 
 //微信相关
 Route::group([], function () {
-    Route::any('WXSVCheck', 'WXController@WXSVCheck');
+    Route::any('wxServerCheck', 'WXController@wxServerCheck');
     Route::get('accessToken/{token}/{sig}', 'WXController@setAccessToken');
 });
 
@@ -38,6 +38,7 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::get('logOut', 'UserController@logOut');
     Route::get('getUserBase', 'UserController@getUserBase');
     Route::get('getUserInfo', 'UserController@getUserInfo');
+    Route::get('updateWXInfo', 'UserController@updateWXInfo');
     Route::post('bindAccount', 'UserController@bindAccount');
     Route::post('changePsw', 'UserController@changePsw');
     Route::post('changeUserInfo', 'UserController@changeUserInfo');

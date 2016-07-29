@@ -12,7 +12,7 @@ class WXController extends CommController
     {
         $wx = getWXConfig();
 
-        $token = $wx['token'];
+        $token = $wx->Token;
         $tmpArr = array($token, $timestamp, $nonce);
         // use SORT_STRING rule
         sort($tmpArr, SORT_STRING);
@@ -27,9 +27,17 @@ class WXController extends CommController
     }
 
     //微信服务器验证
-    public function WXSVCheck()
+    public function wxServerCheck()
     {
         $input = Input::all();
+
+        if (!array_key_exists('signature', $input)
+            || !array_key_exists('timestamp', $input)
+            || !array_key_exists('nonce', $input)
+            || !array_key_exists('echostr', $input)){
+            return;
+
+        }
 
         $signature = $input['signature'];
         $timestamp = $input['timestamp'];
@@ -54,5 +62,11 @@ class WXController extends CommController
         }else{
             return 1;
         }
+    }
+
+    //订单支付结果回调
+    public function wxPayNotify()
+    {
+        
     }
 }
