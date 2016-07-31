@@ -115,6 +115,7 @@ class UserController extends CommController
         $user = session('user');
         $user = Users::find($user['id']);
         $user->psw = null;
+        $user->qrc = null;
 
         return rtnMsg(0, $user);
     }
@@ -387,21 +388,80 @@ class UserController extends CommController
         }
     }
 
-    public function spreadInfo()
+    private function removeFile($name)
     {
+        if(0 == strlen($name)){
+            return;
+        }
+
+        $filePath = base_path().'/uploads/'.$name;
+        if (file_exists($filePath)){
+            unlink($filePath);
+        }
+    }
+
+    private function getQRC($userID, $strQRC)
+    {
+        $expire_seconds = 2592000;
+        $oneHour = 60 * 60;
+        if (0 != strlen($strQRC)){
+            $qrc = json_decode($strQRC);
+            if ($qrc->time + $expire_seconds - $oneHour >= time()){
+                return $qrc->qrc;
+            }
+            else{
+                $this->removeFile($qrc->qrc);
+            }
+        }
+
+        $param=[
+            'expire_seconds'=>$expire_seconds,
+            'action_name'=>'QR_SCENE',
+            'action_info'=>[
+                'scene_id'=>$userID
+            ]
+        ];
+        $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.getToken();
+        $result = https($url, json_encode($param));
+        if (!$result
+            || !property_exists($result, 'ticket')
+            || !property_exists($result, 'url')){
+            return '';
+        }
+
+        $url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.urlencode($result->ticket);
+        $qrcName = saveQRCPic($url);
+        if(!$qrcName) {
+            return '';
+        }
+
+        $user = Users::find($userID);
+        $save = [
+            'time'=>time(),
+            'qrc'=>$qrcName
+        ];
+        $user->qrc = json_encode($save);
+        $user->update();
+
+        return $save['qrc'];
+    }
+
+    public function spreadInfo()
+    {        
         $user = session('user');
         $userID = $user['id'];
 
         //是否显示
         $rtn = [];
         $config = Config::all()[0];
-        $user = Users::select('consume', 'income')->find($userID);
+        $user = Users::select('consume', 'income', 'qrc')->find($userID);
         $rtn['Income'] = $user['income'];
         $rtn['Cash'] = $config['cash'];
         $rtn['follower'] = 0;
+        $rtn['QRC'] = '';
         if ($user['consume'] >= $config['openspread']){
             $rtn['follower'] = (new Follower)->getFollowerCount($userID);
-
+            $rtn['QRC'] = $this->getQRC($userID, $user['qrc']);
             $rtn['canShowQRC'] = true;
             return rtnMsg(0, $rtn);
         }else{

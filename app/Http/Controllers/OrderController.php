@@ -9,6 +9,7 @@ use App\http\Model\Orders;
 use App\http\Model\ShipperCode;
 use App\http\Model\ShopItem;
 use App\Http\Model\Users;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Input;
 
 class OrderController extends CommController
@@ -42,6 +43,7 @@ class OrderController extends CommController
             return rtnMsg(1, '参数错误!');
         }
 
+        $jsonAddr = [];
         $jsonAddr['name'] = $addr['name'];
         $jsonAddr['phone'] = $addr['phone'];
         $jsonAddr['addr'] = json_decode($addr['addr']);
@@ -60,7 +62,6 @@ class OrderController extends CommController
 
             //检查价格
             $spec = json_decode($item['spec']);
-            $bHave = false;
             $bPriceCheck = false;
             for ($j = 0; $j < count($orderItem->spec); $j++) {
                 $bHave = false;
@@ -103,9 +104,23 @@ class OrderController extends CommController
         }
 
         $orderid = $this->getID();
-
         //微信创建订单
+        $result = wxCreateOrder($orderid, $orderJson->price);
+        if (!$result){
+            return rtnMsg(1, '创建订单失败，请稍候再试!');
+        }
+        //微信返回解析
+        if ('SUCCESS' != $result['return_code']){
+            return rtnMsg(1, '创建订单失败，请稍候再试!');
+        }
+        if ('SUCCESS' != $result['result_code']){
+            return rtnMsg(1, $result['err_msg']);
+        }
 
+        $payinfo = [
+            'prepay_id'=>$result['prepay_id'],
+            'appPayParams'=>wxAppPayParams($result['prepay_id']),
+        ];
         $input = [
             'id'=>$orderid,
             'userid'=>$user['id'],
@@ -114,6 +129,8 @@ class OrderController extends CommController
             'addr'=>json_encode($jsonAddr),
             'createtime'=>time(),
             'status'=>0,
+            'payinfo'=>json_encode($payinfo),//微信订单号
+            'paychannel'=>1
         ];
 
         $re = Orders::create($input);
@@ -135,7 +152,30 @@ class OrderController extends CommController
         }
 
         if (0 != strlen($order['payinfo'])){
-            //微信查询
+            $payInfo = json_decode($order['payinfo']);
+            $result = wxCloseOrder($payInfo->prepay_id);
+            if (!$result){
+                return rtnMsg(1, '订单取消失败，请稍后重试！');
+            }
+            if ('SUCCESS' != $result['return_code']){
+                return rtnMsg(1, '订单取消失败，请稍后重试！');
+            }
+            if ('ORDERPAID' == $result['result_code']){
+                $order->status = 1;
+                if ($order->update()){
+                    $this->addIncome($user['id'], $orderID);
+                }
+
+                return rtnMsg(1, '订单已支付！');
+            }
+
+            if ('SYSTEMERROR' == $result['result_code']
+                || 'SIGNERROR' == $result['result_code']
+                || 'REQUIRE_POST_METHOD' == $result['result_code']
+                || 'XML_FORMAT_ERROR' == $result['result_code']
+                || 'MCHID_NOT_EXIST' == $result['result_code']){
+                return rtnMsg(1, '订单取消失败，请稍后重试！');
+            }
         }
 
         $order->status = 4;
@@ -145,6 +185,32 @@ class OrderController extends CommController
         } else {
             return rtnMsg(1, '订单取消失败，请稍后重试！');
         }
+    }
+
+    //查询核对
+    public function queryOrder($orderID)
+    {
+        $user = session('user');
+        $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 0)->first();
+        if (!$order){
+            return rtnMsg(1, '无效的订单!');
+        }
+        if (0 == strlen($order['payinfo'])) {
+            return rtnMsg(1, '无效的订单!');
+        }
+
+        $payInfo = json_decode($order['payinfo']);
+
+        if (wxQueryOrderPay($payInfo->prepay_id)){
+            $order->status = 1;
+            if ($order->update()){
+                $this->addIncome($user['id'], $orderID);
+            }
+
+            return rtnMsg(0, '订单已支付，请下拉刷新!');
+        }
+
+        return rtnMsg(1, '订单未支付!');
     }
 
     //$type 0全部  1 待付款 2待评价 3售后
@@ -200,7 +266,7 @@ class OrderController extends CommController
 
                 $order[$i]['iteminfo'] = json_encode($iteminfo);
                 $order[$i]['logistics'] = '';
-                $order[$i]['payinfo'] = '';
+                $order[$i]['payinfo'] = (0 == strlen($order[$i]['payinfo']) ? 0 : 1);
             }
         }
 

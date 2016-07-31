@@ -43,6 +43,28 @@ class OtherController extends CommonController
         }
     }
 
+    public function changeOnlywx()
+    {
+        $input = Input::all();
+        if ($input){
+            $config = Config::find($input['id']);
+            $config->onlywx = $input['onlywx'];
+            $re = $config->update();
+            if($re){
+                $data = [
+                    'status' => 0,
+                    'msg' => '更新成功！',
+                ];
+            }else{
+                $data = [
+                    'status' => 1,
+                    'msg' => '更新失败，请稍后重试！',
+                ];
+            }
+            return $data;
+        }
+    }
+
     public function changeAgent()
     {
         $input = Input::all();
@@ -414,6 +436,7 @@ class OtherController extends CommonController
         $wx['state'] = $input['state'];
         $wx['payID'] = $input['payID'];
         $wx['payKey'] = $input['payKey'];
+        $wx['wxcheck'] = $input['wxcheck'];
 
         $config = Config::first();
         $config['wx'] = json_encode($wx);

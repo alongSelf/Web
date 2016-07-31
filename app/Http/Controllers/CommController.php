@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\http\Model\Config;
+use App\http\Model\Income;
+use App\http\Model\Orders;
+use App\http\Model\Users;
+
 class CommController extends Controller
 {
     public function checkPhone($phone)
@@ -40,7 +45,7 @@ class CommController extends Controller
 
     public function numPerPage()
     {
-        return 10;
+        return 20;
     }
 
     public function getID()
@@ -55,5 +60,67 @@ class CommController extends Controller
     public function pswMax()
     {
         return 12;
+    }
+
+    public function addIncome($userID, $orderID){
+        $user = Users::find($userID);
+        $order = Orders::find($orderID);
+        if (!$user || !$order){
+            return;
+        }
+        if (1 != $order['status']){
+            return;
+        }
+
+        $follower = new Follower;
+        $chief = $follower->getChief($userID);
+        if (!$chief){
+            return;
+        }
+
+        $config = Config::first();
+        $myFollower = $follower->getMy($userID);
+        foreach ($chief as $key=>$val){
+            $income = Income::where('userid', $val['userid'])->where('orderid', $orderID)->first();
+            if ($income){
+                continue;
+            }
+            $chiefUser = Users::find($val['userid']);
+            if (!$chiefUser){
+                continue;
+            }
+
+            $income = 0;
+            $lv = $myFollower['layer'] - $val['layer'];
+            switch ($lv){
+                case 1:
+                    $income = $order['price'] * ($config['commission1']/100);
+                    break;
+                case 2:
+                    $income = $order['price'] * ($config['commission2']/100);
+                    break;
+                case 3:
+                    $income = $order['price'] * ($config['commission3']/100);
+                    break;
+            }
+
+            if ($income > 0){
+                $data = [
+                    'userid' => $chiefUser['userid'],
+                    'followerid' => $userID,
+                    'followernam' => $user['nickname'],
+                    'orderid' => $orderID,
+                    'consume' => $order['price'],
+                    'income' => $income,
+                    'balance' => $income + $chiefUser['income'],
+                    'time' => $order['createtime'],
+                ];
+
+                if (Income::create($data)){
+                    $chiefUser->income = $data['balance'];
+                    $chiefUser->update();
+                }
+            }
+        }
     }
 }

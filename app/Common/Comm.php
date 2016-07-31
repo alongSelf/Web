@@ -17,6 +17,13 @@ function errLogin()
     return 10000;
 }
 
+function getUrl()
+{
+    $PHP_SELF=$_SERVER['PHP_SELF'];
+
+    return 'http://'.$_SERVER['HTTP_HOST'].substr($PHP_SELF, 0, strrpos($PHP_SELF,'/')+1);
+}
+
 /**
  *  post提交数据
  * @param  string $url 请求Url
@@ -126,7 +133,7 @@ function submitEOrder($requestData){
     return $result;
 }
 
-//保存图片并返回名称
+//保存头像并返回名称
 function saveIcon($url)
 {
     $curl = curl_init();
@@ -134,6 +141,11 @@ function saveIcon($url)
     curl_setopt($curl, CURLOPT_HEADER, 0);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     $file = curl_exec($curl);
+    if(curl_error($curl)){
+        curl_close($curl);
+        return 'deficon.jpg';
+    }
+
     curl_close($curl);
 
     // 将文件写入获得的数据
@@ -154,19 +166,23 @@ function saveIcon($url)
     return $newName;
 }
 
-function https($url)
+function https($url, $param=null)
 {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_HEADER, 0);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+    if ($param){
+        curl_setopt($curl, CURLOPT_POST, TRUE);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $param);
+    }
     $data = curl_exec($curl);
 
-    if($error=curl_error($curl)){
+    if(curl_error($curl)){
         curl_close($curl);
-        return null;
+        return false;
     }
 
     curl_close($curl);

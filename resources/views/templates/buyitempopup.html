@@ -11,17 +11,20 @@
             <div ng-if="itemSpec">
                 <div ng-repeat="(key,value) in itemSpec">
                     <span>[[key]]:</span>
-                    <select class="st_buyPopInput" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
+                    <select class="st_buyPopSelect" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
                         <option ng-repeat="spec in value">[[spec.val]]</option>
                     </select>
                     <div style="height: 10px"></div>
                 </div>
             </div>
-
             <div>
                 <em>数量:</em>
-                <input class="st_buyPopInput" ng-model="PopData.chooseNum" ng-change="checkInput(PopData.chooseNum)" placeholder="请输入数量" value="PopData.chooseNum">
+                <span ng-click="subNum()">&nbsp&nbsp&nbsp&nbsp-</span>
+                <input class="st_buyPopInput" ng-model="PopData.chooseNum"
+                       ng-change="checkInput(PopData.chooseNum)"
+                       placeholder="数量" value="PopData.chooseNum">
                 </input>
+                <span ng-click="addNum()">+&nbsp&nbsp&nbsp&nbsp</span>
                 <em>[[itemInfo.unit]]</em>
             </div>
         </div>

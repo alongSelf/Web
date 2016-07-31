@@ -81,12 +81,15 @@
                 </div>
             </div>
             <div ng-if="data.status == 0" class="st_orderOp">
-                    <button style="color: red" ng-click="Cancel(data.id)">
-                        取消
-                    </button>
-                    <button style="color: blue;" ng-click="Pay(data.id)">
-                        付款
-                    </button>
+                <button style="color: red" ng-click="Cancel(data.id)">
+                    取消
+                </button>
+                <button ng-if="1 == data.payinfo" style="color: green;" ng-click="orderQuery(data.id)">
+                    已支付
+                </button>
+                <button ng-if="1 == data.payinfo" style="color: blue;" ng-click="Pay(data.id)">
+                    付款
+                </button>
             </div>
             <div class="st_orderOp"
                  ng-if="data.status == 1">
@@ -94,7 +97,7 @@
             </div>
             <div class="st_orderOp"
                  ng-if="data.status == 2">
-                <button ng-click="Logistics(data.id)">查看物流</button>
+                <button ng-click="Logistics(data.id)">物流</button>
                 <button style="color: red" ng-click="Evaluate(data.id)">
                     评价
                 </button>

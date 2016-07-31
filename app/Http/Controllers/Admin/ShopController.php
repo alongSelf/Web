@@ -72,6 +72,8 @@ class ShopController extends CommonController
 
         $validator = Validator::make($input,$rules,$message);
         if($validator->passes()){
+            $category = Category::find($input['category']);
+            $input['sort'] = $category['sort'];
             $re = ShopItem::create($input);
             if($re){
                 return redirect('admin/shop');
@@ -120,6 +122,10 @@ class ShopController extends CommonController
         $validator = Validator::make($input,$rules, $message);
         if($validator->passes()){
             $data = ShopItem::find($item_id);
+            if ($data['category'] != $input['category']){
+                $category = Category::find($input['category']);
+                $input['sort'] = $category['sort'];
+            }
             $re = ShopItem::where('id', $item_id)->update($input);
             if($re){
                 if ($data->indeximg != $input['indeximg']){

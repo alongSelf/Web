@@ -222,6 +222,21 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
             $ionicLoading.hide();
         });
     };
+
+    $scope.orderQuery = function (orderID) {
+        $http.get("queryOrder/"+orderID)
+            .success(
+                function (data, status, header, config) {
+                    layer.msg(data.msg);
+                }
+            ).error(
+            function (data) {
+                onError(data);
+            }).finally(function() {
+
+        });
+    };
+
     $scope.Pay = function (orderID) {
         $state.go('tabs.orderPay', {orderID: orderID});
     };

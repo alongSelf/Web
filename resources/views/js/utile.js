@@ -13,7 +13,6 @@ function onError(data) {
 };
 
 function checkInt(strVal, bLayer) {
-    return true;
     if (0 == strVal.length){
         return false;
     }
@@ -89,55 +88,106 @@ function getColStyle(per) {
     return 90;
 }
 
-function makeItemList(itemData, clientWidth) {
+function getCateInfo($cateID, $Categorys) {
+    for (var i = 0; i < $Categorys.length; i++){
+        if ($Categorys[i].id == $cateID){
+            return $Categorys[i];
+        }
+    }
+
+    return null;
+}
+
+function getLineNum(clientWidth) {
+    var lineNum = parseInt(clientWidth / getItemListImgH());//每列多少个
+    return lineNum > 4 ? 4 : lineNum;
+}
+
+function makeItemList(itemData, $Categorys, clientWidth) {
     var itemList = new Array;
-    if (!itemData){
+    var itemCount = itemData.length;
+    if (!itemData || 0 == itemCount){
         return itemList;
     }
 
-    var itemCount = itemData.length;
-    var lineNum = parseInt(clientWidth / getItemListImgH());//每列多少个
-    lineNum = lineNum > 4 ? 4 : lineNum;
-    var rowNum = Math.ceil(itemCount / lineNum);//多少行
+    var lineNum = getLineNum(clientWidth);//每列多少个
     var iIndex = 0;
+    var curCate = -1;
+    var itemRow = new Array;
 
-    for (var i = 0; i < rowNum; i++){
-        var itemTmp = new Array;
-        for (var j = 0; j < lineNum; j++){
-            if (iIndex >= itemCount){
-                itemList.push(itemTmp);
-                return itemList;
+    while (iIndex < itemCount){
+        for (var i = 0; i < lineNum; i++){
+            itemData[iIndex].type = 1;
+            var item = itemData[iIndex];
+            if (item['category'] != curCate){
+                if (0 != itemRow.length){
+                    itemList.push(itemRow);
+                    itemRow = new Array;
+                }
+
+                curCate = item['category'];
+                var cateInfo = getCateInfo(curCate, $Categorys);
+                var cateImg = new Array;
+                cateImg.type = 0;
+                cateImg.image = cateInfo.backimg;
+                cateImg.id = cateInfo.id;
+                cateImg.title = cateInfo.title;
+
+                var cateRow = new Array;
+                cateRow.push(cateImg);
+                itemList.push(cateRow);
             }
 
-            itemTmp.push(itemData[iIndex]);
-            iIndex++;
-        }
+            if (lineNum == itemRow.length){
+                itemList.push(itemRow);
+                itemRow = new Array;
+            }
 
-        itemList.push(itemTmp);
+            itemRow.push(item);
+
+            iIndex++;
+            if (iIndex >= itemCount){
+                break;
+            }
+        }
+    }
+
+    if (0 != itemRow.length){
+        itemList.push(itemRow);
     }
 
     return itemList;
 }
 
-function reMakeList(itemList, clientWidth) {
+function reMakeList(itemList, $Categorys, clientWidth) {
     var newItemList = new Array;
     if (!itemList){
         return newItemList;
     }
 
-    var lineNum = parseInt(clientWidth / getItemListImgH());//每列多少个
-    lineNum = lineNum > 4 ? 4 : lineNum;
-
+    var lineNum = getLineNum(clientWidth);//每列多少个
     var itemRow = new Array;
-    for (var i = 0; i < itemList.length; i++){
-        var items = itemList[i];
-        for (var j = 0; j < items.length; j++){
-            if (itemRow.length == lineNum){
-                newItemList.push(itemRow);
-                itemRow = new Array;
-            }
 
-            itemRow.push(items[j]);
+    for (var i = 0; i < itemList.length; i++){
+        for (var j = 0; j < itemList[i].length; j++){
+            var item = itemList[i][j];
+            if (item.type == 0){
+                if (0 != itemRow.length){
+                    newItemList.push(itemRow);
+                    itemRow = new Array;
+                }
+
+                var cateRow = new Array;
+                cateRow.push(item);
+                newItemList.push(cateRow);
+            }else{
+                if (itemRow.length == lineNum){
+                    newItemList.push(itemRow);
+                    itemRow = new Array;
+                }
+
+                itemRow.push(item);
+            }
         }
     }
 
@@ -148,41 +198,86 @@ function reMakeList(itemList, clientWidth) {
     return newItemList;
 }
 
-function appendItemList(itemOldeData, itemNewData, clientWidth) {
-    var lineNum = parseInt(clientWidth / getItemListImgH());//每列多少个
-    lineNum = lineNum > 4 ? 4 : lineNum;
-    var oldItemNum = itemOldeData.length;
-    var iAdded = 0;
-    if (0 != oldItemNum){
-        //补齐
-        if (itemOldeData[oldItemNum - 1].length != lineNum){
-            iAdded = lineNum - itemOldeData[oldItemNum - 1].length;
-            for (var i = 0; i < iAdded; i++){
-                itemOldeData[oldItemNum - 1].push(itemNewData[i]);
-            }
+function getLastCate(itemOldeData) {
+    var lastCate = -1;
+    for (var i = itemOldeData.length - 1; i >= 0; i--){
+        var item = itemOldeData[i][0];
+        if(item.type == 0){
+            lastCate = item.id;
+            break;
         }
     }
 
-    if (iAdded >= itemNewData.length){
+    return lastCate;
+}
+
+function deepcopy(obj) {
+    var out = [],i = 0,len = obj.length;
+    for (; i < len; i++) {
+        if (obj[i] instanceof Array){
+            out[i] = deepcopy(obj[i]);
+        }
+        else out[i] = obj[i];
+    }
+    return out;
+}
+
+function appendItemList(itemOldeData, itemNewData, $Categorys, clientWidth) {
+    if (0 == itemNewData.length){
         return itemOldeData;
     }
 
-    while (true){
-        var itemTmp = new Array;
-        for (var j = 0; j < lineNum; j++){
-            if (iAdded >= itemNewData.length){
-                itemOldeData.push(itemTmp);
-                return itemOldeData;
+    var lineNum = getLineNum(clientWidth);//每列多少个
+    var curCate = getLastCate(itemOldeData);
+    var iIndex = 0;
+    var itemRow = new Array;
+    if (0 != itemOldeData.length){
+        var lastItems = itemOldeData[itemOldeData.length - 1];
+        if (lastItems[0].type == 1 && lastItems.length != lineNum){
+            itemRow = deepcopy(lastItems);
+            itemOldeData.splice(itemOldeData.length - 1, 1);
+        }
+    }
+
+    while (iIndex < itemNewData.length){
+        for (var i = 0; i < lineNum; i++){
+            itemNewData[iIndex].type = 1;
+            var item = itemNewData[iIndex];
+            if (item['category'] != curCate){
+                if (0 != itemRow.length){
+                    itemOldeData.push(itemRow);
+                    itemRow = new Array;
+                }
+
+                curCate = item['category'];
+                var cateInfo = getCateInfo(curCate, $Categorys);
+                var cateImg = new Array;
+                cateImg.type = 0;
+                cateImg.image = cateInfo.backimg;
+                cateImg.id = cateInfo.id;
+                cateImg.title = cateInfo.title;
+
+                var cateRow = new Array;
+                cateRow.push(cateImg);
+                itemOldeData.push(cateRow);
             }
 
-            itemTmp.push(itemNewData[iAdded]);
-            iAdded++;
-        }
+            if (lineNum == itemRow.length){
+                itemOldeData.push(itemRow);
+                itemRow = new Array;
+            }
 
-        itemOldeData.push(itemTmp);
-        if (iAdded >= itemNewData.length) {
-            break;
+            itemRow.push(item);
+
+            iIndex++;
+            if (iIndex >= itemNewData.length){
+                break;
+            }
         }
+    }
+
+    if (0 != itemRow.length){
+        itemOldeData.push(itemRow);
     }
 
     return itemOldeData;
@@ -288,6 +383,15 @@ function arrangeLogistics(logistics) {
     }
 
     return logistics;
+}
+
+function isWX(){
+    var ua = navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function getLoading() {

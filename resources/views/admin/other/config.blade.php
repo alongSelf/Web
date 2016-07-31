@@ -22,6 +22,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th><i class="require">*</i>是否只能在微信中使用(1是 0否)：</th>
+                    <td>
+                        <input type="text" onchange="changeOnlywx(this, {{$config->id}})" value="{{$config->onlywx}}">
+                    </td>
+                </tr>
+                <tr>
                     <th><i class="require">*</i>代理介绍：</th>
                     <td>
                         <textarea onchange="changeAgent(this, {{$config->id}})">{{$config->agent}}</textarea>
@@ -72,6 +78,17 @@
         function changeTitle(obj,config_id){
             var title = $(obj).val();
             $.post("{{url('admin/other/changeTitle')}}",{'_token':'{{csrf_token()}}','id':config_id,'title':title},function(data){
+                if(data.status == 0){
+                    layer.msg(data.msg, {icon: 6});
+                }else{
+                    layer.msg(data.msg, {icon: 5});
+                }
+            });
+        }
+
+        function changeOnlywx(obj,config_id){
+            var onlywx = $(obj).val();
+            $.post("{{url('admin/other/changeOnlywx')}}",{'_token':'{{csrf_token()}}','id':config_id,'onlywx':onlywx},function(data){
                 if(data.status == 0){
                     layer.msg(data.msg, {icon: 6});
                 }else{

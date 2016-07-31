@@ -27,6 +27,10 @@ class Follower extends Model
     public function getFollowerCount($userID)
     {
         $myFollow = $this->getMy($userID);
+        if (!$myFollow){
+            return 0;
+        }
+
         $followerCount = $this->where('groupid', $myFollow['groupid'])->
             where('leftweight', '>', $myFollow['leftweight'])->
             where('rightweight', '<', $myFollow['rightweight'])->
@@ -40,6 +44,10 @@ class Follower extends Model
     public function getFollower($userID)
     {
         $myFollow = $this->getMy($userID);
+        if (!$myFollow){
+            return $this->where('groupid', -1)->paginate(10);
+        }
+
         $follower = $this->where('groupid', $myFollow['groupid'])->
             where('leftweight', '>', $myFollow['leftweight'])->
             where('rightweight', '<', $myFollow['rightweight'])->
@@ -53,11 +61,15 @@ class Follower extends Model
     public function getChief($userID)
     {
         $myFollow = $this->getMy($userID);
+        if (!$myFollow){
+            return false;
+        }
+        
         $chief = $this->where('groupid', $myFollow['groupid'])->
             where('leftweight', '<', $myFollow['leftweight'])->
             where('rightweight', '>', $myFollow['rightweight'])->
             where('layer', '<', $myFollow['layer'])->where('layer', '>=', $myFollow['layer'] - $this->getMaxLayer())
-            ->orderBy('layer', 'desc')->paginate(10);
+            ->orderBy('layer', 'desc')->get();
 
         return $chief;
     }

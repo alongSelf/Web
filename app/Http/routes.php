@@ -15,6 +15,7 @@
 Route::group([], function () {
     Route::any('wxServerCheck', 'WXController@wxServerCheck');
     Route::get('accessToken/{token}/{sig}', 'WXController@setAccessToken');
+    Route::any('wxPayNotify', 'WXController@wxPayNotify');
 });
 
 Route::group([], function () {
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['user.login']], function () {
     Route::post('evaluate', 'OrderController@evaluate');
     Route::get('getOrder/{id}/{showEv}', 'OrderController@getOrder');
     Route::get('logistics/{orderID}', 'OrderController@logistics');
+    Route::get('queryOrder/{orderID}', 'OrderController@queryOrder');
 });
 
 
@@ -85,6 +87,7 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
 
     Route::get('other/config', 'OtherController@configIndex');
     Route::any('other/changeTitle', 'OtherController@changeTitle');
+    Route::any('other/changeOnlywx', 'OtherController@changeOnlywx');
     Route::get('other/notice', 'OtherController@noticeIndex');
     Route::any('other/changeNotice', 'OtherController@changeNotice');
     Route::get('other/evaluates', 'OtherController@evaluatesIndex');

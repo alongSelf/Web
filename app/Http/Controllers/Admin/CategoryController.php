@@ -27,6 +27,7 @@ class CategoryController extends CommonController
             $cate->sort = $input['sort'];
             $re = $cate->update();
             if($re){
+                ShopItem::where('category', $cate['id'])->update(['sort'=>$input['sort']]);
                 $data = [
                     'status' => 0,
                     'msg' => '分类排序更新成功！',
@@ -110,6 +111,9 @@ class CategoryController extends CommonController
             $data = Category::find($cate_id);
             $re = Category::where('id', $cate_id)->update($input);
             if($re){
+                if($data['sort'] != $input['sort']){
+                    ShopItem::where('category', $cate_id)->update(['sort'=>$input['sort']]);
+                }
                 if ($data->img != $input['img']){
                     $this->removeFile($data->img);
                 }

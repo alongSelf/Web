@@ -3,7 +3,7 @@
 var appModule = angular.module('ionicApp.server', []);
 
 //配置
-appModule.run(['$rootScope', '$http', '$cookieStore', '$window', function($rootScope, $http, $cookieStore, $window) {
+appModule.run(['$rootScope', '$http', '$cookieStore', '$window', '$state', function($rootScope, $http, $cookieStore, $window, $state) {
     $rootScope.config = [];
     $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
 
@@ -12,7 +12,6 @@ appModule.run(['$rootScope', '$http', '$cookieStore', '$window', function($rootS
             function(data, status, header, config){
                 data.contactus = JSON.parse(data.contactus);
                 $rootScope.config = data;
-                document.title = data.title;
             }
         ).error(
         function(data){

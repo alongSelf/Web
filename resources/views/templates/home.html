@@ -30,24 +30,31 @@
 
         <!--首页物品展示-->
         <div class="row row-wrap" ng-repeat="items in itemList">
-            <div class="col col-[[perItemWidth]] st_taCenter" ng-repeat="item in items">
-                <span>
-                    <img class="st_showImg"
-                         ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
-                         image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
-                </span>
-                <span>
-                    <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">
-                        [[item.name | clipStr]]
-                    </div>
-                </span>
-                <span>
-                    <em class="st_price">[[item.cur_price | currency:'￥']]</em>
-                    <em class="st_buynum">[[item.buynum]]人付款</em>
-                </span>
+            <div class="col st_taCenter" ng-class="{'col-[[perItemWidth]]': item.type == 1}" ng-repeat="item in items">
+                <img ng-if="item.type == 0"
+                     ui-sref="tabs.homecategory({categoryID: [[item.id]], categoryNam: '[[item.title]]'})"
+                     image-lazy-src="uploads/[[item.image]]" image-lazy-loader="bubbles"
+                     style="width: 100%">
+
+                <div ng-if="item.type == 1">
+                    <span>
+                        <img class="st_showImg"
+                             ui-sref="tabs.iteminfo({itemID: [[item.id]]})"
+                             image-lazy-src="uploads/[[item.indeximg]]" image-lazy-loader="bubbles">
+                    </span>
+                    <span>
+                        <div ui-sref="tabs.iteminfo({itemID: [[item.id]]})">
+                            [[item.name | clipStr]]
+                        </div>
+                    </span>
+                    <span>
+                        <em class="st_price">[[item.cur_price | currency:'￥']]/[[item.unit]]</em>
+                        <em class="st_buynum">[[item.buynum]]人付款</em>
+                    </span>
+                </div>
             </div>
         </div>
 
-        <ion-infinite-scroll ng-if="moreData" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moreData && !loaded" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 </ion-view>

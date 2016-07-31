@@ -24,6 +24,7 @@ appModule.controller('spreadController', ['$scope', '$ionicHistory', '$http', '$
                     $scope.Income = data.msg.Income;
                     $scope.Cash = data.msg.Cash;
                     $scope.followerCount = data.msg.follower;
+                    $scope.QRC = data.msg.QRC;
 
                     $scope.incomePage = 0;
                     $scope.moreIncomeData = true;

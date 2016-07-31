@@ -21,7 +21,7 @@ class ShopController extends CommController
 
     public function getConfig()
     {
-        $config = Config::select('title', 'contactus', 'agent', 'spread', 'openspread', 'cash')->first();
+        $config = Config::select('title', 'contactus', 'agent', 'spread', 'openspread', 'cash', 'onlywx')->first();
         return $config;
     }
 
@@ -38,6 +38,7 @@ class ShopController extends CommController
         }
         
         return ShopItem::where('showindex', 1)->where('stock', '<>', 0)->where('display', 1)->
+            orderBy('sort')->orderBy('category')->
             skip($page * $this->numPerPage())->take($this->numPerPage())->get();
     }
 
@@ -46,9 +47,9 @@ class ShopController extends CommController
         $activityItem = ShopItem::where('activity', 1)->where('stock', '<>', 0)->where('display', 1)->get();
         $homeItem = $this->getIndexItem(0);
         $notice = Notice::orderBy('id','desc')->first();
+        $category = Category::get();
 
-
-        return compact('activityItem', 'homeItem', 'notice');
+        return compact('activityItem', 'homeItem', 'notice', 'category');
     }
 
     public function loadMoreIndexItem($page)
@@ -77,8 +78,16 @@ class ShopController extends CommController
             || !is_numeric($page)){
             return;
         }
-        
-        return $this->getCategoryInfo($id, $page);
+
+        if (0 == $page){
+            $category = Category::select('id', 'backimg')->where('id', $id)->get();
+        }
+        $items = $this->getCategoryInfo($id, $page);
+        if (0 == $page) {
+            return compact('items', 'category');
+        }else{
+            return $items;
+        }
     }
 
     public function itemInfo($id)

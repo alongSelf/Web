@@ -10,8 +10,10 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     $scope.moreData = true;
     var innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
     $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
+    $scope.loaded = true;
 
     $scope.doRefresh = function () {
+        $scope.loaded = true;
         $http.get("indexItem")
             .success(
                 function (data, status, header, config) {
@@ -20,9 +22,10 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
                     $scope.itemList = [];
 
                     $scope.activityItem = data.activityItem;
+                    $scope.Categorys= data.category;
                     $scope.Notice = data.notice.notice;
                     if (0 != data.homeItem.length){
-                        $scope.itemList = makeItemList(data.homeItem, innerWidth);
+                        $scope.itemList = makeItemList(data.homeItem, $scope.Categorys, innerWidth);
                     }
 
                     //更新轮播
@@ -35,6 +38,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
             }).finally(function () {
                 // 停止广播ion-refresher
                 $scope.$broadcast('scroll.refreshComplete');
+                $scope.loaded = false;
             }
         );
     };
@@ -49,7 +53,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
                     if (0 == data.length){
                         $scope.moreData = false;
                     }else {
-                        $scope.itemList = appendItemList($scope.itemList, data,innerWidth);
+                        $scope.itemList = appendItemList($scope.itemList, data, $scope.Categorys, innerWidth);
                     }
                 }
             ).error(
@@ -92,7 +96,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 
         innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
         $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
-        $scope.itemList = reMakeList($scope.itemList,innerWidth);
+        $scope.itemList = reMakeList($scope.itemList, $scope.Categorys, innerWidth);
     });
 }]);
 
@@ -105,16 +109,19 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     $scope.showBuild = false;
     var innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
     $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
+    $scope.loaded = true;
 
     $scope.doRefresh = function () {
         $scope.Page = 0;
+        $scope.loaded = true;
         $http.get("categoryInfo/" + $scope.categoryID + '/'+ $scope.Page)
             .success(
                 function(data, status, header, config){
                     $scope.moreData = true;
                     $scope.itemList = [];
 
-                    $scope.itemList = makeItemList(data, innerWidth);
+                    $scope.Categorys = data.category;
+                    $scope.itemList = makeItemList(data.items, $scope.Categorys, innerWidth);
                     if (0 == $scope.itemList.length){
                         $scope.showBuild = true;
                     }
@@ -128,6 +135,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
             }).finally(function() {
                 // 停止广播ion-refresher
                 $scope.$broadcast('scroll.refreshComplete');
+                $scope.loaded = false;
             }
         );
     };
@@ -137,7 +145,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
     $(window).resize(function(){
         innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
         $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
-        $scope.itemList = reMakeList($scope.itemList, innerWidth);
+        $scope.itemList = reMakeList($scope.itemList, $scope.Categorys, innerWidth);
     });
 
     $scope.loadMore = function () {
@@ -148,7 +156,7 @@ appModule.controller('categoryController',['$scope','$stateParams', '$http', '$w
                     if (0 == data.length){
                         $scope.moreData = false;
                     }else {
-                        $scope.itemList = appendItemList($scope.itemList, data,innerWidth);
+                        $scope.itemList = appendItemList($scope.itemList, data, $scope.Categorys, innerWidth);
                     }
 
                     if (0 == $scope.itemList.length){
@@ -292,6 +300,24 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
         carItemNumFactory.setCarItemNum(getCarItemNum(car));
     });
+
+    $scope.subNum = function () {
+        if (0 == $scope.PopData.chooseNum.lengt){
+            $scope.PopData.chooseNum = 1;
+        }
+
+        $scope.PopData.chooseNum =  parseInt($scope.PopData.chooseNum) - 1;
+        if (parseInt($scope.PopData.chooseNum) <= 0){
+            $scope.PopData.chooseNum = 1;
+        }
+    };
+    $scope.addNum = function () {
+        if (0 == $scope.PopData.chooseNum.length){
+            $scope.PopData.chooseNum = 1;
+        }
+
+        $scope.PopData.chooseNum = parseInt($scope.PopData.chooseNum) + 1;
+    };
 
     //加进购物车
     $scope.addInCar = function($event){
@@ -516,6 +542,13 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
             return;
         }
 
+        for (var i = 0; i < carInfo.length; i++){
+            if (parseInt(carInfo[i].num) <= 0){
+                layer.msg('亲输入数量!');
+                return;
+            }
+        }
+
         $ionicLoading.show({
             template: getLoading()
         });
@@ -580,7 +613,6 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
         if (!carInfo || 0 == carInfo.length){
             return;
         }
-
         if (!checkInt(itemNum, true)){
             return;
         }

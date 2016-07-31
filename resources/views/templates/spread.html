@@ -43,9 +43,14 @@
 
             <!--推广二维码，分享-->
             <div ng-if="showQRC && canShowQRC">
-                <div>
-                    拥有粉丝数:[[followerCount]]
-                </div>
+                <ion-item class="item-image">
+                    <div>
+                        <img ng-src="uploads/[[QRC]]" style="width: 200px; height: 200px;">
+                         <div>
+                            拥有粉丝数:[[followerCount]]
+                        </div>
+                    </div>
+                </ion-item>
             </div>
 
             <!--收入明细-->

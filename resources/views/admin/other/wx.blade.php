@@ -72,6 +72,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>是否通过微信服务器验证：</th>
+                    <td>
+                        <select name="wxcheck">
+                            <option value="0" @if(0==$config->wx->wxcheck) selected @endif>否</option>
+                            <option value="1" @if(1==$config->wx->wxcheck) selected @endif>是</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <th></th>
                     <td>
                         <input type="submit" value="提交">

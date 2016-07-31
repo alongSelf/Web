@@ -57,6 +57,14 @@
                 </td>
             </tr>
             <tr>
+                <th><i class="require">*</i>类别头图片(850x)：</th>
+                <td>
+                    <input type="text" size="50" name="backimg" value="">
+                    <input id="backimg_upload" name="backimg_upload" type="file" multiple="false">
+                    <img alt="" id="backimg_img" style="width: 400px; height:50px;" src="">
+                </td>
+            </tr>
+            <tr>
                 <th><i class="require">*</i>排序：</th>
                 <td>
                     <input type="text" class="sm" name="sort" value="0">
@@ -88,6 +96,22 @@
                     'onUploadSuccess' : function(file, data, response) {
                         $('input[name=img]').val(data);
                         $('#category_img').attr('src','/uploads/'+data);
+                    }
+                });
+            });
+
+            $(function() {
+                $('#backimg_upload').uploadify({
+                    'buttonText' : '图片上传',
+                    'formData'     : {
+                        'timestamp' : '<?php echo $timestamp;?>',
+                        '_token'     : "{{csrf_token()}}"
+                    },
+                    'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
+                    'uploader' : "{{url('admin/upload')}}",
+                    'onUploadSuccess' : function(file, data, response) {
+                        $('input[name=backimg]').val(data);
+                        $('#backimg_img').attr('src','/uploads/'+data);
                     }
                 });
             });

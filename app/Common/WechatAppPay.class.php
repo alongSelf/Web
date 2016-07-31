@@ -86,19 +86,17 @@ class wechatAppPay
 		$this->params['spbill_create_ip'] = $this->spbill_create_ip;
 		$this->params['notify_url'] = $this->notify_url;
 		$this->params['trade_type'] = $this->trade_type;
+		$this->params['limit_pay'] = 'no_credit';
 		
 		//获取签名数据
 		$this->sign = $this->MakeSign( $this->params );
-		print_r($this->sign);
 		$this->params['sign'] = $this->sign;
-		print_r($this->params);
 		$xml = $this->data_to_xml($this->params);
-// 		print_r($xml);
 		$response = $this->postXmlCurl($xml, self::API_URL_PREFIX.self::UNIFIEDORDER_URL);
 		if( !$response ){
 			return false;
 		}
-		$result = $this->xml_to_data( $response );print_r($response);
+		$result = $this->xml_to_data( $response );
 		if( !empty($result['result_code']) && !empty($result['err_code']) ){
 			$result['err_msg'] = $this->error_code( $result['err_code'] );
 		}
@@ -110,7 +108,7 @@ class wechatAppPay
 	 * @param $out_trade_no		订单号
 	 * @return array
 	 */
-	public function orderQuery( $out_trade_no ){
+	public function orderQuery($out_trade_no){
 		
 		$this->params['appid'] = $this->appid;
 		$this->params['mch_id'] = $this->mch_id;
@@ -137,7 +135,7 @@ class wechatAppPay
 	 * @param $out_trade_no		订单号
 	 * @return array
 	 */
-	public function closeOrder( $out_trade_no ){
+	public function closeOrder($out_trade_no){
 		$this->params['appid'] = $this->appid;
 		$this->params['mch_id'] = $this->mch_id;
 		$this->params['nonce_str'] = $this->genRandomString();
@@ -151,7 +149,8 @@ class wechatAppPay
 		if( !$response ){
 			return false;
 		}
-		$result = $this->xml_to_data( $response );
+		$result = $this->xml_to_data($response);
+
 		return $result;
 	}
 	
@@ -163,10 +162,10 @@ class wechatAppPay
 	public function getNotifyData(){
 		//获取通知的数据
 		$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-		$data = array();
 		if( empty($xml) ){
 			return false;
 		}
+		$data = array();
 		$data = $this->xml_to_data( $xml );
 		if( !empty($data['return_code']) ){
 			if( $data['return_code'] == 'FAIL' ){
@@ -183,23 +182,20 @@ class wechatAppPay
 	public function replyNotify(){
 		$data['return_code'] = 'SUCCESS';
 		$data['return_msg'] = 'OK';
-		$xml = $this->data_to_xml( $data );
-		echo $xml;
-		die();
+		return $this->data_to_xml( $data );
 	}
 	
 	 /**
 	  * 生成APP端支付参数
 	  * @param	$prepayid	预支付id
 	  */
-	 public function getAppPayParams( $prepayid ){
-		 $data['appid'] = $this->appid;
-		 $data['partnerid'] = $this->mch_id;
-	 	 $data['prepayid'] = $prepayid;
-		 $data['package'] = 'Sign=WXPay';
-		 $data['noncestr'] = $this->genRandomString();
-		 $data['timestamp'] = time();
-		 $data['sign'] = $this->MakeSign( $data ); 
+	 public function getAppPayParams($prepayid){
+		 $data['appId'] = $this->appid;
+		 $data['timeStamp'] = time();
+		 $data['nonceStr'] = $this->genRandomString();
+	 	 $data['package'] = 'prepay_id='.$prepayid;
+		 $data['signType'] = 'MD5';
+		 $data['paySign'] = $this->MakeSign($data);
 		 return $data;
 	 }
 	
@@ -351,7 +347,6 @@ class wechatAppPay
 		//运行curl
 		$data = curl_exec($ch);
 		//返回结果
-		
 		if($data){
 			curl_close($ch);
 			return $data;
@@ -390,5 +385,21 @@ class wechatAppPay
 		 	return $errList[$code];
 		 }
 	 }
+
+	public function close_error($code){
+		$errList = array(
+			'ORDERPAID'				=>	'订单已支付',
+			'SYSTEMERROR'				=>	'系统错误',
+			'ORDERNOTEXIST'			=>	'订单不存在',
+			'ORDERCLOSED'				=>	'订单已关闭',
+			'SIGNERROR'			=>	'签名错误',
+			'REQUIRE_POST_METHOD'			=>	'请使用post方法',
+			'XML_FORMAT_ERROR'		=>	'XML格式错误',
+			'MCHID_NOT_EXIST'		=>	'参数中缺少MCHID'
+		);
+		if( array_key_exists( $code , $errList ) ){
+			return $errList[$code];
+		}
+	}
 	 
 }
