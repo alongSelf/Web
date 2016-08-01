@@ -28,6 +28,27 @@ class WXController extends CommController
         }
     }
 
+    private function wxSVCheck($wxConfig){
+        $input = Input::all();
+        if (!array_key_exists('signature', $input)
+            || !array_key_exists('timestamp', $input)
+            || !array_key_exists('nonce', $input)
+            || !array_key_exists('echostr', $input)){
+            return;
+
+        }
+
+        $signature = $input['signature'];
+        $timestamp = $input['timestamp'];
+        $nonce = $input['nonce'];
+        $echostr = $input['echostr'];
+        if (!$this->checkSignature($signature, $timestamp, $nonce)) {
+            return;
+        }
+
+        return $echostr;
+    }
+
     private function xml_to_data($xml){
         if(!$xml){
             return false;
@@ -46,40 +67,22 @@ class WXController extends CommController
             return false;
         }
         $data = array();
-        return $this->xml_to_data( $xml );
+        return $this->xml_to_data($xml);
     }
 
     //微信服务器验证,消息接收
-    public function wxServerCheck()
+    public function wxPost()
     {
         $wxConfig = getWXConfig();
         if (0 == $wxConfig->wxcheck){
-            $input = Input::all();
-
-            if (!array_key_exists('signature', $input)
-                || !array_key_exists('timestamp', $input)
-                || !array_key_exists('nonce', $input)
-                || !array_key_exists('echostr', $input)){
-                return;
-
-            }
-
-            $signature = $input['signature'];
-            $timestamp = $input['timestamp'];
-            $nonce = $input['nonce'];
-            $echostr = $input['echostr'];
-            if (!$this->checkSignature($signature, $timestamp, $nonce)) {
-                return;
-            }
-
-            return $echostr;
+            return $this->wxSVCheck($wxConfig);
         }
 
         //$data = $this->getWXPostEvent();
         $input = Input::all();
-        file_put_contents(base_path().'/error.log', json_encode($input), FILE_APPEND);
+        H_Log(LV_Debug, 'xxxxxxxxxxxxxxxxxxx');
 
-        return '';
+        echo 'success';
     }
 
     //python设置token

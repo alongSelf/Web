@@ -17,6 +17,20 @@ function errLogin()
     return 10000;
 }
 
+define("LV_Debug", "Debug");
+define("LV_Info", "Info");
+define("LV_Waring", "Waring");
+define("LV_Error", "Error");
+
+function H_Log($logLV, $strMsg){
+    if (!env('APP_DEBUG')){
+        return;
+    }
+    
+    $msg = '['.date('Y-m-d H:i:s').']['.$logLV.']'.$strMsg.PHP_EOL;
+    file_put_contents(base_path().'/log/log.txt', $msg, FILE_APPEND);
+}
+
 function getUrl()
 {
     $PHP_SELF=$_SERVER['PHP_SELF'];

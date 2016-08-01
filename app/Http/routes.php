@@ -13,7 +13,7 @@
 
 //微信相关
 Route::group([], function () {
-    Route::any('wxServerCheck', 'WXController@wxServerCheck');
+    Route::any('wxPost', 'WXController@wxPost');
     Route::get('accessToken/{token}/{sig}', 'WXController@setAccessToken');
     Route::any('wxPayNotify', 'WXController@wxPayNotify');
 });
