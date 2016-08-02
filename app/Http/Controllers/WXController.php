@@ -62,10 +62,11 @@ class WXController extends CommController
 
     private function getWXPostEvent(){
         //获取通知的数据
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml = file_get_contents('php://input');
         if( empty($xml) ){
             return false;
         }
+
         $data = array();
         return $this->xml_to_data($xml);
     }
@@ -79,7 +80,6 @@ class WXController extends CommController
         }
 
         $input = $this->getWXPostEvent();
-        //$input = Input::all();
         H_Log(LV_Debug, json_encode($input));
 
         echo 'success';
