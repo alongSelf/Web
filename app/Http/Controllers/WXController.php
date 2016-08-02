@@ -78,8 +78,8 @@ class WXController extends CommController
             return $this->wxSVCheck($wxConfig);
         }
 
-        //$data = $this->getWXPostEvent();
-        $input = Input::all();
+        $input = $this->getWXPostEvent();
+        //$input = Input::all();
         H_Log(LV_Debug, json_encode($input));
 
         echo 'success';
