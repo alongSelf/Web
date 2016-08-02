@@ -111,6 +111,7 @@ Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'
     Route::any('other/setLAccount', 'OtherController@setLAccount');
     Route::get('other/showWXSet', 'OtherController@showWXSet');
     Route::any('other/setWXSet', 'OtherController@setWXSet');
+    Route::any('other/createWXMenu', 'OtherController@createWXMenu');
 
     Route::get('user/index', 'UserController@index');
     Route::get('user/show/{id}', 'UserController@show');

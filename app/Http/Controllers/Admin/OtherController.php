@@ -446,4 +446,9 @@ class OtherController extends CommonController
             return back()->with('errors','更新失败，请稍后重试！');
         }
     }
+
+    public function createWXMenu()
+    {
+        
+    }
 }
