@@ -81,8 +81,24 @@ class WXController extends CommController
 
         $input = $this->getWXPostEvent();
         H_Log(LV_Debug, 'recv wx message:'.json_encode($input));
+        $MsgType = $input['MsgType'];
+        switch ($MsgType)
+        {
+            case 'event':
+                $event = $input['event'];
+                switch ($event){
+                    case 'subscribe':
+                        //关注事件
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
 
-        echo 'success';
+        return 'success';
     }
 
     //python设置token
