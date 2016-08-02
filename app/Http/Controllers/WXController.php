@@ -80,7 +80,7 @@ class WXController extends CommController
         }
 
         $input = $this->getWXPostEvent();
-        H_Log(LV_Debug, json_encode($input));
+        H_Log(LV_Debug, 'recv wx message:'.json_encode($input));
 
         echo 'success';
     }
