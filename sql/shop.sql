@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50539
-Source Host           : localhost:3306
+Source Server         : 139.196.214.195_3306
+Source Server Version : 50631
+Source Host           : 139.196.214.195:3306
 Source Database       : shop
 
 Target Server Type    : MYSQL
-Target Server Version : 50539
+Target Server Version : 50631
 File Encoding         : 65001
 
-Date: 2016-08-01 15:58:39
+Date: 2016-08-02 10:05:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `addr` (
   `phone` varchar(32) DEFAULT '' COMMENT '收货人电话',
   `addr` text COMMENT '地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of addr
@@ -128,7 +128,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('3', '微信商城', '1', '{\"phone\":\"15882279747\\r\\n13328585252\\r\\n15788255222\\r\\n028-6687222\",\"email\":\"7812212qq.com\\r\\n2451@163.com\",\"qq\":\"5845222\\r\\n1541512\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"city\":\"\\u4e1c\\u57ce\\u533a\",\"county\":\"\",\"address\":\"XXX\\u53f7\"}', '{\"Token\":\"lsy20130123\",\"AppID\":\"wx0ba615b5c18aef46\",\"AppSecret\":\"6c0e14c610536960b5b6f0929275ef1f\",\"accessToken\":\"Lsy20130123*&%\",\"state\":\"lsywxstate\",\"payID\":\"\",\"payKey\":\"\",\"wxcheck\":\"1\"}', '0');
+INSERT INTO `config` VALUES ('3', '微信商城', '1', '{\"phone\":\"15882279747\\r\\n13328585252\\r\\n15788255222\\r\\n028-6687222\",\"email\":\"7812212qq.com\\r\\n2451@163.com\",\"qq\":\"5845222\\r\\n1541512\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"city\":\"\\u4e1c\\u57ce\\u533a\",\"county\":\"\",\"address\":\"XXX\\u53f7\"}', '{\"Token\":\"lsy20130123\",\"AppID\":\"\",\"AppSecret\":\"\",\"accessToken\":\"Lsy20130123*&%\",\"state\":\"lsywxstate\",\"payID\":\"\",\"payKey\":\"\",\"wxcheck\":\"1\"}', '0');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -3750,7 +3750,7 @@ CREATE TABLE `users` (
   `errortime` bigint(20) DEFAULT '0' COMMENT '最后次错误时间',
   `qrc` text COMMENT '二维码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10020 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
