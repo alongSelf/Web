@@ -112,8 +112,7 @@ class WXController extends CommController
                 switch ($event){
                     case 'subscribe':
                         //关注事件
-                        H_Log(LV_Debug, '1111');
-                        $user = Users::where('unionid', $input['FromUserName']);
+                        $user = Users::where('unionid', $input['FromUserName'])->first();
                         if (!$user){
                             $user = new Users;
                             $user->unionid = $input['FromUserName'];
