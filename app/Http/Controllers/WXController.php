@@ -123,6 +123,8 @@ class WXController extends CommController
                                 //if($spreadUser){
                                 //    (new Follower)->addFollower($spread_id, $user->id);
                                 //}
+                                //不是则加根粉丝
+                                //(new Follower)->addRoot($user->id);
                             }
                         }
                             break;
@@ -132,14 +134,14 @@ class WXController extends CommController
                 }
                 break;
             default:
-                $rtnMsg=[
-                    'ToUserName'=>$input['FromUserName'],
-                    'FromUserName'=>$input['ToUserName'],
-                    'CreateTime'=>time(),
-                    'MsgType'=>'text',
-                    'Content'=>'亲 你的消息已收到，我们会尽快处理并回复你。'
-                ];
-                $rtnMsg = $this->data_to_xml($rtnMsg);
+                //$rtnMsg=[
+                //    'ToUserName'=>$input['FromUserName'],
+                //    'FromUserName'=>$input['ToUserName'],
+                //    'CreateTime'=>time(),
+                //    'MsgType'=>'text',
+                //    'Content'=>'亲 你的消息已收到，我们会尽快处理并回复你。'
+                //];
+                //$rtnMsg = $this->data_to_xml($rtnMsg);
                 break;
         }
 
