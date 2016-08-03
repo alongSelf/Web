@@ -489,8 +489,8 @@ class OtherController extends CommonController
             return view('admin.other.wscsv', compact('csv', 'errors'));
         }
         if (property_exists($csv, 'errcode')){
-            if ($csv['errcode'] != 0){
-                $errors = $csv['errmsg'];
+            if ($csv->errcode != 0){
+                $errors = $csv->errmsg;
                 $csv = array();
                 return view('admin.other.wscsv', compact('csv', 'errors'));
             }
