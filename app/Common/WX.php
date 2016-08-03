@@ -225,3 +225,17 @@ function getJSTicket()
         return false;
     }
 }
+
+function wxCreateMenu($data)
+{
+    $data = json_decode($data);
+    $data = json_encode($data);
+
+    $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getToken();
+    $result = https($url, $data);
+    if (!$result){
+        return false;
+    }
+
+    return $result;
+}

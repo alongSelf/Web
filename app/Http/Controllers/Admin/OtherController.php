@@ -6,6 +6,7 @@ use App\http\Model\Config;
 use App\http\Model\Evaluates;
 use App\http\Model\Notice;
 use App\http\Model\ShipperCode;
+use App\http\Model\WXMenu;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -447,8 +448,33 @@ class OtherController extends CommonController
         }
     }
 
+    public function wxMenu()
+    {
+        $menu = WXMenu::first();
+        if (!$menu){
+            $menu['menu'] = '';
+            WXMenu::create($menu);
+            $menu =  WXMenu::first();
+        }
+
+        return view('admin.other.wxmenu', compact('menu'));
+    }
     public function createWXMenu()
     {
-        
+        $input = Input::except('_token');
+        $rtn = wxCreateMenu($input['menu']);
+        if (!$rtn){
+            return back()->with('errors','菜单创建失败！');
+        }
+        if (0 != $rtn->errcode){
+            return back()->with('errors',$rtn->errmsg);
+        }
+
+        $menu =  WXMenu::find($input['id']);
+        if($menu->update($input)){
+            return back()->with('errors','菜单创建成功！');
+        }else{
+            return back()->with('errors','菜单创建失败，请稍后重试！');
+        }
     }
 }
