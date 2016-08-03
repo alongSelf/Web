@@ -107,11 +107,12 @@ class WXController extends CommController
         $this->saveWXMsg($input);
         switch ($input['MsgType'])
         {
-            case 'event':
+            case 'event':{
                 $event = $input['Event'];
                 switch ($event){
                     case 'subscribe':
                         //关注事件
+                        H_Log(LV_Debug, '1111');
                         $user = Users::where('unionid', $input['FromUserName']);
                         if (!$user){
                             $user = new Users;
@@ -122,9 +123,10 @@ class WXController extends CommController
                                 //(new Follower)->addFollower(, $user->id);
                             }
                         }
-                        break;
+                            break;
                     default:
                         break;
+                    }
                 }
                 break;
             default:
