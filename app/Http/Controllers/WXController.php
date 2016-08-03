@@ -108,7 +108,7 @@ class WXController extends CommController
         switch ($input['MsgType'])
         {
             case 'event':
-                $event = $input['event'];
+                $event = $input['Event'];
                 switch ($event){
                     case 'subscribe':
                         //关注事件
