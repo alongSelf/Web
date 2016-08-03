@@ -478,4 +478,24 @@ class OtherController extends CommonController
             return back()->with('errors','菜单创建失败，请稍后重试！');
         }
     }
+
+    public function wxCSV()
+    {
+        $errors = '';
+        $url = 'https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token='.getToken();
+        $csv = https($url);
+        if (!$csv){
+            $errors = '获取客服信息失败，请稍后再试！';
+            return view('admin.other.wscsv', compact('csv', 'errors'));
+        }
+        if (property_exists($csv, 'errcode')){
+            if ($csv['errcode'] != 0){
+                $errors = $csv['errmsg'];
+                $csv = array();
+                return view('admin.other.wscsv', compact('csv', 'errors'));
+            }
+        }
+
+        return view('admin.other.wscsv', compact('csv', 'errors'));
+    }
 }

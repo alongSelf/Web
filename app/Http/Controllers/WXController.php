@@ -118,8 +118,11 @@ class WXController extends CommController
                             $user->unionid = $input['FromUserName'];
                             if ($user->save()){
                                 //是否扫描的带参二维码
-                                //if ()
-                                //(new Follower)->addFollower(, $user->id);
+                                //$spread_id = substr(trim($input['EventKey']), 8);
+                                //$spreadUser = Users::find($spread_id);
+                                //if($spreadUser){
+                                //    (new Follower)->addFollower($spread_id, $user->id);
+                                //}
                             }
                         }
                             break;
