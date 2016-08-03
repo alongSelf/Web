@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\http\Model\Config;
+use App\http\Model\Follower;
 use App\http\Model\Orders;
 use App\http\Model\Users;
+use App\http\Model\WXMsg;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 
@@ -59,7 +61,23 @@ class WXController extends CommController
         $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
         return $data;
     }
-
+    private function data_to_xml( $params ){
+        if(!is_array($params)|| count($params) <= 0)
+        {
+            return false;
+        }
+        $xml = "<xml>";
+        foreach ($params as $key=>$val)
+        {
+            if (is_numeric($val)){
+                $xml.="<".$key.">".$val."</".$key.">";
+            }else{
+                $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
+            }
+        }
+        $xml.="</xml>";
+        return $xml;
+    }
     private function getWXPostEvent(){
         //获取通知的数据
         $xml = file_get_contents('php://input');
@@ -71,6 +89,59 @@ class WXController extends CommController
         return $this->xml_to_data($xml);
     }
 
+    private function saveWXMsg($input)
+    {
+        $data = [
+            'fromuser' => $input['FromUserName'],
+            'touer' => $input['ToUserName'],
+            'msgtype' => $input['MsgType'],
+            'msg' => json_encode($input),
+            'time' => $input['CreateTime']
+        ];
+
+        WXMsg::create($data);
+    }
+    private function dowithWXMsg($input)
+    {
+        $rtnMsg = 'success';
+        $this->saveWXMsg($input);
+        switch ($input['MsgType'])
+        {
+            case 'event':
+                $event = $input['event'];
+                switch ($event){
+                    case 'subscribe':
+                        //关注事件
+                        $user = Users::where('unionid', $input['FromUserName']);
+                        if (!$user){
+                            $user = new Users;
+                            $user->unionid = $input['FromUserName'];
+                            if ($user->save()){
+                                //是否扫描的带参二维码
+                                //if ()
+                                //(new Follower)->addFollower(, $user->id);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                $rtnMsg=[
+                    'ToUserName'=>$input['FromUserName'],
+                    'FromUserName'=>$input['ToUserName'],
+                    'CreateTime'=>time(),
+                    'MsgType'=>'text',
+                    'Content'=>'亲 你的消息已收到，我们会尽快处理并回复你。'
+                ];
+                $rtnMsg = $this->data_to_xml($rtnMsg);
+                break;
+        }
+
+        return $rtnMsg;
+    }
+
     //微信服务器验证,消息接收
     public function wxPost()
     {
@@ -80,25 +151,7 @@ class WXController extends CommController
         }
 
         $input = $this->getWXPostEvent();
-        H_Log(LV_Debug, 'recv wx message:'.json_encode($input));
-        $MsgType = $input['MsgType'];
-        switch ($MsgType)
-        {
-            case 'event':
-                $event = $input['event'];
-                switch ($event){
-                    case 'subscribe':
-                        //关注事件
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
-        }
-
-        return 'success';
+        return $this->dowithWXMsg($input);
     }
 
     //python设置token
