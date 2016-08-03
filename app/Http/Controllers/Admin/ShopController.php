@@ -137,6 +137,24 @@ class ShopController extends CommonController
                 if ($data->content != $input['content']){
                     $this->removeFile($data->content);
                 }
+                if ($data->content != $input['content']){
+                    $oldShowImg =  json_decode($data->content);
+                    $newShowImg = json_decode($input['content']);
+                    $bHave = false;
+                    for($i = 0; $i < count($oldShowImg); $i++){
+                        $bHave = false;
+                        for($j = 0; $j < count($newShowImg); $j++){
+                            if ($oldShowImg[$i] == $newShowImg[$j]){
+                                $bHave = true;
+                                break;
+                            }
+                        }
+
+                        if (!$bHave){
+                            $this->removeFile($oldShowImg[$i]);
+                        }
+                    }
+                }
 
                 if ($data->showimg != $input['showimg']){
                     $oldShowImg =  json_decode($data->showimg);

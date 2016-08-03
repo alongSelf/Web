@@ -199,6 +199,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         $http.get("itemInfo/" + $stateParams.itemID)
             .success(
                 function (data, status, header, config) {
+                    data.content = JSON.parse(data.content);
                     if (data.showimg) {
                         $scope.slideImg = JSON.parse(data.showimg);
                       }

@@ -47,16 +47,16 @@
                 <p style="font-weight:bold" ng-bind-html="itemInfo.describe | toHtml | trustHtml"></p>
             </div>
             <div>
-                    <span>
-                        <em class="st_price" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
-                        <em class="st_primePrice" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
-                        <em class="st_buynum">&nbsp&nbsp[[buynum]]</em>
-                    </span>
+                <span>
+                    <em class="st_price" ng-cloak>[[cur_price]]&nbsp&nbsp</em>
+                    <em class="st_primePrice" ng-cloak>[[itemInfo.prime_price | currency:'￥']]</em>
+                    <em class="st_buynum">&nbsp&nbsp[[buynum]]</em>
+                </span>
             </div>
         </div>
 
-        <div ng-if="showCon">
-            <img ng-src="uploads/[[itemInfo.content]]" class="st_W100">
+        <div class="row" ng-if="showCon" ng-repeat="contentImg in itemInfo.content">
+            <img ng-src="uploads/[[contentImg]]" class="st_W100">
         </div>
 
         <div ng-if="showEv">

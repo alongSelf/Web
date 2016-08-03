@@ -144,10 +144,9 @@
 
                 <tr>
                     <th><i class="require">*</i>图文详情(850X):</th>
-                    <td>
-                        <input type="text" size="50" name="content" value="">
-                        <input id="content_upload" name="content_upload" type="file" multiple="false">
-                        <img alt="" id="content_img" style="max-width: 850px;" src="">
+                    <td id="contentimgtd">
+                        <input type="text" id="content" name="content" value="" hidden="true">
+                        <input id="content_upload" name="content_upload" type="file" multiple="true">
                     </td>
                 </tr>
 
@@ -221,6 +220,52 @@
             });
         });
 
+        //图文详情
+        $(function() {
+            $('#content_upload').uploadify({
+                'buttonText' : '图片上传',
+                'formData'     : {
+                    'timestamp' : '<?php echo $timestamp;?>',
+                    '_token'     : "{{csrf_token()}}"
+                },
+                'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
+                'uploader' : "{{url('admin/upload')}}",
+                'onUploadSuccess' : function(file, data, response) {
+                    var  html = '<dl>\
+                     <input type="text" value="'+data+'" onchange="contentimg_total(this)"><br>\
+                     <img style="max-width: 200px; max-height:210px;" src="{{asset('uploads')}}/'+data+'">\
+                     </dl>';
+                    $(document.getElementById('contentimgtd')).append(html);
+                    setContentImg();
+                }
+            });
+        });
+        function setContentImg() {
+            var contentimg = document.getElementById('content');
+            var contentimgTd = document.getElementById('contentimgtd');
+            var allImg = []
+
+            $(contentimgTd).find('dl').each(function(i) {
+                var img = $(this).find('input').val();
+                if (0 != img.length){
+                    allImg.push(img);
+                }
+            });
+
+            contentimg.value = JSON.stringify(allImg);
+        }
+        function contentimg_total(obj) {
+            var inputVal = obj.value;
+            if (0 == inputVal.length){
+                $(obj).parents('dl').hide();
+            }
+            else {
+                $(obj).parents('dl').find('img').attr('src', '{{asset('uploads')}}/'+inputVal+'');
+            }
+
+            setContentImg();
+        }
+
         //物品详情轮播
         function setShowImg() {
             var showimg = document.getElementById('showimg');
@@ -236,24 +281,6 @@
 
             showimg.value = JSON.stringify(allImg);
         }
-
-        //图文详情
-        $(function() {
-            $('#content_upload').uploadify({
-                'buttonText' : '图片上传',
-                'formData'     : {
-                    'timestamp' : '<?php echo $timestamp;?>',
-                    '_token'     : "{{csrf_token()}}"
-                },
-                'swf'      : "{{asset('resources/views/uploadify/uploadify.swf')}}",
-                'uploader' : "{{url('admin/upload')}}",
-                'onUploadSuccess' : function(file, data, response) {
-                    $('input[name=content]').val(data);
-                    $('#content_img').attr('src','/uploads/'+data);
-                }
-            });
-        });
-
         function showimg_total(obj) {
             var inputVal = obj.value;
             if (0 == inputVal.length){
