@@ -33,7 +33,7 @@
                 <tr>
                     <th style="width: 100px">微信菜单(json)：</th>
                     <td>
-                        <textarea style="width: 30%; height: 500px; font-size:20px;" name="menu">{{$menu->menu}}</textarea>
+                        <textarea style="width: 80%; height: 700px; font-size:20px;" name="menu">{{$menu->menu}}</textarea>
                     </td>
                 </tr>
                 <tr>
