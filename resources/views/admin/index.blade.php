@@ -58,7 +58,7 @@
 				<li><a href="{{url('admin/other/showShippercode')}}" target="main"><i class="fa fa-fw fa-edit"></i>承运公司</a></li>
 				<li><a href="{{url('admin/other/showWXSet')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信</a></li>
 				<li><a href="{{url('admin/other/wxMenu')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信菜单</a></li>
-				<li><a href="{{url('admin/other/wxCSV')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信客服</a></li>
+				<!--li><a href="{{url('admin/other/wxCSV')}}" target="main"><i class="fa fa-fw fa-edit"></i>微信客服</a></li-->
 			</ul>
 		</li>
 	</ul>

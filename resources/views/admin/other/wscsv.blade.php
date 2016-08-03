@@ -28,6 +28,7 @@
         <!--快捷导航 开始-->
         <div class="result_content">
             <div class="short_wrap">
+                <a href="{{url('admin/other/createWXCSV')}}"><i class="fa fa-plus"></i>添加客服(最多10个)</a>
             </div>
         </div>
         <!--快捷导航 结束-->
@@ -47,15 +48,17 @@
                         <tr>
                             <td>{{$v->kf_id}}</td>
                             <td>{{$v->kf_account}}</td>
-                            <td>{{$v->kf_nick}}</td>
                             <td>
-                                <img src="{{$v->kf_headimgurl}}">
+                                <input type="text" name="title" value="{{$v->kf_nick}}">
                             </td>
                             <td>
-                                <a href="javascript:;" onclick="disPlayEvaluates({{$v->id}})">
+                                <img style="width: 100px; height: 100px" src="{{$v->kf_headimgurl}}">
+                            </td>
+                            <td>
+                                <a href="javascript:;" onclick="delCSV({{$v->id}})">
                                     删除
                                 </a>
-                                <a href="javascript:;" onclick="disPlayEvaluates({{$v->id}})">
+                                <a href="{{url('admin/other/showWXCSV')}}">
                                     修改
                                 </a>
                             </td>
@@ -66,5 +69,26 @@
         </div>
     </form>
     <!--搜索结果页面 列表 结束-->
+
+    <script>
+        //删除分类
+        function delEvaluates(id) {
+            layer.confirm('您确定要删除该评论吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.post("{{url('admin/other/delEvaluates')}}", {'id':id,'_token':"{{csrf_token()}}"},function (data) {
+                    if(data.status==0){
+                        location.href = location.href;
+                        layer.msg(data.msg, {icon: 6});
+                    }else{
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                });
+//            layer.msg('的确很重要', {icon: 1});
+            }, function(){
+
+            });
+        }
+    </script>
 
 @endsection
