@@ -194,25 +194,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.showInfo = true;
     $scope.PopData = {};
 
-    $scope.imgContent = [];
-    $scope.imgContentMore = true;
-    $scope.imgContentPage = 0;
-    var perPage = 2;
-    
-    $scope.getImgContent = function () {
-        var content = $scope.itemInfo.content;
-        var conLens = content.length;
-
-        for (var i = $scope.imgContentPage * perPage; i < ($scope.imgContentPage + 1) * perPage; i++){
-            if (i >= conLens){
-                $scope.imgContentMore = false;
-                break;
-            }
-
-            $scope.imgContent.push(content[i]);
-        }
-        $scope.imgContentPage++;
-    };
 
     //数据获取
     $scope.doRefresh = function () {
@@ -231,10 +212,9 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
                     $scope.itemInfo = data;
 
-                    $scope.imgContent = [];
+                    $scope.imgContent = {};
                     $scope.imgContentMore = true;
                     $scope.imgContentPage = 0;
-                    $scope.getImgContent();
 
                     var f = parseFloat(data.cur_price);
                     $scope.cur_price = '惊爆价:￥' + f.toFixed(2);
@@ -445,11 +425,6 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         $scope.Page++;
     };
     $scope.loadMore();
-
-    $scope.loadMoreContent = function () {
-        $scope.getImgContent();
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-    };
 
     $scope.setSlideImgStyle = function () {
         $scope.innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
