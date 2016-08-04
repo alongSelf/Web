@@ -45,7 +45,7 @@ class CommController extends Controller
 
     public function numPerPage()
     {
-        return 20;
+        return 16;
     }
 
     public function getID()
