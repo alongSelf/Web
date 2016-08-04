@@ -194,6 +194,19 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.showInfo = true;
     $scope.PopData = {};
 
+    $scope.imgContent = [];
+    $scope.imgContentMore = true;
+    $scope.imgContentIndex = 1;
+
+    $scope.getImgContent = function () {
+        var content = $scope.itemInfo.content;
+        if ($scope.imgContentIndex >= content.length){
+            $scope.imgContentMore = false;
+            return;
+        }
+        $scope.imgContent.push(content[$scope.imgContentIndex]);
+        $scope.imgContentIndex++;
+    };
 
     //数据获取
     $scope.doRefresh = function () {
@@ -201,6 +214,9 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
             .success(
                 function (data, status, header, config) {
                     data.content = JSON.parse(data.content);
+                    if (0 != data.content.length){
+                        $scope.firstContent = data.content[0];
+                    }
                     if (data.showimg) {
                         $scope.slideImg = JSON.parse(data.showimg);
                       }
@@ -212,9 +228,10 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
                     $scope.itemInfo = data;
 
-                    $scope.imgContent = {};
+                    $scope.imgContent = [];
                     $scope.imgContentMore = true;
-                    $scope.imgContentPage = 0;
+                    $scope.imgContentIndex = 1;
+                    $scope.getImgContent();
 
                     var f = parseFloat(data.cur_price);
                     $scope.cur_price = '惊爆价:￥' + f.toFixed(2);
@@ -425,6 +442,11 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
         $scope.Page++;
     };
     $scope.loadMore();
+
+    $scope.loadMoreContent = function () {
+        $scope.getImgContent();
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
 
     $scope.setSlideImgStyle = function () {
         $scope.innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;

@@ -55,8 +55,11 @@
             </div>
         </div>
 
-        <div class="row" ng-if="showCon" ng-repeat="contentImg in itemInfo.content">
-            <img image-lazy-src="uploads/[[contentImg]]" class="st_W100">
+        <div class="row" ng-if="showCon">
+            <img ng-src="uploads/[[firstContent]]" class="st_W100">
+        </div>
+        <div class="row" ng-if="showCon" ng-repeat="contentImg in imgContent">
+            <img image-lazy-src="uploads/[[contentImg]]" image-lazy-loader="bubbles" class="st_W100">
         </div>
 
         <div ng-if="showEv">
@@ -84,6 +87,7 @@
         </div>
 
         <ion-infinite-scroll ng-if="moreData && showEv" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="imgContentMore && showCon" on-infinite="loadMoreContent()" distance="1%" ></ion-infinite-scroll>
     </ion-content>
 
     <ion-footer-bar ng-if="showInfo">
