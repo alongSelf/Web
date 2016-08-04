@@ -134,14 +134,13 @@ class WXController extends CommController
                 }
                 break;
             default:
-                //$rtnMsg=[
-                //    'ToUserName'=>$input['FromUserName'],
-                //    'FromUserName'=>$input['ToUserName'],
-                //    'CreateTime'=>time(),
-                //    'MsgType'=>'text',
-                //    'Content'=>'亲 你的消息已收到，我们会尽快处理并回复你。'
-                //];
-                //$rtnMsg = $this->data_to_xml($rtnMsg);
+                $rtnMsg=[
+                    'ToUserName'=>$input['FromUserName'],
+                    'FromUserName'=>$input['ToUserName'],
+                    'CreateTime'=>time(),
+                    'MsgType'=>'transfer_customer_service',
+                ];
+                $rtnMsg = $this->data_to_xml($rtnMsg);
                 break;
         }
 
