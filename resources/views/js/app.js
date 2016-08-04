@@ -10,9 +10,15 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
     $interpolateProvider.endSymbol(']]');
     //$locationProvider.html5Mode(true);
     var onlywx = false;
-    
+
     function setAllState() {
         $stateProvider
+            .state('jump', {
+                cache: false,
+                url: "/jump",
+                templateUrl: "resources/views/templates/jump.html",
+                controller: 'jumpController'
+            })
             .state('tabs', {
                 abstract: true,
                 url: "/tabs",
@@ -213,7 +219,7 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
     if (onlywx){
         if (isWX()){
             setAllState();
-            $urlRouterProvider.otherwise("/tabs/home");
+            $urlRouterProvider.otherwise("jump");
         }else {
             $stateProvider
                 .state('onlywx', {
@@ -225,6 +231,6 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider'
         }
     }else {
         setAllState();
-        $urlRouterProvider.otherwise("/tabs/home");
+        $urlRouterProvider.otherwise("jump");
     }
 }]);

@@ -2,8 +2,29 @@
 
 var appModule = angular.module('ionicApp.shopcontroller', ['ionicApp.server']);
 
+appModule.controller('jumpController', ['$scope', '$state', '$cookieStore', function($scope, $state, $cookieStore){
+    $scope.jumpState = function () {
+        var state = $cookieStore.get('state');
+        if (state && 0 != state.length){
+            state = state.state;
+            $cookieStore.remove('state');
+            if ('find' == state){
+                $state.go('tabs.find');
+            }else if ('user' == state){
+                $state.go('tabs.user');
+            }else {
+                $state.go('tabs.home');
+            }
+        }else {
+            $state.go('tabs.home');
+        }
+    };
+
+    $scope.jumpState();
+}]);
+
 //主页
-appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$timeout', '$window', function($scope, $http, $ionicSlideBoxDelegate, $sce, $timeout, $window){
+appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegate', '$sce', '$timeout', '$window', '$cookieStore', '$state', function($scope, $http, $ionicSlideBoxDelegate, $sce, $timeout, $window, $cookieStore, $state){
     $scope.activityItem = [];
     $scope.itemList = [];
     $scope.Page = 0;
@@ -11,7 +32,6 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
     var innerWidth = $window.innerWidth > getMaxW() ? getMaxW(): $window.innerWidth;
     $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
     $scope.loaded = true;
-
     $scope.doRefresh = function () {
         $scope.loaded = true;
         $http.get("indexItem")
@@ -73,7 +93,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
 
     //页面切换后轮播可以继续
     $scope.$on('$ionicView.beforeEnter',function(){
-        $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();        
+        $ionicSlideBoxDelegate.$getByHandle('delegateHandler').start();
     });
 
     $scope.setSlideImgStyle = function () {
@@ -98,6 +118,7 @@ appModule.controller('homeController',['$scope', '$http', '$ionicSlideBoxDelegat
         $scope.perItemWidth = getColStyle(parseInt(getItemListImgH() / innerWidth * 100));
         $scope.itemList = reMakeList($scope.itemList, $scope.Categorys, innerWidth);
     });
+
 }]);
 
 //分类商品展示
@@ -474,7 +495,6 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
     $scope.itemInCar = carInfo;
     $scope.priceTotal = getCarPriceTotal(carInfo);
     $scope.showCarInfo = false;
-
     if (carInfo && carInfo.length > 0){
         $scope.showCarInfo = true;
     }

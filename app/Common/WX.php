@@ -54,57 +54,59 @@ function getWXUserInfo($openID)
 //微信登录
 function wxLogIn()
 {
+    $state = '';
     $input = Input::all();
     //微信登录
     if (array_key_exists('code', $input) && array_key_exists('state', $input)){
-         $wx = getWXConfig();
-        if ($input['state'] == $wx->state){
-            //用state换取openid
-            $openID = getWXOpenID($input['code'], $wx);
-            if (0 != strlen($openID)){
-                //是否已经存在
-                $user = Users::where('unionid', $openID)->first();
-                if ($user){
-                    //设置session
-                    session(['user'=>$user]);
-                }else{
-                    $data['unionid'] = $openID;
-                    
-                    //拉去用户信息
-                    $wxUserInfo = getWXUserInfo($openID);
-                    if ($wxUserInfo
-                        && property_exists($wxUserInfo, 'nickname')
-                        && property_exists($wxUserInfo, 'headimgurl')){
+        $wx = getWXConfig();
+        $state = $input['state'];
+        //用state换取openid
+        $openID = getWXOpenID($input['code'], $wx);
+        if (0 != strlen($openID)){
+            //是否已经存在
+            $user = Users::where('unionid', $openID)->first();
+            if ($user){
+                //设置session
+                session(['user'=>$user]);
+            }else{
+                $data['unionid'] = $openID;
 
-                        $data['nickname'] = $wxUserInfo->nickname;
-                        $data['icon'] = saveIcon($wxUserInfo->headimgurl);
-                    }
+                //拉去用户信息
+                $wxUserInfo = getWXUserInfo($openID);
+                if ($wxUserInfo
+                    && property_exists($wxUserInfo, 'nickname')
+                    && property_exists($wxUserInfo, 'headimgurl')){
 
-                    $ses = session('user');
-                    if ($ses){//已经登录直接绑定
-                        $user = Users::find($ses['id']);
-                        if (!$user){
-                            if (Users::create($data)){
-                                //设置session
-                                $user = Users::where('unionid', $openID)->first();
-                                session(['user'=>$user]);
-                                (new Follower)->addRoot($user['id']);
-                            }
-                        }else{
-                            $user->update($data);
-                        }
-                    }else{//未登录新建用户
+                    $data['nickname'] = $wxUserInfo->nickname;
+                    $data['icon'] = saveIcon($wxUserInfo->headimgurl);
+                }
+
+                $ses = session('user');
+                if ($ses){//已经登录直接绑定
+                    $user = Users::find($ses['id']);
+                    if (!$user){
                         if (Users::create($data)){
                             //设置session
                             $user = Users::where('unionid', $openID)->first();
                             session(['user'=>$user]);
                             (new Follower)->addRoot($user['id']);
                         }
+                    }else{
+                        $user->update($data);
+                    }
+                }else{//未登录新建用户
+                    if (Users::create($data)){
+                        //设置session
+                        $user = Users::where('unionid', $openID)->first();
+                        session(['user'=>$user]);
+                        (new Follower)->addRoot($user['id']);
                     }
                 }
             }
         }
     }
+
+    return $state;
 }
 
 function newWXPay()

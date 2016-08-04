@@ -14,9 +14,8 @@ class ShopController extends CommController
 {
     public function index()
     {
-        wxLogIn();
-
-        return view('index');
+        $state = wxLogIn();
+        return view('index', compact('state'));
     }
 
     public function getConfig()
