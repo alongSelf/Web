@@ -194,7 +194,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
     $scope.showInfo = true;
     $scope.PopData = {};
 
-    $scope.imgContent = {};
+    $scope.imgContent = [];
     $scope.imgContentMore = true;
     $scope.imgContentPage = 0;
     var perPage = 2;
@@ -231,7 +231,7 @@ appModule.controller('iteminfoController', ['$scope','$stateParams', '$ionicHist
 
                     $scope.itemInfo = data;
 
-                    $scope.imgContent = {};
+                    $scope.imgContent = [];
                     $scope.imgContentMore = true;
                     $scope.imgContentPage = 0;
                     $scope.getImgContent();
