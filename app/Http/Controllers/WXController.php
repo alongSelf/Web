@@ -88,7 +88,6 @@ class WXController extends CommController
         $data = array();
         return $this->xml_to_data($xml);
     }
-
     private function saveWXMsg($input)
     {
         $data = [
@@ -101,10 +100,19 @@ class WXController extends CommController
 
         WXMsg::create($data);
     }
+    private function toCSV($input)
+    {
+        $rtnMsg=[
+            'ToUserName'=>$input['FromUserName'],
+            'FromUserName'=>$input['ToUserName'],
+            'CreateTime'=>time(),
+            'MsgType'=>'transfer_customer_service',
+        ];
+        return $this->data_to_xml($rtnMsg);
+    }
     private function dowithWXMsg($input)
     {
         $rtnMsg = 'success';
-        $this->saveWXMsg($input);
         switch ($input['MsgType'])
         {
             case 'event':{
@@ -129,18 +137,13 @@ class WXController extends CommController
                         }
                             break;
                     default:
+                        $rtnMsg = $this->toCSV($input);
                         break;
                     }
                 }
                 break;
             default:
-                $rtnMsg=[
-                    'ToUserName'=>$input['FromUserName'],
-                    'FromUserName'=>$input['ToUserName'],
-                    'CreateTime'=>time(),
-                    'MsgType'=>'transfer_customer_service',
-                ];
-                $rtnMsg = $this->data_to_xml($rtnMsg);
+                $rtnMsg = $this->toCSV($input);
                 break;
         }
 
