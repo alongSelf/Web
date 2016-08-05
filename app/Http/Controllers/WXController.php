@@ -217,6 +217,7 @@ class WXController extends CommController
         $order->status = 1;
         if ($order->update()){
             $this->addIncome($user['id'], $orderID);
+            $this->addBuyNum($orderID);
         }
 
         return $wechatAppPay->replyNotify();

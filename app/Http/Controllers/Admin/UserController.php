@@ -128,6 +128,7 @@ class UserController extends CommonController
         }
 
         $data->status = 2;
+        $data->operate = session(BSessionNam)['user_name'];
         if($data->update()){
             $user = Users::find($data['userid']);
             if ($user){
@@ -164,8 +165,29 @@ class UserController extends CommonController
         }
 
         //微信红包。。。。。。
+        $wxPay = newWXPay();
+        $result = $wxPay->redPack((string)$id, $user['unionid'], $data['money'] * 100);
+        if (!$result){
+            return [
+                'status' => 1,
+                'msg' => '红包发放失败！',
+            ];
+        }
+        if ('SUCCESS' != $result['return_code']){
+            return [
+                'status' => 1,
+                'msg' => $result['return_msg'],
+            ];
+        }
+        if ('SUCCESS' != $result['result_code']){
+            return [
+                'status' => 1,
+                'msg' => $result['err_code_des'],
+            ];
+        }
 
         $data->status = 1;
+        $data->operate = session(BSessionNam)['user_name'];
         if($data->update()){
             return [
                 'status' => 0,

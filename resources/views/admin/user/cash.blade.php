@@ -27,6 +27,7 @@
                         <th>余额(分)</th>
                         <th>申请时间</th>
                         <th>状态</th>
+                        <th>处理者</th>
                         <th>操作</th>
                     </tr>
                     @foreach($data as $v)
@@ -56,6 +57,7 @@
                                 }
                                 ?>
                             </td>
+                            <td>{{$v->operate}}</td>
                              <td>
                                  @if (0 == $v->status)
                                      <a href="javascript:;" onclick="Cash({{$v->id}})">发红包</a>

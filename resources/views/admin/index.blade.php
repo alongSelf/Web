@@ -34,7 +34,7 @@
 			<ul class="sub_menu" style="display: block;">
 				<li><a href="{{url('admin/user/index')}}" target="main"><i class="fa fa-fw fa-edit"></i>用户列表</a></li>
 				<li><a href="{{url('admin/user/agent')}}" target="main"><i class="fa fa-fw fa-edit"></i>代理申请</a></li>
-				<li><a href="{{url('admin/user/cash')}}" target="main"><i class="fa fa-fw fa-edit"></i>提现申请(未完)</a></li>
+				<li><a href="{{url('admin/user/cash')}}" target="main"><i class="fa fa-fw fa-edit"></i>提现申请</a></li>
 				<li><a href="{{url('admin/user/income')}}" target="main"><i class="fa fa-fw fa-edit"></i>提成明细</a></li>
 				<li><a href="{{url('admin/user/follower/junior')}}" target="main"><i class="fa fa-fw fa-edit"></i>粉丝</a></li>
 			</ul>

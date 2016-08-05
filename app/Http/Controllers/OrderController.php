@@ -164,6 +164,7 @@ class OrderController extends CommController
                 $order->status = 1;
                 if ($order->update()){
                     $this->addIncome($user['id'], $orderID);
+                    $this->addBuyNum($orderID);
                 }
 
                 return rtnMsg(1, '订单已支付！');
@@ -205,6 +206,7 @@ class OrderController extends CommController
             $order->status = 1;
             if ($order->update()){
                 $this->addIncome($user['id'], $orderID);
+                $this->addBuyNum($orderID);
             }
 
             return rtnMsg(0, '订单已支付，请下拉刷新!');

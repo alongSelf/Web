@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\http\Model\Config;
 use App\http\Model\Income;
 use App\http\Model\Orders;
+use App\http\Model\ShopItem;
 use App\http\Model\Users;
 
 class CommController extends Controller
@@ -60,6 +61,23 @@ class CommController extends Controller
     public function pswMax()
     {
         return 12;
+    }
+
+    public function addBuyNum($orderID)
+    {
+        $order = Orders::find($orderID);
+        if (!$order){
+            return;
+        }
+
+        $items = json_decode($order['iteminfo']);
+        for ($i = 0; $i < count($items->items); $i++) {
+            $info = $items->items[$i];
+            $shopitem = ShopItem::find($info->id);
+            if ($shopitem){
+                $shopitem->increment('buynum', $info->num);
+            }
+        }
     }
 
     public function addIncome($userID, $orderID){
