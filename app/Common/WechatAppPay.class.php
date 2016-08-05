@@ -20,7 +20,7 @@
  */
 class wechatAppPay
 {	
-	//接口API URL前缀
+	//接口API URL前缀 https://api.mch.weixin.qq.com/sandbox
 	const API_URL_PREFIX = 'https://api.mch.weixin.qq.com';
 	//下单地址URL
 	const UNIFIEDORDER_URL = "/pay/unifiedorder";
@@ -178,6 +178,7 @@ class wechatAppPay
 	/**
 	 * 接收通知成功后应答输出XML数据
 	 * @param string $xml
+	 * return xml
 	 */
 	public function replyNotify(){
 		$data['return_code'] = 'SUCCESS';
@@ -188,6 +189,7 @@ class wechatAppPay
 	 /**
 	  * 生成APP端支付参数
 	  * @param	$prepayid	预支付id
+	  * return arry
 	  */
 	 public function getAppPayParams($prepayid){
 		 $data['appId'] = $this->appid;

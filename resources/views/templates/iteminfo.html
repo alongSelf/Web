@@ -55,10 +55,10 @@
             </div>
         </div>
 
-        <div class="row" ng-if="showCon">
+        <div ng-if="showCon">
             <img ng-src="uploads/[[firstContent]]" class="st_W100">
         </div>
-        <div class="row" ng-if="showCon" ng-repeat="contentImg in imgContent">
+        <div ng-if="showCon" ng-repeat="contentImg in imgContent">
             <img image-lazy-src="uploads/[[contentImg]]" image-lazy-loader="bubbles" class="st_W100">
         </div>
 
