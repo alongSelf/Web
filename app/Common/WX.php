@@ -21,10 +21,19 @@ function setToken($token){
     $tmp->wx_access_token = $token;
     $tmp->update();
 }
-
 function getToken(){
     $tmp = WXTemp::first();
     return $tmp['wx_access_token'];
+}
+
+function setJSToken($token){
+    $tmp = WXTemp::first();
+    $tmp->wx_js_token = $token;
+    $tmp->update();
+}
+function getJSToken(){
+    $tmp = WXTemp::first();
+    return $tmp['wx_js_token'];
 }
 
 //通过code换取网页授权access_token
@@ -228,6 +237,7 @@ function getJSTicket()
     }
 }
 
+//创建菜单
 function wxCreateMenu($data)
 {
     $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.getToken();

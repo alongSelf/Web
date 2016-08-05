@@ -184,6 +184,12 @@ class WXController extends CommController
         $mySig = md5($token.$pyToken->accessToken);
         if ($sig == $mySig){
             setToken($token);
+            $jsTocken = getJSTicket();
+            if (!$jsTocken){
+                H_Log(LV_Error, 'get js token error.');
+            }else{
+                setJSToken($jsTocken);
+            }
             return 0;
         }else{
             return 1;
