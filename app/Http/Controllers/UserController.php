@@ -418,7 +418,9 @@ class UserController extends CommController
             'expire_seconds'=>$expire_seconds,
             'action_name'=>'QR_SCENE',
             'action_info'=>[
-                'scene_id'=>$userID
+                'scene'=>[
+                    'scene_id'=>$userID
+                ]
             ]
         ];
         $url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='.getToken();

@@ -127,6 +127,7 @@ class WXController extends CommController
         switch ($input['MsgType'])
         {
             case 'event':{
+                $this->saveWXMsg($input);
                 $event = $input['Event'];
                 switch ($event){
                     case 'subscribe':
@@ -139,12 +140,11 @@ class WXController extends CommController
                                 if (empty($input['EventKey'])){
                                     (new Follower)->addRoot($user->id);
                                 }else{
-                                    //是否扫描的带参二维码
-                                    //$spread_id = substr(trim($input['EventKey']), 8);
-                                    //$spreadUser = Users::find($spread_id);
-                                    //if($spreadUser){
-                                    //    (new Follower)->addFollower($spread_id, $user->id);
-                                    //}
+                                    $spread_id = substr(trim($input['EventKey']), 8);
+                                    $spreadUser = Users::find($spread_id);
+                                    if($spreadUser){
+                                        (new Follower)->addFollower($spread_id, $user->id);
+                                    }
                                 }
                             }
                         }
