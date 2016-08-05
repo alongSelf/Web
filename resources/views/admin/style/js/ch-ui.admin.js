@@ -68,7 +68,7 @@ function showUser(url) {
 		title: '用户信息',
 		shadeClose: true,
 		shade: 0.8,
-		area: ['500px', '90%'],
+		area: ['800px', '90%'],
 		content: url
 	});
 }
