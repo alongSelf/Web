@@ -85,7 +85,7 @@ class UserController extends CommController
             return rtnMsg(1, '密码错误！');
         }
 
-        session(['user'=>$user]);
+        session([FSessionNam=>$user]);
         $userBase = [
             'id'=>$user->id,
             'consume'=>$user->consume,
@@ -98,21 +98,21 @@ class UserController extends CommController
 
     public function logOut()
     {
-        session(['user'=>null]);
+        session([FSessionNam=>null]);
 
         return 0;
     }
 
     public function getUserBase()
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $user = Users::select('id', 'consume', 'nickname', 'icon')->find($user['id']);
         return rtnMsg(0, $user);
     }
 
     public function getUserInfo()
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $user = Users::find($user['id']);
         $user->psw = null;
         $user->qrc = null;
@@ -122,7 +122,7 @@ class UserController extends CommController
 
     public function updateWXInfo()
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $user = Users::find($user['id']);
         $wxInfo = getWXUserInfo($user['unionid']);
         if ($wxInfo
@@ -155,7 +155,7 @@ class UserController extends CommController
             return rtnMsg(1, '密码长度最少'.$this->pswMin().'位最多'.$this->pswMax().'位!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $have = Users::where('phone', $phone)->count();
         if (0 != $have){
             return rtnMsg(1, '号码已经绑定!');
@@ -168,7 +168,7 @@ class UserController extends CommController
         $re = Users::where('id', $user['id'])->update($input);
         if ($re){
             $user = Users::find($user['id']);
-            session(['user'=>$user]);
+            session([FSessionNam=>$user]);
 
             return rtnMsg(0, '绑定成功!');
         }else{
@@ -185,7 +185,7 @@ class UserController extends CommController
         if (strlen($newpsw) < $this->pswMin() || strlen($newpsw) > $this->pswMax()){
             return rtnMsg(1, '密码长度最少'.$this->pswMin().'位最多'.$this->pswMax().'位!');
         }
-        $user = session('user');
+        $user = session(FSessionNam);
         if (!$this->checkPhone($user['phone'])){
             return rtnMsg(1, '请先绑定号码!');
         }
@@ -241,7 +241,7 @@ class UserController extends CommController
             return rtnMsg(1, '微信号最少2位最多64位!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $nickCount = Users::where('nickname', $input->nickname)->where('id', '<>', $user['id'])->count();
         if (0 != $nickCount){
             return rtnMsg(1, '昵称重复啦!');
@@ -292,7 +292,7 @@ class UserController extends CommController
             return rtnMsg(1, '请勿输入特殊字符!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $input = [
             'userid'=>$user['id'],
             'name'=>$input->name,
@@ -314,7 +314,7 @@ class UserController extends CommController
             return rtnMsg(errLogin(), '请先登录!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $addr = Addr::where('userid', $user['id'])->get();
 
         return rtnMsg(0, $addr);
@@ -327,7 +327,7 @@ class UserController extends CommController
         if (!is_numeric($id)){
             return rtnMsg(1, '参数错误!');
         }
-        $user = session('user');
+        $user = session(FSessionNam);
         $re = Addr::where('id', $id)->delete();
         if($re){
             $addr = Addr::where('userid', $user['id'])->get();
@@ -339,7 +339,7 @@ class UserController extends CommController
 
     public function agentShow()
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $have = Agent::where('userid', $user['id'])->count();
         if (0 != $have){
             return rtnMsg(0, false);
@@ -367,7 +367,7 @@ class UserController extends CommController
             return rtnMsg(1, '姓名最少2位最多64位！');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $have = Agent::where('userid', $user['id'])->count();
         if (0 != $have){
             return rtnMsg(1, '你已经申请过了，不需要重新申请!');
@@ -450,7 +450,7 @@ class UserController extends CommController
 
     public function spreadInfo()
     {        
-        $user = session('user');
+        $user = session(FSessionNam);
         $userID = $user['id'];
 
         //是否显示
@@ -478,7 +478,7 @@ class UserController extends CommController
             return rtnMsg(1, '参数错误!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $income = Income::where('userid', $user['id'])->
             skip($page * $this->numPerPage())->take($this->numPerPage())->
             orderBy('time','desc')->get();
@@ -492,7 +492,7 @@ class UserController extends CommController
             return rtnMsg(1, '参数错误!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $cash = Cash::where('userid', $user['id'])->
         skip($page * $this->numPerPage())->take($this->numPerPage())->
         orderBy('time','desc')->get();
@@ -507,7 +507,7 @@ class UserController extends CommController
         if (!is_numeric($money)){
             return rtnMsg(1, '参数错误!');
         }
-        $user = session('user');
+        $user = session(FSessionNam);
         $config = Config::all()[0];
         if ($config['cash'] > $money || 0 != $money % $config['cash']){
             return rtnMsg(1, '提现金额必须为'.$config['cash'].'的整数倍!');
@@ -544,7 +544,7 @@ class UserController extends CommController
             return rtnMsg(1, '参数错误!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $myLayer = Follower::where('userid', $user['id'])->first();
         $followerLayer = Follower::where('userid', $followerid)->first();
 

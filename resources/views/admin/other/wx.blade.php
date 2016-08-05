@@ -66,6 +66,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>商户名称：</th>
+                    <td>
+                        <input type="text" style="width: 50%" placeholder="商户名称" name="mchName" value="{{$config->wx->mchName}}">
+                    </td>
+                </tr>
+                <tr>
                     <th>商户签名密钥：</th>
                     <td>
                         <input type="text" style="width: 50%" placeholder="商户签名密钥" name="payKey" value="{{$config->wx->payKey}}">

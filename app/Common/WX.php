@@ -114,7 +114,7 @@ function wxLogIn()
                         $user->update();
                     }
                 }
-                session(['user'=>$user]);
+                session([FSessionNam=>$user]);
             }else{
                 $data['unionid'] = $openID;
 
@@ -128,14 +128,14 @@ function wxLogIn()
                     $data['icon'] = saveIcon($wxUserInfo->headimgurl);
                 }
 
-                $ses = session('user');
+                $ses = session(FSessionNam);
                 if ($ses){//已经登录直接绑定
                     $user = Users::find($ses['id']);
                     if (!$user){
                         if (Users::create($data)){
                             //设置session
                             $user = Users::where('unionid', $openID)->first();
-                            session(['user'=>$user]);
+                            session([FSessionNam=>$user]);
                             (new Follower)->addRoot($user['id']);
                         }
                     }else{
@@ -145,7 +145,7 @@ function wxLogIn()
                     if (Users::create($data)){
                         //设置session
                         $user = Users::where('unionid', $openID)->first();
-                        session(['user'=>$user]);
+                        session([FSessionNam=>$user]);
                         (new Follower)->addRoot($user['id']);
                     }
                 }
@@ -163,7 +163,8 @@ function newWXPay()
         'appid' 	=> 	$wx->AppID,		//填写微信分配的公众账号ID
         'mch_id'	=>	$wx->payID,				//填写微信支付分配的商户号
         'notify_url'=>	getUrl().'wxPayNotify',	//填写微信支付结果回调地址
-        'key'		=>	$wx->payKey				//填写微信商户支付密钥
+        'key'		=>	$wx->payKey,				//填写微信商户支付密钥
+        'mch_name'		=> $wx->mchName				//填写微信商名
     );
 
     return new wechatAppPay($options);

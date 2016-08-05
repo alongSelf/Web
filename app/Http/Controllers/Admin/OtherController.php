@@ -434,7 +434,7 @@ class OtherController extends CommonController
         $wx['AppID'] = $input['AppID'];
         $wx['AppSecret'] = $input['AppSecret'];
         $wx['accessToken'] = $input['accessToken'];
-        //$wx['state'] = $input['state'];
+        $wx['mchName'] = $input['mchName'];
         $wx['payID'] = $input['payID'];
         $wx['payKey'] = $input['payKey'];
         $wx['wxcheck'] = $input['wxcheck'];

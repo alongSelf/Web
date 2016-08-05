@@ -15,7 +15,7 @@ class AdminLogin
      */
     public function handle($request, Closure $next)
     {
-        if(!session('admin_user')){
+        if(!session(BSessionNam)){
             return redirect('admin/login');
         }
 

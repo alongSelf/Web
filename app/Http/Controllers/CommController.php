@@ -36,13 +36,13 @@ class CommController extends Controller
     
     public function isLogIn()
     {
-        if (session('user')){
+        if (session(FSessionNam)){
             return true;
         }else{
             return false;
         }
     }
-
+    
     public function numPerPage()
     {
         return 16;

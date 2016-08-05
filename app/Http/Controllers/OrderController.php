@@ -33,7 +33,7 @@ class OrderController extends CommController
             return rtnMsg(errLogin(), '请先登录!');
         }
 
-        $user = session('user');
+        $user = session(FSessionNam);
         $order = Input::get('order');
         $orderJson = json_decode($order);
 
@@ -143,7 +143,7 @@ class OrderController extends CommController
 
     public function cancelOrder()
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $orderID = Input::get('id');
 
         $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 0)->first();
@@ -190,7 +190,7 @@ class OrderController extends CommController
     //查询核对
     public function queryOrder($orderID)
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $order = Orders::where('id', $orderID)->where('userid', $user['id'])->where('status', 0)->first();
         if (!$order){
             return rtnMsg(1, '无效的订单!');
@@ -217,7 +217,7 @@ class OrderController extends CommController
     //0待付款  1待发货 2待评价 3完成 4售后 5取消
     public function showOrder($page, $type)
     {
-        $user = session('user');
+        $user = session(FSessionNam);
 
         switch ($type){
             case 0://全部
@@ -275,7 +275,7 @@ class OrderController extends CommController
 
     public function getOrder($id, $showEv)
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $order = Orders::where('id', $id)->where('userid', $user['id'])->first();
         if (!$order){
             return rtnMsg(1, '无效的订单!');
@@ -307,7 +307,7 @@ class OrderController extends CommController
 
     public function evaluate()
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $input = Input::except('_token');
         if (!is_numeric($input['star']) ||
             !is_numeric($input['itemid'])){
@@ -357,7 +357,7 @@ class OrderController extends CommController
 
     public function logistics($orderID)
     {
-        $user = session('user');
+        $user = session(FSessionNam);
         $order = Orders::select('logistics')->where('id', $orderID)->where('userid', $user['id'])->first();
         if (!$order){
             return rtnMsg(1, '查询失败，请稍候再试!');

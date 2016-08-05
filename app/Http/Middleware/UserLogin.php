@@ -15,7 +15,7 @@ class UserLogin
      */
     public function handle($request, Closure $next)
     {
-        if(!session('user')){
+        if(!session(FSessionNam)){
             return redirect('/');
         }
 
