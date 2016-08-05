@@ -6,6 +6,7 @@ var appModule = angular.module('ionicApp.server', []);
 appModule.run(['$rootScope', '$http', '$cookieStore', '$window', '$state', function($rootScope, $http, $cookieStore, $window, $state) {
     $rootScope.config = [];
     $rootScope.carItemNum = getCarItemNum($cookieStore.get('car'));
+    $rootScope.isWX = isWX();
 
     $http.get("getConfig")
         .success(
