@@ -438,6 +438,7 @@ class OtherController extends CommonController
         $wx['payID'] = $input['payID'];
         $wx['payKey'] = $input['payKey'];
         $wx['wxcheck'] = $input['wxcheck'];
+        $wx['welcome'] = $input['welcome'];
 
         $config = Config::first();
         $config['wx'] = json_encode($wx);

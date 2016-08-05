@@ -72,6 +72,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>关注问候语：</th>
+                    <td>
+                        <input type="text" style="width: 50%" placeholder="关注问候语" name="welcome" value="{{$config->wx->welcome}}">
+                    </td>
+                </tr>
+                <tr>
                     <th>是否通过微信服务器验证：</th>
                     <td>
                         <select name="wxcheck">

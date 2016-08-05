@@ -111,12 +111,13 @@ class WXController extends CommController
         return $this->data_to_xml($rtnMsg);
     }
     private function welCome($input){
+        $wx = getWXConfig();
         $rtnMsg=[
             'ToUserName'=>$input['FromUserName'],
             'FromUserName'=>$input['ToUserName'],
             'CreateTime'=>time(),
             'MsgType'=>'text',
-            'Content'=>'欢迎光临帛爵墙布'
+            'Content'=>$wx->welcome
         ];
         return $this->data_to_xml($rtnMsg);
     }
