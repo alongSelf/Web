@@ -76,6 +76,12 @@ function wxLogIn()
             $user = Users::where('unionid', $openID)->first();
             if ($user){
                 //设置session
+                if ('deficon.jpg' == $user['icon']){
+                    $wxUserInfo = getWXUserInfo($openID);
+                    $user->nickname = $wxUserInfo->nickname;
+                    $user->icon = saveIcon($wxUserInfo->headimgurl);
+                    $user->update();
+                }
                 session(['user'=>$user]);
             }else{
                 $data['unionid'] = $openID;
