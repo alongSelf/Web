@@ -2,6 +2,7 @@
 
 use App\http\Model\Users;
 use App\http\Model\Config;
+use App\http\Model\WXPayLog;
 use Illuminate\Support\Facades\Input;
 
 define("FSessionNam", "UjfSEfsA1tjIUE6hK1bmf6rAGMZLvFyR_user");
@@ -65,6 +66,17 @@ function H_Log($logLV, $strMsg){
     
     $msg = '['.date('Y-m-d H:i:s').']['.$logLV.']'.$strMsg.PHP_EOL;
     file_put_contents(base_path().'/storage/logs/log.txt', $msg, FILE_APPEND);
+}
+
+function H_PayLog($type, $send, $recv){
+    $data = [
+        'type'=>$type,
+        'sendmsg'=>$send,
+        'recvmsg'=>$recv,
+        'time'=>time()
+    ];
+
+    WXPayLog::create($data);
 }
 
 function getUrl()

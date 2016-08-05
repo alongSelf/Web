@@ -106,6 +106,8 @@ class wechatAppPay
 		if(!$response){
 			return false;
 		}
+
+		H_PayLog('unifiedOrder', $xml, $response);
 		$result = xml_to_data($response);
 		if ($result['sign'] != $this->MakeSign($result)){
 			H_Log(LV_Waring, 'unified order check sign error.');
@@ -139,6 +141,8 @@ class wechatAppPay
 		if(!$response){
 			return false;
 		}
+
+		H_PayLog('orderQuery', $xml, $response);
 		$result = xml_to_data($response);
 		if ($result['sign'] != $this->MakeSign($result)){
 			H_Log(LV_Waring, 'query order check sign error.');
@@ -172,6 +176,8 @@ class wechatAppPay
 		if(!$response){
 			return false;
 		}
+
+		H_PayLog('closeOrder', $xml, $response);
 		$result = xml_to_data($response);
 		if ($result['sign'] != $this->MakeSign($result)){
 			H_Log(LV_Waring, 'close order check sign error.');
@@ -192,6 +198,8 @@ class wechatAppPay
 		if(empty($xml)){
 			return false;
 		}
+
+		H_PayLog('getNotifyData', '', $xml);
 		$data = array();
 		$data = xml_to_data($xml);
 		if ($data['sign'] != $this->MakeSign($data)){
@@ -261,6 +269,8 @@ class wechatAppPay
 		if(!$response){
 			return false;
 		}
+
+		H_PayLog('redPack', $xml, $response);
 		$result = xml_to_data($response);
 		if ($result['sign'] != $this->MakeSign($result)){
 			H_Log(LV_Waring, 'red pack check sign error.');
