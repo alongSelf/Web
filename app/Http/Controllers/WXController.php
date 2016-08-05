@@ -140,7 +140,7 @@ class WXController extends CommController
                                 if (empty($input['EventKey'])){
                                     (new Follower)->addRoot($user->id);
                                 }else{
-                                    $spread_id = substr(trim($input['EventKey']), 8);
+                                    $spread_id = explode("_", $input['EventKey'])[1];
                                     $spreadUser = Users::find($spread_id);
                                     if($spreadUser){
                                         (new Follower)->addFollower($spread_id, $user->id);
