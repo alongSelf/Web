@@ -78,9 +78,13 @@ function wxLogIn()
                 //设置session
                 if ('deficon.jpg' == $user['icon']){
                     $wxUserInfo = getWXUserInfo($openID);
-                    $user->nickname = $wxUserInfo->nickname;
-                    $user->icon = saveIcon($wxUserInfo->headimgurl);
-                    $user->update();
+                    if ($wxUserInfo
+                        && property_exists($wxUserInfo, 'nickname')
+                        && property_exists($wxUserInfo, 'headimgurl')){
+                        $user->nickname = $wxUserInfo->nickname;
+                        $user->icon = saveIcon($wxUserInfo->headimgurl);
+                        $user->update();
+                    }
                 }
                 session(['user'=>$user]);
             }else{
