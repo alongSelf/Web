@@ -36,6 +36,34 @@ function getJSToken(){
     return $tmp['wx_js_token'];
 }
 
+function xml_to_data($xml){
+    if(!$xml){
+        return false;
+    }
+    //将XML转为array
+    //禁止引用外部xml实体
+    libxml_disable_entity_loader(true);
+    $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+    return $data;
+}
+function data_to_xml( $params ){
+    if(!is_array($params)|| count($params) <= 0)
+    {
+        return false;
+    }
+    $xml = "<xml>";
+    foreach ($params as $key=>$val)
+    {
+        if (is_numeric($val)){
+            $xml.="<".$key.">".$val."</".$key.">";
+        }else{
+            $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
+        }
+    }
+    $xml.="</xml>";
+    return $xml;
+}
+
 //通过code换取网页授权access_token
 function getWXOpenID($code, $wx)
 {

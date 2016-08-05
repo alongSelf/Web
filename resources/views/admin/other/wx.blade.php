@@ -36,15 +36,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>认证参数state：</th>
-                    <td>
-                        <input type="text" style="width: 50%" placeholder="a-z A-Z 0-9最多128字节"  name="state" value="{{$config->wx->state}}">
-                    </td>
-                </tr>
-                <tr>
                     <th>Token(令牌)：</th>
                     <td>
                         <input type="text" style="width: 50%" placeholder="令牌"  name="Token" value="{{$config->wx->Token}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>公众号ID：</th>
+                    <td>
+                        <input type="text" style="width: 50%" placeholder="公众号ID"  name="ghID" value="{{$config->wx->ghID}}">
                     </td>
                 </tr>
                 <tr>

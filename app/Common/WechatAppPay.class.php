@@ -91,12 +91,12 @@ class wechatAppPay
 		//获取签名数据
 		$this->sign = $this->MakeSign( $this->params );
 		$this->params['sign'] = $this->sign;
-		$xml = $this->data_to_xml($this->params);
+		$xml = data_to_xml($this->params);
 		$response = $this->postXmlCurl($xml, self::API_URL_PREFIX.self::UNIFIEDORDER_URL);
 		if( !$response ){
 			return false;
 		}
-		$result = $this->xml_to_data( $response );
+		$result = xml_to_data( $response );
 		if( !empty($result['result_code']) && !empty($result['err_code']) ){
 			$result['err_msg'] = $this->error_code( $result['err_code'] );
 		}
@@ -118,12 +118,12 @@ class wechatAppPay
 		//获取签名数据
 		$this->sign = $this->MakeSign( $this->params );
 		$this->params['sign'] = $this->sign;
-		$xml = $this->data_to_xml($this->params);
+		$xml = data_to_xml($this->params);
 		$response = $this->postXmlCurl($xml, self::API_URL_PREFIX.self::ORDERQUERY_URL);
 		if( !$response ){
 			return false;
 		}
-		$result = $this->xml_to_data( $response );
+		$result = xml_to_data( $response );
 		if( !empty($result['result_code']) && !empty($result['err_code']) ){
 			$result['err_msg'] = $this->error_code( $result['err_code'] );
 		}
@@ -144,12 +144,12 @@ class wechatAppPay
 		//获取签名数据
 		$this->sign = $this->MakeSign( $this->params );
 		$this->params['sign'] = $this->sign;
-		$xml = $this->data_to_xml($this->params);
+		$xml = data_to_xml($this->params);
 		$response = $this->postXmlCurl($xml, self::API_URL_PREFIX.self::CLOSEORDER_URL);
 		if( !$response ){
 			return false;
 		}
-		$result = $this->xml_to_data($response);
+		$result = xml_to_data($response);
 
 		return $result;
 	}
@@ -166,7 +166,7 @@ class wechatAppPay
 			return false;
 		}
 		$data = array();
-		$data = $this->xml_to_data( $xml );
+		$data = xml_to_data( $xml );
 		if( !empty($data['return_code']) ){
 			if( $data['return_code'] == 'FAIL' ){
 				return false;
@@ -182,7 +182,7 @@ class wechatAppPay
 	public function replyNotify(){
 		$data['return_code'] = 'SUCCESS';
 		$data['return_msg'] = 'OK';
-		return $this->data_to_xml( $data );
+		return data_to_xml( $data );
 	}
 	
 	 /**
@@ -232,48 +232,8 @@ class wechatAppPay
 			$string = implode("&",$array);
 		}
 		return $string;
-	}
-	
-	/**
-	 * 输出xml字符
-	 * @param	$params		参数名称
-	 * return	string		返回组装的xml
-	 **/
-	public function data_to_xml( $params ){
-		if(!is_array($params)|| count($params) <= 0)
-		{
-    		return false;
-    	}
-    	$xml = "<xml>";
-    	foreach ($params as $key=>$val)
-    	{
-    		if (is_numeric($val)){
-    			$xml.="<".$key.">".$val."</".$key.">";
-    		}else{
-    			$xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
-    		}
-        }
-        $xml.="</xml>";
-        return $xml; 
-	}
-	
-
-	/**
-     * 将xml转为array
-     * @param string $xml
-	 * return array
-     */
-	public function xml_to_data($xml){	
-		if(!$xml){
-			return false;
-		}
-        //将XML转为array
-        //禁止引用外部xml实体
-        libxml_disable_entity_loader(true);
-        $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);		
-		return $data;
-	}
-	
+	}	
+		
 	
 	/**
 	 * 获取毫秒级别的时间戳

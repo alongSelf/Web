@@ -49,35 +49,7 @@ class WXController extends CommController
         }
 
         return $echostr;
-    }
-
-    private function xml_to_data($xml){
-        if(!$xml){
-            return false;
-        }
-        //将XML转为array
-        //禁止引用外部xml实体
-        libxml_disable_entity_loader(true);
-        $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-        return $data;
-    }
-    private function data_to_xml( $params ){
-        if(!is_array($params)|| count($params) <= 0)
-        {
-            return false;
-        }
-        $xml = "<xml>";
-        foreach ($params as $key=>$val)
-        {
-            if (is_numeric($val)){
-                $xml.="<".$key.">".$val."</".$key.">";
-            }else{
-                $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
-            }
-        }
-        $xml.="</xml>";
-        return $xml;
-    }
+    }    
     private function getWXPostEvent(){
         //获取通知的数据
         $xml = file_get_contents('php://input');
@@ -86,7 +58,7 @@ class WXController extends CommController
         }
 
         $data = array();
-        return $this->xml_to_data($xml);
+        return xml_to_data($xml);
     }
     private function saveWXMsg($input)
     {
@@ -108,7 +80,7 @@ class WXController extends CommController
             'CreateTime'=>time(),
             'MsgType'=>'transfer_customer_service',
         ];
-        return $this->data_to_xml($rtnMsg);
+        return data_to_xml($rtnMsg);
     }
     private function welCome($input){
         $wx = getWXConfig();
@@ -119,7 +91,7 @@ class WXController extends CommController
             'MsgType'=>'text',
             'Content'=>$wx->welcome
         ];
-        return $this->data_to_xml($rtnMsg);
+        return data_to_xml($rtnMsg);
     }
     private function dowithWXMsg($input)
     {
