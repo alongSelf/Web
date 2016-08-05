@@ -110,6 +110,16 @@ class WXController extends CommController
         ];
         return $this->data_to_xml($rtnMsg);
     }
+    private function welCome($input){
+        $rtnMsg=[
+            'ToUserName'=>$input['FromUserName'],
+            'FromUserName'=>$input['ToUserName'],
+            'CreateTime'=>time(),
+            'MsgType'=>'text',
+            'Content'=>'欢迎光临帛爵墙布'
+        ];
+        return $this->data_to_xml($rtnMsg);
+    }
     private function dowithWXMsg($input)
     {
         $rtnMsg = 'success';
@@ -126,21 +136,19 @@ class WXController extends CommController
                             $user->unionid = $input['FromUserName'];
                             if ($user->save()){
                                 if (empty($input['EventKey'])){
-                                    H_Log(LV_Debug, '11111111111111');
+                                    (new Follower)->addRoot($user->id);
                                 }else{
-                                    H_Log(LV_Debug, '2222222222');
+                                    //是否扫描的带参二维码
+                                    //$spread_id = substr(trim($input['EventKey']), 8);
+                                    //$spreadUser = Users::find($spread_id);
+                                    //if($spreadUser){
+                                    //    (new Follower)->addFollower($spread_id, $user->id);
+                                    //}
                                 }
-                                //是否扫描的带参二维码
-                                //$spread_id = substr(trim($input['EventKey']), 8);
-                                //$spreadUser = Users::find($spread_id);
-                                //if($spreadUser){
-                                //    (new Follower)->addFollower($spread_id, $user->id);
-                                //}
-                                //不是则加根粉丝
-                                //(new Follower)->addRoot($user->id);
                             }
                         }
-                            break;
+                        $rtnMsg = $this->welCome($input);
+                        break;
                     default:
                         $rtnMsg = $this->toCSV($input);
                         break;
