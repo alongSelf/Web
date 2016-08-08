@@ -64,6 +64,16 @@ def task():
 	token = getToken(url)
 	setToken(token, wxInf)
 	
+def updateOrderStatus():
+	nowtime = time.time()
+	timeout = 2 * 60 * 60
+	config = getMySqlConfig()
+	
+	db = MySQL(config)
+	sql='update orders set status=4 where status=0 and createtime + '+str(timeout)+' <= '+str(nowtime)+''
+	db.update(sql)	
+	db.close()
+	
 wxInf = getWXConfig()
 url = getUrl(wxInf)
 token = getToken(url)
@@ -76,4 +86,5 @@ print 'tick:' + str(tick)
 
 sched = BlockingScheduler()
 sched.add_job(task, 'interval', seconds=tick)
+sched.add_job(updateOrderStatus, 'interval', seconds=60)
 sched.start()

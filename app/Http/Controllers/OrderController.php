@@ -223,7 +223,6 @@ class OrderController extends CommController
     public function showOrder($page, $type)
     {
         $user = session(FSessionNam);
-
         switch ($type){
             case 0://全部
             {
