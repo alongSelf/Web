@@ -4,7 +4,7 @@ var appModule = angular.module('ionicApp.usercontroller', ['ionicApp.server']);
 
 //用户中心
 appModule.controller('uerCenterController', ['$scope', '$http', '$ionicLoading', function($scope, $http, $ionicLoading){
-    $scope.needLogIn = true;
+    $scope.needLogIn = false;
     $scope.logInOrReg = '登录';
     $scope.clickLoginOrReg = '点击注册';
     $scope.isRegister = false;
