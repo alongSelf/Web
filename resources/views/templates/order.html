@@ -87,7 +87,7 @@
                 <button ng-if="1 == data.payinfo" style="color: green;" ng-click="orderQuery(data.id)">
                     已支付
                 </button>
-                <button style="color: blue;" ng-click="Pay(data.id)">
+                <button ng-if="1 == data.payinfo" style="color: blue;" ng-click="Pay(data.id)">
                     付款
                 </button>
             </div>
