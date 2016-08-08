@@ -300,11 +300,10 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
                 "paySign":$scope.payInfo.paySign //微信签名
             },
             function(res){
-                dd(res);
-                if(res.errMsg == "get_brand_wcpay_request:ok" ) {
+                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                     layer.msg('支付成功！');
                 }else {
-                    layer.msg(res.errMsg);
+                    layer.msg(res.err_desc);
                 }
             }
         );
