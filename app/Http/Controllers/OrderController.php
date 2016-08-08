@@ -196,11 +196,14 @@ class OrderController extends CommController
         if (!$order){
             return rtnMsg(1, '无效的订单!');
         }
-        if (0 == strlen($order['payinfo'])) {
+        if (!$order['payinfo'] || 0 == strlen($order['payinfo'])) {
             return rtnMsg(1, '无效的订单!');
         }
 
         $payInfo = json_decode($order['payinfo']);
+        if (!property_exists($payInfo, 'prepay_id')){
+            return rtnMsg(1, '无效的订单!');
+        }
 
         if (wxQueryOrderPay($payInfo->prepay_id)){
             $order->status = 1;

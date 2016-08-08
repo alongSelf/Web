@@ -6,6 +6,18 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content scroll="true">
-        支付[[Order.id]]
+        <label class="item item-input">
+            <span class="input-label st_inputLabel">单号:</span>
+            <div>[[Order.id]]</div>
+        </label>
+        <label class="item item-input">
+            <span class="input-label st_inputLabel">共需支付:</span>
+            <div style="color: red">[[Order.price | currency:'￥']]</div>
+        </label>
+        <div class="st_taCenter">
+            <button style="width: 30%" class="button button-assertive" ng-click="pay()">
+                付款
+            </button>
+        </div>
     </ion-content>
 </ion-view>

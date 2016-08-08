@@ -270,24 +270,64 @@ function getOrder($scope, $http, showEv)
 //支付
 appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$ionicPopup', '$stateParams', function($scope, $ionicHistory, $http, $ionicLoading, $ionicPopup, $stateParams){
     $scope.orderID = $stateParams.orderID;
-    var bPopuped = false;
     $scope.goBack = function () {
-        if (bPopuped){
-            return;
-        }
-        bPopuped = true;
-        var confirmPopup = $ionicPopup.confirm({
-            title: '',
-            template: '确定放弃本次支付?'
-        });
-        confirmPopup.then(function(res) {
-            bPopuped = false;
-            if(res) {
-                $ionicHistory.goBack();
-            }
-        });
+        $ionicHistory.goBack();
     };
-    //getOrder($scope, $http, 0);
+
+    $http.get("getOrder/" + $scope.orderID + '/0')
+        .success(
+            function (data, status, header, config) {
+                if (0 != data.status){
+                    layer.msg(data.msg);
+                    return;
+                }
+                $scope.Order = data.msg;
+            }
+        ).error(
+        function (data) {
+            onError(data);
+        }
+    );
+
+    function jsApiCall(){
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId":$scope.payInfo.appId,     //公众号名称，由商户传入
+                "timeStamp":$scope.payInfo.timeStamp,         //时间戳，自1970年以来的秒数
+                "nonceStr":$scope.payInfo.nonceStr, //随机串
+                "package":$scope.payInfo.package,
+                "signType":$scope.payInfo.signType,         //微信签名方式：
+                "paySign":$scope.payInfo.paySign //微信签名
+            },
+            function(res){
+                dd(res);
+                if(res.errMsg == "get_brand_wcpay_request:ok" ) {
+                    layer.msg('支付成功！');
+                }else {
+                    layer.msg(res.errMsg);
+                }
+            }
+        );
+    };
+
+    $scope.pay = function () {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            if (!$scope.Order.payinfo || 0 == $scope.Order.payinfo.length){
+                layer.msg('参数错误！');
+                return;
+            }
+
+            $scope.payInfo = JSON.parse($scope.Order.payinfo);
+            jsApiCall();
+        }
+    };
 }]);
 
 //评论
