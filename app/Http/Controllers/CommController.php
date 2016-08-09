@@ -7,6 +7,7 @@ use App\http\Model\Income;
 use App\http\Model\Orders;
 use App\http\Model\ShopItem;
 use App\http\Model\Users;
+use App\http\Model\Follower;
 
 class CommController extends Controller
 {
