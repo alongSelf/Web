@@ -54,11 +54,7 @@ class wechatAppPay
 	private $trade_type;
 	//支付密钥
 	private	$key;
-	//证书路径
-	private $public_key;
-	private	$private_key;
-	private $rootca;
-	
+
 	//所有参数
 	private $params = array();
 	
@@ -69,10 +65,6 @@ class wechatAppPay
 		$this->mch_name = isset($options['mch_name'])?$options['mch_name']:'';
 		$this->notify_url = isset($options['notify_url'])?$options['notify_url']:'';
 		$this->key = isset($options['key'])?$options['key']:'';
-
-		$this->public_key = 'apiclient_cert.pem';
-		$this->private_key = 'apiclient_key.pem';
-		$this->rootca = 'rootca.pem';
 	}
 	
 	/**
@@ -357,10 +349,10 @@ class wechatAppPay
 			//设置证书
 			//PHP开发环境请使用商户证书文件apiclient_cert.pem和apiclient_key.pem ，rootca.pem是CA证书。
 			curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-			curl_setopt($ch,CURLOPT_SSLCERT, base_path().'/resource/scert/'.$this->public_key);
+			curl_setopt($ch,CURLOPT_SSLCERT, base_path().'/resource/scert/apiclient_cert.pem');
 			curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-			curl_setopt($ch,CURLOPT_SSLKEY, base_path().'/resource/scert/'.$this->private_key);
-			curl_setopt($ch,CURLOPT_CAINFO, base_path().'/resource/scert/'.$this->rootca);
+			curl_setopt($ch,CURLOPT_SSLKEY, base_path().'/resource/scert/apiclient_key.pem');
+			//curl_setopt($ch,CURLOPT_CAINFO, base_path().'/resource/scert/rootca.pem');
 		}
 		//post提交方式
 		curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -373,6 +365,7 @@ class wechatAppPay
 			return $data;
 		} else { 
 			$error = curl_errno($ch);
+			H_Log(LV_Waring, $error);
 			curl_close($ch);
 			return false;
 		}
