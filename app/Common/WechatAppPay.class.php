@@ -70,9 +70,9 @@ class wechatAppPay
 		$this->notify_url = isset($options['notify_url'])?$options['notify_url']:'';
 		$this->key = isset($options['key'])?$options['key']:'';
 
-		$this->public_key = isset($options['public_key'])?$options['public_key']:'';
-		$this->private_key = isset($options['private_key'])?$options['private_key']:'';
-		$this->rootca = isset($options['rootca'])?$options['rootca']:'';
+		$this->public_key = 'apiclient_cert.pem';
+		$this->private_key = 'apiclient_key.pem';
+		$this->rootca = 'rootca.pem';
 	}
 	
 	/**
