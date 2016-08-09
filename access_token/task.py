@@ -86,5 +86,5 @@ print 'tick:' + str(tick)
 
 sched = BlockingScheduler()
 sched.add_job(task, 'interval', seconds=tick)
-sched.add_job(updateOrderStatus, 'interval', seconds=60)
+#sched.add_job(updateOrderStatus, 'interval', seconds=60)
 sched.start()
