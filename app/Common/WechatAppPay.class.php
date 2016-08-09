@@ -134,7 +134,7 @@ class wechatAppPay
 		$this->params['appid'] = $this->appid;
 		$this->params['mch_id'] = $this->mch_id;
 		$this->params['nonce_str'] = genRandomString();
-		$this->params['out_trade_no'] = $out_trade_no;
+		$this->params['transaction_id'] = $out_trade_no;
 		
 		//获取签名数据
 		$this->sign = $this->MakeSign($this->params);
