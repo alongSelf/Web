@@ -105,7 +105,7 @@ class OrderController extends CommController
 
         $orderid = $this->getID();
         //微信创建订单
-        $result = wxCreateOrder($orderid, $orderJson->price);
+        $result = wxCreateOrder($orderid, $orderJson->price, $user['unionid']);
         if (!$result){
             return rtnMsg(1, '创建订单失败，请稍候再试!');
         }
