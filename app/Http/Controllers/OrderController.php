@@ -117,9 +117,10 @@ class OrderController extends CommController
             return rtnMsg(1, $result['err_msg']);
         }
 
+		$payParam = wxAppPayParams($result['prepay_id']);
         $payinfo = [
             'prepay_id'=>$result['prepay_id'],
-            'appPayParams'=>wxAppPayParams($result['prepay_id']),
+            'appPayParams'=>$payParam
         ];
         $input = [
             'id'=>$orderid,

@@ -303,7 +303,7 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                     layer.msg('支付成功！');
                 }else {
-                    layer.msg(res.err_desc);
+                    layer.msg('支付失败！');
                 }
             }
         );
@@ -322,8 +322,8 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
                 layer.msg('参数错误！');
                 return;
             }
-
-            $scope.payInfo = JSON.parse($scope.Order.payinfo);
+			
+            $scope.payInfo = (JSON.parse($scope.Order.payinfo)).appPayParams;
             jsApiCall();
         }
     };
