@@ -545,6 +545,10 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
             return;
         }
 
+        $ionicLoading.show({
+            template: getLoading()
+        });
+        
         //订单信息生成
         var orderMsg = {}
         orderMsg.price = getCarPriceTotal(carInfo);
@@ -559,6 +563,7 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
 
             orderMsg.items.push(itemInfo);
         }
+
         $.post("newOrder",{'_token':$('meta[name="_token"]').attr('content'),'order':JSON.stringify(orderMsg)},function(data){
             if (-1 == data.status){
                 layer.msg(data.msg);
@@ -580,6 +585,8 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
             }
 
         });
+
+        $ionicLoading.hide();
     });
 
         //结算
