@@ -124,7 +124,7 @@ class CommController extends Controller
             }
 
             $data = [
-                'userid' => $chiefUser['userid'],
+                'userid' => $chiefUser['id'],
                 'followerid' => $userID,
                 'followernam' => $user['nickname'],
                 'orderid' => $orderID,
