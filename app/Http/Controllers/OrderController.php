@@ -161,22 +161,24 @@ class OrderController extends CommController
             if ('SUCCESS' != $result['return_code']){
                 return rtnMsg(1, '订单取消失败，请稍后重试！');
             }
-            if ('ORDERPAID' == $result['result_code']){
-                $order->status = 1;
-                if ($order->update()){
-                    $this->addIncome($user['id'], $orderID);
-                    $this->addBuyNum($orderID);
+            if ('SUCCESS' != $result['result_code']){
+                if ('SYSTEMERROR' == $result['err_code']
+                    || 'SIGNERROR' == $result['err_code']
+                    || 'REQUIRE_POST_METHOD' == $result['err_code']
+                    || 'XML_FORMAT_ERROR' == $result['err_code']
+                    || 'MCHID_NOT_EXIST' == $result['err_code']){
+                    return rtnMsg(1, '订单取消失败，请稍后重试！');
                 }
 
-                return rtnMsg(1, '订单已支付！');
-            }
+                if ('ORDERPAID' == $result['err_code']){
+                    $order->status = 1;
+                    if ($order->update()){
+                        $this->addIncome($user['id'], $orderID);
+                        $this->addBuyNum($orderID);
+                    }
 
-            if ('SYSTEMERROR' == $result['result_code']
-                || 'SIGNERROR' == $result['result_code']
-                || 'REQUIRE_POST_METHOD' == $result['result_code']
-                || 'XML_FORMAT_ERROR' == $result['result_code']
-                || 'MCHID_NOT_EXIST' == $result['result_code']){
-                return rtnMsg(1, '订单取消失败，请稍后重试！');
+                    return rtnMsg(1, '订单已支付！');
+                }
             }
         }
 
