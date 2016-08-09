@@ -123,22 +123,20 @@ class CommController extends Controller
                     break;
             }
 
-            if ($income > 0){
-                $data = [
-                    'userid' => $chiefUser['userid'],
-                    'followerid' => $userID,
-                    'followernam' => $user['nickname'],
-                    'orderid' => $orderID,
-                    'consume' => $order['price'],
-                    'income' => $income,
-                    'balance' => $income + $chiefUser['income'],
-                    'time' => $order['createtime'],
-                ];
+            $data = [
+                'userid' => $chiefUser['userid'],
+                'followerid' => $userID,
+                'followernam' => $user['nickname'],
+                'orderid' => $orderID,
+                'consume' => $order['price'],
+                'income' => $income,
+                'balance' => $income + $chiefUser['income'],
+                'time' => $order['createtime'],
+            ];
 
-                if (Income::create($data)){
-                    $chiefUser->income = $data['balance'];
-                    $chiefUser->update();
-                }
+            if (Income::create($data)){
+                $chiefUser->income = $data['balance'];
+                $chiefUser->update();
             }
         }
     }
