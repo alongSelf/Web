@@ -171,7 +171,7 @@ function newWXPay()
 }
 
 //创建订单
-function wxCreateOrder($orderID, $price)
+function wxCreateOrder($orderID, $price, $openid)
 {
     $wechatAppPay = newWXPay();
 
@@ -179,6 +179,7 @@ function wxCreateOrder($orderID, $price)
     $params['out_trade_no'] = $orderID;	//自定义的订单号
     $params['total_fee'] = $price * 100;					//订单金额 只能为整数 单位为分
     $params['trade_type'] = 'JSAPI';					//交易类型 JSAPI | NATIVE |APP | WAP
+    $params['openid'] = $openid;
 
     $result = $wechatAppPay->unifiedOrder($params);
 

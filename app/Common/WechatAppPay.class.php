@@ -29,6 +29,7 @@ class wechatAppPay
 	//关闭订单URL
 	const CLOSEORDER_URL = "/pay/closeorder";
 
+	private $openid;
 	//公众账号ID
 	private $appid;
 	//商户号
@@ -85,6 +86,7 @@ class wechatAppPay
 		$this->trade_type = $params['trade_type'];
 		$this->nonce_str = genRandomString();
 		$this->spbill_create_ip = $_SERVER['REMOTE_ADDR'];
+		$this->openid = $params['openid'];
 
 		$this->params = array();
 		$this->params['appid'] = $this->appid;
@@ -97,6 +99,7 @@ class wechatAppPay
 		$this->params['notify_url'] = $this->notify_url;
 		$this->params['trade_type'] = $this->trade_type;
 		$this->params['limit_pay'] = 'no_credit';
+		$this->params['openid'] = $this->openid;
 		
 		//获取签名数据
 		$this->sign = $this->MakeSign($this->params);
