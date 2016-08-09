@@ -349,10 +349,9 @@ class wechatAppPay
 			//设置证书
 			//PHP开发环境请使用商户证书文件apiclient_cert.pem和apiclient_key.pem ，rootca.pem是CA证书。
 			curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-			curl_setopt($ch,CURLOPT_SSLCERT, base_path().'/resource/scert/apiclient_cert.pem');
+			curl_setopt($ch,CURLOPT_SSLCERT, base_path().'/resources/cert/apiclient_cert.pem');
 			curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-			curl_setopt($ch,CURLOPT_SSLKEY, base_path().'/resource/scert/apiclient_key.pem');
-			//curl_setopt($ch,CURLOPT_CAINFO, base_path().'/resource/scert/rootca.pem');
+			curl_setopt($ch,CURLOPT_SSLKEY, base_path().'/resources/cert/apiclient_key.pem');
 		}
 		//post提交方式
 		curl_setopt($ch, CURLOPT_POST, TRUE);
