@@ -277,6 +277,9 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
         $ionicHistory.goBack();
     };
 
+    $ionicLoading.show({
+        template: getLoading()
+    });
     $http.get("getOrder/" + $scope.orderID + '/0')
         .success(
             function (data, status, header, config) {
@@ -289,6 +292,8 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
         ).error(
         function (data) {
             onError(data);
+        }).finally(function() {
+            $ionicLoading.hide();
         }
     );
 

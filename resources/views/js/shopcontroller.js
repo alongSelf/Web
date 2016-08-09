@@ -535,6 +535,10 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
             return;
         }
 
+        $ionicLoading.show({
+            template: getLoading()
+        });
+
         $scope.isCancel = false;
         $scope.popover.hide();
     };
@@ -545,10 +549,6 @@ appModule.controller('carController', ['$scope', '$cookieStore', '$ionicPopup', 
             return;
         }
 
-        $ionicLoading.show({
-            template: getLoading()
-        });
-        
         //订单信息生成
         var orderMsg = {}
         orderMsg.price = getCarPriceTotal(carInfo);
