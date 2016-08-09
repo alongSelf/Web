@@ -301,7 +301,7 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
                 "appId":$scope.payInfo.appId,     //公众号名称，由商户传入
-                "timeStamp":$scope.payInfo.timeStamp,         //时间戳，自1970年以来的秒数
+                "timeStamp":$scope.payInfo.timeStamp.toString(),         //时间戳，自1970年以来的秒数
                 "nonceStr":$scope.payInfo.nonceStr, //随机串
                 "package":$scope.payInfo.package,
                 "signType":$scope.payInfo.signType,         //微信签名方式：
