@@ -182,30 +182,14 @@ class WXController extends CommController
         }
 
         //参数验证
-        $appid = $result['appid'];//公众号ID
-        $mch_id = $result['mch_id'];//商户ID
         $openid = $result['openid'];//用户openID
-        $transaction_id = $result['transaction_id'];//微信支付订单号
         $orderID = $result['out_trade_no'];//订单号
-        $total_fee = $result['total_fee'];//订单金额
-        $wx = getWXConfig();
-        if ($wx->AppID != $appid
-            || $wx->payID != $mch_id){
-            return $wechatAppPay->replyNotify();
-        }
         $order = Orders::where('id', $orderID)->where('status', 0)->first();
         if (!$order){
             return $wechatAppPay->replyNotify();
         }
-        if ($order['price'] * 100 != $total_fee){
-            return $wechatAppPay->replyNotify();
-        }
         $user = Users::where('unionid', $openid)->first();
-        if ($user['id'] != $order['userid']){
-            return $wechatAppPay->replyNotify();
-        }
-        $payInfo = json_decode($order['payinfo']);
-        if ($payInfo->prepay_id != $transaction_id){
+        if (!$user){
             return $wechatAppPay->replyNotify();
         }
 
