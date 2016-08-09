@@ -116,6 +116,8 @@ class WXController extends CommController
                                     $spreadUser = Users::find($spread_id);
                                     if($spreadUser){
                                         (new Follower)->addFollower($spread_id, $user->id);
+                                    }else{
+                                        (new Follower)->addRoot($user->id);
                                     }
                                 }
                             }
