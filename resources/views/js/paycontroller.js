@@ -310,6 +310,7 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
             function(res){
                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                     layer.msg('支付成功！');
+                    $ionicHistory.goBack();
                 }else {
                     layer.msg('支付失败！');
                 }
