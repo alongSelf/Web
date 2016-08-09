@@ -224,6 +224,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     };
 
     $scope.orderQuery = function (orderID) {
+        $ionicLoading.show({
+            template: getLoading()
+        });
         $http.get("queryOrder/"+orderID)
             .success(
                 function (data, status, header, config) {
@@ -233,7 +236,7 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
             function (data) {
                 onError(data);
             }).finally(function() {
-
+                $ionicLoading.hide();
         });
     };
 
