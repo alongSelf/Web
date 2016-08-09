@@ -279,10 +279,6 @@ class wechatAppPay
 		if ('SUCCESS' != $result['return_code']){
 			return false;
 		}
-		if ($result['sign'] != $this->MakeSign($result)){
-			H_Log(LV_Waring, 'red pack check sign error.');
-			return false;
-		}
 
 		return $result;
 	}
