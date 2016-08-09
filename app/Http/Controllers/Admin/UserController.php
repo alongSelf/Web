@@ -226,7 +226,7 @@ class UserController extends CommonController
             if ($condition == 'junior'){
                 $data = $follower->getFollower($userID);
             }else{
-                $data = $follower->getChief($userID);
+                $data = $follower->getChiefPage($userID);
             }
         }else{
             $data = Follower::where('id', 0)->paginate(10);

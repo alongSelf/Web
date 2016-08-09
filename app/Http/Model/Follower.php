@@ -74,6 +74,22 @@ class Follower extends Model
         return $chief;
     }
 
+    public function getChiefPage($userID)
+    {
+        $myFollow = $this->getMy($userID);
+        if (!$myFollow){
+            return false;
+        }
+
+        $chief = $this->where('groupid', $myFollow['groupid'])->
+        where('leftweight', '<', $myFollow['leftweight'])->
+        where('rightweight', '>', $myFollow['rightweight'])->
+        where('layer', '<', $myFollow['layer'])->where('layer', '>=', $myFollow['layer'] - $this->getMaxLayer())
+            ->orderBy('layer', 'desc')->paginate(10);
+
+        return $chief;
+    }
+
     //根粉丝
     public function addRoot($userID)
     {
