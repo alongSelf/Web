@@ -154,7 +154,7 @@ class OrderController extends CommController
 
         if (0 != strlen($order['payinfo'])){
             $payInfo = json_decode($order['payinfo']);
-            $result = wxCloseOrder($payInfo->prepay_id);
+            $result = wxCloseOrder($orderID);
             if (!$result){
                 return rtnMsg(1, '订单取消失败，请稍后重试！');
             }
