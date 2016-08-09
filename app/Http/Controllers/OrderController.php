@@ -206,7 +206,7 @@ class OrderController extends CommController
             return rtnMsg(1, '无效的订单!');
         }
 
-        if (wxQueryOrderPay($payInfo->prepay_id)){
+        if (wxQueryOrderPay($orderID)){
             $order->status = 1;
             if ($order->update()){
                 $this->addIncome($user['id'], $orderID);

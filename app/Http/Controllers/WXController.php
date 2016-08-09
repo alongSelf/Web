@@ -210,7 +210,7 @@ class WXController extends CommController
         }
 
         //微信查询
-        if (!wxQueryOrderPay($payInfo->prepay_id)){
+        if (!wxQueryOrderPay($orderID)){
             return $wechatAppPay->replyNotify();
         }
 
