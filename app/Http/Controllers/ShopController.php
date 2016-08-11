@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Model\Category;
-use App\http\Model\Config;
-use App\http\Model\Evaluates;
-use App\http\Model\Notice;
-use App\http\model\ShopItem;
-use App\http\Model\Users;
+use App\Http\Model\Config;
+use App\Http\Model\Evaluates;
+use App\Http\Model\Notice;
+use App\Http\Model\ShopItem;
+use App\Http\Model\Users;
 use Illuminate\Support\Facades\Input;
 
 class ShopController extends CommController

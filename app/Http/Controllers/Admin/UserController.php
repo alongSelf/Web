@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\http\Model\Agent;
-use App\http\Model\Cash;
-use App\http\Model\Follower;
-use App\http\Model\Income;
-use App\http\Model\Users;
+use App\Http\Model\Agent;
+use App\Http\Model\Cash;
+use App\Http\Model\Follower;
+use App\Http\Model\Income;
+use App\Http\Model\Users;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;

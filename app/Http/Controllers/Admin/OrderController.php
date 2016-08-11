@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\http\Model\Config;
-use App\http\Model\Orders;
-use App\http\Model\ShipperCode;
-use App\http\Model\ShopItem;
-use App\http\Model\Users;
+use App\Http\Model\Config;
+use App\Http\Model\Orders;
+use App\Http\Model\ShipperCode;
+use App\Http\Model\ShopItem;
+use App\Http\Model\Users;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Model\Category;
-use App\http\Model\ShopItem;
+use App\Http\Model\ShopItem;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;

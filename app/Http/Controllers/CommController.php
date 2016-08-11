@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\http\Model\Config;
-use App\http\Model\Income;
-use App\http\Model\Orders;
-use App\http\Model\ShopItem;
-use App\http\Model\Users;
-use App\http\Model\Follower;
+use App\Http\Model\Config;
+use App\Http\Model\Income;
+use App\Http\Model\Orders;
+use App\Http\Model\ShopItem;
+use App\Http\Model\Users;
+use App\Http\Model\Follower;
 
 class CommController extends Controller
 {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\http\Model\Addr;
-use App\http\Model\Config;
-use App\http\Model\Evaluates;
-use App\http\Model\Orders;
-use App\http\Model\ShipperCode;
-use App\http\Model\ShopItem;
+use App\Http\Model\Addr;
+use App\Http\Model\Config;
+use App\Http\Model\Evaluates;
+use App\Http\Model\Orders;
+use App\Http\Model\ShipperCode;
+use App\Http\Model\ShopItem;
 use App\Http\Model\Users;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Input;

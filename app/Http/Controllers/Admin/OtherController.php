@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\http\Model\Config;
-use App\http\Model\Evaluates;
-use App\http\Model\Notice;
-use App\http\Model\ShipperCode;
-use App\http\Model\WXMenu;
+use App\Http\Model\Config;
+use App\Http\Model\Evaluates;
+use App\Http\Model\Notice;
+use App\Http\Model\ShipperCode;
+use App\Http\Model\WXMenu;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;

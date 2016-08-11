@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\http\Model\Addr;
-use App\http\Model\Agent;
-use App\http\Model\Cash;
-use App\http\Model\Citys;
-use App\http\Model\Config;
-use App\http\Model\Follower;
-use App\http\Model\Income;
+use App\Http\Model\Addr;
+use App\Http\Model\Agent;
+use App\Http\Model\Cash;
+use App\Http\Model\Citys;
+use App\Http\Model\Config;
+use App\Http\Model\Follower;
+use App\Http\Model\Income;
 use App\Http\Model\Users;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
