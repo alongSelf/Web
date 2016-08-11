@@ -67,7 +67,7 @@ class LoginController extends CommonController
         return redirect('admin/login');
     }
 
-    public function code()
+    public function verificationCode()
     {
         $code = new \Code;
         $code->make();

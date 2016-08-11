@@ -37,7 +37,6 @@ class Code{
 		header("Content-type:image/png");
 		imagepng($this->img);
 		imagedestroy($this->img);
-		exit;
 	}
 
 	//设置字体文件
