@@ -68,7 +68,7 @@ Route::group(['middleware' => ['user.login']], function () {
 Route::group([], function () {
     //admin
     Route::any('admin/login', 'Admin\LoginController@login');
-    Route::any('admin/verificationCode', 'Admin\LoginController@verificationCode');
+    //Route::any('admin/verificationCode', 'Admin\LoginController@verificationCode');
 });
 Route::group(['middleware' => ['admin.login'], 'prefix'=>'admin', 'namespace'=>'Admin'], function () {
     Route::any('upload', 'CommonController@upload');

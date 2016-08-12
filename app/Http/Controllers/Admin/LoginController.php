@@ -9,18 +9,18 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
-require_once 'resources/code/Code.class.php';
+//require_once 'resources/code/Code.class.php';
 
 class LoginController extends CommonController
 {
     public function login()
     {
         if($input = Input::all()){
-            $code = new \Code;
-            $_code = $code->get();
-            if(strtoupper($input['code']) != $_code){
-                return back()->with('msg','验证码错误！');
-            }
+            //$code = new \Code;
+            //$_code = $code->get();
+            //if(strtoupper($input['code']) != $_code){
+            //    return back()->with('msg','验证码错误！');
+            //}
 
             $user = AdminUser::where('user_name', $input['user_name'])->first();
             if(!$user || 0 == count($user)){
@@ -56,20 +56,15 @@ class LoginController extends CommonController
         }
     }
 
-    private function isUsingThrottlesLoginsTrait()
-    {
-        return true;
-    }
-
     public function quit()
     {
         session([BSessionNam=>null]);
         return redirect('admin/login');
     }
 
-    public function verificationCode()
-    {
-        $code = new \Code;
-        $code->make();
-    }
+    //public function verificationCode()
+    //{
+    //    $code = new \Code;
+    //    $code->make();
+    //}
 }
