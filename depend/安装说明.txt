@@ -1,0 +1,103 @@
+﻿mysql安装：
+yum install mysql-server mysql mysql-deve
+
+yum install pcre-devel openssl-devel libXpm-devel fontconfig-devel
+
+libmcrypt:
+tar -xvzf libmcrypt-2.5.7.tar.gz
+cd libmcrypt-2.5.7
+./configure --prefix=/usr/local/libmcrypt
+make && make install
+
+libxml2:
+tar -xvzf libxml2-2.9.4.tar.gz
+cd libxml2-2.9.4
+./configure --prefix=/usr/local/libxml2
+make && make install
+
+
+libpng:
+tar -xvzf libpng-1.6.24.tar.gz
+cd libpng-1.6.24
+./configure --prefix=/usr/local/libpng
+make && make install
+
+jpegsrc:
+tar -xvzf jpegsrc.v9b.tar.gz
+cd jpeg-9b
+./configure --prefix=/usr/local/jpeg --enable-shared
+make && make install
+
+freetype:
+tar -xvzf freetype-2.6.5.tar.gz
+cd freetype-2.6.5
+./configure --prefix=/usr/local/freetype
+make && make install
+
+zlib:
+tar -xvzf zlib-1.2.8.tar.gz
+cd zlib-1.2.8
+./configure --prefix=/usr/local/zlib
+make && make install
+
+libgd:
+tar -xvzf libgd-2.2.3.tar.gz
+./configure --prefix=/usr/local/libgd --with-png=/usr/local/libpng --with-freetype=/usr/local/freetype --with-jpeg=/usr/local/jpeg --with-zlib=/usr/local/zlib
+make && make install
+
+php:
+tar -xvzf php-5.6.24.tar.gz 
+./configure --prefix=/usr/local/php-5.6 --with-config-file-path=/usr/local/php-5.6/bin --enable-fpm --with-mysql --with-mysqli --with-pdo-mysql --with-libxml-dir=/usr/local/libxml2 --with-gd=/usr/local/libgd --with-zlib=/usr/local/zlib --with-png-dir=/usr/local/libpng --with-jpeg-dir=/usr/local/jpeg --with-freetype-dir=/usr/local/freetype  --with-xpm-dir=/usr/lib64/ --enable-gd-native-ttf
+make && make install
+
+增加链接：
+ln -s /usr/local/php-5.6/bin/php /usr/local/bin/php
+ln -s /usr/local/php-5.6/bin/phpize /usr/local/bin/phpize
+
+将源代码目录（php-5.6.24/sapi/fpm）的init.d.php-fpm 拷贝到init.d下
+cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+为该文件增加权限 ：
+chmod a+x /etc/init.d/php-fpm
+添加系统服务：
+chkconfig --add php-fpm
+ln -s /etc/init.d/php-fpm /usr/local/bin/php-fpm
+开机自启
+chkconfig php-fpm on 
+
+nginx:
+./configure --prefix=/usr/local/nginx
+make && make install
+
+将shell文件nginx放入目录/etc/init.d
+增加链接：
+ln -s /etc/init.d/nginx /usr/local/bin/nginx
+
+为该文件增加权限 ：
+chmod a+x nginx
+添加系统服务：
+chkconfig --add nginx
+开机自启：
+chkconfig nginx on 
+
+php 扩展：
+cd到源代码ext目录的扩展目录 执行 
+phpize
+再执行：
+
+bz2
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-bz2
+curl
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-curl
+mbstring
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --enable-mbstring
+mcrypt
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-mcrypt
+openssl
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-openssl
+sockets
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --enable-sockets
+
+make && make install
+
+
+出现 PHP Startup: Invalid library (maybe not a PHP library) 先make clean
