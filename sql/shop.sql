@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-08-09 23:11:02
+Date: 2016-08-16 13:00:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -116,9 +116,9 @@ CREATE TABLE `config` (
   `spread` text COMMENT '推广规则介绍',
   `openspread` int(11) DEFAULT '0' COMMENT '开启推广二维码条件',
   `cash` int(11) DEFAULT '0' COMMENT '满多少元可以提现',
-  `commission1` float DEFAULT '0' COMMENT '第一级上级每100元提成多少分',
-  `commission2` float DEFAULT '0' COMMENT '第二级上级每100元提成多少分',
-  `commission3` float DEFAULT '0' COMMENT '第三级上级每100元提成多少分',
+  `commission1` float DEFAULT '0' COMMENT '第一级上级提成比例',
+  `commission2` float DEFAULT '0' COMMENT '第二级上级提成比例',
+  `commission3` float DEFAULT '0' COMMENT '第三级上级提成比例',
   `logistics` text COMMENT '物流',
   `logisticsaddr` text COMMENT '在线发货地址信息',
   `wx` text COMMENT '微信配置信息',
@@ -129,7 +129,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('3', '微信商城', '1', '{\"phone\":\"\",\"email\":\"\",\"qq\":\"\",\"postAddr\":\"\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"\",\"apiKey\":\"\"}', '{\"name\":\"\",\"phone\":\"\",\"province\":\"\",\"city\":\"\",\"county\":\"\",\"address\":\"\"}', '{\"Token\":\"\",\"AppID\":\"\",\"AppSecret\":\"\",\"accessToken\":\"\",\"mchName\":\"\",\"payID\":\"\",\"payKey\":\"\",\"wxcheck\":\"0\",\"welcome\":\"\",\"ghID\":\"\"}', '0');
+INSERT INTO `config` VALUES ('3', '微信商城', '1', '{\"phone\":\"15882279747\\r\\n13328585252\",\"email\":\"2451@163.com\",\"qq\":\"5845222\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"city\":\"\\u4e1c\\u57ce\\u533a\",\"county\":\"\",\"address\":\"XXX\\u53f7\"}', '{\"Token\":\"\",\"AppID\":\"\",\"AppSecret\":\"\",\"accessToken\":\"\",\"mchName\":\"\",\"payID\":\"\",\"payKey\":\"\",\"wxcheck\":\"0\",\"welcome\":\"\",\"ghID\":\"\"}', '0');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -164,7 +164,7 @@ CREATE TABLE `follower` (
   `userid` int(11) DEFAULT '0' COMMENT '用户ID',
   `layer` int(11) DEFAULT '0' COMMENT '所在层',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of follower
@@ -204,7 +204,7 @@ CREATE TABLE `notice` (
 -- ----------------------------
 -- Records of notice
 -- ----------------------------
-INSERT INTO `notice` VALUES ('1', '商家承诺：xxxxxxxxxxxxx');
+INSERT INTO `notice` VALUES ('1', '商家承诺：购买“上门安装”服务，如未履行服务最高可获得100元赔付  ');
 
 -- ----------------------------
 -- Table structure for `orders`
@@ -358,6 +358,7 @@ CREATE TABLE `shopitem` (
   `prime_price` float(11,0) DEFAULT '0' COMMENT '原价',
   `cur_price` float(11,0) DEFAULT '0' COMMENT '现价',
   `stock` int(11) DEFAULT '-1' COMMENT '库存 -1 无限制',
+  `brokerage` float DEFAULT '0' COMMENT '佣金比例',
   `buynum` int(11) DEFAULT '0' COMMENT '购买人数',
   `indeximg` varchar(255) DEFAULT '' COMMENT '主图片',
   `showimg` text COMMENT '展示图片',
@@ -3751,7 +3752,7 @@ CREATE TABLE `users` (
   `errortime` bigint(20) DEFAULT '0' COMMENT '最后次错误时间',
   `qrc` text COMMENT '二维码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10033 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -3765,11 +3766,12 @@ CREATE TABLE `wx_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu` text COMMENT '菜单',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wx_menu
 -- ----------------------------
+INSERT INTO `wx_menu` VALUES ('2', '');
 
 -- ----------------------------
 -- Table structure for `wx_msg`
@@ -3785,7 +3787,7 @@ CREATE TABLE `wx_msg` (
   `status` tinyint(4) DEFAULT '0' COMMENT '状态',
   `csvid` int(11) DEFAULT '0' COMMENT '处理者客服ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wx_msg
@@ -3802,7 +3804,7 @@ CREATE TABLE `wx_paylog` (
   `recvmsg` text,
   `time` bigint(20) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wx_paylog
