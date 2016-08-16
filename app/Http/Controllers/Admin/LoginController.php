@@ -39,13 +39,15 @@ class LoginController extends CommonController
                 }
             }
 
-            if (Crypt::decrypt($user->user_pass) != $input['user_pass']){
-                $user->errorcount++;
-                $user->errortime = time();
+            if ($user->user_pass && 0 != strlen($user->user_pass)){
+                if (Crypt::decrypt($user->user_pass) != $input['user_pass']){
+                    $user->errorcount++;
+                    $user->errortime = time();
 
-                $user->update();
+                    $user->update();
 
-                return back()->with('msg','密码错误！');
+                    return back()->with('msg','密码错误！');
+                }
             }
 
             session([BSessionNam=>$user]);

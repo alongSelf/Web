@@ -45,18 +45,20 @@ class IndexController extends CommonController
                     return redirect('admin/login')->with('msg','未找到用户！');
                 }
 
-                $_password = Crypt::decrypt($user->user_pass);
-                if($input['password_o']==$_password){
-                    if ($_password == $input['password']){
-                        return back()->with('errors','新密码不能与原密码相同！');
+                if ($user->user_pass && 0 != strlen($user->user_pass)){
+                    $_password = Crypt::decrypt($user->user_pass);
+                    if($input['password_o']==$_password){
+                        if ($_password == $input['password']){
+                            return back()->with('errors','新密码不能与原密码相同！');
+                        }
+                    }else{
+                        return back()->with('errors','原密码错误！');
                     }
-
-                    $user->user_pass = Crypt::encrypt($input['password']);
-                    $user->update();
-                    return back()->with('errors','密码修改成功！');
-                }else{
-                    return back()->with('errors','原密码错误！');
                 }
+
+                $user->user_pass = Crypt::encrypt($input['password']);
+                $user->update();
+                return back()->with('errors','密码修改成功！');
             }else{
                 return back()->withErrors($validator);
             }
