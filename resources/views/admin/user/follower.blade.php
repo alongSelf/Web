@@ -34,7 +34,7 @@
                             </th>
                             <th>组ID</th>
                             <th>级别</th>
-                            <th>粉丝总数</th>
+                            <th>总人数</th>
                         </tr>
                         @foreach($data as $v)
                             <tr>
