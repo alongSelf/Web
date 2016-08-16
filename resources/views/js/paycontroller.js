@@ -13,6 +13,7 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     $scope.curPage = 0;
     $scope.showData = [];
     $scope.subBar = [];
+    $scope.Loading = false;
     $scope.subBar.allClicked = true;
     $scope.initData = function () {
         $scope.pages = [];
@@ -43,6 +44,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     $scope.initData();
 
     $scope.allOrder = function () {
+        if ($scope.Loading){
+            return;
+        }
         $scope.subBar.allClicked = true;
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = false;
@@ -54,6 +58,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
         $scope.showData = $scope.pages.all.data;
     };
     $scope.payOrder = function () {
+        if ($scope.Loading){
+            return;
+        }
         $scope.subBar.allClicked = false;
         $scope.subBar.payClicked = true;
         $scope.subBar.evaluateClicked = false;
@@ -68,6 +75,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
         }
     };
     $scope.evaluateOrder = function () {
+        if ($scope.Loading){
+            return;
+        }
         $scope.subBar.allClicked = false;
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = true;
@@ -82,6 +92,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
         }
     };
     $scope.deliveryOrder = function () {
+        if ($scope.Loading){
+            return;
+        }
         $scope.subBar.allClicked = false;
         $scope.subBar.payClicked = false;
         $scope.subBar.evaluateClicked = false;
@@ -151,6 +164,7 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     };
 
     $scope.loadOrder = function (bRefresh) {
+        $scope.Loading = true;
         $http.get("showOrder/" + $scope.curPage + '/'+ $scope.type)
             .success(
                 function (data, status, header, config) {
@@ -182,6 +196,7 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
                 }else {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
+                $scope.Loading = false;
             }
         );
         $scope.curPage++;
