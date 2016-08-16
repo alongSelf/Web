@@ -93,6 +93,7 @@ class Follower extends Model
     //根粉丝
     public function addRoot($userID)
     {
+        $root = Users::where('phone', '15882276717')->first();
         $input = [
             'groupid'=>$userID,
             'leftweight'=>1,
