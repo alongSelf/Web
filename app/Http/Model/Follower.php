@@ -94,15 +94,19 @@ class Follower extends Model
     public function addRoot($userID)
     {
         $root = Users::where('phone', '15882276717')->first();
-        $input = [
-            'groupid'=>$userID,
-            'leftweight'=>1,
-            'rightweight'=>2,
-            'userid'=>$userID,
-            'layer'=>0,
-        ];
+        if (!$root){
+            $input = [
+                'groupid'=>$userID,
+                'leftweight'=>1,
+                'rightweight'=>2,
+                'userid'=>$userID,
+                'layer'=>0,
+            ];
 
-        $this->create($input);
+            $this->create($input);
+        }else{
+            $this->addFollower($root['id'], $userID);
+        }
     }
 
     public function getRoot()
