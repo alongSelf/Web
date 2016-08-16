@@ -98,6 +98,7 @@ class CommController extends Controller
         }
 
         $config = Config::first();
+        $items = json_decode($order['iteminfo']);
         $myFollower = $follower->getMy($userID);
         foreach ($chief as $key=>$val){
             $income = Income::where('userid', $val['userid'])->where('orderid', $orderID)->first();
@@ -111,16 +112,25 @@ class CommController extends Controller
 
             $income = 0;
             $lv = $myFollower['layer'] - $val['layer'];
-            switch ($lv){
-                case 1:
-                    $income = $order['price'] * ($config['commission1']/100);
-                    break;
-                case 2:
-                    $income = $order['price'] * ($config['commission2']/100);
-                    break;
-                case 3:
-                    $income = $order['price'] * ($config['commission3']/100);
-                    break;
+            for ($i = 0; $i < count($items->items); $i++) {
+                $info = $items->items[$i];
+                $shopitem = ShopItem::find($info->id);
+                if (!$shopitem){
+                    continue;
+                }
+
+                $totalPrice = $info->num * $info->price * $shopitem['brokerage'];
+                switch ($lv){
+                    case 1:
+                        $income += $totalPrice * 100 * $config['commission1'];
+                        break;
+                    case 2:
+                        $income += $totalPrice * 100 * $config['commission2'];
+                        break;
+                    case 3:
+                        $income += $totalPrice * 100 * $config['commission3'];
+                        break;
+                }
             }
 
             $data = [

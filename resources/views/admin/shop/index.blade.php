@@ -53,6 +53,7 @@
                     <th>原价</th>
                     <th>现价</th>
                     <th>库存</th>
+                    <th>佣金比例</th>
                     <th>购买人数</th>
                     <th>操作</th>
                 </tr>
@@ -86,6 +87,7 @@
                         <td>{{$v->prime_price}}</td>
                         <td>{{$v->cur_price}}</td>
                         <td>{{$v->stock}}</td>
+                        <td>{{$v->brokerage}}</td>
                         <td>{{$v->buynum}}</td>
                         <td>
                             <a href="{{url('admin/shop/'.$v->id.'/edit')}}">修改</a>

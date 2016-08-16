@@ -52,19 +52,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>第一级上级提成(每100元提成多少分)：</th>
+                    <th><i class="require">*</i>第一级上级提成比例：</th>
                     <td>
                         <input type="number" onchange="changeCommission1(this, {{$config->id}})" value="{{$config->commission1}}">
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>第二级上级提成(每100元提成多少分)：</th>
+                    <th><i class="require">*</i>第二级上级提成比例：</th>
                     <td>
                         <input type="number" onchange="changeCommission2(this, {{$config->id}})" value="{{$config->commission2}}">
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>第级上级三提成(每100元提成多少分)：</th>
+                    <th><i class="require">*</i>第三级上级提成比例：</th>
                     <td>
                         <input type="number" onchange="changeCommission3(this, {{$config->id}})" value="{{$config->commission3}}">
                     </td>

@@ -96,6 +96,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th><i class="require">*</i>佣金比例：</th>
+                    <td>
+                        <input type="text" name="brokerage" value="0">
+                    </td>
+                </tr>
+                <tr>
                     <th><i class="require">*</i>售出数量：</th>
                     <td>
                         <input type="number" name="buynum" value="0">
