@@ -7,8 +7,6 @@ use App\http\Model\Orders;
 use App\http\Model\Follower;
 use Illuminate\Support\Facades\Input;
 
-require_once 'app/Common/WechatAppPay.class.php';
-
 //微信
 function getWXConfig()
 {
