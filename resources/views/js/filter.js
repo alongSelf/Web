@@ -92,7 +92,7 @@ appModule.filter('toChannelImg', function () {
             return 'zfb.jpg';
         }
 
-        return 'empty.jpg';
+        return 'empty.png';
     }
 });
 
@@ -112,7 +112,7 @@ appModule.filter('orderBgImg', function () {
         if (3 == input){
             return 'complete.jpg';
         }else {
-            return 'empty.jpg';
+            return 'empty.png';
         }
     }
 });
