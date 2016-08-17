@@ -11,7 +11,7 @@
         <script src="resources/views/ionic/js/ionic.bundle.min.js"></script>
         <script src="resources/views/ionic/js/angular/angular-cookies.min.js"></script>
         <script src="resources/views/ionic/js/ionic-image-lazy-load.js"></script>
-        <script src="resources/views/js/jweixin-1.0.0.js"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
         <script src="resources/views/js/utile.js"></script>
         <script src="resources/views/js/app.js"></script>
@@ -22,7 +22,7 @@
         <script src="resources/views/js/spreadcontroller.js"></script>
         <script src="resources/views/js/paycontroller.js"></script>
 
-        <script src="resources/views/js/jquery-1.12.4.js"></script>
+        <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
         <script src="resources/views/js/layer.js"></script>
 
         <title></title>
