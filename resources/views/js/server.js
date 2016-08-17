@@ -30,3 +30,13 @@ appModule.factory('carItemNumFactory', ['$rootScope', function ($rootScope) {
 
     return factory;
 }]);
+
+appModule.service('payedService', [function () {
+    this.payed = false;
+    this.setPayed = function(bPayed) {
+        this.payed = bPayed;
+    };
+    this.getPayed = function () {
+        return this.payed;
+    };
+}]);

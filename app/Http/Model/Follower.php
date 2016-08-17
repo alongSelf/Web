@@ -93,8 +93,9 @@ class Follower extends Model
     //根粉丝
     public function addRoot($userID)
     {
+        $newUser = Users::find($userID);
         $root = Users::where('phone', '15882276717')->first();
-        if (!$root){
+        if (!$root || '15882276717' == $newUser['phone']){
             $input = [
                 'groupid'=>$userID,
                 'leftweight'=>1,
@@ -123,6 +124,21 @@ class Follower extends Model
     //添加粉丝
     public function addFollower($userID, $followerID)
     {
+        $newUser = Users::find($followerID);
+        if ('15882276717' == $newUser['phone']){
+            $input = [
+                'groupid'=>$followerID,
+                'leftweight'=>1,
+                'rightweight'=>2,
+                'userid'=>$followerID,
+                'layer'=>0,
+            ];
+
+            $this->create($input);
+
+            return;
+        }
+
         $myFollow = $this->getMy($userID);
         
         $input = [
