@@ -341,6 +341,7 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
                 document.attachEvent('WeixinJSBridgeReady', jsApiCall);
                 document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
             }
+            layer.msg('请在微信中完成支付!');
         }else{
             if (!$scope.Order.payinfo || 0 == $scope.Order.payinfo.length){
                 layer.msg('参数错误！');
