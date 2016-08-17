@@ -31,12 +31,16 @@ appModule.factory('carItemNumFactory', ['$rootScope', function ($rootScope) {
     return factory;
 }]);
 
-appModule.service('payedService', [function () {
-    this.payed = false;
-    this.setPayed = function(bPayed) {
-        this.payed = bPayed;
+appModule.factory('payedFactory', ['$rootScope', function ($rootScope) {
+    var factory = {};
+    $rootScope.payed = false;
+
+    factory.setPayed = function(bPayed) {
+        $rootScope.payed = bPayed;
     };
-    this.getPayed = function () {
-        return this.payed;
+    factory.getPayed = function() {
+        return $rootScope.payed;
     };
+
+    return factory;
 }]);

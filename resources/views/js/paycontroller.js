@@ -3,7 +3,7 @@
 var appModule = angular.module('ionicApp.paycontroller', ['ionicApp.server']);
 
 //订单
-appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$state', 'payedService', function($scope, $ionicHistory, $http, $ionicLoading, $state, payedService){
+appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$state', 'payedFactory', function($scope, $ionicHistory, $http, $ionicLoading, $state, payedFactory){
     $scope.goBack = function () {
         $ionicHistory.goBack();
     };
@@ -215,9 +215,9 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     $scope.doRefresh();
 
     $scope.$on('$ionicView.beforeEnter',function(){
-        if (payedService.getPayed()){
+        if (payedFactory.getPayed()){
             $scope.doRefresh();
-            payedService.setPayed(false);
+            payedFactory.setPayed(false);
         }
     });
 
@@ -293,7 +293,7 @@ function getOrder($scope, $http, showEv)
 }
 
 //支付
-appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$ionicPopup', '$stateParams', 'payedService', function($scope, $ionicHistory, $http, $ionicLoading, $ionicPopup, $stateParams, payedService){
+appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ionicLoading', '$ionicPopup', '$stateParams', 'payedFactory', function($scope, $ionicHistory, $http, $ionicLoading, $ionicPopup, $stateParams, payedFactory){
     $scope.orderID = $stateParams.orderID;
     $scope.goBack = function () {
         $ionicHistory.goBack();
@@ -332,7 +332,7 @@ appModule.controller('payController', ['$scope', '$ionicHistory', '$http', '$ion
             function(res){
                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                     layer.msg('支付成功！');
-                    payedService.setPayed(true);
+                    payedFactory.setPayed(true);
                     $ionicHistory.goBack();
                 }else {
                     layer.msg('支付失败！');
