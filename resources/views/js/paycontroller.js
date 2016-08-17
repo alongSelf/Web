@@ -217,6 +217,7 @@ appModule.controller('orderController', ['$scope', '$ionicHistory', '$http', '$i
     $scope.$on('$ionicView.beforeEnter',function(){
         if (payedService.getPayed()){
             $scope.doRefresh();
+            payedService.setPayed(false);
         }
     });
 
