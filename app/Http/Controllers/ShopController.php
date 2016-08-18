@@ -30,7 +30,7 @@ class ShopController extends CommController
         }
         $url = getUrl().'/shareTo/'.$qrcID;
 
-        $signStr = 'jsapi_ticket='.$jsToken.'&noncestr='.$randomStr.'&timestamp='.$timeNow.'&url='.$url.'';
+        $signStr = "jsapi_ticket=$jsToken&noncestr=$randomStr&timestamp=$timeNow&url=$url";
         $sign = sha1($signStr);
         $jsParam = [
             'appId'=>getWXConfig()->AppID,
