@@ -565,6 +565,10 @@ class UserController extends CommController
             }
         }
 
-        return view('share', compact('QRC'));
+        $wx = getWXConfig();
+        $sharetitle = $wx->sharetitle;
+        $sharememo = $wx->sharememo;
+
+        return view('share', compact('QRC', 'sharetitle', 'sharememo'));
     }
 }

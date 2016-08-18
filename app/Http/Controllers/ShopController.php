@@ -33,17 +33,17 @@ class ShopController extends CommController
         $signStr = "jsapi_ticket=$jsToken&noncestr=$randomStr&timestamp=$timeNow&url=$url";
         $sign = sha1($signStr);
         $url = getUrl().'/shareTo/'.$qrcID;
+        $wx = getWXConfig();
+
         $jsParam = [
-            'appId'=>getWXConfig()->AppID,
+            'appId'=>$wx->AppID,
             'timestamp'=>$timeNow,
             'nonceStr'=>$randomStr,
             'url'=>$url,
             'signature'=>$sign,
+            'title'=>$wx->sharetitle,
+            'memo'=>$wx->sharememo
         ];
-
-        $wx = getWXConfig();
-        $jsParam['title'] = $wx->sharetitle;
-        $jsParam['memo'] = $wx->sharememo;
 
         return view('index', compact('state', 'jsParam'));
     }
