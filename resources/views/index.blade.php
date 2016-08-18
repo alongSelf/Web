@@ -65,7 +65,7 @@
             ]
         });
         wx.ready(function(){
-            layer.msg(shareLink);
+            //layer.msg(shareLink);
         });
         //分享到朋友圈
         wx.onMenuShareTimeline({
