@@ -403,10 +403,10 @@ class UserController extends CommController
     private function getQRC($userID, $strQRC)
     {
         $expire_seconds = 2592000;
-        $oneHour = 60 * 60;
+        $hour = 5 * 60 * 60;
         if (0 != strlen($strQRC)){
             $qrc = json_decode($strQRC);
-            if ($qrc->time + $expire_seconds - $oneHour >= time()){
+            if ($qrc->time + $expire_seconds - $hour >= time()){
                 return $qrc->qrc;
             }
             else{
@@ -553,6 +553,18 @@ class UserController extends CommController
 
     public function shareTo($shareID = 0)
     {
-        return $shareID;
+        $QRC = 'resources/views/sysimg/qrcode.jpg';
+
+        if (0 != $shareID){
+            $user = Users::find($shareID);
+            if ($user){
+                $config = Config::all()[0];
+                if ($user['consume'] >= $config['openspread']) {
+                    $QRC = 'uploads/'.$this->getQRC($user['id'], $user['qrc']);
+                }
+            }
+        }
+
+        return view('share', compact('QRC'));
     }
 }
