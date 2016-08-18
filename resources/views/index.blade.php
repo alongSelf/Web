@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="utf-8">
         <base href="/" />
@@ -38,4 +38,90 @@
         <ion-nav-view class="st_mainview">
         </ion-nav-view>
     </body>
+
+    <script>
+        var shareTitle = '{{$jsParam["title"]}}';
+        var shareDesc = '{{$jsParam["memo"]}}';
+        var shareLink = '{{url('/shareTo').'/'.$jsParam['qrcID']}}';
+        var shareImg = '{{asset('resources/views/sysimg/logo.png')}}';
+        var sharOk = '分享成功，非常感谢您的大力支持！';
+
+        wx.config({
+            debug: true,
+            appId: '{{$jsParam["appId"]}}',
+            timestamp: {{$jsParam["timestamp"]}},
+            nonceStr: '{{$jsParam["nonceStr"]}}',
+            signature: '{{$jsParam["signature"]}}',
+            jsApiList: [
+                // 所有要调用的 API 都要加到这个列表中
+                'checkJsApi',
+                'openLocation',
+                'getLocation',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone',
+            ]
+        });
+        wx.ready(function () {
+            layer.msg('wx.config ok.');
+        });
+        //分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: shareTitle,
+            link: shareLink,
+            imgUrl: shareImg,
+            success: function () {
+                layer.msg(sharOk);
+            },
+            cancel: function () { }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: shareTitle,
+            desc: shareDesc,
+            link: shareLink,
+            imgUrl: shareImg,
+            type: 'link',
+            dataUrl: '',
+            success: function () {
+                layer.msg(sharOk);
+            },
+            cancel: function () {}
+        });
+        //分享到QQ
+        wx.onMenuShareQQ({
+            title: shareTitle,
+            desc: shareDesc,
+            link: shareLink,
+            imgUrl: shareImg,
+            success: function () {
+                layer.msg(sharOk);
+            },
+            cancel: function () {}
+        });
+        //分享到腾讯微博
+        wx.onMenuShareWeibo({
+            title: shareTitle,
+            desc: shareDesc,
+            link: shareLink,
+            imgUrl: shareImg,
+            success: function () {
+                layer.msg(sharOk);
+            },
+            cancel: function () {}
+        });
+        //分享到QQ空间
+        wx.onMenuShareQZone({
+            title: shareTitle,
+            desc: shareDesc,
+            link: shareLink,
+            imgUrl: shareImg,
+            success: function () {
+                layer.msg(sharOk);
+            },
+            cancel: function () {}
+        });
+    </script>
 </html>

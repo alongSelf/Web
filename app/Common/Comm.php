@@ -83,7 +83,7 @@ function getUrl()
 {
     $PHP_SELF=$_SERVER['PHP_SELF'];
 
-    return 'http://'.$_SERVER['HTTP_HOST'].substr($PHP_SELF, 0, strrpos($PHP_SELF,'/')+1);
+    return 'http://'.$_SERVER['HTTP_HOST'].substr($PHP_SELF, 0, strrpos($PHP_SELF,'/'));
 }
 
 /**

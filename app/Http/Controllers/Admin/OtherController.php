@@ -440,6 +440,8 @@ class OtherController extends CommonController
         $wx['wxcheck'] = $input['wxcheck'];
         $wx['welcome'] = $input['welcome'];
         $wx['ghID'] = $input['ghID'];
+        $wx['sharetitle'] = $input['sharetitle'];
+        $wx['sharememo'] = $input['sharememo'];
 
         $config = Config::first();
         $config['wx'] = json_encode($wx);

@@ -449,7 +449,7 @@ class UserController extends CommController
     }
 
     public function spreadInfo()
-    {        
+    {
         $user = session(FSessionNam);
         $userID = $user['id'];
 
@@ -549,5 +549,10 @@ class UserController extends CommController
         $followerLayer = Follower::where('userid', $followerid)->first();
 
         return rtnMsg(0, $followerLayer['layer'] - $myLayer['layer']);
+    }
+
+    public function shareTo($shareID = 0)
+    {
+        return $shareID;
     }
 }

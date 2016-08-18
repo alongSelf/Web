@@ -84,6 +84,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>分享标题：</th>
+                    <td>
+                        <input type="text" style="width: 50%" placeholder="分享标题" name="sharetitle" value="{{$config->wx->sharetitle}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>分享描述：</th>
+                    <td>
+                        <input type="text" style="width: 50%" placeholder="分享描述" name="sharememo" value="{{$config->wx->sharememo}}">
+                    </td>
+                </tr>
+                <tr>
                     <th>是否通过微信服务器验证：</th>
                     <td>
                         <select name="wxcheck">

@@ -160,7 +160,7 @@ function newWXPay()
     $options = array(
         'appid' 	=> 	$wx->AppID,		//填写微信分配的公众账号ID
         'mch_id'	=>	$wx->payID,				//填写微信支付分配的商户号
-        'notify_url'=>	getUrl().'wxPayNotify',	//填写微信支付结果回调地址
+        'notify_url'=>	getUrl().'/wxPayNotify',	//填写微信支付结果回调地址
         'key'		=>	$wx->payKey,				//填写微信商户支付密钥
         'mch_name'		=> $wx->mchName				//填写微信商名
     );

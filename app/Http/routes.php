@@ -34,6 +34,7 @@ Route::group([], function () {
 
     Route::post('newOrder', 'OrderController@newOrder');
     Route::get('getAddr', 'UserController@getAddr');
+    Route::get('shareTo/{shareID?}', 'UserController@shareTo');
 });
 Route::group(['middleware' => ['user.login']], function () {
     Route::get('logOut', 'UserController@logOut');

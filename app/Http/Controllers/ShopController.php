@@ -15,7 +15,42 @@ class ShopController extends CommController
     public function index()
     {
         $state = wxLogIn();
-        return view('index', compact('state'));
+
+        $jsToken = getJSToken();
+        $randomStr= genRandomString();
+        $timeNow = time();
+        $singParam = [
+            'noncestr'=>$randomStr,
+            'jsapi_ticket'=>$jsToken,
+            'timestamp'=>$timeNow,
+            'url'=>getUrl(),
+        ];
+        $wechatAppPay = newWXPay();
+        $sign = $wechatAppPay->MakeJSSign($singParam);
+
+        $jsParam = [
+            'appId'=>getWXConfig()->AppID,
+            'timestamp'=>$timeNow,
+            'nonceStr'=>$randomStr,
+            'signature'=>$sign,
+        ];
+
+        $qrcID = 0;
+        $user = session(FSessionNam);
+        if ($user){
+            $user = Users::find($user['id']);
+            $config = Config::all()[0];
+            if ($user['consume'] >= $config['openspread']) {
+                $qrcID = $user['id'];
+            }
+        }
+
+        $wx = getWXConfig();
+        $jsParam['qrcID'] = $qrcID;
+        $jsParam['title'] = $wx->sharetitle;
+        $jsParam['memo'] = $wx->sharememo;
+
+        return view('index', compact('state', 'jsParam'));
     }
 
     public function getConfig()
