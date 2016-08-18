@@ -29,7 +29,7 @@ class ShopController extends CommController
             }
         }
 
-        $url = 'http://'.$_SERVER['HTTP_HOST'].'/?'.$_SERVER['QUERY_STRING'];
+        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $signStr = "jsapi_ticket=$jsToken&noncestr=$randomStr&timestamp=$timeNow&url=$url";
         $sign = sha1($signStr);
         $url = getUrl().'/shareTo/'.$qrcID;
