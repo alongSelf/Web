@@ -280,13 +280,6 @@ class wechatAppPay
 		$result = strtoupper($string);
 		return $result;
 	}
-
-	public function MakeJSSign( $params ){
-		//签名步骤一：按字典序排序数组参数
-		ksort($params);
-		$string = $this->ToUrlParams($params);
-		return sha1($string);
-	}
 	
 	/**
 	 * 将参数拼接为url: key=value&key=value

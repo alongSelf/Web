@@ -42,7 +42,7 @@
     <script>
         var shareTitle = '{{$jsParam["title"]}}';
         var shareDesc = '{{$jsParam["memo"]}}';
-        var shareLink = '{{url('/shareTo').'/'.$jsParam['qrcID']}}';
+        var shareLink = '{{$jsParam["url"]}}';
         var shareImg = '{{asset('resources/views/sysimg/logo.png')}}';
         var sharOk = '分享成功，非常感谢您的大力支持！';
 
@@ -64,8 +64,8 @@
                 'onMenuShareQZone',
             ]
         });
-        wx.ready(function () {
-            layer.msg('wx.config ok.');
+        wx.ready(function(){
+            layer.msg(shareLink);
         });
         //分享到朋友圈
         wx.onMenuShareTimeline({

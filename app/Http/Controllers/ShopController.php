@@ -19,22 +19,6 @@ class ShopController extends CommController
         $jsToken = getJSToken();
         $randomStr= genRandomString();
         $timeNow = time();
-        $singParam = [
-            'noncestr'=>$randomStr,
-            'jsapi_ticket'=>$jsToken,
-            'timestamp'=>$timeNow,
-            'url'=>getUrl(),
-        ];
-        $wechatAppPay = newWXPay();
-        $sign = $wechatAppPay->MakeJSSign($singParam);
-
-        $jsParam = [
-            'appId'=>getWXConfig()->AppID,
-            'timestamp'=>$timeNow,
-            'nonceStr'=>$randomStr,
-            'signature'=>$sign,
-        ];
-
         $qrcID = 0;
         $user = session(FSessionNam);
         if ($user){
@@ -44,9 +28,18 @@ class ShopController extends CommController
                 $qrcID = $user['id'];
             }
         }
+        $url = getUrl().'/shareTo/'.$qrcID;
+
+        $sign = sha1('jsapi_ticket='.$jsToken.'&noncestr=$'.$randomStr.'&timestamp=$'.$timeNow.'&url='.$url.'');
+        $jsParam = [
+            'appId'=>getWXConfig()->AppID,
+            'timestamp'=>$timeNow,
+            'nonceStr'=>$randomStr,
+            'url'=>$url,
+            'signature'=>$sign,
+        ];
 
         $wx = getWXConfig();
-        $jsParam['qrcID'] = $qrcID;
         $jsParam['title'] = $wx->sharetitle;
         $jsParam['memo'] = $wx->sharememo;
 
