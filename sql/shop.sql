@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50539
 File Encoding         : 65001
 
-Date: 2016-08-16 13:00:07
+Date: 2016-08-18 15:15:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `addr` (
   `phone` varchar(32) DEFAULT '' COMMENT '收货人电话',
   `addr` text COMMENT '地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of addr
@@ -48,7 +48,7 @@ CREATE TABLE `adminuser` (
 -- ----------------------------
 -- Records of adminuser
 -- ----------------------------
-INSERT INTO `adminuser` VALUES ('1', 'admin', 'eyJpdiI6Ik4wUHNjb0psMm9VZlJyOWo3QWE2NFE9PSIsInZhbHVlIjoiRmNiUGJuRWxiK2RYQ1lJTnNuSk5xQT09IiwibWFjIjoiYWI2YjExMmJhNjEyZTRkZjQyMTIzOTUzOTExNWM3MTE0NGNkNjE4ODU3MWI3NWQ5OTdkOGQ4MmRjZDE1M2IyZCJ9', '0', '0');
+INSERT INTO `adminuser` VALUES ('1', 'admin', '', '1471325014', '1');
 
 -- ----------------------------
 -- Table structure for `agent`
@@ -79,7 +79,7 @@ CREATE TABLE `cash` (
   `operate` varchar(64) DEFAULT '' COMMENT '操作员',
   `time` bigint(20) DEFAULT '0' COMMENT '提现时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cash
@@ -97,7 +97,7 @@ CREATE TABLE `category` (
   `describe` varchar(255) DEFAULT '',
   `sort` tinyint(4) DEFAULT '0' COMMENT '排序规则',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of category
@@ -129,7 +129,7 @@ CREATE TABLE `config` (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES ('3', '微信商城', '1', '{\"phone\":\"15882279747\\r\\n13328585252\",\"email\":\"2451@163.com\",\"qq\":\"5845222\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"1261616\",\"apiKey\":\"7a7ca21d-cd65-4a20-96af-f95801dd57c2\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"city\":\"\\u4e1c\\u57ce\\u533a\",\"county\":\"\",\"address\":\"XXX\\u53f7\"}', '{\"Token\":\"\",\"AppID\":\"\",\"AppSecret\":\"\",\"accessToken\":\"\",\"mchName\":\"\",\"payID\":\"\",\"payKey\":\"\",\"wxcheck\":\"0\",\"welcome\":\"\",\"ghID\":\"\"}', '0');
+INSERT INTO `config` VALUES ('3', '微信商城', '1', '{\"phone\":\"15882279747\\r\\n13328585252\",\"email\":\"2451@163.com\",\"qq\":\"5845222\",\"postAddr\":\"\\u56db\\u5ddd\\u7701 \\u6210\\u90fd\\u5e02 xxx\"}', '代理介绍：\n申请成为线下代理。', '推广介绍：\n消费满300元即可开启推广，发展粉丝，通过扫码关注，你的下3级粉丝消费，你将获得奖励，当奖励达到一定金额就可以提现', '300', '50', '0.6', '0.3', '0.1', '{\"userID\":\"\",\"apiKey\":\"\"}', '{\"name\":\"\\u8001\\u5218\",\"phone\":\"15883276717\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"city\":\"\\u4e1c\\u57ce\\u533a\",\"county\":\"\",\"address\":\"XXX\\u53f7\"}', '{\"Token\":\"\",\"AppID\":\"\",\"AppSecret\":\"\",\"accessToken\":\"\",\"mchName\":\"\",\"payID\":\"\",\"payKey\":\"\",\"wxcheck\":\"0\",\"welcome\":\"\",\"ghID\":\"\",\"sharetitle\":\"\",\"sharememo\":\"\"}', '0');
 
 -- ----------------------------
 -- Table structure for `evaluates`
@@ -164,7 +164,7 @@ CREATE TABLE `follower` (
   `userid` int(11) DEFAULT '0' COMMENT '用户ID',
   `layer` int(11) DEFAULT '0' COMMENT '所在层',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of follower
@@ -185,7 +185,7 @@ CREATE TABLE `income` (
   `balance` float DEFAULT '0' COMMENT '余额分',
   `time` bigint(20) DEFAULT '0' COMMENT '消费时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of income
@@ -369,7 +369,7 @@ CREATE TABLE `shopitem` (
   `showindex` tinyint(4) DEFAULT '0' COMMENT '是否在主页显示',
   `display` tinyint(4) DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shopitem
@@ -3752,7 +3752,7 @@ CREATE TABLE `users` (
   `errortime` bigint(20) DEFAULT '0' COMMENT '最后次错误时间',
   `qrc` text COMMENT '二维码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10033 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -3787,7 +3787,7 @@ CREATE TABLE `wx_msg` (
   `status` tinyint(4) DEFAULT '0' COMMENT '状态',
   `csvid` int(11) DEFAULT '0' COMMENT '处理者客服ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wx_msg
@@ -3804,7 +3804,7 @@ CREATE TABLE `wx_paylog` (
   `recvmsg` text,
   `time` bigint(20) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wx_paylog
@@ -3819,7 +3819,7 @@ CREATE TABLE `wx_tmp` (
   `wx_access_token` text,
   `wx_js_token` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wx_tmp
