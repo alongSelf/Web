@@ -68,7 +68,7 @@
                         <div class="col">余额</div>
                         <div class="col">时间</div>
                     </div>
-                    <div class="row row-wrap" ng-repeat="income in incomeInfo">
+                    <div class="row row-wrap" ng-repeat="income in incomeInfo track by income.id">
                         <div class="col" ng-click="showLevel([[income.followerid]])">[[income.followernam | cutUserName]]</div>
                         <div class="col">[[income.consume | currency:'￥']]</div>
                         <div class="col">[[income.income/100 | currency:'￥']]</div>
@@ -88,7 +88,7 @@
                         <div class="col">时间</div>
                     </div>
                 </div>
-                <div class="row row-wrap" ng-repeat="cash in cashInfo">
+                <div class="row row-wrap" ng-repeat="cash in cashInfo track by cash.id">
                     <div class="col">[[cash.money | currency:'￥']]</div>
                     <div class="col">[[cash.balance/100 | currency:'￥']]</div>
                     <div class="col">[[cash.status | toStrCashStatus]]</div>
