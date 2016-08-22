@@ -1,10 +1,10 @@
 <?php
 
-use App\http\Model\Users;
-use App\http\Model\Config;
-use App\http\Model\WXTemp;
-use App\http\Model\Orders;
-use App\http\Model\Follower;
+use App\Http\Model\Users;
+use App\Http\Model\Config;
+use App\Http\Model\WXTemp;
+use App\Http\Model\Orders;
+use App\Http\Model\Follower;
 use Illuminate\Support\Facades\Input;
 
 //微信

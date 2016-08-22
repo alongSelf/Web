@@ -12,7 +12,7 @@ make && make install
 libxml2:
 tar -xvzf libxml2-2.9.4.tar.gz
 cd libxml2-2.9.4
-./configure --prefix=/usr/local/libxml2
+./configure --prefix=/usr/local/libxml2 --with-python=no
 make && make install
 
 
@@ -27,6 +27,7 @@ tar -xvzf jpegsrc.v9b.tar.gz
 cd jpeg-9b
 ./configure --prefix=/usr/local/jpeg --enable-shared
 make && make install
+
 
 freetype:
 tar -xvzf freetype-2.6.5.tar.gz
