@@ -74,7 +74,7 @@ make && make install
 ln -s /etc/init.d/nginx /usr/local/bin/nginx
 
 为该文件增加权限 ：
-chmod a+x nginx
+chmod a+x /etc/init.d/nginx
 添加系统服务：
 chkconfig --add nginx
 开机自启：
