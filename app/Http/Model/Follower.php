@@ -14,7 +14,7 @@ class Follower extends Model
 
     private function getMaxLayer()
     {
-        return 3;
+        return 1;
     }
 
     //获取自己的信息
