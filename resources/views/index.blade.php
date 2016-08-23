@@ -47,7 +47,7 @@
         var sharOk = '分享成功，非常感谢您的大力支持！';
 
         wx.config({
-            debug: true,
+            debug: false,
             appId: '{{$jsParam["appId"]}}',
             timestamp: {{$jsParam["timestamp"]}},
             nonceStr: '{{$jsParam["nonceStr"]}}',
@@ -65,63 +65,62 @@
             ]
         });
         wx.ready(function(){
-            //layer.msg(shareLink);
-        });
-        //分享到朋友圈
-        wx.onMenuShareTimeline({
-            title: shareTitle,
-            link: shareLink,
-            imgUrl: shareImg,
-            success: function () {
-                layer.msg(sharOk);
-            },
-            cancel: function () { }
-        });
-        //分享给朋友
-        wx.onMenuShareAppMessage({
-            title: shareTitle,
-            desc: shareDesc,
-            link: shareLink,
-            imgUrl: shareImg,
-            type: 'link',
-            dataUrl: '',
-            success: function () {
-                layer.msg(sharOk);
-            },
-            cancel: function () {}
-        });
-        //分享到QQ
-        wx.onMenuShareQQ({
-            title: shareTitle,
-            desc: shareDesc,
-            link: shareLink,
-            imgUrl: shareImg,
-            success: function () {
-                layer.msg(sharOk);
-            },
-            cancel: function () {}
-        });
-        //分享到腾讯微博
-        wx.onMenuShareWeibo({
-            title: shareTitle,
-            desc: shareDesc,
-            link: shareLink,
-            imgUrl: shareImg,
-            success: function () {
-                layer.msg(sharOk);
-            },
-            cancel: function () {}
-        });
-        //分享到QQ空间
-        wx.onMenuShareQZone({
-            title: shareTitle,
-            desc: shareDesc,
-            link: shareLink,
-            imgUrl: shareImg,
-            success: function () {
-                layer.msg(sharOk);
-            },
-            cancel: function () {}
+            //分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: shareTitle,
+                link: shareLink,
+                imgUrl: shareImg,
+                success: function () {
+                    layer.msg(sharOk);
+                },
+                cancel: function () { }
+            });
+            //分享给朋友
+            wx.onMenuShareAppMessage({
+                title: shareTitle,
+                desc: shareDesc,
+                link: shareLink,
+                imgUrl: shareImg,
+                type: 'link',
+                dataUrl: '',
+                success: function () {
+                    layer.msg(sharOk);
+                },
+                cancel: function () {}
+            });
+            //分享到QQ
+            wx.onMenuShareQQ({
+                title: shareTitle,
+                desc: shareDesc,
+                link: shareLink,
+                imgUrl: shareImg,
+                success: function () {
+                    layer.msg(sharOk);
+                },
+                cancel: function () {}
+            });
+            //分享到腾讯微博
+            wx.onMenuShareWeibo({
+                title: shareTitle,
+                desc: shareDesc,
+                link: shareLink,
+                imgUrl: shareImg,
+                success: function () {
+                    layer.msg(sharOk);
+                },
+                cancel: function () {}
+            });
+            //分享到QQ空间
+            wx.onMenuShareQZone({
+                title: shareTitle,
+                desc: shareDesc,
+                link: shareLink,
+                imgUrl: shareImg,
+                success: function () {
+                    layer.msg(sharOk);
+                },
+                cancel: function () {}
+            });
         });
     </script>
 </html>
