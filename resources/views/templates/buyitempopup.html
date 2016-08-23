@@ -11,7 +11,7 @@
             <div ng-if="itemSpec">
                 <div ng-repeat="(key,value) in itemSpec">
                     <span>[[key]]:</span>
-                    <select class="st_buyPopSelect" ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
+                    <select ng-change="PopData.showPrice(key)" ng-model="PopData[key].Spec">
                         <option ng-repeat="spec in value">[[spec.val]]</option>
                     </select>
                     <div style="height: 10px"></div>
