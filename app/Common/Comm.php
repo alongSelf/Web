@@ -1,8 +1,8 @@
 <?php
 
-use App\http\Model\Users;
-use App\http\Model\Config;
-use App\http\Model\WXPayLog;
+use App\Http\Model\Users;
+use App\Http\Model\Config;
+use App\Http\Model\WXPayLog;
 use Illuminate\Support\Facades\Input;
 
 define("FSessionNam", "UjfSEfsA1tjIUE6hK1bmf6rAGMZLvFyR_user");
