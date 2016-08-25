@@ -58,12 +58,19 @@ appModule.filter('toStrDate', function () {
 
 appModule.filter('cutUserName', function () {
     return function (input) {
-        if (input.length > 3){
+        if (input.length >= 3){
             var first = input.substr(0, 1);
-            var last = input.substr(input.length - 2, 2);
+            var last = input.substr(input.length - 1, 1);
 
-            input = first+'***'+last;
-        }
+            input = first+'*'+last;
+        }else if(1 == input.length){
+            input = '*'+input;
+        }else if(2 == input.length){
+            var first = input.substr(0, 1);
+            var last = input.substr(input.length - 1, 1);
+
+            input = first+'*'+last;
+        }else{}
 
         return input;
     }
