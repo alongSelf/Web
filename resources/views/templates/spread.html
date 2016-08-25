@@ -66,14 +66,14 @@
                         <div class="col">消费</div>
                         <div class="col">提成</div>
                         <div class="col">余额</div>
-                        <div class="col col-25">日期</div>
+                        <div class="col">日期</div>
                     </div>
                     <div class="row row-wrap" ng-repeat="income in incomeInfo track by income.id">
                         <div class="col" ng-click="showLevel([[income.followerid]])">[[income.followernam | cutUserName]]</div>
                         <div class="col">[[income.consume | currency:'￥']]</div>
                         <div class="col">[[income.income/100 | currency:'￥']]</div>
                         <div class="col">[[income.balance/100 | currency:'￥']]</div>
-                        <div class="col col-25">[[income.time | toStrDate]]</div>
+                        <div class="col">[[income.time | toStrDate]]</div>
                     </div>
                 </div>
             </div>

@@ -49,10 +49,11 @@ appModule.filter('hidePhone', function () {
 
 appModule.filter('toStrDate', function () {
     return function (input) {
-        var newDate = new Date();
-        newDate.setTime(input * 1000);
+        var newDate = new Date(input * 1000);
+        var D = newDate.getDate();
+        var M = newDate.getMonth()+1;
 
-        return newDate.toLocaleDateString();
+        return M+'/'+D;
     }
 });
 
