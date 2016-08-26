@@ -85,20 +85,36 @@ cd到源代码ext目录的扩展目录 执行
 phpize
 再执行：
 
-bz2
+cd bz2
+phpize
 ./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-bz2
-curl
-./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-curl
-mbstring
-./configure --with-php-config=/usr/local/php-5.6/bin/php-config --enable-mbstring
-mcrypt
-./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-mcrypt
-openssl
-./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-openssl
-sockets
-./configure --with-php-config=/usr/local/php-5.6/bin/php-config --enable-sockets
-
 make && make install
+
+cd curl
+phpize
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-curl
+make && make install
+
+cd mbstring
+phpize
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --enable-mbstring
+make && make install
+
+cd mcrypt
+phpize
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-mcrypt
+make && make install
+
+cd openssl
+phpize
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --with-openssl
+make && make install
+
+cd sockets
+phpize
+./configure --with-php-config=/usr/local/php-5.6/bin/php-config --enable-sockets
+make && make install
+
 
 
 出现 PHP Startup: Invalid library (maybe not a PHP library) 先make clean
